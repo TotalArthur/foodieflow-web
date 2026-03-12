@@ -242,7 +242,7 @@
       display: grid; place-items: center;
       margin-bottom: 16px;
     }
-    .feature-icon svg { width: 22px; height: 22px; fill: var(--blue); }
+    .feature-icon svg { width: 22px; height: 22px; fill: none; stroke: var(--blue); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
     .feature-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
     .feature-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
 
@@ -450,14 +450,14 @@
             <div class="phone-app-name">FoodieFlow</div>
           </div>
           <div class="phone-shortcuts">
-            <div class="phone-shortcut-gold">✦ GENERATE IDEA</div>
+            <div class="phone-shortcut-gold"><svg width="9" height="9" viewBox="0 0 24 24" fill="var(--fore)" style="display:inline-block;vertical-align:middle;margin-right:3px;"><path d="M12 2l2.09 6.26L20 10l-5.91 1.74L12 18l-2.09-6.26L4 10l5.91-1.74L12 2z"/></svg> GENERATE IDEA</div>
             <div class="phone-shortcut-blue">⊕ ADD RECIPE</div>
           </div>
           <div class="phone-content">
             <div class="phone-section-label" style="margin-bottom:6px;">Chef's Shortcuts</div>
             <div class="phone-big-card" style="margin-bottom:6px;">
               <div>
-                <div style="width:24px;height:24px;background:var(--blue-lt);border-radius:6px;display:grid;place-items:center;font-size:0.7rem;margin-bottom:4px;">📅</div>
+                <div style="width:24px;height:24px;background:var(--blue-lt);border-radius:6px;display:grid;place-items:center;margin-bottom:4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
                 <div class="phone-big-title">Weekly Plan</div>
                 <div class="phone-big-sub">Manage your schedule and meals.</div>
               </div>
@@ -468,7 +468,7 @@
             </div>
             <div class="phone-big-card" style="margin-bottom:8px;">
               <div>
-                <div style="width:24px;height:24px;background:var(--blue-lt);border-radius:6px;display:grid;place-items:center;font-size:0.7rem;margin-bottom:4px;">🛒</div>
+                <div style="width:24px;height:24px;background:var(--blue-lt);border-radius:6px;display:grid;place-items:center;margin-bottom:4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
                 <div class="phone-big-title">Shopping List</div>
                 <div class="phone-big-sub">Ingredients grouped by grocery aisle.</div>
               </div>
@@ -478,7 +478,7 @@
             </div>
             <div class="phone-section-label">Next Scheduled Meal</div>
             <div class="phone-meal-row">
-              <div class="phone-meal-thumb">🍗</div>
+              <div class="phone-meal-thumb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/><path d="M12 8v8"/></svg></div>
               <div>
                 <div class="phone-meal-day">Monday</div>
                 <div class="phone-meal-name">Marry Me Chicken &amp; Mash</div>
@@ -530,42 +530,48 @@
   <div class="features-grid">
     <div class="feature-card">
       <div class="feature-icon">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l2.09 6.26L20 10l-5.91 1.74L12 18l-2.09-6.26L4 10l5.91-1.74L12 2z"/></svg>
+        <!-- Smart Meal Generator: sparkle/wand -->
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15 4V2m0 14v-2M8 9H6m12 0h-2M13.8 6.2l-1.4 1.4m-4.8 4.8-1.4 1.4M13.8 11.8l-1.4-1.4M7.6 6.2 6.2 7.6"/><path d="m3 21 9-9"/><path d="M12.2 12.2 15 15l3.8-3.8a2.12 2.12 0 0 0-3-3L12.2 12.2z"/></svg>
       </div>
       <h3>Smart Meal Generator</h3>
       <p>Tell FoodieFlow your ingredients, dietary preferences, and goals — it generates personalised meal ideas instantly.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6" stroke-width="2" stroke="var(--blue)" fill="none"/><line x1="8" y1="2" x2="8" y2="6" stroke-width="2" stroke="var(--blue)" fill="none"/><line x1="3" y1="10" x2="21" y2="10" stroke-width="2" stroke="var(--blue)" fill="none"/></svg>
+        <!-- Weekly Planner: calendar -->
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="14" x2="8" y2="14" stroke-width="2.5"/><line x1="12" y1="14" x2="12" y2="14" stroke-width="2.5"/><line x1="16" y1="14" x2="16" y2="14" stroke-width="2.5"/><line x1="8" y1="18" x2="8" y2="18" stroke-width="2.5"/><line x1="12" y1="18" x2="12" y2="18" stroke-width="2.5"/></svg>
       </div>
       <h3>Weekly Planner</h3>
       <p>Fill your whole week in seconds. See every meal at a glance — breakfast, lunch, and dinner — and never scramble for ideas.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6" stroke-width="2" stroke="var(--blue)" fill="none"/><path d="M16 10a4 4 0 0 1-8 0" fill="none" stroke="var(--blue)" stroke-width="2"/></svg>
+        <!-- Smart Shopping Lists: basket/bag -->
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
       </div>
       <h3>Smart Shopping Lists</h3>
       <p>FoodieFlow automatically builds your shopping list from your weekly plan, grouped by grocery aisle.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z"/><path d="M12 8v4l3 3" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+        <!-- Meal Library: bookmark/book -->
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="9" y1="12" x2="13" y2="12"/></svg>
       </div>
       <h3>Your Meal Library</h3>
       <p>Save any meal you love. Build a collection of go-to recipes tailored to your household — and generate new suggestions based on them.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <!-- Dietary Preferences: sliders -->
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="8" cy="6" r="2" fill="var(--blue-lt)" stroke="var(--blue)"/><circle cx="16" cy="12" r="2" fill="var(--blue-lt)" stroke="var(--blue)"/><circle cx="10" cy="18" r="2" fill="var(--blue-lt)" stroke="var(--blue)"/></svg>
       </div>
       <h3>Dietary Preferences</h3>
       <p>Set allergies, dietary restrictions, and disliked ingredients once. FoodieFlow remembers them every time.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <!-- Nutrition Tracking: bar chart -->
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="12" width="4" height="9" rx="1"/><rect x="10" y="6" width="4" height="15" rx="1"/><rect x="17" y="9" width="4" height="12" rx="1"/><line x1="2" y1="21" x2="22" y2="21"/></svg>
       </div>
       <h3>Nutrition Tracking</h3>
       <p>See macro and calorie estimates for every meal. Pro users get full detailed breakdowns for every recipe.</p>
@@ -614,7 +620,7 @@
     </div>
     <div class="how-visual">
       <div class="how-visual-header">
-        <div class="how-visual-icon">🛒</div>
+        <div class="how-visual-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
         <div>
           <div class="how-visual-title">Shopping List</div>
           <div class="how-visual-sub">This week · 7 items</div>
@@ -644,21 +650,21 @@
       <p class="section-sub">The free plan gets you started. Pro unlocks unlimited AI generation, detailed nutrition information, and more.</p>
       <div class="pro-features">
         <div class="pro-feature">
-          <div class="pro-feature-icon">✦</div>
+          <div class="pro-feature-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.09 6.26L20 10l-5.91 1.74L12 18l-2.09-6.26L4 10l5.91-1.74L12 2z"/></svg></div>
           <div class="pro-feature-text">
             <h4>Unlimited AI meal generation</h4>
             <p>Generate as many personalised meal suggestions as you need, any time.</p>
           </div>
         </div>
         <div class="pro-feature">
-          <div class="pro-feature-icon">📊</div>
+          <div class="pro-feature-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
           <div class="pro-feature-text">
             <h4>Full nutrition information</h4>
             <p>See detailed macro and calorie estimates for every meal you save or generate.</p>
           </div>
         </div>
         <div class="pro-feature">
-          <div class="pro-feature-icon">🎯</div>
+          <div class="pro-feature-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
           <div class="pro-feature-text">
             <h4>Advanced preference matching</h4>
             <p>More granular AI matching — protein goals, cuisine style, cooking time, and more.</p>
