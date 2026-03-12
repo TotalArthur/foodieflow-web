@@ -43,14 +43,6 @@
     .nav-links { display: flex; align-items: center; gap: 2rem; }
     .nav-links a { font-size: 0.84rem; color: var(--muted); text-decoration: none; font-weight: 700; transition: color 0.2s; }
     .nav-links a:hover { color: var(--blue); }
-    .nav-cta {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--fore); color: white;
-      padding: 9px 20px; border-radius: 100px;
-      font-size: 0.82rem; font-weight: 700; text-decoration: none;
-      transition: background 0.2s;
-    }
-    .nav-cta:hover { background: var(--blue); }
     /* Mobile nav */
     .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 6px; }
     .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--fore); margin: 5px 0; border-radius: 2px; transition: 0.25s; }
@@ -66,11 +58,6 @@
     .mobile-menu.open { display: flex; }
     .mobile-menu a { font-size: 1.4rem; font-weight: 700; color: var(--fore); text-decoration: none; transition: color 0.2s; }
     .mobile-menu a:hover { color: var(--blue); }
-    .mobile-menu .mobile-cta {
-      background: var(--fore); color: white;
-      padding: 14px 36px; border-radius: 100px; font-size: 1rem;
-    }
-    .mobile-menu .mobile-cta:hover { background: var(--blue); color: white; }
 
     /* ── HERO ── */
     .hero { padding: 64px 2rem 48px; text-align: center; max-width: 660px; margin: 0 auto; }
@@ -165,20 +152,18 @@
     <img src="/logo.png" alt="FoodieFlow" />
   </a>
   <div class="nav-links">
-    <a href="/#features">Features</a>
-    <a href="/#how-it-works">How it works</a>
-    <a href="/#pro">Pro</a>
-    <a href="/support" class="nav-cta">Support</a>
+    <a href="/support">Support</a>
+    <a href="/privacy">Privacy</a>
+    <a href="/terms">Terms of Use</a>
   </div>
   <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
 <div class="mobile-menu" id="mobile-menu">
-  <a href="/#features" class="mobile-nav-link">Features</a>
-  <a href="/#how-it-works" class="mobile-nav-link">How it works</a>
-  <a href="/#pro" class="mobile-nav-link">Pro</a>
-  <a href="/support" class="mobile-nav-link mobile-cta">Support</a>
+  <a href="/support" class="mobile-nav-link">Support</a>
+  <a href="/privacy" class="mobile-nav-link">Privacy</a>
+  <a href="/terms" class="mobile-nav-link">Terms of Use</a>
 </div>
 <script>
   var btn = document.getElementById('hamburger');
