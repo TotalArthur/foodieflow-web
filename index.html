@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FoodieFlow — Meal Planning, Made Simple</title>
+  <meta name="description" content="FoodieFlow helps you plan meals, generate shopping lists, and discover recipes based on what you already have. Available on iOS." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=PT+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:        hsl(210, 28%, 95%);
+      --bg-warm:   hsl(210, 22%, 92%);
+      --card:      hsl(0, 0%, 100%);
+      --fore:      hsl(222, 47%, 13%);
+      --blue:      hsl(205, 68%, 50%);
+      --blue-mid:  hsl(205, 60%, 62%);
+      --blue-lt:   hsl(205, 55%, 90%);
+      --blue-pale: hsl(205, 45%, 96%);
+      --muted:     hsl(215, 16%, 50%);
+      --border:    hsl(210, 28%, 88%);
+      --gold:      hsl(42, 90%, 52%);
+      --gold-dark: hsl(42, 85%, 42%);
+      --radius:    1.3rem;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: "PT Sans", sans-serif; background: var(--bg); color: var(--fore); min-height: 100vh; overflow-x: hidden; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(235,240,246,0.96); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2.5rem;
+      display: flex; align-items: center; justify-content: space-between; height: 66px;
+    }
+    .logo { display: flex; align-items: center; text-decoration: none; }
+    .logo img { height: 48px; width: auto; object-fit: contain; }
+    .nav-links { display: flex; align-items: center; gap: 2rem; }
+    .nav-links a { font-size: 0.84rem; color: var(--muted); text-decoration: none; font-weight: 700; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--blue); }
+    .nav-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--fore); color: white;
+      padding: 9px 20px; border-radius: 100px;
+      font-size: 0.82rem; font-weight: 700; text-decoration: none;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--blue); }
+    /* Mobile nav drawer */
+    .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 6px; }
+    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--fore); margin: 5px 0; border-radius: 2px; transition: 0.25s; }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu {
+      display: none; position: fixed; top: 66px; left: 0; right: 0; bottom: 0;
+      background: rgba(235,240,246,0.98); backdrop-filter: blur(16px);
+      z-index: 199; flex-direction: column; align-items: center; justify-content: center;
+      gap: 2rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-size: 1.4rem; font-weight: 700; color: var(--fore); text-decoration: none; transition: color 0.2s; }
+    .mobile-menu a:hover { color: var(--blue); }
+    .mobile-menu .mobile-cta {
+      background: var(--fore); color: white;
+      padding: 14px 36px; border-radius: 100px; font-size: 1rem;
+    }
+    .mobile-menu .mobile-cta:hover { background: var(--blue); color: white; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 86vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center; gap: 4rem;
+      max-width: 1160px; margin: 0 auto;
+      padding: 80px 2.5rem 60px;
+    }
+    .hero-text { max-width: 520px; }
+    h1 {
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: clamp(2.6rem, 5.5vw, 4rem);
+      font-weight: 900; line-height: 1.06;
+      letter-spacing: -0.02em;
+      margin-bottom: 22px;
+      color: var(--fore);
+    }
+    h1 em { color: var(--blue); font-style: normal; }
+    .hero-sub {
+      font-size: 1.05rem; color: hsl(215,20%,38%);
+      line-height: 1.7; margin-bottom: 36px;
+      max-width: 420px;
+    }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+
+    /* App Store style buttons */
+    .appstore-btn {
+      display: inline-flex; align-items: center; gap: 11px;
+      background: var(--fore); color: white;
+      padding: 11px 22px; border-radius: 13px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .appstore-btn:hover { background: var(--blue); transform: translateY(-2px); }
+    .appstore-btn-text { display: flex; flex-direction: column; line-height: 1.2; }
+    .appstore-btn-label { font-size: 0.62rem; font-weight: 400; opacity: 0.75; letter-spacing: 0.03em; }
+    .appstore-btn-name { font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; }
+
+    .playstore-btn {
+      display: inline-flex; align-items: center; gap: 11px;
+      background: var(--fore); color: rgba(255,255,255,0.45);
+      padding: 11px 22px; border-radius: 13px;
+      text-decoration: none; opacity: 0.38; cursor: default;
+    }
+    .playstore-btn-text { display: flex; flex-direction: column; line-height: 1.2; }
+    .playstore-btn-label { font-size: 0.62rem; font-weight: 400; letter-spacing: 0.03em; }
+    .playstore-btn-name { font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; }
+
+    /* Hero visual */
+    .hero-visual { position: relative; display: flex; justify-content: center; align-items: center; }
+    .hero-blob {
+      position: absolute; width: 460px; height: 460px;
+      background: radial-gradient(circle, hsl(205,55%,88%) 0%, transparent 70%);
+      border-radius: 50%; z-index: 0;
+      top: 50%; left: 50%; transform: translate(-50%,-50%);
+      pointer-events: none;
+    }
+    .hero-card-stack { position: relative; width: 320px; height: 440px; z-index: 1; }
+    .phone-mockup {
+      position: absolute; left: 50%; transform: translateX(-50%);
+      width: 245px;
+      background: hsl(222,47%,13%);
+      border-radius: 38px;
+      padding: 11px;
+      box-shadow: 0 40px 90px rgba(20,40,70,0.22), 0 0 0 1px rgba(255,255,255,0.05);
+      z-index: 3;
+    }
+    .phone-inner {
+      background: var(--bg);
+      border-radius: 29px;
+      overflow: hidden;
+      height: 400px;
+      display: flex; flex-direction: column;
+    }
+    .phone-status {
+      background: var(--bg); padding: 14px 16px 6px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .phone-status .time { font-size: 0.72rem; font-weight: 700; color: var(--fore); }
+    .phone-header { padding: 6px 14px 10px; border-bottom: 1px solid var(--border); }
+    .phone-app-name { font-size: 0.85rem; font-weight: 700; color: var(--fore); }
+    .phone-app-sub { font-size: 0.58rem; color: var(--muted); }
+    .phone-shortcuts { display: flex; gap: 8px; padding: 10px 14px 6px; }
+    .phone-shortcut-gold {
+      flex: 1; background: var(--gold); color: var(--fore);
+      border-radius: 10px; padding: 8px 6px;
+      font-size: 0.6rem; font-weight: 700; text-align: center;
+    }
+    .phone-shortcut-blue {
+      flex: 1; background: var(--blue-lt); color: var(--blue);
+      border-radius: 10px; padding: 8px 6px;
+      font-size: 0.6rem; font-weight: 700; text-align: center;
+    }
+    .phone-content { padding: 6px 14px; flex: 1; overflow: hidden; }
+    .phone-section-label { font-size: 0.52rem; font-weight: 700; color: var(--muted); letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 6px; }
+    .phone-big-card {
+      background: var(--card); border-radius: 14px; padding: 10px 12px;
+      margin-bottom: 8px;
+      display: flex; justify-content: space-between; align-items: flex-start;
+    }
+    .phone-big-title { font-size: 0.75rem; font-weight: 700; margin-bottom: 3px; }
+    .phone-big-sub { font-size: 0.56rem; color: var(--muted); }
+    .phone-progress-row { display: flex; justify-content: flex-end; margin-bottom: 4px; }
+    .phone-progress-label { font-size: 0.52rem; color: var(--blue); font-weight: 700; }
+    .phone-prog-bar { height: 3px; background: var(--border); border-radius: 2px; margin-top: 4px; overflow: hidden; }
+    .phone-prog-fill { height: 100%; background: var(--blue); border-radius: 2px; width: 100%; }
+    .phone-meal-row {
+      background: var(--card); border-radius: 12px; padding: 8px 10px;
+      display: flex; align-items: center; gap: 8px; margin-bottom: 6px;
+    }
+    .phone-meal-thumb {
+      width: 30px; height: 30px; border-radius: 8px;
+      background: var(--blue-lt); flex-shrink: 0; overflow: hidden;
+      display: grid; place-items: center; font-size: 1rem;
+    }
+    .phone-meal-name { font-size: 0.62rem; font-weight: 700; }
+    .phone-meal-day { font-size: 0.52rem; color: var(--blue); font-weight: 700; text-transform: uppercase; }
+
+    /* Float cards */
+    .float-card {
+      position: absolute; background: white;
+      border: 1px solid var(--border); border-radius: 16px;
+      padding: 12px 16px;
+      box-shadow: 0 8px 28px rgba(30,60,100,0.1); z-index: 4;
+    }
+    .float-card-1 { top: 16px; right: -24px; width: 150px; }
+    .float-card-2 { bottom: 28px; left: -28px; width: 140px; }
+    .float-label { font-size: 0.56rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 700; margin-bottom: 5px; }
+    .float-val { font-family: "Playfair Display", serif; font-size: 1.4rem; font-weight: 700; color: var(--fore); line-height: 1; }
+    .float-val span { font-size: 0.68rem; font-weight: 400; color: var(--muted); }
+    .float-pills { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+    .float-pill { font-size: 0.56rem; font-weight: 700; padding: 3px 7px; border-radius: 100px; background: var(--blue-lt); color: var(--blue); }
+
+    /* ── MARQUEE STRIP ── */
+    .strip { background: var(--fore); padding: 16px 0; overflow: hidden; }
+    .strip-inner {
+      display: flex; gap: 3rem; align-items: center;
+      animation: marquee 24s linear infinite;
+      white-space: nowrap; width: max-content;
+    }
+    .strip-item { display: flex; align-items: center; gap: 8px; font-size: 0.82rem; font-weight: 700; color: rgba(255,255,255,0.7); }
+    .strip-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--blue-mid); }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    /* ── SECTIONS ── */
+    .section { max-width: 1160px; margin: 0 auto; padding: 80px 2.5rem; }
+    .section-eyebrow { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue); margin-bottom: 12px; }
+    .section-title {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.7rem);
+      font-weight: 700; line-height: 1.15;
+      letter-spacing: -0.02em; margin-bottom: 16px;
+    }
+    .section-sub { font-size: 1rem; color: var(--muted); line-height: 1.7; max-width: 480px; }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 0 2.5rem; }
+
+    /* ── FEATURES ── */
+    .features-header { margin-bottom: 48px; }
+    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .feature-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 28px;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .feature-card:hover { box-shadow: 0 8px 30px rgba(30,80,140,0.09); transform: translateY(-3px); }
+    .feature-card.wide { grid-column: span 1; }
+    .feature-icon {
+      width: 42px; height: 42px; border-radius: 11px;
+      background: var(--blue-lt);
+      display: grid; place-items: center;
+      margin-bottom: 16px;
+    }
+    .feature-icon svg { width: 22px; height: 22px; fill: var(--blue); }
+    .feature-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+    .feature-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
+
+    /* ── HOW IT WORKS ── */
+    .how-section { background: var(--bg-warm); }
+    .how-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .how-steps { display: flex; flex-direction: column; gap: 0; }
+    .how-step { display: flex; gap: 20px; padding: 22px 0; border-bottom: 1px solid var(--border); }
+    .how-step:last-child { border-bottom: none; }
+    .how-number {
+      width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
+      background: var(--blue-lt); color: var(--blue);
+      display: grid; place-items: center;
+      font-family: "Playfair Display", serif; font-size: 0.95rem; font-weight: 700;
+    }
+    .how-step.active .how-number { background: var(--blue); color: white; }
+    .how-step-text h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 5px; }
+    .how-step-text p { font-size: 0.86rem; color: var(--muted); line-height: 1.65; }
+    .how-visual {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 22px; padding: 26px;
+      box-shadow: 0 16px 50px rgba(30,70,130,0.08);
+    }
+    .how-visual-header { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+    .how-visual-icon { width: 36px; height: 36px; border-radius: 10px; background: var(--blue-lt); display: grid; place-items: center; font-size: 1rem; }
+    .how-visual-title { font-family: "Playfair Display", serif; font-size: 1rem; font-weight: 700; }
+    .how-visual-sub { font-size: 0.72rem; color: var(--muted); }
+    .shopping-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 9px 0; border-bottom: 1px solid var(--border);
+      font-size: 0.88rem;
+    }
+    .shopping-item:last-child { border-bottom: none; }
+    .check {
+      width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
+      display: grid; place-items: center;
+    }
+    .check.done { background: var(--blue); }
+    .check.done::after { content: "✓"; color: white; font-size: 0.65rem; font-weight: 700; }
+    .check.todo { border: 1.5px solid var(--border); }
+    .item-name { flex: 1; font-size: 0.86rem; }
+    .item-name.done { color: var(--muted); text-decoration: line-through; }
+    .item-cat { font-size: 0.7rem; color: var(--muted); background: var(--bg); padding: 2px 8px; border-radius: 100px; }
+    .shopping-footer { margin-top: 14px; }
+    .shopping-progress { font-size: 0.76rem; color: var(--muted); margin-bottom: 6px; }
+    .progress-bar { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--blue); border-radius: 2px; width: 43%; }
+
+    /* ── PRO ── */
+    .pro-section { background: var(--fore); color: white; }
+    .pro-inner { max-width: 1160px; margin: 0 auto; padding: 80px 2.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .pro-text .section-eyebrow { color: var(--blue-mid); }
+    .pro-text .section-title { color: white; }
+    .pro-text .section-sub { color: rgba(255,255,255,0.5); max-width: 420px; }
+    .pro-features { display: flex; flex-direction: column; gap: 16px; margin-top: 36px; }
+    .pro-feature { display: flex; align-items: flex-start; gap: 14px; }
+    .pro-feature-icon { width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0; background: rgba(255,255,255,0.07); display: grid; place-items: center; font-size: 0.9rem; }
+    .pro-feature-text h4 { font-size: 0.92rem; font-weight: 700; margin-bottom: 3px; }
+    .pro-feature-text p { font-size: 0.82rem; color: rgba(255,255,255,0.45); line-height: 1.55; }
+    .pro-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 22px; padding: 34px; }
+    .pro-price { margin-bottom: 26px; }
+    .pro-price-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 8px; }
+    .pro-price-val { font-family: "Playfair Display", serif; font-size: 3rem; font-weight: 700; line-height: 1; }
+    .pro-price-val sup { font-size: 1.2rem; vertical-align: super; }
+    .pro-price-val sub { font-size: 0.9rem; font-weight: 400; color: rgba(255,255,255,0.35); vertical-align: baseline; }
+    .pro-includes { display: flex; flex-direction: column; gap: 10px; margin-bottom: 26px; }
+    .pro-include { display: flex; align-items: center; gap: 10px; font-size: 0.88rem; }
+    .pro-include::before { content: "✓"; width: 18px; height: 18px; background: var(--blue); border-radius: 50%; display: grid; place-items: center; font-size: 0.62rem; font-weight: 700; flex-shrink: 0; }
+    .btn-gold { display: block; text-align: center; background: var(--gold); color: var(--fore); padding: 14px; border-radius: 13px; font-weight: 700; font-size: 0.92rem; text-decoration: none; transition: opacity 0.2s, transform 0.15s; }
+    .btn-gold:hover { opacity: 0.88; transform: translateY(-2px); }
+    .pro-note { font-size: 0.74rem; color: rgba(255,255,255,0.28); text-align: center; margin-top: 12px; }
+
+    /* ── DOWNLOAD ── */
+    .download-section { text-align: center; }
+    .download-section .section-title, .download-section .section-eyebrow { margin-left: auto; margin-right: auto; }
+    .download-section .section-sub { margin: 0 auto 40px; }
+    .download-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .download-note { font-size: 0.79rem; color: var(--muted); margin-top: 22px; }
+
+    /* ── FOOTER ── */
+    footer { border-top: 1px solid var(--border); padding: 40px 2.5rem 28px; background: var(--card); }
+    .footer-inner { max-width: 1160px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 36px; }
+    .footer-brand img { height: 44px; margin-bottom: 12px; }
+    .footer-brand p { font-size: 0.84rem; color: var(--muted); line-height: 1.65; max-width: 240px; }
+    .footer-col h4 { font-size: 0.77rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--fore); margin-bottom: 14px; }
+    .footer-col a { display: block; font-size: 0.84rem; color: var(--muted); text-decoration: none; margin-bottom: 8px; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--blue); }
+    .footer-bottom { max-width: 1160px; margin: 0 auto; padding-top: 22px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+    .footer-bottom span { font-size: 0.77rem; color: var(--muted); word-break: break-word; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+    .hero-text h1   { animation: fadeUp 0.5s 0.06s ease both; }
+    .hero-sub       { animation: fadeUp 0.5s 0.14s ease both; }
+    .hero-actions   { animation: fadeUp 0.5s 0.20s ease both; }
+    .hero-visual    { animation: fadeUp 0.6s 0.08s ease both; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; text-align: center; min-height: auto; padding: 60px 1.5rem; }
+      .hero-text { max-width: 100%; }
+      .hero-sub { margin: 0 auto 36px; }
+      .hero-actions { justify-content: center; }
+      .hero-visual { order: -1; }
+      .hero-card-stack { height: 360px; }
+      .float-card-1 { right: -8px; }
+      .float-card-2 { left: -8px; }
+      .features-grid { grid-template-columns: 1fr 1fr; }
+      .feature-card.wide { grid-column: span 2; }
+      .how-grid { grid-template-columns: 1fr; gap: 40px; }
+      .pro-inner { grid-template-columns: 1fr; gap: 40px; }
+      .footer-inner { grid-template-columns: 1fr 1fr; }
+      nav { padding: 0 1.5rem; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: block; }
+    }
+    @media (max-width: 600px) {
+      .section { padding: 60px 1.5rem; }
+      .features-grid { grid-template-columns: 1fr; }
+      .feature-card.wide { grid-column: span 1; }
+      .footer-inner { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+      .divider { margin: 0 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="logo">
+    <img src="/logo.png" alt="FoodieFlow"/>
+  </a>
+  <div class="nav-links">
+    <a href="/support">Support</a>
+    <a href="/privacy">Privacy</a>
+    <a href="/terms">Terms of Use</a>
+  </div>
+  <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="/support" class="mobile-nav-link">Support</a>
+  <a href="/privacy" class="mobile-nav-link">Privacy</a>
+  <a href="/terms" class="mobile-nav-link">Terms of Use</a>
+</div>
+<script>
+  var btn = document.getElementById('hamburger');
+  var menu = document.getElementById('mobile-menu');
+  btn.addEventListener('click', function() {
+    btn.classList.toggle('open');
+    menu.classList.toggle('open');
+    document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+  });
+  document.querySelectorAll('.mobile-nav-link, .mobile-cta').forEach(function(link) {
+    link.addEventListener('click', function() {
+      btn.classList.remove('open');
+      menu.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+</script>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <h1>Meal planning,<br /><em>finally simple.</em></h1>
+    <p class="hero-sub">FoodieFlow organises your meals, builds your shopping list, and suggests recipes based on what you already have — all in one place.</p>
+    <div class="hero-actions">
+      <!-- App Store button -->
+      <a href="https://apps.apple.com/app/foodieflow" class="appstore-btn">
+        <svg width="22" height="27" viewBox="0 0 814 1000" fill="white"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-57.8-155.5-127.4C46 790.7 0 663 0 541.8c0-207.5 135.4-317.3 269-317.3 70.1 0 128.4 46.4 172.5 46.4 42.8 0 109.6-49 192.5-49 30.9 0 113.8 2.6 168.9 98.3zm-234.8-181.4c31.3-36.9 53.7-88.1 53.7-139.3 0-7.1-.6-14.3-1.9-20.1-50.6 1.9-110.8 33.7-147.1 75.8-28.5 32.4-55.1 83.6-55.1 135.5 0 7.8 1.3 15.6 1.9 18.1 3.2.6 8.4 1.3 13.6 1.3 45.4 0 102.5-30.4 134.9-71.3z"/></svg>
+        <span class="appstore-btn-text">
+          <span class="appstore-btn-label">Download on the</span>
+          <span class="appstore-btn-name">App Store</span>
+        </span>
+      </a>
+      <!-- Google Play greyed out -->
+      <span class="playstore-btn">
+        <svg width="20" height="22" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3.18 23.76a2 2 0 0 0 2.08-.21l11.39-6.58-3.22-3.22L3.18 23.76z" fill="rgba(255,255,255,0.5)"/>
+          <path d="M21.28 10.4 17.64 8.3 14.1 11.86l3.54 3.54 3.64-2.1a2 2 0 0 0 0-3.46z" fill="rgba(255,255,255,0.5)"/>
+          <path d="M3.18.24A2 2 0 0 0 2 2v20a2 2 0 0 0 1.18 1.76L13.38 12 3.18.24z" fill="rgba(255,255,255,0.5)"/>
+          <path d="M5.26.45 16.65 7.03 13.38 10.3 3.18.24A2 2 0 0 1 5.26.45z" fill="rgba(255,255,255,0.5)"/>
+        </svg>
+        <span class="playstore-btn-text">
+          <span class="playstore-btn-label">Coming soon to</span>
+          <span class="playstore-btn-name">Google Play</span>
+        </span>
+      </span>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="hero-blob"></div>
+    <div class="hero-card-stack">
+      <div class="phone-mockup">
+        <div class="phone-inner">
+          <div class="phone-status">
+            <span class="time">14:31</span>
+            <span style="font-size:0.58rem;color:var(--muted);">●●●</span>
+          </div>
+          <div class="phone-header">
+            <div class="phone-app-name">FoodieFlow</div>
+          </div>
+          <div class="phone-shortcuts">
+            <div class="phone-shortcut-gold">✦ GENERATE IDEA</div>
+            <div class="phone-shortcut-blue">⊕ ADD RECIPE</div>
+          </div>
+          <div class="phone-content">
+            <div class="phone-section-label" style="margin-bottom:6px;">Chef's Shortcuts</div>
+            <div class="phone-big-card" style="margin-bottom:6px;">
+              <div>
+                <div style="width:24px;height:24px;background:var(--blue-lt);border-radius:6px;display:grid;place-items:center;font-size:0.7rem;margin-bottom:4px;">📅</div>
+                <div class="phone-big-title">Weekly Plan</div>
+                <div class="phone-big-sub">Manage your schedule and meals.</div>
+              </div>
+              <div style="text-align:right;">
+                <div class="phone-progress-label">7/7 DAYS</div>
+                <div class="phone-prog-bar" style="width:56px;margin-top:2px;"><div class="phone-prog-fill"></div></div>
+              </div>
+            </div>
+            <div class="phone-big-card" style="margin-bottom:8px;">
+              <div>
+                <div style="width:24px;height:24px;background:var(--blue-lt);border-radius:6px;display:grid;place-items:center;font-size:0.7rem;margin-bottom:4px;">🛒</div>
+                <div class="phone-big-title">Shopping List</div>
+                <div class="phone-big-sub">Ingredients grouped by grocery aisle.</div>
+              </div>
+              <div style="text-align:right;">
+                <div class="phone-progress-label">0/30 ITEMS</div>
+              </div>
+            </div>
+            <div class="phone-section-label">Next Scheduled Meal</div>
+            <div class="phone-meal-row">
+              <div class="phone-meal-thumb">🍗</div>
+              <div>
+                <div class="phone-meal-day">Monday</div>
+                <div class="phone-meal-name">Marry Me Chicken &amp; Mash</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Float cards -->
+      <div class="float-card float-card-1">
+        <div class="float-label">Weekly plan</div>
+        <div class="float-val">7 <span>meals ready</span></div>
+        <div class="float-pills"><span class="float-pill">All days filled</span></div>
+      </div>
+      <div class="float-card float-card-2">
+        <div class="float-label">Shopping list</div>
+        <div class="float-val">30 <span>items</span></div>
+        <div class="float-pills"><span class="float-pill">Auto-generated</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="strip">
+  <div class="strip-inner">
+    <span class="strip-item"><span class="strip-dot"></span> Save your favourite meals</span>
+    <span class="strip-item"><span class="strip-dot"></span> AI-powered meal suggestions</span>
+    <span class="strip-item"><span class="strip-dot"></span> Auto-generated shopping lists</span>
+    <span class="strip-item"><span class="strip-dot"></span> Plan your entire week</span>
+    <span class="strip-item"><span class="strip-dot"></span> Dietary &amp; allergy preferences</span>
+    <span class="strip-item"><span class="strip-dot"></span> Use what you already have</span>
+    <span class="strip-item"><span class="strip-dot"></span> Save your favourite meals</span>
+    <span class="strip-item"><span class="strip-dot"></span> AI-powered meal suggestions</span>
+    <span class="strip-item"><span class="strip-dot"></span> Auto-generated shopping lists</span>
+    <span class="strip-item"><span class="strip-dot"></span> Plan your entire week</span>
+    <span class="strip-item"><span class="strip-dot"></span> Dietary &amp; allergy preferences</span>
+    <span class="strip-item"><span class="strip-dot"></span> Use what you already have</span>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="section" id="features">
+  <div class="features-header">
+    <p class="section-eyebrow">What FoodieFlow does</p>
+    <h2 class="section-title">Everything you need to eat well, every week.</h2>
+    <p class="section-sub">One app for your entire meal planning routine — from saving recipes to walking out of the supermarket.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l2.09 6.26L20 10l-5.91 1.74L12 18l-2.09-6.26L4 10l5.91-1.74L12 2z"/></svg>
+      </div>
+      <h3>Smart Meal Generator</h3>
+      <p>Tell FoodieFlow your ingredients, dietary preferences, and goals — it generates personalised meal ideas instantly.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6" stroke-width="2" stroke="var(--blue)" fill="none"/><line x1="8" y1="2" x2="8" y2="6" stroke-width="2" stroke="var(--blue)" fill="none"/><line x1="3" y1="10" x2="21" y2="10" stroke-width="2" stroke="var(--blue)" fill="none"/></svg>
+      </div>
+      <h3>Weekly Planner</h3>
+      <p>Fill your whole week in seconds. See every meal at a glance — breakfast, lunch, and dinner — and never scramble for ideas.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6" stroke-width="2" stroke="var(--blue)" fill="none"/><path d="M16 10a4 4 0 0 1-8 0" fill="none" stroke="var(--blue)" stroke-width="2"/></svg>
+      </div>
+      <h3>Smart Shopping Lists</h3>
+      <p>FoodieFlow automatically builds your shopping list from your weekly plan, grouped by grocery aisle.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z"/><path d="M12 8v4l3 3" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+      </div>
+      <h3>Your Meal Library</h3>
+      <p>Save any meal you love. Build a collection of go-to recipes tailored to your household — and generate new suggestions based on them.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </div>
+      <h3>Dietary Preferences</h3>
+      <p>Set allergies, dietary restrictions, and disliked ingredients once. FoodieFlow remembers them every time.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </div>
+      <h3>Nutrition Tracking</h3>
+      <p>See macro and calorie estimates for every meal. Pro users get full detailed breakdowns for every recipe.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- HOW IT WORKS -->
+<section class="section how-section" id="how-it-works">
+  <div class="how-grid">
+    <div>
+      <p class="section-eyebrow">How it works</p>
+      <h2 class="section-title">From fridge to table in four steps.</h2>
+      <div class="how-steps">
+        <div class="how-step active">
+          <div class="how-number">1</div>
+          <div class="how-step-text">
+            <h4>Set up your profile</h4>
+            <p>Add your dietary preferences, allergies, and anything you want to avoid. Takes two minutes.</p>
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="how-number">2</div>
+          <div class="how-step-text">
+            <h4>Generate meal ideas</h4>
+            <p>Tap Generate and FoodieFlow produces a personalised set of meal suggestions based on your preferences and what you have at home.</p>
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="how-number">3</div>
+          <div class="how-step-text">
+            <h4>Plan your week</h4>
+            <p>Drop meals into your weekly planner. Mix AI suggestions with meals from your personal library.</p>
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="how-number">4</div>
+          <div class="how-step-text">
+            <h4>Shop and cook</h4>
+            <p>Your shopping list is automatically generated from your plan, grouped by aisle. Walk in prepared.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="how-visual">
+      <div class="how-visual-header">
+        <div class="how-visual-icon">🛒</div>
+        <div>
+          <div class="how-visual-title">Shopping List</div>
+          <div class="how-visual-sub">This week · 7 items</div>
+        </div>
+      </div>
+      <div class="shopping-item"><div class="check done"></div><span class="item-name done">Asparagus</span><span class="item-cat">Produce</span></div>
+      <div class="shopping-item"><div class="check done"></div><span class="item-name done">Caramelized Onions</span><span class="item-cat">Produce</span></div>
+      <div class="shopping-item"><div class="check done"></div><span class="item-name done">Garlic</span><span class="item-cat">Produce</span></div>
+      <div class="shopping-item"><div class="check todo"></div><span class="item-name">Pasta (500g)</span><span class="item-cat">Dry goods</span></div>
+      <div class="shopping-item"><div class="check todo"></div><span class="item-name">Double Cream</span><span class="item-cat">Dairy</span></div>
+      <div class="shopping-item"><div class="check todo"></div><span class="item-name">Sundried Tomatoes</span><span class="item-cat">Produce</span></div>
+      <div class="shopping-item"><div class="check todo"></div><span class="item-name">Butter</span><span class="item-cat">Dairy</span></div>
+      <div class="shopping-footer">
+        <div class="shopping-progress">3 of 7 items collected</div>
+        <div class="progress-bar"><div class="progress-fill"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRO -->
+<section class="pro-section" id="pro">
+  <div class="pro-inner">
+    <div class="pro-text">
+      <p class="section-eyebrow">FoodieFlow Pro</p>
+      <h2 class="section-title">Unlock the full experience.</h2>
+      <p class="section-sub">The free plan gets you started. Pro unlocks unlimited AI generation, detailed nutrition information, and more.</p>
+      <div class="pro-features">
+        <div class="pro-feature">
+          <div class="pro-feature-icon">✦</div>
+          <div class="pro-feature-text">
+            <h4>Unlimited AI meal generation</h4>
+            <p>Generate as many personalised meal suggestions as you need, any time.</p>
+          </div>
+        </div>
+        <div class="pro-feature">
+          <div class="pro-feature-icon">📊</div>
+          <div class="pro-feature-text">
+            <h4>Full nutrition information</h4>
+            <p>See detailed macro and calorie estimates for every meal you save or generate.</p>
+          </div>
+        </div>
+        <div class="pro-feature">
+          <div class="pro-feature-icon">🎯</div>
+          <div class="pro-feature-text">
+            <h4>Advanced preference matching</h4>
+            <p>More granular AI matching — protein goals, cuisine style, cooking time, and more.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pro-card">
+      <div class="pro-price">
+        <div class="pro-price-label">FoodieFlow Pro</div>
+        <div class="pro-price-val"><sup>£</sup>2.99<sub>/month</sub></div>
+      </div>
+      <div class="pro-includes">
+        <div class="pro-include">Unlimited AI meal suggestions</div>
+        <div class="pro-include">Full macro &amp; calorie breakdown</div>
+        <div class="pro-include">Advanced dietary matching</div>
+        <div class="pro-include">Priority support</div>
+        <div class="pro-include">All future Pro features</div>
+      </div>
+      <p class="pro-note" style="color:rgba(255,255,255,0.4);font-size:0.8rem;margin-top:8px;">Billed monthly via the App Store. Cancel any time.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DOWNLOAD -->
+<section class="section download-section" id="download">
+  <p class="section-eyebrow">Get started today</p>
+  <h2 class="section-title">Available free on iOS.</h2>
+  <p class="section-sub">Download FoodieFlow and start planning your meals today. Android coming soon.</p>
+  <div class="download-buttons">
+    <a href="https://apps.apple.com/app/foodieflow" class="appstore-btn">
+      <svg width="22" height="27" viewBox="0 0 814 1000" fill="white"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-57.8-155.5-127.4C46 790.7 0 663 0 541.8c0-207.5 135.4-317.3 269-317.3 70.1 0 128.4 46.4 172.5 46.4 42.8 0 109.6-49 192.5-49 30.9 0 113.8 2.6 168.9 98.3zm-234.8-181.4c31.3-36.9 53.7-88.1 53.7-139.3 0-7.1-.6-14.3-1.9-20.1-50.6 1.9-110.8 33.7-147.1 75.8-28.5 32.4-55.1 83.6-55.1 135.5 0 7.8 1.3 15.6 1.9 18.1 3.2.6 8.4 1.3 13.6 1.3 45.4 0 102.5-30.4 134.9-71.3z"/></svg>
+      <span class="appstore-btn-text">
+        <span class="appstore-btn-label">Download on the</span>
+        <span class="appstore-btn-name">App Store</span>
+      </span>
+    </a>
+    <span class="playstore-btn">
+      <svg width="20" height="22" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3.18 23.76a2 2 0 0 0 2.08-.21l11.39-6.58-3.22-3.22L3.18 23.76z" fill="rgba(255,255,255,0.5)"/>
+        <path d="M21.28 10.4 17.64 8.3 14.1 11.86l3.54 3.54 3.64-2.1a2 2 0 0 0 0-3.46z" fill="rgba(255,255,255,0.5)"/>
+        <path d="M3.18.24A2 2 0 0 0 2 2v20a2 2 0 0 0 1.18 1.76L13.38 12 3.18.24z" fill="rgba(255,255,255,0.5)"/>
+        <path d="M5.26.45 16.65 7.03 13.38 10.3 3.18.24A2 2 0 0 1 5.26.45z" fill="rgba(255,255,255,0.5)"/>
+      </svg>
+      <span class="playstore-btn-text">
+        <span class="playstore-btn-label">Coming soon to</span>
+        <span class="playstore-btn-name">Google Play</span>
+      </span>
+    </span>
+  </div>
+  <p class="download-note">Free to download. No credit card required. Pro available via subscription.</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="/logo.png" alt="FoodieFlow"/>
+      <p>Meal planning made simple. Organise your meals, discover new recipes, and shop smarter — all in one app.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Product</h4>
+      <a href="#features">Features</a>
+      <a href="#how-it-works">How it works</a>
+      <a href="#pro">Pro</a>
+      <a href="#download">Download</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="/privacy">Privacy Policy</a>
+      <a href="/terms">Terms of Use</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a href="/support">Support</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 FoodieFlow. All rights reserved. FoodieFlow is an independent software product.</span>
+  </div>
+</footer>
