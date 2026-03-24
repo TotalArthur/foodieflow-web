@@ -213,46 +213,106 @@
   <div class="footer-bottom">© 2026 FoodieFlow. All rights reserved.</div>
 </footer>
 
-<!-- NO Firebase SDK needed — verification is handled server-side by the Cloud Function.
-     This page only reads the ?status= param that the function redirects to. -->
+<!-- This page now handles email verification directly.
+     Firebase sends users here with ?mode=verifyEmail&oobCode=...&apiKey=...
+     We apply the action code client-side, then swap to a clean success/error URL. -->
 <script>
   function show(id) {
     document.querySelectorAll('.state').forEach(el => el.classList.remove('active'));
     document.getElementById(id).classList.add('active');
   }
 
-  const params = new URLSearchParams(window.location.search);
-  const mode = params.get('mode');
-  const status = params.get('status');
-  const fullQuery = window.location.search || '';
+  function setError(message) {
+    document.getElementById('error-message').textContent = message;
+    show('state-error');
+  }
 
-  // Route non-verification Firebase action modes to their dedicated pages
-  if (mode === 'resetPassword') {
-    window.location.replace(`/reset-password/${fullQuery}`);
-  } else if (mode === 'recoverEmail') {
-    window.location.replace(`/recover-email/${fullQuery}`);
-  } else if (mode && mode !== 'verifyEmail') {
-    window.location.replace(`/verify/?status=invalid`);
-  } else {
-    // Verification page state handling
+  async function applyEmailVerificationCode(apiKey, oobCode) {
+    const response = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:update?key=${encodeURIComponent(apiKey)}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ oobCode })
+    });
+
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      const message = data?.error?.message || 'UNKNOWN_ERROR';
+      throw new Error(message);
+    }
+
+    return data;
+  }
+
+  (async function init() {
+    const params = new URLSearchParams(window.location.search);
+    const mode = params.get('mode');
+    const status = params.get('status');
+    const oobCode = params.get('oobCode');
+    const apiKey = params.get('apiKey');
+    const fullQuery = window.location.search || '';
+
+    if (mode === 'resetPassword') {
+      window.location.replace(`/reset-password/${fullQuery}`);
+      return;
+    }
+
+    if (mode === 'recoverEmail') {
+      window.location.replace(`/recover-email/${fullQuery}`);
+      return;
+    }
+
+    if (mode && mode !== 'verifyEmail') {
+      window.location.replace(`/verify/?status=invalid`);
+      return;
+    }
+
     if (status === 'success') {
       show('state-success');
-    } else if (status === 'expired') {
-      document.getElementById('error-message').textContent =
-        'This link has already been used or has expired. Open the app and request a new verification email.';
-      show('state-error');
-    } else if (status === 'error' || status === 'invalid') {
-      document.getElementById('error-message').textContent =
-        'Invalid verification link. Please use the link sent to your email inbox.';
-      show('state-error');
-    } else if (mode === 'verifyEmail') {
-      show('state-loading');
-    } else {
-      document.getElementById('error-message').textContent =
-        'Invalid action link. Please use the latest email sent to your inbox.';
-      show('state-error');
+      return;
     }
-  }
+
+    if (status === 'expired') {
+      setError('This link has already been used or has expired. Open the app and request a new verification email.');
+      return;
+    }
+
+    if (status === 'error' || status === 'invalid') {
+      setError('Invalid verification link. Please use the link sent to your email inbox.');
+      return;
+    }
+
+    if (mode === 'verifyEmail' && oobCode && apiKey) {
+      show('state-loading');
+
+      try {
+        await applyEmailVerificationCode(apiKey, oobCode);
+        window.history.replaceState({}, '', '/verify/?status=success');
+        show('state-success');
+      } catch (error) {
+        console.error('Email verification failed:', error);
+
+        const firebaseMessage = String(error?.message || '');
+        const expiredOrUsedErrors = new Set([
+          'INVALID_OOB_CODE',
+          'EXPIRED_OOB_CODE',
+          'USER_DISABLED'
+        ]);
+
+        if (expiredOrUsedErrors.has(firebaseMessage)) {
+          window.history.replaceState({}, '', '/verify/?status=expired');
+          setError('This link has already been used or has expired. Open the app and request a new verification email.');
+        } else {
+          window.history.replaceState({}, '', '/verify/?status=error');
+          setError('We could not verify your email right now. Please try again from the latest email or request a new verification email in the app.');
+        }
+      }
+
+      return;
+    }
+
+    setError('Invalid action link. Please use the latest email sent to your inbox.');
+  })();
 </script>
 
 </body>
