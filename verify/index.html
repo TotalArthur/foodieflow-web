@@ -221,20 +221,38 @@
     document.getElementById(id).classList.add('active');
   }
 
-  const status = new URLSearchParams(window.location.search).get('status');
+  const params = new URLSearchParams(window.location.search);
+  const mode = params.get('mode');
+  const status = params.get('status');
+  const fullQuery = window.location.search || '';
 
-  if (status === 'success') {
-    show('state-success');
-  } else if (status === 'expired') {
-    document.getElementById('error-message').textContent =
-      'This link has already been used or has expired. Open the app and request a new verification email.';
-    show('state-error');
-  } else if (status === 'error' || status === 'invalid') {
-    document.getElementById('error-message').textContent =
-      'Invalid verification link. Please use the link sent to your email inbox.';
-    show('state-error');
+  // Route non-verification Firebase action modes to their dedicated pages
+  if (mode === 'resetPassword') {
+    window.location.replace(`/reset-password/${fullQuery}`);
+  } else if (mode === 'recoverEmail') {
+    window.location.replace(`/recover-email/${fullQuery}`);
+  } else if (mode && mode !== 'verifyEmail') {
+    window.location.replace(`/verify/?status=invalid`);
+  } else {
+    // Verification page state handling
+    if (status === 'success') {
+      show('state-success');
+    } else if (status === 'expired') {
+      document.getElementById('error-message').textContent =
+        'This link has already been used or has expired. Open the app and request a new verification email.';
+      show('state-error');
+    } else if (status === 'error' || status === 'invalid') {
+      document.getElementById('error-message').textContent =
+        'Invalid verification link. Please use the link sent to your email inbox.';
+      show('state-error');
+    } else if (mode === 'verifyEmail') {
+      show('state-loading');
+    } else {
+      document.getElementById('error-message').textContent =
+        'Invalid action link. Please use the latest email sent to your inbox.';
+      show('state-error');
+    }
   }
-  // If no status param yet, stay on loading (shouldn't happen via normal flow)
 </script>
 
 </body>
