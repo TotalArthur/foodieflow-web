@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reset your password — FoodieFlow</title>
+  <meta name="description" content="Reset your FoodieFlow account password." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:        hsl(210, 28%, 95%);
+      --card:      hsl(0, 0%, 100%);
+      --fore:      hsl(222, 47%, 13%);
+      --blue:      hsl(205, 68%, 50%);
+      --blue-lt:   hsl(205, 55%, 90%);
+      --blue-pale: hsl(205, 45%, 96%);
+      --muted:     hsl(215, 16%, 50%);
+      --border:    hsl(210, 28%, 88%);
+      --green-pale:hsl(142, 55%, 94%);
+      --red-pale:  hsl(0, 86%, 96%);
+      --radius:    1.3rem;
+    }
+    body {
+      font-family: "PT Sans", sans-serif;
+      background: var(--bg);
+      color: var(--fore);
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(235,240,246,0.96); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2.5rem;
+      display: flex; align-items: center; justify-content: space-between; height: 66px;
+    }
+    .logo { display: flex; align-items: center; text-decoration: none; }
+    .logo img { height: 48px; width: auto; object-fit: contain; }
+    .nav-links { display: flex; align-items: center; gap: 2rem; }
+    .nav-links a { font-size: 0.84rem; color: var(--muted); text-decoration: none; font-weight: 700; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--blue); }
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      nav { padding: 0 1.2rem; }
+    }
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 1.5rem;
+    }
+    .wrap {
+      width: 100%;
+      max-width: 460px;
+      opacity: 0;
+      transform: translateY(18px);
+      animation: fadeUp 0.5s 0.05s ease forwards;
+    }
+    .eyebrow {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 40px 36px 36px;
+      text-align: center;
+      box-shadow: 0 1px 2px rgba(20,40,70,0.04), 0 8px 32px rgba(20,40,70,0.07), 0 32px 60px rgba(20,40,70,0.05);
+    }
+    .icon-bubble {
+      width: 72px; height: 72px; border-radius: 20px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 24px; font-size: 36px;
+      animation: popIn 0.4s 0.25s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+    .icon-bubble.loading { background: var(--blue-pale); }
+    .icon-bubble.success { background: var(--green-pale); }
+    .icon-bubble.error   { background: var(--red-pale); }
+    .spinner {
+      width: 34px; height: 34px;
+      border: 3px solid var(--blue-lt);
+      border-top-color: var(--blue);
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+    }
+    .card h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--fore);
+      margin-bottom: 10px;
+    }
+    .card p {
+      font-size: 0.97rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 24px;
+    }
+    .state { display: none; }
+    .state.active { display: block; }
+    .field {
+      text-align: left;
+      margin-bottom: 14px;
+    }
+    .field label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--fore);
+      margin-bottom: 8px;
+    }
+    .field input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      font-size: 1rem;
+      font-family: "PT Sans", sans-serif;
+      color: var(--fore);
+      background: white;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .field input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 4px rgba(60, 145, 214, 0.12);
+    }
+    .password-rules {
+      text-align: left;
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin: 8px 0 18px;
+      line-height: 1.55;
+    }
+    .error-inline {
+      display: none;
+      text-align: left;
+      margin: 0 0 18px;
+      font-size: 0.86rem;
+      color: #b42318;
+      background: var(--red-pale);
+      border: 1px solid #f3c7c7;
+      border-radius: 12px;
+      padding: 12px 14px;
+    }
+    .error-inline.active { display: block; }
+    .btn-primary {
+      display: block;
+      width: 100%;
+      padding: 14px 20px;
+      background: var(--fore);
+      color: white;
+      border: none;
+      border-radius: 100px;
+      font-family: "PT Sans", sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: var(--blue); transform: translateY(-1px); }
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .divider { height: 1px; background: var(--border); margin: 24px 0; }
+    .hint {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 16px;
+      margin-bottom: 0;
+      line-height: 1.5;
+    }
+    footer {
+      background: var(--fore);
+      color: rgba(255,255,255,0.55);
+      padding: 28px 2.5rem;
+      font-size: 0.8rem;
+    }
+    .footer-inner {
+      max-width: 1160px; margin: 0 auto 16px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 20px; flex-wrap: wrap;
+    }
+    .footer-brand img { height: 36px; width: auto; opacity: 0.8; }
+    .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .footer-links a { color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: white; }
+    .footer-bottom { max-width: 1160px; margin: 0 auto; color: rgba(255,255,255,0.3); font-size: 0.75rem; }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    @keyframes popIn  { from { opacity:0; transform:scale(0.5); } to { opacity:1; transform:scale(1); } }
+    @keyframes spin   { to { transform: rotate(360deg); } }
+    @media (max-width: 480px) {
+      .card { padding: 28px 18px 24px; }
+      .footer-inner { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <a href="/" class="logo"><img src="/logo.png" alt="FoodieFlow" /></a>
+  <div class="nav-links">
+    <a href="/support">Support</a>
+    <a href="/privacy">Privacy</a>
+    <a href="/terms">Terms of Use</a>
+  </div>
+</nav>
+
+<main>
+  <div class="wrap">
+    <p class="eyebrow">Password reset</p>
+    <div class="card">
+
+      <div id="state-loading" class="state active">
+        <div class="icon-bubble loading"><div class="spinner"></div></div>
+        <h1>Checking your reset link…</h1>
+        <p>Just a moment while we validate your password reset request.</p>
+      </div>
+
+      <div id="state-form" class="state">
+        <div class="icon-bubble loading">🔐</div>
+        <h1>Set a new password</h1>
+        <p>Choose a secure new password for your FoodieFlow account.</p>
+
+        <div id="form-error" class="error-inline"></div>
+
+        <form id="reset-form">
+          <div class="field">
+            <label for="new-password">New password</label>
+            <input id="new-password" type="password" autocomplete="new-password" required />
+          </div>
+
+          <div class="field">
+            <label for="confirm-password">Confirm password</label>
+            <input id="confirm-password" type="password" autocomplete="new-password" required />
+          </div>
+
+          <div class="password-rules">
+            Use at least 8 characters, including 1 uppercase letter and 1 number.
+          </div>
+
+          <button id="submit-btn" class="btn-primary" type="submit">Reset password</button>
+        </form>
+      </div>
+
+      <div id="state-success" class="state">
+        <div class="icon-bubble success">✅</div>
+        <h1>Password updated</h1>
+        <p>Your password has been reset successfully. Go back to the app and sign in with your new password.</p>
+        <a href="com.foodieflow.app://" class="btn-primary">Open FoodieFlow</a>
+        <p class="hint">If the app does not open, return to FoodieFlow manually and sign in again.</p>
+      </div>
+
+      <div id="state-error" class="state">
+        <div class="icon-bubble error">❌</div>
+        <h1>Reset link unavailable</h1>
+        <p id="error-message">This password reset link is invalid or has expired. Open the app and request a new reset email.</p>
+        <a href="com.foodieflow.app://" class="btn-primary">Back to FoodieFlow</a>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand"><img src="/logo.png" alt="FoodieFlow" /></div>
+    <div class="footer-links">
+      <a href="/privacy">Privacy Policy</a>
+      <a href="/terms">Terms of Use</a>
+      <a href="/support">Support</a>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 FoodieFlow. All rights reserved.</div>
+</footer>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+  import {
+    getAuth,
+    verifyPasswordResetCode,
+    confirmPasswordReset
+  } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAC59SIcgJU3sec1qhh4qEAbA-Di5EBSMs",
+    authDomain: "studio-1440362352-d1bfa.firebaseapp.com",
+    projectId: "studio-1440362352-d1bfa",
+    storageBucket: "studio-1440362352-d1bfa.firebasestorage.app",
+    messagingSenderId: "883303524433",
+    appId: "1:883303524433:web:f15a09051c90bef05a7070"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  const params = new URLSearchParams(window.location.search);
+  const mode = params.get("mode");
+  const oobCode = params.get("oobCode");
+
+  const form = document.getElementById("reset-form");
+  const formError = document.getElementById("form-error");
+  const submitBtn = document.getElementById("submit-btn");
+  const errorMessage = document.getElementById("error-message");
+
+  function show(id) {
+    document.querySelectorAll(".state").forEach(el => el.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+  }
+
+  function setFormError(message) {
+    formError.textContent = message;
+    formError.classList.add("active");
+  }
+
+  function clearFormError() {
+    formError.textContent = "";
+    formError.classList.remove("active");
+  }
+
+  function isStrongPassword(password) {
+    return password.length >= 8 && /[A-Z]/.test(password) && /[0-9]/.test(password);
+  }
+
+  async function init() {
+    if (mode !== "resetPassword" || !oobCode) {
+      errorMessage.textContent = "This password reset link is invalid. Please request a new one from the app.";
+      show("state-error");
+      return;
+    }
+
+    try {
+      await verifyPasswordResetCode(auth, oobCode);
+      show("state-form");
+    } catch (err) {
+      errorMessage.textContent = "This password reset link has expired or is no longer valid. Please request a new one.";
+      show("state-error");
+    }
+  }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    clearFormError();
+
+    const newPassword = document.getElementById("new-password").value.trim();
+    const confirmPassword = document.getElementById("confirm-password").value.trim();
+
+    if (!isStrongPassword(newPassword)) {
+      setFormError("Your password must be at least 8 characters long and include 1 uppercase letter and 1 number.");
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      setFormError("Passwords do not match.");
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Resetting password...";
+
+    try {
+      await confirmPasswordReset(auth, oobCode, newPassword);
+      show("state-success");
+    } catch (err) {
+      setFormError("We could not reset your password. Please request a new reset link and try again.");
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Reset password";
+    }
+  });
+
+  init();
+</script>
+</body>
+</html>
