@@ -92,7 +92,7 @@
     .platforms {
       max-width: 960px; margin: 0 auto;
       padding: 0 2.5rem 80px;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start;
     }
 
     .platform-card {
@@ -117,7 +117,7 @@
     .platform-label.android { color: var(--android); }
 
     .platform-card h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; }
-    .platform-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.65; margin-bottom: 28px; flex: 1; }
+    .platform-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.65; margin-bottom: 28px; }
 
     /* ── iOS BUTTON ── */
     .tf-btn {
@@ -186,17 +186,6 @@
     .store-btn-text { display: flex; flex-direction: column; line-height: 1.25; }
     .store-btn-sub { font-size: 0.6rem; font-weight: 400; opacity: 0.75; }
     .store-btn-name { font-size: 0.8rem; font-weight: 700; }
-
-    /* ── STRIP ── */
-    .strip { background: var(--fore); padding: 16px 0; overflow: hidden; }
-    .strip-inner {
-      display: flex; gap: 3rem; align-items: center;
-      animation: marquee 24s linear infinite;
-      white-space: nowrap; width: max-content;
-    }
-    .strip-item { display: flex; align-items: center; gap: 8px; font-size: 0.82rem; font-weight: 700; color: rgba(255,255,255,0.7); }
-    .strip-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--blue-mid); }
-    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
     /* ── NOTE ── */
     .beta-note {
@@ -292,26 +281,8 @@
     Beta Access
   </div>
   <h1>Try FoodieFlow<br /><em>before anyone else.</em></h1>
-  <p class="hero-sub">We're in early access and looking for people to help shape the app. Join the beta on iOS or Android — it's free, and your feedback genuinely matters.</p>
+  <p class="hero-sub">We're in early access and looking for testers.<br />Join free on iOS or Android — your feedback genuinely matters.</p>
 </section>
-
-<!-- STRIP -->
-<div class="strip">
-  <div class="strip-inner">
-    <span class="strip-item"><span class="strip-dot"></span> Save your favourite meals</span>
-    <span class="strip-item"><span class="strip-dot"></span> AI-powered meal suggestions</span>
-    <span class="strip-item"><span class="strip-dot"></span> Auto-generated shopping lists</span>
-    <span class="strip-item"><span class="strip-dot"></span> Plan your entire week</span>
-    <span class="strip-item"><span class="strip-dot"></span> Dietary &amp; allergy preferences</span>
-    <span class="strip-item"><span class="strip-dot"></span> Use what you already have</span>
-    <span class="strip-item"><span class="strip-dot"></span> Save your favourite meals</span>
-    <span class="strip-item"><span class="strip-dot"></span> AI-powered meal suggestions</span>
-    <span class="strip-item"><span class="strip-dot"></span> Auto-generated shopping lists</span>
-    <span class="strip-item"><span class="strip-dot"></span> Plan your entire week</span>
-    <span class="strip-item"><span class="strip-dot"></span> Dietary &amp; allergy preferences</span>
-    <span class="strip-item"><span class="strip-dot"></span> Use what you already have</span>
-  </div>
-</div>
 
 <!-- PLATFORM CARDS -->
 <section class="platforms" style="margin-top:56px;">
