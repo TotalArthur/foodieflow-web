@@ -273,12 +273,14 @@
     .shopping-item {
       display: flex; align-items: center; gap: 12px;
       padding: 9px 0; border-bottom: 1px solid var(--border);
-      font-size: 0.88rem;
+      font-size: 0.88rem; cursor: pointer; user-select: none;
+      transition: opacity 0.15s;
     }
+    .shopping-item:hover { opacity: 0.75; }
     .shopping-item:last-child { border-bottom: none; }
     .check {
       width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
-      display: grid; place-items: center;
+      display: grid; place-items: center; transition: background 0.2s;
     }
     .check.done { background: var(--blue); }
     .check.done::after { content: "✓"; color: white; font-size: 0.65rem; font-weight: 700; }
@@ -506,13 +508,13 @@
 <div class="strip">
   <div class="strip-inner">
     <span class="strip-item"><span class="strip-dot"></span> Save your favourite meals</span>
-    <span class="strip-item"><span class="strip-dot"></span> AI-powered meal suggestions</span>
+    <span class="strip-item"><span class="strip-dot"></span> Foodie Assistant meal suggestions</span>
     <span class="strip-item"><span class="strip-dot"></span> Auto-generated shopping lists</span>
     <span class="strip-item"><span class="strip-dot"></span> Plan your entire week</span>
     <span class="strip-item"><span class="strip-dot"></span> Dietary &amp; allergy preferences</span>
     <span class="strip-item"><span class="strip-dot"></span> Use what you already have</span>
     <span class="strip-item"><span class="strip-dot"></span> Save your favourite meals</span>
-    <span class="strip-item"><span class="strip-dot"></span> AI-powered meal suggestions</span>
+    <span class="strip-item"><span class="strip-dot"></span> Foodie Assistant meal suggestions</span>
     <span class="strip-item"><span class="strip-dot"></span> Auto-generated shopping lists</span>
     <span class="strip-item"><span class="strip-dot"></span> Plan your entire week</span>
     <span class="strip-item"><span class="strip-dot"></span> Dietary &amp; allergy preferences</span>
@@ -533,8 +535,8 @@
         <!-- Smart Meal Generator: sparkle/wand -->
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15 4V2m0 14v-2M8 9H6m12 0h-2M13.8 6.2l-1.4 1.4m-4.8 4.8-1.4 1.4M13.8 11.8l-1.4-1.4M7.6 6.2 6.2 7.6"/><path d="m3 21 9-9"/><path d="M12.2 12.2 15 15l3.8-3.8a2.12 2.12 0 0 0-3-3L12.2 12.2z"/></svg>
       </div>
-      <h3>Smart Meal Generator</h3>
-      <p>Tell FoodieFlow your ingredients, dietary preferences, and goals — it generates personalised meal ideas instantly.</p>
+      <h3>Foodie Assistant</h3>
+      <p>Tell Foodie Assistant what's in your fridge and what you're craving — it delivers personalised meal ideas in seconds, tailored to your dietary goals.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">
@@ -542,7 +544,7 @@
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="14" x2="8" y2="14" stroke-width="2.5"/><line x1="12" y1="14" x2="12" y2="14" stroke-width="2.5"/><line x1="16" y1="14" x2="16" y2="14" stroke-width="2.5"/><line x1="8" y1="18" x2="8" y2="18" stroke-width="2.5"/><line x1="12" y1="18" x2="12" y2="18" stroke-width="2.5"/></svg>
       </div>
       <h3>Weekly Planner</h3>
-      <p>Fill your whole week in seconds. See every meal at a glance — breakfast, lunch, and dinner — and never scramble for ideas.</p>
+      <p>Plan breakfast, lunch, and dinner for every day of the week. See your full schedule at a glance and never wonder what's for dinner again.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">
@@ -550,7 +552,7 @@
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
       </div>
       <h3>Smart Shopping Lists</h3>
-      <p>FoodieFlow automatically builds your shopping list from your weekly plan, grouped by grocery aisle.</p>
+      <p>Your shopping list writes itself. Every ingredient from your weekly plan is pulled together and sorted by grocery aisle — so you can shop without doubling back.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">
@@ -558,7 +560,7 @@
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="9" y1="12" x2="13" y2="12"/></svg>
       </div>
       <h3>Your Meal Library</h3>
-      <p>Save any meal you love. Build a collection of go-to recipes tailored to your household — and generate new suggestions based on them.</p>
+      <p>Save any meal you love and build your own recipe collection. Foodie Assistant uses your library to suggest meals that actually suit your household.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">
@@ -566,7 +568,7 @@
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="8" cy="6" r="2" fill="var(--blue-lt)" stroke="var(--blue)"/><circle cx="16" cy="12" r="2" fill="var(--blue-lt)" stroke="var(--blue)"/><circle cx="10" cy="18" r="2" fill="var(--blue-lt)" stroke="var(--blue)"/></svg>
       </div>
       <h3>Dietary Preferences</h3>
-      <p>Set allergies, dietary restrictions, and disliked ingredients once. FoodieFlow remembers them every time.</p>
+      <p>Set your allergies, dietary restrictions, and dislikes once. FoodieFlow filters every suggestion around them — no need to repeat yourself.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">
@@ -574,7 +576,7 @@
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="12" width="4" height="9" rx="1"/><rect x="10" y="6" width="4" height="15" rx="1"/><rect x="17" y="9" width="4" height="12" rx="1"/><line x1="2" y1="21" x2="22" y2="21"/></svg>
       </div>
       <h3>Nutrition Tracking</h3>
-      <p>See macro and calorie estimates for every meal. Pro users get full detailed breakdowns for every recipe.</p>
+      <p>Get calorie and macro estimates for every meal at a glance. Pro unlocks full nutritional breakdowns for every recipe you plan or save.</p>
     </div>
   </div>
 </section>
@@ -606,7 +608,7 @@
           <div class="how-number">3</div>
           <div class="how-step-text">
             <h4>Plan your week</h4>
-            <p>Drop meals into your weekly planner. Mix AI suggestions with meals from your personal library.</p>
+            <p>Drop meals into your weekly planner. Mix Foodie Assistant suggestions with meals from your personal library.</p>
           </div>
         </div>
         <div class="how-step">
@@ -618,24 +620,24 @@
         </div>
       </div>
     </div>
-    <div class="how-visual">
+    <div class="how-visual" id="shopping-list">
       <div class="how-visual-header">
         <div class="how-visual-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
         <div>
           <div class="how-visual-title">Shopping List</div>
-          <div class="how-visual-sub">This week · 7 items</div>
+          <div class="how-visual-sub" id="shopping-list-sub">This week · 7 items</div>
         </div>
       </div>
-      <div class="shopping-item"><div class="check done"></div><span class="item-name done">Asparagus</span><span class="item-cat">Produce</span></div>
-      <div class="shopping-item"><div class="check done"></div><span class="item-name done">Caramelized Onions</span><span class="item-cat">Produce</span></div>
-      <div class="shopping-item"><div class="check done"></div><span class="item-name done">Garlic</span><span class="item-cat">Produce</span></div>
       <div class="shopping-item"><div class="check todo"></div><span class="item-name">Pasta (500g)</span><span class="item-cat">Dry goods</span></div>
       <div class="shopping-item"><div class="check todo"></div><span class="item-name">Double Cream</span><span class="item-cat">Dairy</span></div>
       <div class="shopping-item"><div class="check todo"></div><span class="item-name">Sundried Tomatoes</span><span class="item-cat">Produce</span></div>
       <div class="shopping-item"><div class="check todo"></div><span class="item-name">Butter</span><span class="item-cat">Dairy</span></div>
-      <div class="shopping-footer">
-        <div class="shopping-progress">3 of 7 items collected</div>
-        <div class="progress-bar"><div class="progress-fill"></div></div>
+      <div class="shopping-item"><div class="check todo"></div><span class="item-name">Asparagus</span><span class="item-cat">Produce</span></div>
+      <div class="shopping-item"><div class="check todo"></div><span class="item-name">Garlic</span><span class="item-cat">Produce</span></div>
+      <div class="shopping-item"><div class="check todo"></div><span class="item-name">Parmesan</span><span class="item-cat">Dairy</span></div>
+      <div class="shopping-footer" id="shopping-footer">
+        <div class="shopping-progress" id="shopping-progress">0 of 7 items collected</div>
+        <div class="progress-bar"><div class="progress-fill" id="shopping-fill" style="width:0%"></div></div>
       </div>
     </div>
   </div>
@@ -647,12 +649,12 @@
     <div class="pro-text">
       <p class="section-eyebrow">FoodieFlow Pro</p>
       <h2 class="section-title">Unlock the full experience.</h2>
-      <p class="section-sub">The free plan gets you started. Pro unlocks unlimited AI generation, detailed nutrition information, and more.</p>
+      <p class="section-sub">The free plan gets you started. Pro unlocks unlimited Foodie Assistant generations, detailed nutrition information, and more.</p>
       <div class="pro-features">
         <div class="pro-feature">
           <div class="pro-feature-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.09 6.26L20 10l-5.91 1.74L12 18l-2.09-6.26L4 10l5.91-1.74L12 2z"/></svg></div>
           <div class="pro-feature-text">
-            <h4>Unlimited AI meal generation</h4>
+            <h4>Unlimited Foodie Assistant generations</h4>
             <p>Generate as many personalised meal suggestions as you need, any time.</p>
           </div>
         </div>
@@ -667,7 +669,7 @@
           <div class="pro-feature-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
           <div class="pro-feature-text">
             <h4>Advanced preference matching</h4>
-            <p>More granular AI matching — protein goals, cuisine style, cooking time, and more.</p>
+            <p>More granular Foodie Assistant matching — protein goals, cuisine style, cooking time, and more.</p>
           </div>
         </div>
       </div>
@@ -678,7 +680,7 @@
         <div class="pro-price-val"><sup>£</sup>2.99<sub>/month</sub></div>
       </div>
       <div class="pro-includes">
-        <div class="pro-include">Unlimited AI meal suggestions</div>
+        <div class="pro-include">Unlimited Foodie Assistant suggestions</div>
         <div class="pro-include">Full macro &amp; calorie breakdown</div>
         <div class="pro-include">Advanced dietary matching</div>
         <div class="pro-include">Priority support</div>
@@ -746,3 +748,50 @@
     <span>© 2026 FoodieFlow. All rights reserved. FoodieFlow is an independent software product.</span>
   </div>
 </footer>
+
+<script>
+(function () {
+  var list = document.getElementById('shopping-list');
+  if (!list) return;
+  var footer = document.getElementById('shopping-footer');
+  var progressText = document.getElementById('shopping-progress');
+  var progressFill = document.getElementById('shopping-fill');
+
+  function getItems() {
+    return Array.from(list.querySelectorAll('.shopping-item'));
+  }
+
+  function updateProgress() {
+    var items = getItems();
+    var total = items.length;
+    var done = items.filter(function (i) { return i.querySelector('.check.done'); }).length;
+    progressText.textContent = done + ' of ' + total + ' items collected';
+    progressFill.style.width = Math.round(done / total * 100) + '%';
+  }
+
+  function reorder() {
+    var items = getItems();
+    var todo = items.filter(function (i) { return !i.querySelector('.check.done'); });
+    var done = items.filter(function (i) { return i.querySelector('.check.done'); });
+    todo.forEach(function (i) { list.insertBefore(i, footer); });
+    done.forEach(function (i) { list.insertBefore(i, footer); });
+  }
+
+  list.addEventListener('click', function (e) {
+    var item = e.target.closest('.shopping-item');
+    if (!item) return;
+    var check = item.querySelector('.check');
+    var name = item.querySelector('.item-name');
+    var isDone = check.classList.contains('done');
+    if (isDone) {
+      check.classList.replace('done', 'todo');
+      name.classList.remove('done');
+    } else {
+      check.classList.replace('todo', 'done');
+      name.classList.add('done');
+    }
+    reorder();
+    updateProgress();
+  });
+})();
+</script>
