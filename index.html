@@ -229,6 +229,7 @@
     /* ── FEATURES ── */
     .features-header { margin-bottom: 48px; }
     .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .feature-card-pantry { grid-column: 2; }
     .feature-card {
       background: var(--card); border: 1px solid var(--border);
       border-radius: var(--radius); padding: 28px;
@@ -354,6 +355,7 @@
       .float-card-2 { left: -8px; }
       .features-grid { grid-template-columns: 1fr 1fr; }
       .feature-card.wide { grid-column: span 2; }
+      .feature-card-pantry { grid-column: auto; }
       .how-grid { grid-template-columns: 1fr; gap: 40px; }
       .pro-inner { grid-template-columns: 1fr; gap: 40px; }
       .footer-inner { grid-template-columns: 1fr 1fr; }
@@ -532,8 +534,8 @@
   <div class="features-grid">
     <div class="feature-card">
       <div class="feature-icon">
-        <!-- Smart Meal Generator: sparkle/wand -->
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15 4V2m0 14v-2M8 9H6m12 0h-2M13.8 6.2l-1.4 1.4m-4.8 4.8-1.4 1.4M13.8 11.8l-1.4-1.4M7.6 6.2 6.2 7.6"/><path d="m3 21 9-9"/><path d="M12.2 12.2 15 15l3.8-3.8a2.12 2.12 0 0 0-3-3L12.2 12.2z"/></svg>
+        <!-- Foodie Assistant: sparkles -->
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg>
       </div>
       <h3>Foodie Assistant</h3>
       <p>Tell Foodie Assistant what's in your fridge and what you're craving — it delivers personalised meal ideas in seconds, tailored to your dietary goals.</p>
@@ -544,7 +546,7 @@
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="14" x2="8" y2="14" stroke-width="2.5"/><line x1="12" y1="14" x2="12" y2="14" stroke-width="2.5"/><line x1="16" y1="14" x2="16" y2="14" stroke-width="2.5"/><line x1="8" y1="18" x2="8" y2="18" stroke-width="2.5"/><line x1="12" y1="18" x2="12" y2="18" stroke-width="2.5"/></svg>
       </div>
       <h3>Weekly Planner</h3>
-      <p>Plan breakfast, lunch, and dinner for every day of the week. See your full schedule at a glance and never wonder what's for dinner again.</p>
+      <p>Plan your meals for every day of the week. See your full schedule at a glance and never scramble for ideas at the last minute.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">
@@ -577,6 +579,14 @@
       </div>
       <h3>Nutrition Tracking</h3>
       <p>Get calorie and macro estimates for every meal at a glance. Pro unlocks full nutritional breakdowns for every recipe you plan or save.</p>
+    </div>
+    <div class="feature-card feature-card-pantry">
+      <div class="feature-icon">
+        <!-- Pantry: storage jar -->
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 2h6"/><path d="M7 4h10a1 1 0 0 1 1 1v1a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3V5a1 1 0 0 1 1-1z"/><path d="M6 9v11a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V9"/><path d="M10 13h4"/><path d="M10 17h3"/></svg>
+      </div>
+      <h3>Your Pantry</h3>
+      <p>Log the ingredients you already have at home. FoodieFlow excludes them from your shopping list and Foodie Assistant prioritises recipes you can make right now — cutting waste and saving money.</p>
     </div>
   </div>
 </section>
@@ -648,28 +658,28 @@
   <div class="pro-inner">
     <div class="pro-text">
       <p class="section-eyebrow">FoodieFlow Pro</p>
-      <h2 class="section-title">Unlock the full experience.</h2>
-      <p class="section-sub">The free plan gets you started. Pro unlocks unlimited Foodie Assistant generations, detailed nutrition information, and more.</p>
+      <h2 class="section-title">Eat better, waste less, stress never.</h2>
+      <p class="section-sub">Pro turns FoodieFlow into your personal sous chef — smarter suggestions, deeper nutrition, and a Foodie Assistant that truly knows your kitchen.</p>
       <div class="pro-features">
         <div class="pro-feature">
-          <div class="pro-feature-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.09 6.26L20 10l-5.91 1.74L12 18l-2.09-6.26L4 10l5.91-1.74L12 2z"/></svg></div>
+          <div class="pro-feature-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg></div>
           <div class="pro-feature-text">
             <h4>Unlimited Foodie Assistant generations</h4>
-            <p>Generate as many personalised meal suggestions as you need, any time.</p>
-          </div>
-        </div>
-        <div class="pro-feature">
-          <div class="pro-feature-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
-          <div class="pro-feature-text">
-            <h4>Full nutrition information</h4>
-            <p>See detailed macro and calorie estimates for every meal you save or generate.</p>
+            <p>No caps, no waiting. Generate as many personalised meal ideas as you need — morning, noon, or night.</p>
           </div>
         </div>
         <div class="pro-feature">
           <div class="pro-feature-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
           <div class="pro-feature-text">
-            <h4>Advanced preference matching</h4>
-            <p>More granular Foodie Assistant matching — protein goals, cuisine style, cooking time, and more.</p>
+            <h4>A smarter Foodie Assistant</h4>
+            <p>Pro unlocks deeper preference matching — protein targets, cuisine style, cooking time, and pantry-first suggestions that use what you have.</p>
+          </div>
+        </div>
+        <div class="pro-feature">
+          <div class="pro-feature-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+          <div class="pro-feature-text">
+            <h4>Full nutrition breakdowns</h4>
+            <p>See detailed macros and calorie counts for every meal you plan, save, or generate — not just estimates.</p>
           </div>
         </div>
       </div>
@@ -681,8 +691,9 @@
       </div>
       <div class="pro-includes">
         <div class="pro-include">Unlimited Foodie Assistant suggestions</div>
-        <div class="pro-include">Full macro &amp; calorie breakdown</div>
-        <div class="pro-include">Advanced dietary matching</div>
+        <div class="pro-include">Smarter, deeper preference matching</div>
+        <div class="pro-include">Full macro &amp; calorie breakdowns</div>
+        <div class="pro-include">Pantry-first meal recommendations</div>
         <div class="pro-include">Priority support</div>
         <div class="pro-include">All future Pro features</div>
       </div>
