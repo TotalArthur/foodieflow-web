@@ -5,6 +5,6 @@ Called by .github/workflows/update-pricing.yml after logo.png is updated.
 """
 from PIL import Image
 
-img = Image.open("logo.png").convert("RGBA")
+img = Image.open("favicon.png").convert("RGBA")
 img.save("favicon.ico", format="ICO", sizes=[(16, 16), (32, 32), (48, 48)])
-print("✓  favicon.ico generated from logo.png")
+print("✓  favicon.ico generated from favicon.png")

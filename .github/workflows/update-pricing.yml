@@ -20,9 +20,10 @@ jobs:
         env:
           RC_SECRET: ${{ secrets.REVENUECAT_SECRET_KEY }}
         run: python3 .github/fetch-pricing.py
+        continue-on-error: true
 
-      # ── Regenerate favicon.ico whenever logo.png changes ────────────────────
-      - name: Generate favicon.ico from logo.png
+      # ── Regenerate favicon.ico from favicon.png ─────────────────────────────
+      - name: Generate favicon.ico from favicon.png
         run: |
           pip install Pillow --quiet
           python3 .github/generate-favicon.py
