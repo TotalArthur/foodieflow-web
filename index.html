@@ -4,7 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FoodieFlow — Meal Planning, Made Simple</title>
-  <meta name="description" content="FoodieFlow helps you plan meals, generate shopping lists, and discover recipes based on what you already have. Available on iOS." />
+  <meta name="description" content="FoodieFlow helps you plan meals, generate shopping lists, and discover recipes based on what you already have. Available on iOS and Android." />
+  <link rel="icon" href="/logo.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=PT+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
@@ -688,7 +690,7 @@
     <div class="pro-card">
       <div class="pro-price">
         <div class="pro-price-label">FoodieFlow Pro</div>
-        <div class="pro-price-val"><sup>£</sup>2.99<sub>/month</sub></div>
+        <div class="pro-price-val" id="rc-price-container"><sup>£</sup>2.99<sub>/month</sub></div>
       </div>
       <div class="pro-includes">
         <div class="pro-include">Unlimited Foodie Assistant suggestions</div>
@@ -698,7 +700,7 @@
         <div class="pro-include">Priority support</div>
         <div class="pro-include">All future Pro features</div>
       </div>
-      <p class="pro-note" style="color:rgba(255,255,255,0.4);font-size:0.8rem;margin-top:8px;">Billed monthly via the App Store. Cancel any time.</p>
+      <p class="pro-note" style="color:rgba(255,255,255,0.4);font-size:0.8rem;margin-top:8px;">Billed monthly via the App Store or Google Play. Cancel any time.</p>
     </div>
   </div>
 </section>
@@ -807,3 +809,4 @@
   });
 })();
 </script>
+<script src="/pricing.js"></script>
