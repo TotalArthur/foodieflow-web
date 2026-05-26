@@ -15,74 +15,32 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Fetch price from RevenueCat v2 API
-        id: price
+      # ── Fetch current price from RevenueCat (pure Python, no curl) ──────────
+      - name: Fetch pricing from RevenueCat
         env:
           RC_SECRET: ${{ secrets.REVENUECAT_SECRET_KEY }}
+        run: python3 .github/fetch-pricing.py
+
+      # ── Regenerate favicon.ico whenever logo.png changes ────────────────────
+      - name: Generate favicon.ico from logo.png
         run: |
-          set -euo pipefail
+          pip install Pillow --quiet
+          python3 .github/generate-favicon.py
 
-          # 1. Discover the project ID
-          PROJECTS=$(curl -sf \
-            -H "Authorization: Bearer $RC_SECRET" \
-            "https://api.revenuecat.com/v2/projects")
-          PROJECT_ID=$(echo "$PROJECTS" | jq -r '.items[0].id')
-          echo "project_id=$PROJECT_ID"
-
-          # 2. Fetch production offerings
-          OFFERINGS=$(curl -sf \
-            -H "Authorization: Bearer $RC_SECRET" \
-            "https://api.revenuecat.com/v2/projects/$PROJECT_ID/offerings?environment=production")
-
-          # 3. Extract price:  current offering → $rc_monthly package
-          #    Prefer the App Store (iOS) product; fall back to the first product listed.
-          #    pricing_phases[-1] is the base recurring phase (after any trial phases).
-          PRICE_JSON=$(echo "$OFFERINGS" | jq -c '
-            .items[]
-            | select(.is_current == true)
-            | .packages[]
-            | select(.lookup_key == "$rc_monthly")
-            | .products
-            | (map(select(.app.store == "app_store")) | first) // first
-            | .default_purchase_option.pricing_phases[-1].price
-          ' | head -1)
-
-          echo "price_json=$PRICE_JSON" >> "$GITHUB_OUTPUT"
-
-      - name: Write pricing.json
-        env:
-          PRICE_JSON: ${{ steps.price.outputs.price_json }}
-        run: |
-          python3 - <<'PYEOF'
-          import json, os, datetime
-
-          price = json.loads(os.environ['PRICE_JSON'])
-
-          # RevenueCat stores amounts in minor currency units (e.g. 399 = £3.99)
-          amount_major = round(price['amount'] / 100, 2)
-
-          pricing = {
-              "base_currency": price['currency'],
-              "base_amount":   amount_major,
-              "period":        "month",
-              "last_updated":  datetime.datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ'),
-          }
-
-          with open('pricing.json', 'w') as f:
-              json.dump(pricing, f, indent=2)
-              f.write('\n')
-
-          print(f"Wrote: {price['currency']} {amount_major}")
-          PYEOF
-
-      - name: Commit if changed
+      # ── Commit anything that changed ────────────────────────────────────────
+      - name: Commit changes
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add pricing.json
+          git add pricing.json favicon.ico
           if git diff --staged --quiet; then
-            echo "No pricing changes — nothing to commit."
+            echo "Nothing to commit — pricing and assets are already up to date."
           else
-            git commit -m "chore: update pricing from RevenueCat"
+            PRICE=$(python3 -c "
+import json
+d = json.load(open('pricing.json'))
+print(f\"{d['base_currency']} {d['base_amount']}\")
+")
+            git commit -m "chore: sync pricing (${PRICE}) and regenerate favicon"
             git push
           fi
