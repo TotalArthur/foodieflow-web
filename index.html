@@ -158,7 +158,7 @@
       transform: rotate(6deg);
       box-shadow: 0 28px 60px rgba(20,40,70,0.16), 0 0 0 1px rgba(255,255,255,0.04);
     }
-    .phone-back-inner { background: var(--blue-pale); border-radius: 22px; height: 320px; overflow: hidden; display: flex; flex-direction: column; }
+    .phone-back-inner { background: var(--blue-pale); border-radius: 22px; height: 320px; overflow: hidden; position: relative; }
     .phone-back-hdr { padding: 12px 10px 8px; background: white; border-bottom: 1px solid var(--border); }
     .phone-back-title { font-size: 0.6rem; font-weight: 700; color: var(--fore); }
     .phone-back-sub { font-size: 0.48rem; color: var(--muted); }
@@ -178,7 +178,7 @@
       animation: floatPhone 3.5s ease-in-out infinite;
     }
     @keyframes floatPhone { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-    .phone-front-inner { background: var(--bg-hero); border-radius: 28px; height: 406px; overflow: hidden; display: flex; flex-direction: column; }
+    .phone-front-inner { background: var(--bg-hero); border-radius: 28px; height: 406px; overflow: hidden; position: relative; }
     .pf-status { background: var(--bg-hero); padding: 12px 14px 4px; display: flex; justify-content: space-between; align-items: center; }
     .pf-time { font-size: 0.7rem; font-weight: 700; color: var(--fore); }
     .pf-hdr { padding: 4px 12px 8px; border-bottom: 1px solid var(--border); }
@@ -220,6 +220,20 @@
     .ing-tomato  { width: 78px; height: 78px; bottom: 24px; right: -46px; animation: floatB 4.1s ease-in-out infinite 0.5s; }
     .ing-herbs   { width: 72px; height: 72px; top: 12px; right: -26px; animation: floatC 3.8s ease-in-out infinite 1s; }
     .ingredient img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+
+    /* Reliable full-bleed rendering for all phone screen images */
+    .phone-front-inner img,
+    .phone-back-inner img,
+    .zz-phone-inner img,
+    .how-screen-pane img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+    }
     @keyframes floatA { 0%,100% { transform: translateY(0) rotate(-6deg); } 50% { transform: translateY(-12px) rotate(-6deg); } }
     @keyframes floatB { 0%,100% { transform: translateY(0) rotate(9deg); } 50% { transform: translateY(-10px) rotate(9deg); } }
     @keyframes floatC { 0%,100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-14px) rotate(-3deg); } }
@@ -285,7 +299,7 @@
     .zz-link:hover { text-decoration: underline; }
     .zz-phone-col { display: flex; justify-content: center; }
     .zz-phone { width: 240px; background: hsl(222,47%,13%); border-radius: 36px; padding: 10px; box-shadow: 0 28px 70px rgba(20,40,70,0.18); }
-    .zz-phone-inner { border-radius: 28px; height: 426px; overflow: hidden; background: var(--bg-hero); display: flex; align-items: center; justify-content: center; }
+    .zz-phone-inner { border-radius: 28px; height: 426px; overflow: hidden; background: var(--bg-hero); position: relative; }
     .zz-phone-inner img { width: 100%; height: 100%; object-fit: cover; }
     .zz-placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, var(--blue-pale) 0%, var(--blue-lt) 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; }
     .zz-ph-icon { width: 52px; height: 52px; background: white; border-radius: 16px; display: grid; place-items: center; margin-bottom: 14px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
@@ -336,7 +350,7 @@
     .how-visual { position: sticky; top: calc(var(--nav-h) + 20px); }
     .how-phone { width: 260px; margin: 0 auto; background: hsl(222,47%,13%); border-radius: 38px; padding: 12px; box-shadow: 0 30px 80px rgba(20,40,70,0.2); }
     .how-screen { border-radius: 28px; height: 460px; overflow: hidden; position: relative; background: var(--bg); }
-    .how-screen-pane { position: absolute; inset: 0; opacity: 0; transition: opacity 0.25s ease; display: flex; flex-direction: column; }
+    .how-screen-pane { position: absolute; inset: 0; opacity: 0; transition: opacity 0.25s ease; }
     .how-screen-pane.active { opacity: 1; }
     .hsp-hdr { padding: 16px 14px 10px; background: white; border-bottom: 1px solid var(--border); }
     .hsp-title { font-size: 0.82rem; font-weight: 700; }
@@ -494,11 +508,19 @@
       .dl-btns { flex-direction: column; align-items: center; }
     }
     @media (min-width: 1280px) {
+      /* Hero phones */
       .phone-cluster { width: 360px; height: 630px; }
       .phone-front { width: 288px; }
       .phone-front-inner { height: 505px; }
       .phone-back { width: 230px; right: -55px; }
       .phone-back-inner { height: 397px; }
+      /* Feature section phones */
+      .zz-phone { width: 300px; }
+      .zz-phone-inner { height: 532px; }
+      /* How it works phone */
+      .how-phone { width: 320px; }
+      .how-screen { height: 577px; }
+      /* Ingredient icons */
       .ing-avocado { width: 104px; height: 104px; top: -22px; left: -44px; }
       .ing-tomato  { width: 92px;  height: 92px;  bottom: 28px; right: -54px; }
       .ing-herbs   { width: 86px;  height: 86px;  top: 14px; right: -32px; }
