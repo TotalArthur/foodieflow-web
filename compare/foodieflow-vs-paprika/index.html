@@ -164,9 +164,9 @@
     .store-btn:hover { transform: translateY(-2px); }
     .cta-note { color: rgba(255,255,255,0.5); font-size: 0.82rem; margin-top: 18px; }
 
-    /* OTHER COMPARISONS */
-    .other-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-    .other-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; text-decoration: none; color: var(--fore); transition: border-color 0.2s, transform 0.15s; }
+    /* OTHER COMPARISONS — flex so 2 or 3 cards stay centred */
+    .other-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+    .other-card { flex: 1 1 240px; max-width: 320px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; text-decoration: none; color: var(--fore); transition: border-color 0.2s, transform 0.15s; }
     .other-card:hover { border-color: var(--blue); transform: translateY(-2px); }
     .other-card .oc-vs { font-size: 0.76rem; color: var(--muted); font-weight: 700; }
     .other-card .oc-name { font-size: 1rem; font-weight: 700; margin-top: 2px; }
@@ -190,7 +190,6 @@
       .nav-links { display: none; }
       .nav-hamburger { display: block; }
       .reason-grid { grid-template-columns: 1fr; }
-      .other-grid { grid-template-columns: 1fr; }
       .footer-inner { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 600px) {
