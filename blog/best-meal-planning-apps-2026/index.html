@@ -113,13 +113,12 @@
     .prose h2 { text-align: left; }
     .prose p { color: var(--fore); line-height: 1.75; margin-bottom: 16px; }
     .prose p:last-child { margin-bottom: 0; }
-    .prose p.lede { font-size: 1.12rem; font-weight: 700; line-height: 1.5; color: var(--fore); border-left: 3px solid var(--blue); padding-left: 16px; }
     .prose ul.plain { list-style: none; display: flex; flex-direction: column; gap: 10px; margin: 4px 0 18px; }
     .prose ul.plain li { padding-left: 22px; position: relative; line-height: 1.6; }
     .prose ul.plain li::before { content: "•"; position: absolute; left: 2px; color: var(--blue); font-weight: 700; }
 
     /* QUICK PICKS */
-    .quickpicks { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .quickpicks { margin-top: 12px; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
     .qp-row { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 16px 22px; border-bottom: 1px solid var(--border); }
     .qp-row:last-child { border-bottom: none; }
     .qp-label { font-size: 0.92rem; color: var(--fore); }
@@ -264,24 +263,24 @@
   <div class="wrap prose">
     <p>Every meal planning app promises the same thing: fewer trips to the shop, less wasted food, and one less decision to make after work. In practice, most of them stop halfway. They'll help you plan the week, or they'll help you build a shopping list, but hardly any of them connect the two to what's already sitting in your fridge. That gap between planning a meal and actually shopping for it is the exact problem we built FoodieFlow to close.</p>
 
-    <p class="lede">Built my partner an app for our anniversary because we genuinely could not decide what to eat — now it's the most used thing on my phone.</p>
+    <p>So a bit of context. I'm in my fourth year of a Mechanical Engineering degree, already working in the field alongside it, and my brain is basically running on fumes most days. Between the degree, the job, and trying to have some sort of a life, the last thing I have energy for in the evening is standing in the kitchen doorway staring into the fridge like something's going to magically appear.</p>
 
-    <p>So a bit of context — I'm in my 4th year of a Mechanical Engineering degree, already working in the field alongside it, and honestly my brain is just permanently running on fumes at this point. Between the degree, the job, and trying to have some sort of a life, the absolute last thing I have the energy for at the end of the day is standing in the kitchen doorway staring into the fridge like something's going to magically appear.</p>
+    <p>The worst part is my partner is exactly the same. We're both completely useless at deciding what to eat, and when you put two exhausted, indecisive people in a kitchen together, the answer is almost always "just get a takeaway." That gets old fast, on the wallet and on the waistline.</p>
 
-    <p>The worst part? My partner is exactly the same. We are both completely useless when it comes to deciding what to eat, and when you put two indecisive people together who are both exhausted, the answer is almost always "just get a takeaway" — which gets old fast, both on the wallet and on your waistline.</p>
+    <p>It got to the point where we weren't really food shopping anymore, we were just wandering round the supermarket grabbing random things that never quite came together into an actual meal. It was a mess.</p>
 
-    <p>It got to the point where we weren't even properly food shopping anymore because we'd never planned what we actually needed, so we'd just wander round the supermarket buying random things that never quite came together into actual meals. It was a mess.</p>
+    <p>So for our anniversary, I built an app. Not exactly roses and chocolates, but hear me out.</p>
 
-    <p>So for our anniversary, I built an app. Not exactly roses and chocolates, but hear me out —</p>
-
-    <p>Full disclosure before we get into it: FoodieFlow is our app, and this article is going to make the case for why it's the strongest all-round option. We think that's a fair thing to say up front rather than pretend to be a neutral reviewer. Every feature listed for every app below is something you can check for yourself on that app's own website, App Store listing, or Google Play page, and we've linked to what we used where it matters.</p>
+    <p>Full disclosure before we get into it. FoodieFlow is the app I built, so obviously I think it's the best option on this list. We're not pretending to be a neutral reviewer here. But every feature listed for every app below is something you can check for yourself on that app's own website, App Store listing, or Google Play page.</p>
   </div>
 </section>
 
 <section class="block" style="background:var(--bg-warm)">
-  <div class="wrap prose">
-    <h2>Quick picks</h2>
-    <p>If you don't want the full breakdown, here's the short version:</p>
+  <div class="wrap">
+    <div class="prose">
+      <h2>Quick picks</h2>
+      <p>If you don't want the full breakdown, here's the short version:</p>
+    </div>
     <div class="quickpicks">
       <div class="qp-row"><span class="qp-label">Best overall (smart planning + pantry-aware list)</span><span class="qp-app">FoodieFlow</span></div>
       <div class="qp-row"><span class="qp-label">Best free, no-frills weeknight planner</span><span class="qp-app">Mealime</span></div>
@@ -476,9 +475,11 @@
 </section>
 
 <section class="block" style="background:var(--bg-warm)">
-  <div class="wrap prose">
-    <h2>Why a pantry-aware grocery list actually matters</h2>
-    <p>It's easy to treat "pantry-aware" as a nice-to-have feature on a checklist. In practice, it's the difference between a shopping list that saves you money and one that just organises the same overspending by aisle.</p>
+  <div class="wrap">
+    <div class="prose">
+      <h2>Why a pantry-aware grocery list actually matters</h2>
+      <p>It's easy to treat "pantry-aware" as a nice-to-have feature on a checklist. In practice, it's the difference between a shopping list that saves you money and one that just organises the same overspending by aisle.</p>
+    </div>
 
     <div class="stat-box">
       <h3>30 to 40% of the U.S. food supply goes uneaten</h3>
@@ -486,9 +487,11 @@
       <p class="source">Source: USDA, Food Loss and Waste</p>
     </div>
 
-    <p>On a household level, the U.S. Environmental Protection Agency estimated in 2025 that the average consumer loses around $728 a year to food that's bought and never eaten, which works out to roughly $2,913 a year for a household of four. Older USDA estimates put the family-of-four figure closer to $1,500 a year. Either number tells the same story: a shopping list that doesn't check against what's already in your fridge is quietly costing you money every single week.</p>
+    <div class="prose">
+      <p>On a household level, the U.S. Environmental Protection Agency estimated in 2025 that the average consumer loses around $728 a year to food that's bought and never eaten, which works out to roughly $2,913 a year for a household of four. Older USDA estimates put the family-of-four figure closer to $1,500 a year. Either number tells the same story: a shopping list that doesn't check against what's already in your fridge is quietly costing you money every single week.</p>
 
-    <p>There's a second reason this matters beyond the money. A study published in <em>Public Health Nutrition</em> found that people who cook at home more often score higher on standard measures of diet quality, and a related study in the <em>Journal of the Academy of Nutrition and Dietetics</em> found that more frequent home cooking is linked to eating fewer ultra-processed foods. A shopping list that actually works is one less reason to give up on home cooking by week three.</p>
+      <p>There's a second reason this matters beyond the money. A study published in <em>Public Health Nutrition</em> found that people who cook at home more often score higher on standard measures of diet quality, and a related study in the <em>Journal of the Academy of Nutrition and Dietetics</em> found that more frequent home cooking is linked to eating fewer ultra-processed foods. A shopping list that actually works is one less reason to give up on home cooking by week three.</p>
+    </div>
   </div>
 </section>
 
