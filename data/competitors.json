@@ -16,7 +16,7 @@
     }
   },
   "feature_labels": {
-    "ai_assistant": "AI meal assistant",
+    "ai_assistant": "Smart Meal Assistant",
     "weekly_planner": "Weekly meal planner",
     "auto_shopping_list": "Auto shopping list (aisle-sorted)",
     "pantry_aware": "Pantry-aware suggestions",
@@ -28,16 +28,20 @@
   "comparison_matrix": {
     "columns": ["mealime", "paprika", "plan-to-eat"],
     "rows": [
-      { "label": "AI meal assistant",              "foodieflow": true,  "mealime": false, "paprika": false, "plan-to-eat": false },
-      { "label": "Pantry-aware suggestions",        "foodieflow": true,  "mealime": false, "paprika": false, "plan-to-eat": false },
-      { "label": "Dietary & allergy profiles",      "foodieflow": true,  "mealime": true,  "paprika": false, "plan-to-eat": false },
-      { "label": "Nutrition (macros & calories)",   "foodieflow": true,  "mealime": true,  "paprika": false, "plan-to-eat": false },
-      { "label": "Auto aisle-sorted shopping list", "foodieflow": true,  "mealime": true,  "paprika": true,  "plan-to-eat": true  },
-      { "label": "Free to start",                   "foodieflow": true,  "mealime": true,  "paprika": false, "plan-to-eat": false },
-      { "label": "Import recipes from the web",     "foodieflow": false, "mealime": false, "paprika": true,  "plan-to-eat": true  },
-      { "label": "Web app (plan in a browser)",     "foodieflow": false, "mealime": false, "paprika": false, "plan-to-eat": true  },
-      { "label": "Desktop apps (Mac & Windows)",    "foodieflow": false, "mealime": false, "paprika": true,  "plan-to-eat": false },
-      { "label": "One-time purchase option",        "foodieflow": false, "mealime": false, "paprika": true,  "plan-to-eat": false }
+      { "label": "Smart Meal Assistant",                    "foodieflow": true, "mealime": false, "paprika": false, "plan-to-eat": false },
+      { "label": "One-tap smart weekly meal plan",          "foodieflow": true, "mealime": false, "paprika": false, "plan-to-eat": false },
+      { "label": "Drag-and-drop weekly planner",            "foodieflow": true, "mealime": false, "paprika": true,  "plan-to-eat": true  },
+      { "label": "Basic vs. From Scratch ingredient mode",  "foodieflow": true, "mealime": false, "paprika": false, "plan-to-eat": false },
+      { "label": "Pantry-aware suggestions",                "foodieflow": true, "mealime": false, "paprika": false, "plan-to-eat": false },
+      { "label": "Pantry auto-exclusion in shopping list",  "foodieflow": true, "mealime": false, "paprika": false, "plan-to-eat": false },
+      { "label": "Auto aisle-sorted shopping list",         "foodieflow": true, "mealime": true,  "paprika": true,  "plan-to-eat": true  },
+      { "label": "Import recipes from a web link",          "foodieflow": true, "mealime": false, "paprika": true,  "plan-to-eat": true  },
+      { "label": "Import recipes from video (YouTube/TikTok)", "foodieflow": true, "mealime": false, "paprika": false, "plan-to-eat": false },
+      { "label": "Dietary & allergy profiles",              "foodieflow": true, "mealime": true,  "paprika": false, "plan-to-eat": false },
+      { "label": "Nutrition (macros & calories)",           "foodieflow": true, "mealime": true,  "paprika": false, "plan-to-eat": false },
+      { "label": "Cook Again history",                      "foodieflow": true, "mealime": false, "paprika": false, "plan-to-eat": false },
+      { "label": "Guest mode (no signup)",                  "foodieflow": true, "mealime": false, "paprika": false, "plan-to-eat": false },
+      { "label": "Free to start",                           "foodieflow": true, "mealime": true,  "paprika": false, "plan-to-eat": false }
     ]
   },
   "competitors": [

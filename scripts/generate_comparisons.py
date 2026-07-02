@@ -566,9 +566,9 @@ def render_hub(data):
     canonical = f"{SITE_URL}/compare/"
     title = "FoodieFlow vs the Alternatives — Meal Planning App Comparison (2026)"
     description = (
-        "See FoodieFlow vs Mealime, Paprika and Plan to Eat in one table — where "
-        "FoodieFlow is better and where it isn't. AI suggestions, pantry awareness, "
-        "shopping lists, recipe import and pricing compared."
+        "See FoodieFlow vs Mealime, Paprika and Plan to Eat in one table. Smart Meal "
+        "Assistant, one-tap weekly plans, pantry-aware shopping lists and recipe import "
+        "from web links and video — compared feature by feature."
     )
     comps = data["competitors"]
     name_by_slug = {c["slug"]: c["name"] for c in comps}
@@ -632,7 +632,7 @@ def render_hub(data):
 <header class="hero">
   <p class="eyebrow">Comparisons</p>
   <h1>FoodieFlow vs <span class="brand">the alternatives</span></h1>
-  <p class="hero-sub">Thinking of switching meal planning apps? Here's FoodieFlow next to Mealime, Paprika and Plan to Eat — where we're better, and where we're not.</p>
+  <p class="hero-sub">Thinking of switching meal planning apps? Here's FoodieFlow next to Mealime, Paprika and Plan to Eat — including the smart-planning and recipe-import features you won't find elsewhere.</p>
   <div class="hero-ctas">
     <a href="/beta" class="btn-primary">Try FoodieFlow free</a>
   </div>
