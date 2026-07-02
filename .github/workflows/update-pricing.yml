@@ -37,11 +37,7 @@ jobs:
           if git diff --staged --quiet; then
             echo "Nothing to commit — pricing and assets are already up to date."
           else
-            PRICE=$(python3 -c "
-import json
-d = json.load(open('pricing.json'))
-print(f\"{d['base_currency']} {d['base_amount']}\")
-")
+            PRICE=$(python3 -c "import json; d = json.load(open('pricing.json')); print(f\"{d['base_currency']} {d['base_amount']}\")")
             git commit -m "chore: sync pricing (${PRICE}) and regenerate favicon"
             git push origin HEAD:main
           fi
