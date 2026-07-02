@@ -343,6 +343,7 @@ FOOTER = f"""<!-- FOOTER -->
     }});
   }}
 </script>
+<script src="/pricing.js"></script>
 </body>
 </html>
 """
@@ -434,9 +435,14 @@ def render_comparison(data, comp, others):
     faq_items = []
     faq_ld = []
     for f in comp["faqs"]:
+        # Wrap the price so pricing.js can swap in the visitor's region-specific
+        # App Store price (same mechanism as the homepage's .rc-price-inline).
+        answer_html = esc(f["a"]).replace(
+            "£3.99", '<span class="rc-price-inline">£3.99</span>'
+        )
         faq_items.append(f"""      <details class="faq-item">
         <summary>{esc(f['q'])}<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></summary>
-        <p>{esc(f['a'])}</p>
+        <p>{answer_html}</p>
       </details>""")
         faq_ld.append({
             "@type": "Question",
