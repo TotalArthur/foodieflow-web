@@ -26,22 +26,152 @@
     "platforms": "Platforms"
   },
   "comparison_matrix": {
-    "columns": ["mealime", "paprika", "plan-to-eat"],
+    "columns": [
+      "mealime",
+      "paprika",
+      "plan-to-eat"
+    ],
     "rows": [
-      { "label": "Smart Meal Assistant",                    "foodieflow": true, "mealime": false, "paprika": false, "plan-to-eat": false },
-      { "label": "One-tap smart weekly meal plan",          "foodieflow": true, "mealime": false, "paprika": false, "plan-to-eat": false },
-      { "label": "Drag-and-drop weekly planner",            "foodieflow": true, "mealime": false, "paprika": true,  "plan-to-eat": true  },
-      { "label": "Basic vs. From Scratch ingredient mode",  "foodieflow": true, "mealime": false, "paprika": false, "plan-to-eat": false },
-      { "label": "Pantry-aware suggestions",                "foodieflow": true, "mealime": false, "paprika": false, "plan-to-eat": false },
-      { "label": "Pantry auto-exclusion in shopping list",  "foodieflow": true, "mealime": false, "paprika": false, "plan-to-eat": false },
-      { "label": "Auto aisle-sorted shopping list",         "foodieflow": true, "mealime": true,  "paprika": true,  "plan-to-eat": true  },
-      { "label": "Import recipes from a web link",          "foodieflow": true, "mealime": false, "paprika": true,  "plan-to-eat": true  },
-      { "label": "Import recipes from video (YouTube/TikTok)", "foodieflow": true, "mealime": false, "paprika": false, "plan-to-eat": false },
-      { "label": "Dietary & allergy profiles",              "foodieflow": true, "mealime": true,  "paprika": false, "plan-to-eat": false },
-      { "label": "Nutrition (macros & calories)",           "foodieflow": true, "mealime": true,  "paprika": false, "plan-to-eat": false },
-      { "label": "Cook Again history",                      "foodieflow": true, "mealime": false, "paprika": false, "plan-to-eat": false },
-      { "label": "Guest mode (no signup)",                  "foodieflow": true, "mealime": false, "paprika": false, "plan-to-eat": false },
-      { "label": "Free to start",                           "foodieflow": true, "mealime": true,  "paprika": false, "plan-to-eat": false }
+      {
+        "label": "Smart Meal Assistant",
+        "foodieflow": true,
+        "mealime": false,
+        "paprika": false,
+        "plan-to-eat": false,
+        "samsung-food": true,
+        "anylist": false,
+        "emeals": false
+      },
+      {
+        "label": "One-tap smart weekly meal plan",
+        "foodieflow": true,
+        "mealime": false,
+        "paprika": false,
+        "plan-to-eat": false,
+        "samsung-food": false,
+        "anylist": false,
+        "emeals": false
+      },
+      {
+        "label": "Drag-and-drop weekly planner",
+        "foodieflow": true,
+        "mealime": false,
+        "paprika": true,
+        "plan-to-eat": true,
+        "samsung-food": true,
+        "anylist": false,
+        "emeals": false
+      },
+      {
+        "label": "Basic vs. From Scratch ingredient mode",
+        "foodieflow": true,
+        "mealime": false,
+        "paprika": false,
+        "plan-to-eat": false,
+        "samsung-food": false,
+        "anylist": false,
+        "emeals": false
+      },
+      {
+        "label": "Pantry-aware suggestions",
+        "foodieflow": true,
+        "mealime": false,
+        "paprika": false,
+        "plan-to-eat": false,
+        "samsung-food": false,
+        "anylist": false,
+        "emeals": false
+      },
+      {
+        "label": "Pantry auto-exclusion in shopping list",
+        "foodieflow": true,
+        "mealime": false,
+        "paprika": false,
+        "plan-to-eat": false,
+        "samsung-food": false,
+        "anylist": false,
+        "emeals": false
+      },
+      {
+        "label": "Auto aisle-sorted shopping list",
+        "foodieflow": true,
+        "mealime": true,
+        "paprika": true,
+        "plan-to-eat": true,
+        "samsung-food": true,
+        "anylist": true,
+        "emeals": true
+      },
+      {
+        "label": "Import recipes from a web link",
+        "foodieflow": true,
+        "mealime": false,
+        "paprika": true,
+        "plan-to-eat": true,
+        "samsung-food": true,
+        "anylist": true,
+        "emeals": false
+      },
+      {
+        "label": "Import recipes from video (YouTube/TikTok)",
+        "foodieflow": true,
+        "mealime": false,
+        "paprika": false,
+        "plan-to-eat": false,
+        "samsung-food": false,
+        "anylist": false,
+        "emeals": false
+      },
+      {
+        "label": "Dietary & allergy profiles",
+        "foodieflow": true,
+        "mealime": true,
+        "paprika": false,
+        "plan-to-eat": false,
+        "samsung-food": true,
+        "anylist": false,
+        "emeals": true
+      },
+      {
+        "label": "Nutrition (macros & calories)",
+        "foodieflow": true,
+        "mealime": true,
+        "paprika": false,
+        "plan-to-eat": false,
+        "samsung-food": true,
+        "anylist": false,
+        "emeals": false
+      },
+      {
+        "label": "Cook Again history",
+        "foodieflow": true,
+        "mealime": false,
+        "paprika": false,
+        "plan-to-eat": false,
+        "samsung-food": false,
+        "anylist": false,
+        "emeals": false
+      },
+      {
+        "label": "Guest mode (no signup)",
+        "foodieflow": true,
+        "mealime": false,
+        "paprika": false,
+        "plan-to-eat": false,
+        "samsung-food": false,
+        "anylist": false,
+        "emeals": false
+      },
+      {
+        "label": "Free to start",
+        "foodieflow": true,
+        "mealime": true,
+        "paprika": false,
+        "plan-to-eat": false,
+        "samsung-food": true,
+        "anylist": true,
+        "emeals": false
+      }
     ]
   },
   "competitors": [
@@ -63,10 +193,10 @@
       "switch_reasons": [
         {
           "title": "Cook what you already have",
-          "body": "Mealime plans around its own recipe catalogue. FoodieFlow's Foodie Assistant looks at what's already in your kitchen first, so you buy less and waste less."
+          "body": "Mealime plans around its own recipe catalogue. FoodieFlow's Smart Assistant looks at what's already in your kitchen first, so you buy less and waste less."
         },
         {
-          "title": "A conversational AI assistant",
+          "title": "A Smart Meal Assistant",
           "body": "Tell FoodieFlow what you're craving in plain language and it returns tailored ideas in seconds — not just a fixed set of curated recipes to browse."
         },
         {
@@ -82,7 +212,7 @@
       "faqs": [
         {
           "q": "Is FoodieFlow a good alternative to Mealime?",
-          "a": "Yes. FoodieFlow covers the same core jobs as Mealime — weekly planning and automatic shopping lists — and adds a conversational AI assistant plus pantry-aware suggestions that plan around the food you already own."
+          "a": "Yes. FoodieFlow covers the same core jobs as Mealime — weekly planning and automatic shopping lists — and adds a Smart Assistant plus pantry-aware suggestions that plan around the food you already own."
         },
         {
           "q": "Does FoodieFlow have automatic shopping lists like Mealime?",
@@ -90,7 +220,7 @@
         },
         {
           "q": "Is FoodieFlow free?",
-          "a": "FoodieFlow is free to download and use. FoodieFlow Pro unlocks unlimited AI suggestions and full nutrition data from £3.99/month."
+          "a": "FoodieFlow is free to download and use. FoodieFlow Pro unlocks unlimited Smart Assistant suggestions and full nutrition data from £3.99/month."
         }
       ]
     },
@@ -135,11 +265,11 @@
         },
         {
           "q": "Does FoodieFlow let me save my own recipes like Paprika?",
-          "a": "Yes. You can save any meal you love into your personal Meal Library, and the Foodie Assistant uses it to suggest meals that suit your household."
+          "a": "Yes. You can save any meal you love into your personal Meal Library, and the Smart Assistant uses it to suggest meals that suit your household."
         },
         {
           "q": "Is FoodieFlow one-time or subscription?",
-          "a": "FoodieFlow is free to download, with an optional Pro subscription from £3.99/month that unlocks unlimited AI suggestions and full nutrition data."
+          "a": "FoodieFlow is free to download, with an optional Pro subscription from £3.99/month that unlocks unlimited Smart Assistant suggestions and full nutrition data."
         }
       ]
     },
@@ -161,7 +291,7 @@
       "switch_reasons": [
         {
           "title": "No blank calendar to fill",
-          "body": "Plan to Eat asks you to bring every recipe yourself. FoodieFlow's Foodie Assistant fills the gaps with personalised ideas so you're never staring at an empty week."
+          "body": "Plan to Eat asks you to bring every recipe yourself. FoodieFlow's Smart Assistant fills the gaps with personalised ideas so you're never staring at an empty week."
         },
         {
           "title": "Pantry-first planning",
@@ -188,7 +318,7 @@
         },
         {
           "q": "How much does FoodieFlow cost?",
-          "a": "FoodieFlow is free to download. Pro is available from £3.99/month for unlimited AI suggestions and full nutrition data."
+          "a": "FoodieFlow is free to download. Pro is available from £3.99/month for unlimited Smart Assistant suggestions and full nutrition data."
         }
       ]
     },
@@ -229,15 +359,15 @@
       "faqs": [
         {
           "q": "Is FoodieFlow a good alternative to Samsung Food?",
-          "a": "Yes. Both offer AI-assisted planning and automatic shopping lists. FoodieFlow is a focused, independent app centred on quick weekly planning and pantry-aware suggestions, without the social network or ecosystem lock-in."
+          "a": "Yes. Both offer smart, assisted planning and automatic shopping lists. FoodieFlow is a focused, independent app centred on quick weekly planning and pantry-aware suggestions, without the social network or ecosystem lock-in."
         },
         {
-          "q": "Does FoodieFlow have an AI assistant like Samsung Food?",
-          "a": "Yes. The Foodie Assistant generates personalised meal ideas from your preferences and pantry in seconds."
+          "q": "Does FoodieFlow have a smart meal assistant like Samsung Food?",
+          "a": "Yes. The Smart Assistant generates personalised meal ideas from your preferences and pantry in seconds."
         },
         {
           "q": "Is FoodieFlow free?",
-          "a": "FoodieFlow is free to download, with an optional Pro plan from £3.99/month for unlimited AI suggestions and full nutrition data."
+          "a": "FoodieFlow is free to download, with an optional Pro plan from £3.99/month for unlimited Smart Assistant suggestions and full nutrition data."
         }
       ]
     },
@@ -262,7 +392,7 @@
           "body": "AnyList is a superb list. FoodieFlow starts a step earlier — generating the meal plan itself — then produces the aisle-sorted list from it automatically."
         },
         {
-          "title": "AI suggestions and dietary profiles",
+          "title": "Smart suggestions and dietary profiles",
           "body": "FoodieFlow suggests meals tailored to your tastes, allergies and pantry. AnyList has no suggestion engine or dietary filtering."
         },
         {
@@ -278,7 +408,7 @@
       "faqs": [
         {
           "q": "Is FoodieFlow a good alternative to AnyList?",
-          "a": "If you mainly want a shared grocery list, AnyList is hard to beat. If you want the app to plan your meals and then produce the list, FoodieFlow adds AI suggestions, dietary profiles and pantry-aware planning on top of an automatic list."
+          "a": "If you mainly want a shared grocery list, AnyList is hard to beat. If you want the app to plan your meals and then produce the list, FoodieFlow adds smart suggestions, dietary profiles and pantry-aware planning on top of an automatic list."
         },
         {
           "q": "Does FoodieFlow create shopping lists automatically?",
@@ -286,7 +416,7 @@
         },
         {
           "q": "What does FoodieFlow cost?",
-          "a": "It's free to download, with Pro from £3.99/month for unlimited AI suggestions and full nutrition data."
+          "a": "It's free to download, with Pro from £3.99/month for unlimited Smart Assistant suggestions and full nutrition data."
         }
       ]
     },
@@ -331,7 +461,7 @@
         },
         {
           "q": "Does FoodieFlow make plans for me like eMeals?",
-          "a": "Yes — the Foodie Assistant generates personalised meal ideas and you drop them into your weekly planner. Unlike eMeals, every plan is fully editable and built around your own tastes."
+          "a": "Yes — the Smart Assistant generates personalised meal ideas and you drop them into your weekly planner. Unlike eMeals, every plan is fully editable and built around your own tastes."
         },
         {
           "q": "Is FoodieFlow cheaper than eMeals?",

@@ -92,7 +92,8 @@ STYLES = """
     /* LAYOUT */
     .wrap { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
     .eyebrow { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue); margin-bottom: 12px; }
-    .breadcrumb { max-width: 960px; margin: 0 auto; padding: 20px 2rem 0; font-size: 0.8rem; color: var(--muted); }
+    /* Breadcrumb is a <nav> for a11y but must NOT inherit the sticky header styles above. */
+    nav.breadcrumb { position: static; z-index: auto; height: auto; display: block; background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; border-bottom: none; max-width: 960px; margin: 0 auto; padding: 20px 2rem 0; font-size: 0.8rem; color: var(--muted); }
     .breadcrumb a { text-decoration: none; color: var(--muted); border-bottom: 1px solid transparent; }
     .breadcrumb a:hover { color: var(--blue); border-bottom-color: var(--blue); }
     .breadcrumb span { color: var(--fore); }
@@ -371,40 +372,23 @@ def val_class(value):
 def render_comparison(data, comp, others):
     name = comp["name"]
     slug = comp["slug"]
-    us = data["product"]
-    labels = data["feature_labels"]
     canonical = f"{SITE_URL}/compare/foodieflow-vs-{slug}/"
 
     title = f"FoodieFlow vs {name}: Which Meal Planning App Wins? (2026)"
     description = (
-        f"FoodieFlow vs {name} compared feature by feature — AI meal suggestions, "
-        f"weekly planning, automatic shopping lists, pantry awareness and price. "
+        f"FoodieFlow vs {name} compared feature by feature — smart meal suggestions, "
+        f"weekly planning, automatic shopping lists, recipe import and pantry awareness. "
         f"See why people switch to FoodieFlow."
     )
 
-    # Comparison table rows
+    # Comparison table rows — same matrix as the hub, two columns (us vs this competitor).
     rows = []
-    for key, label in labels.items():
-        us_v = us["features"].get(key, "")
-        co_v = comp["features"].get(key, "")
-        us_cell = (
-            f'<span class="{val_class(us_v)}">{esc(us_v)}</span>' if key != "platforms" else esc(us_v)
-        )
-        co_cell = (
-            f'<span class="{val_class(co_v)}">{esc(co_v)}</span>' if key != "platforms" else esc(co_v)
-        )
+    for row in data["comparison_matrix"]["rows"]:
         rows.append(
-            f'        <tr><td class="feat">{esc(label)}</td>'
-            f'<td class="col-us">{us_cell}</td>'
-            f'<td class="val">{co_cell}</td></tr>'
+            f'          <tr><td class="rowlabel">{esc(row["label"])}</td>'
+            f'{matrix_cell(row.get("foodieflow", False), is_us=True)}'
+            f'{matrix_cell(row.get(slug, False))}</tr>'
         )
-    price_us = esc(us["price"])
-    price_co = esc(comp.get("features", {}).get("price", comp.get("pricing", "Varies")))
-    rows.append(
-        f'        <tr><td class="feat">Price</td>'
-        f'<td class="col-us">{price_us}</td>'
-        f'<td class="val">See {esc(name)}</td></tr>'
-    )
     table_rows = "\n".join(rows)
 
     # Reason cards
@@ -492,14 +476,20 @@ def render_comparison(data, comp, others):
     <h2 class="section-title">Feature comparison</h2>
     <p class="section-sub">FoodieFlow and {esc(name)} side by side, feature for feature.</p>
     <div class="table-card">
-      <table class="compare">
-        <thead>
-          <tr><th>Feature</th><th class="col-us">FoodieFlow</th><th>{esc(name)}</th></tr>
-        </thead>
-        <tbody>
+      <div class="matrix-scroll">
+        <table class="matrix">
+          <thead>
+            <tr><th class="rowlabel">Feature</th><th class="col-us">FoodieFlow</th><th>{esc(name)}</th></tr>
+          </thead>
+          <tbody>
 {table_rows}
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="matrix-legend">
+      <span>{TICK_SVG} Included</span>
+      <span>{CROSS_SVG} Not available</span>
     </div>
   </div>
 </section>
@@ -540,7 +530,7 @@ def render_comparison(data, comp, others):
   <div class="wrap">
     <div class="cta-section">
       <h2>Ready to make meal planning simple?</h2>
-      <p>Join FoodieFlow free and let the Foodie Assistant plan your week around what's already in your kitchen.</p>
+      <p>Join FoodieFlow free and let the Smart Assistant plan your week around what's already in your kitchen.</p>
 {STORE_BUTTONS}
       <p class="cta-note">Free to download. No card required.</p>
     </div>
