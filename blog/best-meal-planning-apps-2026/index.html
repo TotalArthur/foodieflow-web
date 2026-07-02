@@ -119,7 +119,7 @@
     .prose ul.plain li::before { content: "•"; position: absolute; left: 2px; color: var(--blue); font-weight: 700; }
 
     /* QUICK PICKS */
-    .quickpicks { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .quickpicks { margin-top: 12px; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
     .qp-row { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 16px 22px; border-bottom: 1px solid var(--border); }
     .qp-row:last-child { border-bottom: none; }
     .qp-label { font-size: 0.92rem; color: var(--fore); }
@@ -279,9 +279,11 @@
 </section>
 
 <section class="block" style="background:var(--bg-warm)">
-  <div class="wrap prose">
-    <h2>Quick picks</h2>
-    <p>If you don't want the full breakdown, here's the short version:</p>
+  <div class="wrap">
+    <div class="prose">
+      <h2>Quick picks</h2>
+      <p>If you don't want the full breakdown, here's the short version:</p>
+    </div>
     <div class="quickpicks">
       <div class="qp-row"><span class="qp-label">Best overall (smart planning + pantry-aware list)</span><span class="qp-app">FoodieFlow</span></div>
       <div class="qp-row"><span class="qp-label">Best free, no-frills weeknight planner</span><span class="qp-app">Mealime</span></div>
@@ -476,9 +478,11 @@
 </section>
 
 <section class="block" style="background:var(--bg-warm)">
-  <div class="wrap prose">
-    <h2>Why a pantry-aware grocery list actually matters</h2>
-    <p>It's easy to treat "pantry-aware" as a nice-to-have feature on a checklist. In practice, it's the difference between a shopping list that saves you money and one that just organises the same overspending by aisle.</p>
+  <div class="wrap">
+    <div class="prose">
+      <h2>Why a pantry-aware grocery list actually matters</h2>
+      <p>It's easy to treat "pantry-aware" as a nice-to-have feature on a checklist. In practice, it's the difference between a shopping list that saves you money and one that just organises the same overspending by aisle.</p>
+    </div>
 
     <div class="stat-box">
       <h3>30 to 40% of the U.S. food supply goes uneaten</h3>
@@ -486,9 +490,11 @@
       <p class="source">Source: USDA, Food Loss and Waste</p>
     </div>
 
-    <p>On a household level, the U.S. Environmental Protection Agency estimated in 2025 that the average consumer loses around $728 a year to food that's bought and never eaten, which works out to roughly $2,913 a year for a household of four. Older USDA estimates put the family-of-four figure closer to $1,500 a year. Either number tells the same story: a shopping list that doesn't check against what's already in your fridge is quietly costing you money every single week.</p>
+    <div class="prose">
+      <p>On a household level, the U.S. Environmental Protection Agency estimated in 2025 that the average consumer loses around $728 a year to food that's bought and never eaten, which works out to roughly $2,913 a year for a household of four. Older USDA estimates put the family-of-four figure closer to $1,500 a year. Either number tells the same story: a shopping list that doesn't check against what's already in your fridge is quietly costing you money every single week.</p>
 
-    <p>There's a second reason this matters beyond the money. A study published in <em>Public Health Nutrition</em> found that people who cook at home more often score higher on standard measures of diet quality, and a related study in the <em>Journal of the Academy of Nutrition and Dietetics</em> found that more frequent home cooking is linked to eating fewer ultra-processed foods. A shopping list that actually works is one less reason to give up on home cooking by week three.</p>
+      <p>There's a second reason this matters beyond the money. A study published in <em>Public Health Nutrition</em> found that people who cook at home more often score higher on standard measures of diet quality, and a related study in the <em>Journal of the Academy of Nutrition and Dietetics</em> found that more frequent home cooking is linked to eating fewer ultra-processed foods. A shopping list that actually works is one less reason to give up on home cooking by week three.</p>
+    </div>
   </div>
 </section>
 
