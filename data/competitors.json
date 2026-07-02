@@ -25,6 +25,21 @@
     "nutrition": "Nutrition (macros & calories)",
     "platforms": "Platforms"
   },
+  "comparison_matrix": {
+    "columns": ["mealime", "paprika", "plan-to-eat"],
+    "rows": [
+      { "label": "AI meal assistant",              "foodieflow": true,  "mealime": false, "paprika": false, "plan-to-eat": false },
+      { "label": "Pantry-aware suggestions",        "foodieflow": true,  "mealime": false, "paprika": false, "plan-to-eat": false },
+      { "label": "Dietary & allergy profiles",      "foodieflow": true,  "mealime": true,  "paprika": false, "plan-to-eat": false },
+      { "label": "Nutrition (macros & calories)",   "foodieflow": true,  "mealime": true,  "paprika": false, "plan-to-eat": false },
+      { "label": "Auto aisle-sorted shopping list", "foodieflow": true,  "mealime": true,  "paprika": true,  "plan-to-eat": true  },
+      { "label": "Free to start",                   "foodieflow": true,  "mealime": true,  "paprika": false, "plan-to-eat": false },
+      { "label": "Import recipes from the web",     "foodieflow": false, "mealime": false, "paprika": true,  "plan-to-eat": true  },
+      { "label": "Web app (plan in a browser)",     "foodieflow": false, "mealime": false, "paprika": false, "plan-to-eat": true  },
+      { "label": "Desktop apps (Mac & Windows)",    "foodieflow": false, "mealime": false, "paprika": true,  "plan-to-eat": false },
+      { "label": "One-time purchase option",        "foodieflow": false, "mealime": false, "paprika": true,  "plan-to-eat": false }
+    ]
+  },
   "competitors": [
     {
       "slug": "mealime",

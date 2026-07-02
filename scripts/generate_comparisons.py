@@ -134,6 +134,22 @@ STYLES = """
     .v-no { color: var(--bad); font-weight: 700; }
     .v-part { color: var(--gold); font-weight: 700; }
 
+    /* MATRIX (hub) — Lucide tick / grey X */
+    .matrix-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    table.matrix { width: 100%; border-collapse: collapse; min-width: 560px; }
+    table.matrix th, table.matrix td { padding: 13px 12px; border-bottom: 1px solid var(--border); text-align: center; }
+    table.matrix thead th { background: var(--secondary); font-size: 0.82rem; font-weight: 700; }
+    table.matrix thead th.col-us, table.matrix td.col-us { background: hsl(205,55%,97%); }
+    table.matrix thead th.col-us { color: var(--primary-dark); }
+    table.matrix th.rowlabel, table.matrix td.rowlabel { text-align: left; font-weight: 700; font-size: 0.9rem; }
+    table.matrix tbody tr:last-child td { border-bottom: none; }
+    .lucide { width: 22px; height: 22px; fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; vertical-align: middle; }
+    .lucide.tick { stroke: var(--good); }
+    .lucide.cross { stroke: var(--bad); }
+    .matrix-legend { display: flex; gap: 22px; justify-content: center; flex-wrap: wrap; margin-top: 18px; font-size: 0.84rem; color: var(--muted); }
+    .matrix-legend span { display: inline-flex; align-items: center; gap: 7px; }
+    .matrix-legend .lucide { width: 17px; height: 17px; }
+
     /* SWITCH REASONS */
     .reason-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     .reason-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 24px; }
@@ -322,6 +338,23 @@ REASON_ICONS = [
     '<path d="M12 3l1.9 5.8H20l-4.9 3.6 1.9 5.8L12 14.6 7 18.2l1.9-5.8L4 8.8h6.1z"/>',
     '<path d="M20 7L9 18l-5-5"/>',
 ]
+
+
+# Lucide icons (https://lucide.dev): "check" and "x".
+TICK_SVG = (
+    '<svg class="lucide tick" viewBox="0 0 24 24" role="img" aria-label="Yes">'
+    '<path d="M20 6 9 17l-5-5"/></svg>'
+)
+CROSS_SVG = (
+    '<svg class="lucide cross" viewBox="0 0 24 24" role="img" aria-label="No">'
+    '<path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>'
+)
+
+
+def matrix_cell(value, is_us=False):
+    icon = TICK_SVG if value else CROSS_SVG
+    cls = ' class="col-us"' if is_us else ""
+    return f"<td{cls}>{icon}</td>"
 
 
 def val_class(value):
@@ -531,14 +564,29 @@ def render_comparison(data, comp, others):
 
 def render_hub(data):
     canonical = f"{SITE_URL}/compare/"
-    title = "FoodieFlow vs the Alternatives — Meal Planning App Comparisons (2026)"
+    title = "FoodieFlow vs the Alternatives — Meal Planning App Comparison (2026)"
     description = (
-        "Compare FoodieFlow with popular meal planning and grocery apps — Mealime, "
-        "Paprika, Plan to Eat, Samsung Food, AnyList and eMeals. Features, pricing and "
-        "the best alternative for you."
+        "See FoodieFlow vs Mealime, Paprika and Plan to Eat in one table — where "
+        "FoodieFlow is better and where it isn't. AI suggestions, pantry awareness, "
+        "shopping lists, recipe import and pricing compared."
     )
     comps = data["competitors"]
+    name_by_slug = {c["slug"]: c["name"] for c in comps}
 
+    # --- Head-to-head matrix (FoodieFlow vs the 3 named competitors) ---
+    matrix = data["comparison_matrix"]
+    cols = matrix["columns"]
+    header_cells = "".join(f'<th>{esc(name_by_slug.get(s, s))}</th>' for s in cols)
+    matrix_rows = []
+    for row in matrix["rows"]:
+        cells = "".join(matrix_cell(row.get(s, False)) for s in cols)
+        matrix_rows.append(
+            f'          <tr><td class="rowlabel">{esc(row["label"])}</td>'
+            f'{matrix_cell(row.get("foodieflow", False), is_us=True)}{cells}</tr>'
+        )
+    matrix_body = "\n".join(matrix_rows)
+
+    # --- Links to every full comparison (so no page is orphaned) ---
     cards = []
     for c in comps:
         cards.append(f"""      <a class="other-card" href="/compare/foodieflow-vs-{c['slug']}/">
@@ -584,7 +632,7 @@ def render_hub(data):
 <header class="hero">
   <p class="eyebrow">Comparisons</p>
   <h1>FoodieFlow vs <span class="brand">the alternatives</span></h1>
-  <p class="hero-sub">Thinking of switching meal planning apps? See how FoodieFlow compares to the tools you already know — feature by feature, honestly.</p>
+  <p class="hero-sub">Thinking of switching meal planning apps? Here's FoodieFlow next to Mealime, Paprika and Plan to Eat — where we're better, and where we're not.</p>
   <div class="hero-ctas">
     <a href="/beta" class="btn-primary">Try FoodieFlow free</a>
   </div>
@@ -592,6 +640,31 @@ def render_hub(data):
 
 <section class="block">
   <div class="wrap">
+    <h2 class="section-title">How FoodieFlow compares</h2>
+    <p class="section-sub">An honest, head-to-head look at the features that matter most.</p>
+    <div class="table-card">
+      <div class="matrix-scroll">
+        <table class="matrix">
+          <thead>
+            <tr><th class="rowlabel">Feature</th><th class="col-us">FoodieFlow</th>{header_cells}</tr>
+          </thead>
+          <tbody>
+{matrix_body}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="matrix-legend">
+      <span>{TICK_SVG} Included</span>
+      <span>{CROSS_SVG} Not available</span>
+    </div>
+  </div>
+</section>
+
+<section class="block" style="background:var(--bg-warm)">
+  <div class="wrap">
+    <h2 class="section-title">Read the full comparisons</h2>
+    <p class="section-sub">Feature tables, verdicts and FAQs for each meal planning app.</p>
     <div class="other-grid">
 {cards_html}
     </div>

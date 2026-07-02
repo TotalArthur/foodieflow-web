@@ -116,6 +116,22 @@
     .v-no { color: var(--bad); font-weight: 700; }
     .v-part { color: var(--gold); font-weight: 700; }
 
+    /* MATRIX (hub) — Lucide tick / grey X */
+    .matrix-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    table.matrix { width: 100%; border-collapse: collapse; min-width: 560px; }
+    table.matrix th, table.matrix td { padding: 13px 12px; border-bottom: 1px solid var(--border); text-align: center; }
+    table.matrix thead th { background: var(--secondary); font-size: 0.82rem; font-weight: 700; }
+    table.matrix thead th.col-us, table.matrix td.col-us { background: hsl(205,55%,97%); }
+    table.matrix thead th.col-us { color: var(--primary-dark); }
+    table.matrix th.rowlabel, table.matrix td.rowlabel { text-align: left; font-weight: 700; font-size: 0.9rem; }
+    table.matrix tbody tr:last-child td { border-bottom: none; }
+    .lucide { width: 22px; height: 22px; fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; vertical-align: middle; }
+    .lucide.tick { stroke: var(--good); }
+    .lucide.cross { stroke: var(--bad); }
+    .matrix-legend { display: flex; gap: 22px; justify-content: center; flex-wrap: wrap; margin-top: 18px; font-size: 0.84rem; color: var(--muted); }
+    .matrix-legend span { display: inline-flex; align-items: center; gap: 7px; }
+    .matrix-legend .lucide { width: 17px; height: 17px; }
+
     /* SWITCH REASONS */
     .reason-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     .reason-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 24px; }
