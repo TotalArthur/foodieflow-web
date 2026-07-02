@@ -72,6 +72,8 @@
       font-size: 0.88rem; font-weight: 700; text-decoration: none;
       transition: background 0.2s, transform 0.15s;
     }
+    /* Beat `.nav-links a` specificity so the CTA text stays white, not grey. */
+    .nav-links a.nav-cta { color: white; opacity: 1; }
     .nav-cta:hover { background: var(--amber-dark); transform: translateY(-1px); }
     .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 6px; min-height: 44px; min-width: 44px; align-items: center; justify-content: center; flex-direction: column; gap: 5px; }
     .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--fore); border-radius: 2px; transition: 0.25s; }

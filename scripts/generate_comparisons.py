@@ -57,37 +57,55 @@ STYLES = """
       --good:      hsl(150, 55%, 42%);
       --bad:       hsl(0, 0%, 72%);
       --radius:    1.3rem;
-      --nav-h:     66px;
+      --nav-h:     64px;
     }
     html { scroll-behavior: smooth; }
     body { font-family: "PT Sans", sans-serif; background: var(--bg); color: var(--fore); min-height: 100vh; overflow-x: hidden; line-height: 1.5; }
     :focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; border-radius: 4px; }
     a { color: inherit; }
 
-    /* NAV */
+    /* NAV — identical to the homepage header */
     nav {
       position: sticky; top: 0; z-index: 200;
-      background: rgba(235,240,246,0.96); backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-      padding: 0 2.5rem;
-      display: flex; align-items: center; justify-content: space-between; height: var(--nav-h);
+      height: var(--nav-h);
+      padding: 0 clamp(16px, 5vw, 80px);
+      display: flex; align-items: center; justify-content: space-between;
+      background: transparent;
+      border-bottom: 1px solid transparent;
+      transition: background 0.3s, border-color 0.3s, backdrop-filter 0.3s;
+    }
+    nav.scrolled {
+      background: rgba(255,255,255,0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom-color: rgba(0,0,0,0.08);
     }
     .logo { display: flex; align-items: center; text-decoration: none; }
-    .logo img { height: 48px; width: auto; object-fit: contain; }
+    .logo img { height: 44px; width: auto; object-fit: contain; }
     .nav-links { display: flex; align-items: center; gap: 1.8rem; }
-    .nav-links a { font-size: 0.84rem; color: var(--muted); text-decoration: none; font-weight: 700; transition: color 0.2s; }
-    .nav-links a:hover { color: var(--blue); }
-    .nav-cta { display: inline-flex; align-items: center; min-height: 40px; background: var(--amber); color: #fff !important; padding: 9px 20px; border-radius: 8px; font-size: 0.84rem; font-weight: 700; text-decoration: none; transition: background 0.2s, transform 0.15s; }
+    .nav-links a { font-size: 0.88rem; color: var(--fore); text-decoration: none; font-weight: 700; opacity: 0.65; transition: color 0.2s, opacity 0.2s; }
+    .nav-links a:hover { color: var(--blue); opacity: 1; }
+    .nav-cta {
+      display: inline-flex; align-items: center; min-height: 44px;
+      background: var(--amber); color: #fff;
+      padding: 10px 22px; border-radius: 8px;
+      font-size: 0.88rem; font-weight: 700; text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    /* Beat `.nav-links a` specificity so the CTA text stays white, not grey. */
+    .nav-links a.nav-cta { color: #fff; opacity: 1; }
     .nav-cta:hover { background: var(--amber-dark); transform: translateY(-1px); }
-    .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 6px; min-height: 44px; min-width: 44px; }
-    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--fore); margin: 5px 0; border-radius: 2px; transition: 0.25s; }
+    .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 6px; min-height: 44px; min-width: 44px; align-items: center; justify-content: center; flex-direction: column; gap: 5px; }
+    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--fore); border-radius: 2px; transition: 0.25s; }
     .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .nav-hamburger.open span:nth-child(2) { opacity: 0; }
     .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    .mobile-menu { display: none; position: fixed; top: var(--nav-h); left: 0; right: 0; bottom: 0; background: rgba(235,240,246,0.98); backdrop-filter: blur(16px); z-index: 199; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
+    .mobile-menu { display: none; position: fixed; top: var(--nav-h); left: 0; right: 0; bottom: 0; background: rgba(249,248,245,0.97); backdrop-filter: blur(16px); z-index: 199; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
     .mobile-menu.open { display: flex; }
-    .mobile-menu a { font-size: 1.4rem; font-weight: 700; color: var(--fore); text-decoration: none; }
-    .mobile-menu a:hover { color: var(--blue); }
+    .mobile-menu a { font-size: 1.4rem; font-weight: 700; color: var(--fore); text-decoration: none; min-height: 44px; display: flex; align-items: center; transition: color 0.2s; }
+    .mobile-menu a:hover { color: var(--amber); }
+    .mobile-menu .mobile-cta { background: var(--amber); color: #fff; padding: 14px 36px; border-radius: 8px; font-size: 1rem; }
+    .mobile-menu .mobile-cta:hover { background: var(--amber-dark); color: #fff; }
 
     /* LAYOUT */
     .wrap { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
@@ -116,7 +134,9 @@ STYLES = """
     .section-sub { text-align: center; color: var(--muted); max-width: 560px; margin: 0 auto 30px; }
 
     /* COMPARISON TABLE */
-    .table-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    /* Card backdrop matches the highlighted column so the rounded blue border
+       has no white slivers at its corners; individual cells set their own bg. */
+    .table-card { background: hsl(205, 55%, 97%); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
     table.compare { width: 100%; border-collapse: collapse; }
     table.compare th, table.compare td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--border); font-size: 0.92rem; }
     table.compare thead th { background: var(--secondary); font-weight: 700; font-size: 0.82rem; }
@@ -133,6 +153,7 @@ STYLES = """
     .matrix-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
     table.matrix { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 560px; }
     table.matrix th, table.matrix td { padding: 13px 12px; border-bottom: 1px solid var(--border); text-align: center; }
+    table.matrix tbody td { background: var(--card); }
     table.matrix thead th { background: var(--secondary); font-size: 0.82rem; font-weight: 700; }
     table.matrix thead th.col-us, table.matrix td.col-us { background: hsl(205,55%,97%); }
     table.matrix thead th.col-us { color: var(--primary-dark); }
@@ -182,9 +203,9 @@ STYLES = """
     .store-btn:hover { transform: translateY(-2px); }
     .cta-note { color: rgba(255,255,255,0.5); font-size: 0.82rem; margin-top: 18px; }
 
-    /* OTHER COMPARISONS */
-    .other-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-    .other-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; text-decoration: none; color: var(--fore); transition: border-color 0.2s, transform 0.15s; }
+    /* OTHER COMPARISONS — flex so 2 or 3 cards stay centred */
+    .other-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+    .other-card { flex: 1 1 240px; max-width: 320px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; text-decoration: none; color: var(--fore); transition: border-color 0.2s, transform 0.15s; }
     .other-card:hover { border-color: var(--blue); transform: translateY(-2px); }
     .other-card .oc-vs { font-size: 0.76rem; color: var(--muted); font-weight: 700; }
     .other-card .oc-name { font-size: 1rem; font-weight: 700; margin-top: 2px; }
@@ -206,9 +227,8 @@ STYLES = """
     @media (max-width: 900px) {
       nav { padding: 0 1.5rem; }
       .nav-links { display: none; }
-      .nav-hamburger { display: block; }
+      .nav-hamburger { display: flex; }
       .reason-grid { grid-template-columns: 1fr; }
-      .other-grid { grid-template-columns: 1fr; }
       .footer-inner { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 600px) {
@@ -249,7 +269,7 @@ def head(title, description, canonical, jsonld=""):
 """
 
 NAV = """<!-- NAV -->
-<nav>
+<nav id="main-nav">
   <a href="/" class="logo"><img src="/logo.png" alt="FoodieFlow" /></a>
   <div class="nav-links">
     <a href="/#features">Features</a>
@@ -265,7 +285,7 @@ NAV = """<!-- NAV -->
   <a href="/#how-it-works" class="mobile-nav-link">How it works</a>
   <a href="/#pro" class="mobile-nav-link">Pricing</a>
   <a href="/compare/" class="mobile-nav-link">Compare</a>
-  <a href="/beta" class="mobile-nav-link">Join the Beta</a>
+  <a href="/beta" class="mobile-cta mobile-nav-link">Join the Beta</a>
 </div>
 """
 
@@ -299,6 +319,13 @@ FOOTER = f"""<!-- FOOTER -->
 </footer>
 
 <script>
+  /* Nav scroll effect — identical to the homepage. */
+  var mainNav = document.getElementById('main-nav');
+  if (mainNav) {{
+    var onScroll = function () {{ mainNav.classList.toggle('scrolled', window.scrollY > 80); }};
+    window.addEventListener('scroll', onScroll, {{ passive: true }});
+    onScroll();
+  }}
   var btn = document.getElementById('hamburger');
   var menu = document.getElementById('mobile-menu');
   if (btn) {{
@@ -316,6 +343,7 @@ FOOTER = f"""<!-- FOOTER -->
     }});
   }}
 </script>
+<script src="/pricing.js"></script>
 </body>
 </html>
 """
@@ -407,9 +435,14 @@ def render_comparison(data, comp, others):
     faq_items = []
     faq_ld = []
     for f in comp["faqs"]:
+        # Wrap the price so pricing.js can swap in the visitor's region-specific
+        # App Store price (same mechanism as the homepage's .rc-price-inline).
+        answer_html = esc(f["a"]).replace(
+            "£3.99", '<span class="rc-price-inline">£3.99</span>'
+        )
         faq_items.append(f"""      <details class="faq-item">
         <summary>{esc(f['q'])}<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></summary>
-        <p>{esc(f['a'])}</p>
+        <p>{answer_html}</p>
       </details>""")
         faq_ld.append({
             "@type": "Question",
