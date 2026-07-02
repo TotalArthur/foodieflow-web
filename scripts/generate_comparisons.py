@@ -115,12 +115,6 @@ STYLES = """
     .section-title { font-size: clamp(1.4rem, 3.5vw, 2rem); font-weight: 900; letter-spacing: -0.01em; margin-bottom: 10px; text-align: center; }
     .section-sub { text-align: center; color: var(--muted); max-width: 560px; margin: 0 auto 30px; }
 
-    /* VERDICT CARD */
-    .verdict { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 26px 30px; max-width: 720px; margin: 30px auto 0; }
-    .verdict h2 { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue); margin-bottom: 12px; }
-    .verdict p { color: var(--fore); line-height: 1.75; font-size: 1rem; }
-    .verdict p + p { margin-top: 12px; color: var(--muted); }
-
     /* COMPARISON TABLE */
     .table-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
     table.compare { width: 100%; border-collapse: collapse; }
@@ -137,13 +131,17 @@ STYLES = """
 
     /* MATRIX (hub) — Lucide tick / grey X */
     .matrix-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-    table.matrix { width: 100%; border-collapse: collapse; min-width: 560px; }
+    table.matrix { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 560px; }
     table.matrix th, table.matrix td { padding: 13px 12px; border-bottom: 1px solid var(--border); text-align: center; }
     table.matrix thead th { background: var(--secondary); font-size: 0.82rem; font-weight: 700; }
     table.matrix thead th.col-us, table.matrix td.col-us { background: hsl(205,55%,97%); }
     table.matrix thead th.col-us { color: var(--primary-dark); }
     table.matrix th.rowlabel, table.matrix td.rowlabel { text-align: left; font-weight: 700; font-size: 0.9rem; }
     table.matrix tbody tr:last-child td { border-bottom: none; }
+    /* Highlight the FoodieFlow column with a smooth, rounded blue border. */
+    table.matrix .col-us { border-left: 2px solid var(--blue); border-right: 2px solid var(--blue); }
+    table.matrix thead th.col-us { border-top: 2px solid var(--blue); border-top-left-radius: 12px; border-top-right-radius: 12px; }
+    table.matrix tbody tr:last-child td.col-us { border-bottom: 2px solid var(--blue); border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; }
     .lucide { width: 22px; height: 22px; fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; vertical-align: middle; }
     .lucide.tick { stroke: var(--good); }
     .lucide.cross { stroke: var(--bad); }
@@ -463,14 +461,6 @@ def render_comparison(data, comp, others):
   </div>
 </header>
 
-<div class="wrap">
-  <div class="verdict">
-    <h2>The verdict</h2>
-    <p><strong>FoodieFlow</strong> is the better fit if you want an app that decides <em>what</em> to cook — generating personalised, pantry-aware meal ideas and turning them into an aisle-sorted shopping list automatically.</p>
-    <p><strong>{esc(name)}</strong> ({esc(comp['category'])}) remains a strong choice for its own strengths, listed further down. If those match how you already work, it may suit you better.</p>
-  </div>
-</div>
-
 <section class="block" id="compare">
   <div class="wrap">
     <h2 class="section-title">Feature comparison</h2>
@@ -654,7 +644,7 @@ def render_hub(data):
 <section class="block" style="background:var(--bg-warm)">
   <div class="wrap">
     <h2 class="section-title">Read the full comparisons</h2>
-    <p class="section-sub">Feature tables, verdicts and FAQs for each meal planning app.</p>
+    <p class="section-sub">Full feature tables and FAQs for each meal planning app.</p>
     <div class="other-grid">
 {cards_html}
     </div>
