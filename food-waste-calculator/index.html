@@ -4,14 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Food Waste Calculator: How Much Is Wasted Food Costing You?</title>
-  <meta name="description" content="Find out how much money your household loses to wasted food each year, based on UK WRAP and US EPA data, then see how a pantry-aware shopping list can cut it in half." />
+  <meta name="description" content="Find out how much money your household loses to wasted food each year and what's actually going in the bin, based on UK WRAP and US EPA data, adjusted for household size." />
   <link rel="canonical" href="https://foodieflow.app/food-waste-calculator/" />
   <meta name="theme-color" content="#2a7c8a" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://foodieflow.app/food-waste-calculator/" />
   <meta property="og:site_name" content="FoodieFlow" />
   <meta property="og:title" content="Food Waste Calculator: How Much Is Wasted Food Costing You?" />
-  <meta property="og:description" content="Find out how much money your household loses to wasted food each year, based on UK WRAP and US EPA data, then see how a pantry-aware shopping list can cut it in half." />
+  <meta property="og:description" content="Find out how much money your household loses to wasted food each year and what's actually going in the bin, based on UK WRAP and US EPA data, adjusted for household size." />
   <meta property="og:image" content="https://foodieflow.app/logo.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://foodieflow.app/logo.png" />
@@ -20,7 +20,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=PT+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
-  <script type="application/ld+json">[{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://foodieflow.app/"}, {"@type": "ListItem", "position": 2, "name": "Food Waste Calculator", "item": "https://foodieflow.app/food-waste-calculator/"}]}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How much money does the average household waste on food each year?", "acceptedAnswer": {"@type": "Answer", "text": "In the UK, WRAP estimates households throw away around 4.4 million tonnes of edible food a year, worth roughly £17.5 billion in total, which works out to about £1,000 a year for an average household of four. In the US, the EPA estimated in 2025 that the average consumer loses around $728 a year to food that's bought and never eaten, or close to $2,913 a year for a household of four."}}, {"@type": "Question", "name": "How is the food waste calculator's estimate worked out?", "acceptedAnswer": {"@type": "Answer", "text": "The calculator scales published national averages (WRAP for the UK, EPA for the US) per person, then multiplies by your household size. It's a rough estimate based on national data, not a personal audit of your own kitchen, but it's a useful starting point for seeing the scale of the cost."}}, {"@type": "Question", "name": "How can I actually reduce how much food I waste?", "acceptedAnswer": {"@type": "Answer", "text": "A simple weekly habit helps most: scan your fridge and pantry for anything close to going off, then plan a meal or two around using it up before you shop for anything new. A pantry-aware meal planning app like FoodieFlow can suggest meals from what you already have and automatically leave those items off your next shopping list."}}]}]</script>
+  <script type="application/ld+json">[{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://foodieflow.app/"}, {"@type": "ListItem", "position": 2, "name": "Food Waste Calculator", "item": "https://foodieflow.app/food-waste-calculator/"}]}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How much money does the average household waste on food each year?", "acceptedAnswer": {"@type": "Answer", "text": "In the UK, WRAP's 2022 household food waste report puts the figure at around £260 per person a year, or roughly £1,000 for a four-person household. In the US, the EPA estimated in 2025 that the average consumer loses around $728 a year to food that's bought and never eaten, or close to $2,913 a year for a household of four."}}, {"@type": "Question", "name": "Do people living alone waste more food per person?", "acceptedAnswer": {"@type": "Answer", "text": "In the UK, yes. WRAP's research found single-person households waste around a third more food per person than the average household, mainly because fresh produce, meat, and bakery items go off before one person gets through them. This calculator accounts for that when you select a household of one. US data doesn't currently break this down by household size, though the EPA notes the same general pattern is likely to hold."}}, {"@type": "Question", "name": "How is the food waste calculator's estimate worked out?", "acceptedAnswer": {"@type": "Answer", "text": "The calculator scales published national averages (WRAP for the UK, EPA for the US) per person, adjusts for single-person households in the UK where WRAP has published that data, then multiplies by your household size. It's a rough estimate based on national data, not a personal audit of your own kitchen, but it's a useful starting point for seeing the scale of the cost."}}, {"@type": "Question", "name": "How can I actually reduce how much food I waste?", "acceptedAnswer": {"@type": "Answer", "text": "A simple weekly habit helps most: scan your fridge and pantry for anything close to going off, then plan a meal or two around using it up before you shop for anything new. A pantry-aware meal planning app like FoodieFlow can suggest meals from what you already have and automatically leave those items off your next shopping list."}}]}]</script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -148,6 +148,15 @@
     .result-headline { font-size: 1.5rem; font-weight: 900; color: hsl(150,45%,22%); margin-bottom: 4px; }
     .result-sub { font-size: 0.85rem; color: hsl(150,20%,38%); margin-bottom: 16px; }
     .calc-caveat { font-size: 0.78rem; color: var(--muted); margin-top: 16px; font-style: italic; }
+    .household-note { font-size: 0.82rem; color: var(--blue); background: var(--secondary); border-radius: 10px; padding: 10px 14px; margin-top: 10px; }
+
+    /* CATEGORY BREAKDOWN */
+    .breakdown-list { display: flex; flex-direction: column; gap: 14px; margin-top: 14px; }
+    .breakdown-row .b-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 6px; }
+    .breakdown-row .b-label { font-size: 0.9rem; font-weight: 700; color: var(--fore); }
+    .breakdown-row .b-amount { font-size: 0.84rem; color: var(--muted); white-space: nowrap; }
+    .breakdown-bar { height: 8px; border-radius: 4px; background: var(--bg); overflow: hidden; }
+    .breakdown-bar-fill { height: 100%; background: var(--blue); border-radius: 4px; }
 
     /* SOURCES */
     .sources-list { list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 0.88rem; color: var(--muted); }
@@ -248,8 +257,8 @@
       <div class="calc-field">
         <span class="calc-label">Currency</span>
         <div class="pill-group" id="currency-group">
-          <button type="button" class="pill-btn active" data-currency="GBP" data-symbol="&pound;" data-per-person="250">UK &pound; (WRAP)</button>
-          <button type="button" class="pill-btn" data-currency="USD" data-symbol="$" data-per-person="728">US $ (EPA)</button>
+          <button type="button" class="pill-btn active" data-currency="GBP" data-symbol="&pound;">UK &pound; (WRAP)</button>
+          <button type="button" class="pill-btn" data-currency="USD" data-symbol="$">US $ (EPA)</button>
         </div>
       </div>
 
@@ -260,6 +269,7 @@
           <span id="household-size">4</span>
           <button type="button" id="plus-btn" aria-label="Increase household size">+</button>
         </div>
+        <p class="household-note" id="household-note" style="display:none"></p>
       </div>
 
       <div class="calc-field">
@@ -272,13 +282,19 @@
       </div>
 
       <div class="calc-results">
-        <p class="result-headline" id="headline-value">&pound;1,000 <span style="font-weight:700;font-size:0.9rem;color:var(--fore)">/ year</span></p>
+        <p class="result-headline" id="headline-value">&pound;1,040 <span style="font-weight:700;font-size:0.9rem;color:var(--fore)">/ year</span></p>
         <p class="result-sub" id="headline-sub">Estimated cost of wasted food for a household of 4</p>
-        <div class="result-row"><span class="r-label">Per month</span><span class="r-value" id="monthly-value">&pound;83</span></div>
+        <div class="result-row"><span class="r-label">Per month</span><span class="r-value" id="monthly-value">&pound;87</span></div>
         <div class="result-row" id="budget-row" style="display:none"><span class="r-label">Share of your grocery budget</span><span class="r-value" id="budget-value">&ndash;</span></div>
-        <div class="result-row"><span class="r-label">Potential savings if you cut it in half</span><span class="r-value" id="halved-value">&pound;500 / year</span></div>
+        <div class="result-row"><span class="r-label">Potential savings if you cut it in half</span><span class="r-value" id="halved-value">&pound;520 / year</span></div>
       </div>
-      <p class="calc-caveat">This is a rough estimate based on national averages (WRAP for the UK, EPA for the US), scaled to your household size &mdash; not a personal audit of your own kitchen.</p>
+      <p class="calc-caveat">This is a rough estimate based on national averages (WRAP for the UK, EPA for the US), adjusted for household size where the data supports it &mdash; not a personal audit of your own kitchen.</p>
+    </div>
+
+    <div class="calc-card" style="margin-top:20px">
+      <span class="calc-label">Where it typically goes &mdash; <span id="breakdown-region">UK</span></span>
+      <div class="breakdown-list" id="breakdown-list"></div>
+      <p class="calc-hint" id="breakdown-hint" style="margin-top:14px"></p>
     </div>
 
     <div class="share-row">
@@ -291,12 +307,13 @@
 <section class="block" style="background:var(--bg-warm)">
   <div class="wrap prose">
     <h2>Where these numbers come from</h2>
-    <p>Food waste costs are easy to underestimate because they're spread across dozens of small decisions a week, not one big purchase. These figures come from two of the most cited national studies on household food waste:</p>
+    <p>Food waste costs are easy to underestimate because they're spread across dozens of small decisions a week, not one big purchase. These figures come from the most cited national studies on household food waste, not estimates we made up:</p>
     <ul class="sources-list">
-      <li><strong>UK:</strong> WRAP (the Waste and Resources Action Programme) estimates UK households throw away roughly 4.4 million tonnes of edible food a year, worth about &pound;17.5 billion, or around &pound;1,000 a year for an average household of four. <a href="https://www.wrap.ngo/take-action/love-food-hate-waste/food-waste-action-week">Source: WRAP, Food Waste Action Week</a>.</li>
-      <li><strong>US:</strong> The U.S. Environmental Protection Agency estimated in 2025 that the average consumer loses around $728 a year to food that's bought and never eaten, close to $2,913 a year for a household of four. <a href="https://www.epa.gov/food-loss-and-waste-prevention">Source: U.S. EPA, Food Loss and Waste Prevention</a>.</li>
+      <li><strong>UK baseline:</strong> WRAP's 2022 household food waste report puts the figure at about &pound;260 per person a year, or roughly &pound;1,000 for a four-person household, across 4.4 million tonnes of edible food and &pound;17.5 billion nationally. <a href="https://www.wrap.ngo/resources/report/household-food-and-drink-waste-uk-2022">Source: WRAP, Household Food and Drink Waste in the UK 2022</a>.</li>
+      <li><strong>UK single-person adjustment:</strong> WRAP's earlier research found people living alone waste around a third more food per person than the household average, mostly from fresh produce, meat, and bakery not getting used in time. <a href="https://www.wrap.ngo/resources/report/household-food-drink-waste-people-focus">Source: WRAP, Household Food and Drink Waste: A People Focus</a>.</li>
+      <li><strong>US baseline &amp; category breakdown:</strong> The EPA estimated in 2025 that the average consumer loses $728 a year to food bought and never eaten, close to $2,913 for a household of four, and published a full breakdown by food category. <a href="https://www.epa.gov/land-research/estimating-cost-food-waste-american-consumers">Source: U.S. EPA, Estimating the Cost of Food Waste to American Consumers</a>.</li>
     </ul>
-    <p>This calculator scales those per-person averages by your household size. It won't know exactly what's rotting in your specific fridge, but it puts a real number on a cost most households never actually add up.</p>
+    <p>This calculator scales those per-person averages by your household size, and adjusts for single-person households where the underlying research supports it. It won't know exactly what's rotting in your specific fridge, but it puts a real number &mdash; and a real breakdown &mdash; on a cost most households never actually add up.</p>
   </div>
 </section>
 
@@ -306,11 +323,15 @@
     <div class="faq-list">
       <details class="faq-item">
         <summary>How much money does the average household waste on food each year?<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></summary>
-        <p>In the UK, WRAP estimates households throw away around 4.4 million tonnes of edible food a year, worth roughly &pound;17.5 billion in total, which works out to about &pound;1,000 a year for an average household of four. In the US, the EPA estimated in 2025 that the average consumer loses around $728 a year to food that's bought and never eaten, or close to $2,913 a year for a household of four.</p>
+        <p>In the UK, WRAP's 2022 household food waste report puts the figure at around &pound;260 per person a year, or roughly &pound;1,000 for a four-person household. In the US, the EPA estimated in 2025 that the average consumer loses around $728 a year to food that's bought and never eaten, or close to $2,913 a year for a household of four.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Do people living alone waste more food per person?<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></summary>
+        <p>In the UK, yes. WRAP's research found single-person households waste around a third more food per person than the average household, mainly because fresh produce, meat, and bakery items go off before one person gets through them. This calculator accounts for that when you select a household of one. US data doesn't currently break this down by household size, though the EPA notes the same general pattern is likely to hold.</p>
       </details>
       <details class="faq-item">
         <summary>How is the food waste calculator's estimate worked out?<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></summary>
-        <p>The calculator scales published national averages (WRAP for the UK, EPA for the US) per person, then multiplies by your household size. It's a rough estimate based on national data, not a personal audit of your own kitchen, but it's a useful starting point for seeing the scale of the cost.</p>
+        <p>The calculator scales published national averages (WRAP for the UK, EPA for the US) per person, adjusts for single-person households in the UK where WRAP has published that data, then multiplies by your household size. It's a rough estimate based on national data, not a personal audit of your own kitchen, but it's a useful starting point for seeing the scale of the cost.</p>
       </details>
       <details class="faq-item">
         <summary>How can I actually reduce how much food I waste?<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></summary>
@@ -397,6 +418,37 @@
 
   /* Food waste calculator */
   (function () {
+    // UK: WRAP, "Household Food and Drink Waste in the UK 2022" (£260/person/year).
+    // Single-person multiplier: WRAP, "Household food and drink waste: A people focus"
+    // (2014) found one-person households waste ~33% more per person than average.
+    // US: EPA, "Estimating the Cost of Food Waste to American Consumers" (2025),
+    // $728.14/person/year. The EPA report has no US household-size breakdown.
+    var UK_PER_PERSON = 260;
+    var UK_SINGLE_MULTIPLIER = 1.33;
+    var US_PER_PERSON = 728;
+
+    // UK breakdown: WRAP 2022, share of wasted food's cost by category.
+    var UK_BREAKDOWN = [
+      ['Home-cooked meals & leftovers', 24],
+      ['Meat & fish', 17],
+      ['Fresh vegetables & salad', 15],
+      ['Bakery', 11],
+      ['Fresh fruit', 8],
+      ['Dairy & eggs', 5],
+      ['Drink', 2],
+      ['Everything else', 18]
+    ];
+    // US breakdown: EPA 2025, per-capita $ cost by category, grouped and converted to %.
+    var US_BREAKDOWN = [
+      ['Meat, poultry & fish', 34.4],
+      ['Dairy & eggs', 16.5],
+      ['Fruit', 15.2],
+      ['Vegetables', 13.6],
+      ['Added sugar & fats', 13.1],
+      ['Grains', 5.8],
+      ['Nuts & peanuts', 1.4]
+    ];
+
     var currencyGroup = document.getElementById('currency-group');
     var currencyBtns = currencyGroup.querySelectorAll('.pill-btn');
     var minusBtn = document.getElementById('minus-btn');
@@ -404,6 +456,7 @@
     var sizeEl = document.getElementById('household-size');
     var grocerySpendEl = document.getElementById('grocery-spend');
     var inputPrefix = document.getElementById('input-prefix');
+    var householdNote = document.getElementById('household-note');
 
     var headlineValue = document.getElementById('headline-value');
     var headlineSub = document.getElementById('headline-sub');
@@ -411,16 +464,52 @@
     var budgetRow = document.getElementById('budget-row');
     var budgetValue = document.getElementById('budget-value');
     var halvedValue = document.getElementById('halved-value');
+    var breakdownRegion = document.getElementById('breakdown-region');
+    var breakdownList = document.getElementById('breakdown-list');
+    var breakdownHint = document.getElementById('breakdown-hint');
 
-    var state = { symbol: '£', perPerson: 250, size: 4 };
+    var state = { currency: 'GBP', symbol: '£', size: 4 };
 
     function formatMoney(n) {
       var rounded = Math.round(n);
       return state.symbol + rounded.toLocaleString('en-US');
     }
 
+    function perPerson() {
+      if (state.currency === 'GBP') {
+        return state.size === 1 ? UK_PER_PERSON * UK_SINGLE_MULTIPLIER : UK_PER_PERSON;
+      }
+      return US_PER_PERSON;
+    }
+
+    function renderHouseholdNote() {
+      if (state.size !== 1) {
+        householdNote.style.display = 'none';
+        return;
+      }
+      householdNote.textContent = state.currency === 'GBP'
+        ? 'Single-person households waste about 33% more per person than average, per WRAP research — this estimate already accounts for that.'
+        : "US data isn't broken down by household size, so if you live alone your real number is likely higher than this estimate — the EPA notes per-person waste tends to fall as household size rises.";
+      householdNote.style.display = 'block';
+    }
+
+    function renderBreakdown(annual) {
+      var rows = state.currency === 'GBP' ? UK_BREAKDOWN : US_BREAKDOWN;
+      breakdownRegion.textContent = state.currency === 'GBP' ? 'UK' : 'US';
+      breakdownHint.textContent = state.currency === 'GBP'
+        ? "Share of wasted food's cost by category, from WRAP's 2022 UK household food waste report."
+        : "Share of wasted food's cost by category, from the EPA's 2025 per-capita food waste study.";
+      breakdownList.innerHTML = rows.map(function (r) {
+        var amount = annual * (r[1] / 100);
+        return '<div class="breakdown-row">' +
+          '<div class="b-top"><span class="b-label">' + r[0] + '</span><span class="b-amount">' + formatMoney(amount) + ' &middot; ' + r[1] + '%</span></div>' +
+          '<div class="breakdown-bar"><div class="breakdown-bar-fill" style="width:' + r[1] + '%"></div></div>' +
+          '</div>';
+      }).join('');
+    }
+
     function render() {
-      var annual = state.perPerson * state.size;
+      var annual = perPerson() * state.size;
       var monthly = annual / 12;
       var halved = annual / 2;
 
@@ -438,14 +527,17 @@
       } else {
         budgetRow.style.display = 'none';
       }
+
+      renderHouseholdNote();
+      renderBreakdown(annual);
     }
 
     currencyBtns.forEach(function (b) {
       b.addEventListener('click', function () {
         currencyBtns.forEach(function (o) { o.classList.remove('active'); });
         b.classList.add('active');
+        state.currency = b.dataset.currency;
         state.symbol = b.dataset.symbol;
-        state.perPerson = parseInt(b.dataset.perPerson, 10);
         inputPrefix.innerHTML = state.symbol;
         render();
       });
