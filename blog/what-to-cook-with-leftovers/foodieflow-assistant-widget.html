@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FoodieFlow Assistant — What Can I Make With This?</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream:     hsl(38, 45%, 96%);
+    --card:      hsl(0, 0%, 100%);
+    --fore:      hsl(222, 47%, 13%);
+    --muted:     hsl(215, 16%, 45%);
+    --gold:      hsl(42, 90%, 52%);
+    --gold-dark: hsl(38, 75%, 34%);
+    --gold-lt:   hsl(42, 90%, 94%);
+    --blue:      hsl(205, 68%, 50%);
+    --blue-lt:   hsl(205, 55%, 92%);
+    --border:    hsl(210, 28%, 88%);
+    --good:      hsl(150, 55%, 42%);
+    --rose:      hsl(358, 62%, 46%);
+    --radius:    1.1rem;
+  }
+  html, body { height: auto; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--card);
+    color: var(--fore);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .ffa { max-width: 720px; margin: 0 auto; padding: 26px 24px 28px; }
+
+  /* HEADER */
+  .ffa-head { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+  .ffa-head svg { width: 22px; height: 22px; flex-shrink: 0; }
+  .ffa-head h2 { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.01em; }
+  .ffa-sub { color: var(--muted); font-size: 0.88rem; margin: 4px 0 20px; }
+
+  /* PICKER */
+  .ffa-label { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.07em; text-transform: uppercase; color: var(--gold-dark); margin-bottom: 10px; }
+  .ffa-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(102px, 1fr)); gap: 10px; margin-bottom: 22px; }
+  .ffa-tile {
+    position: relative;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+    background: var(--cream); border: 2px solid var(--border); border-radius: 14px;
+    padding: 14px 8px 12px; cursor: pointer; font: inherit; color: var(--fore);
+    transition: background 0.15s, border-color 0.15s, transform 0.1s, box-shadow 0.15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .ffa-tile:hover { border-color: var(--gold); }
+  .ffa-tile:active { transform: scale(0.97); }
+  .ffa-tile svg { width: 28px; height: 28px; color: var(--gold-dark); transition: color 0.15s; }
+  .ffa-tile span { font-size: 0.72rem; font-weight: 700; text-align: center; line-height: 1.25; }
+  .ffa-tile.on {
+    background: var(--gold); border-color: var(--gold-dark);
+    box-shadow: 0 6px 16px rgba(190, 140, 10, 0.28);
+  }
+  .ffa-tile.on svg { color: var(--fore); }
+  .ffa-check {
+    position: absolute; top: -7px; right: -7px; width: 20px; height: 20px; border-radius: 50%;
+    background: var(--fore); color: #fff; display: none; align-items: center; justify-content: center;
+    box-shadow: 0 0 0 2px #fff;
+  }
+  .ffa-tile.on .ffa-check { display: flex; }
+  .ffa-check svg { width: 11px; height: 11px; color: #fff; }
+
+  /* GENERATE BUTTON */
+  .ffa-go {
+    display: block; width: 100%; border: none; border-radius: 100px; padding: 16px;
+    font: inherit; font-size: 0.95rem; font-weight: 800; letter-spacing: 0.03em; text-transform: uppercase;
+    background: var(--gold); color: #191305; cursor: pointer;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 10px 24px rgba(190, 140, 10, 0.28);
+  }
+  .ffa-go:not(:disabled):hover { background: hsl(42, 90%, 47%); transform: translateY(-1px); }
+  .ffa-go:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; box-shadow: none; }
+
+  /* THINKING STATE */
+  .ffa-thinking { display: none; align-items: center; justify-content: center; gap: 10px; padding: 26px 0 6px; color: var(--muted); font-size: 0.9rem; font-style: italic; }
+  .ffa-thinking.show { display: flex; }
+  .ffa-dots { display: flex; gap: 5px; }
+  .ffa-dots span { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: ffaBounce 1s infinite ease-in-out; }
+  .ffa-dots span:nth-child(2) { animation-delay: 0.15s; }
+  .ffa-dots span:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes ffaBounce { 0%, 80%, 100% { transform: translateY(0); opacity: 0.5; } 40% { transform: translateY(-6px); opacity: 1; } }
+
+  /* RESULT CARD */
+  .ffa-result { display: none; margin-top: 22px; opacity: 0; transform: translateY(6px); transition: opacity 0.35s ease, transform 0.35s ease; }
+  .ffa-result.show { display: block; opacity: 1; transform: translateY(0); }
+  .ffa-card {
+    background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 22px; display: flex; gap: 20px; align-items: center;
+  }
+  .ffa-card .ffa-eyebrow { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold-dark); margin-bottom: 6px; }
+  .ffa-card svg.ffa-illus { width: 108px; height: 108px; flex-shrink: 0; }
+  .ffa-card h3 { font-size: 1.18rem; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.01em; }
+  .ffa-card p { font-size: 0.92rem; color: var(--fore); line-height: 1.65; }
+  .ffa-again { display: inline-block; margin-top: 14px; font-size: 0.8rem; font-weight: 700; color: var(--blue); background: none; border: none; cursor: pointer; text-decoration: underline; padding: 0; font-family: inherit; }
+
+  @media (max-width: 480px) {
+    .ffa-card { flex-direction: column; align-items: flex-start; text-align: left; }
+    .ffa-card svg.ffa-illus { width: 96px; height: 96px; }
+  }
+
+  /* BOTTOM CTA — matches the blog's dark CTA panel */
+  .ffa-cta { margin-top: 26px; background: hsl(222, 47%, 10%); border-radius: var(--radius); padding: 24px 22px; text-align: center; }
+  .ffa-cta p { color: rgba(255,255,255,0.85); font-size: 0.92rem; margin-bottom: 14px; }
+  .ffa-store-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .ffa-store-btn { display: inline-flex; align-items: center; gap: 8px; background: #fff; color: var(--fore); padding: 10px 18px; border-radius: 10px; font-weight: 700; font-size: 0.85rem; text-decoration: none; transition: transform 0.15s; }
+  .ffa-store-btn:hover { transform: translateY(-2px); }
+</style>
+</head>
+<body>
+<div class="ffa">
+
+  <div class="ffa-head">
+    <svg viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l1.8 5.6L19.4 9l-5.6 1.8L12 16.4l-1.8-5.6L4.6 9l5.6-1.8L12 2z"/><path d="M19 15l.9 2.8L22.7 18.7l-2.8.9L19 22.4l-.9-2.8-2.8-.9 2.8-.9L19 15z" opacity="0.6"/></svg>
+    <h2>FoodieFlow Assistant</h2>
+  </div>
+  <p class="ffa-sub">Tell it what's hanging around in your fridge — it'll tell you what to make.</p>
+
+  <p class="ffa-label">What have you got left?</p>
+  <div class="ffa-grid" id="ffaGrid" role="group" aria-label="Select the leftovers you have"></div>
+
+  <button class="ffa-go" id="ffaGo" disabled>Generate Idea</button>
+
+  <div class="ffa-thinking" id="ffaThinking">
+    <div class="ffa-dots"><span></span><span></span><span></span></div>
+    <span>Foodie Assistant is thinking&hellip;</span>
+  </div>
+
+  <div class="ffa-result" id="ffaResult">
+    <div class="ffa-card">
+      <div id="ffaIllus"></div>
+      <div>
+        <p class="ffa-eyebrow">Tonight's idea</p>
+        <h3 id="ffaName"></h3>
+        <p id="ffaMethod"></p>
+        <button class="ffa-again" id="ffaAgain">&larr; Try a different combo</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="ffa-cta">
+    <p>Like this? FoodieFlow can save recipes like this one for good.</p>
+    <div class="ffa-store-btns">
+      <a href="https://testflight.apple.com/join/kZ1grhwj" class="ffa-store-btn" target="_blank" rel="noopener noreferrer">
+        <svg width="16" height="19" viewBox="0 0 814 1000" fill="#111" aria-hidden="true"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-57.8-155.5-127.4C46 790.7 0 663 0 541.8c0-207.5 135.4-317.3 269-317.3 70.1 0 128.4 46.4 172.5 46.4 42.8 0 109.6-49 192.5-49 30.9 0 113.8 2.6 168.9 98.3zm-234.8-181.4c31.3-36.9 53.7-88.1 53.7-139.3 0-7.1-.6-14.3-1.9-20.1-50.6 1.9-110.8 33.7-147.1 75.8-28.5 32.4-55.1 83.6-55.1 135.5 0 7.8 1.3 15.6 1.9 18.1 3.2.6 8.4 1.3 13.6 1.3 45.4 0 102.5-30.4 134.9-71.3z"/></svg>
+        App Store
+      </a>
+      <a href="https://play.google.com/store/apps/details?id=com.foodieflow.app" class="ffa-store-btn" target="_blank" rel="noopener noreferrer">
+        <svg width="16" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.18 23.76a2 2 0 0 0 2.08-.21l11.39-6.58-3.22-3.22L3.18 23.76z" fill="#111"/><path d="M21.28 10.4 17.64 8.3 14.1 11.86l3.54 3.54 3.64-2.1a2 2 0 0 0 0-3.46z" fill="#111"/><path d="M3.18.24A2 2 0 0 0 2 2v20a2 2 0 0 0 1.18 1.76L13.38 12 3.18.24z" fill="#111"/><path d="M5.26.45 16.65 7.03 13.38 10.3 3.18.24A2 2 0 0 1 5.26.45z" fill="#111"/></svg>
+        Google Play
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- tile icons (single-colour line art, recolours via currentColor) ---------- */
+  var ICONS = {
+    rice:    '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16c0 6 4.5 10 10 10s10-4 10-10" /><path d="M4 16h24" /><circle cx="12" cy="9" r="1.4" fill="currentColor" stroke="none"/><circle cx="16" cy="6.5" r="1.4" fill="currentColor" stroke="none"/><circle cx="20" cy="9" r="1.4" fill="currentColor" stroke="none"/></svg>',
+    chicken: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6c3 0 6 3 6 7 0 5-4 6-6 10-1 2-2 3-4 3s-2-2-1-4c1-2 1-3-1-3-3 0-5-2-5-5 0-5 5-8 8-8" /><circle cx="21" cy="10" r="1.2" fill="currentColor" stroke="none"/></svg>',
+    mash:    '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20c0-6 5-10 11-10s11 4 11 10" /><path d="M4 20h24" /><rect x="14" y="7" width="4" height="3" rx="0.6" fill="currentColor" stroke="none"/></svg>',
+    pasta:   '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22c0-8 3-14 3-14M11 24c0-9 4-16 4-16M16 25c0-10 4-18 4-18M21 24c0-9 3.5-15 3.5-15" /><path d="M4 24h24" /></svg>',
+    veg:     '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12.5" cy="10" r="3.2"/><circle cx="18" cy="8.5" r="3.2"/><circle cx="20.5" cy="13" r="3.2"/><circle cx="14.5" cy="14" r="3.2"/><rect x="15" y="17" width="3" height="8" rx="1"/><path d="M11 27h11" /></svg>',
+    bread:   '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15c0-6 4.5-9 11-9s11 3 11 9v9H5v-9z" /><circle cx="13" cy="14" r="1" fill="currentColor" stroke="none"/><circle cx="19" cy="14" r="1" fill="currentColor" stroke="none"/></svg>',
+    cheese:  '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 24L16 6l12 18z" /><circle cx="14" cy="19" r="1.3" fill="currentColor" stroke="none"/><circle cx="19" cy="16" r="1.3" fill="currentColor" stroke="none"/><circle cx="17" cy="21.5" r="1.1" fill="currentColor" stroke="none"/></svg>',
+    bacon:   '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9c6 3 16-4 22 1-4 3-4 6 0 8-6 4-16-2-22 1" /><path d="M6 15c6 3 15-3 20 1" /></svg>',
+    eggs:    '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 15c0-4 1.8-8 4.5-8s4.5 4 4.5 8a4.5 4.5 0 0 1-9 0z"/><path d="M18 18c0-4 1.8-8 4.5-8s4.5 4 4.5 8a4.5 4.5 0 0 1-9 0z"/><circle cx="13.5" cy="16" r="1.6" fill="currentColor" stroke="none"/><circle cx="22.5" cy="19" r="1.6" fill="currentColor" stroke="none"/></svg>',
+    beans:   '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 10h14v15a2 2 0 0 1-2 2H11a2 2 0 0 1-2-2V10z" /><path d="M8 10h16" /><path d="M11 10V7h10v3" /></svg>',
+    sauce:   '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 8h10v6c0 5-2 12-5 12s-5-7-5-12V8z" /><path d="M19 12c3 0 5 1.5 5 3.5S22 19 19 19" /><path d="M8 8h12" /></svg>'
+  };
+
+  var LABELS = {
+    rice: 'Rice', chicken: 'Roast Chicken / Turkey', mash: 'Mashed Potato', pasta: 'Pasta',
+    veg: 'Mixed Veg', bread: 'Stale Bread', cheese: 'Cheese Ends', bacon: 'Cooked Bacon',
+    eggs: 'Boiled Eggs', beans: 'Tinned Beans', sauce: 'Leftover Sauce / Gravy'
+  };
+  var ORDER = ['rice','chicken','mash','pasta','veg','bread','cheese','bacon','eggs','beans','sauce'];
+
+  /* ---------- result illustrations (flat, warm-palette SVGs) ---------- */
+  var GOLD = 'hsl(42,90%,52%)', GOLD_D = 'hsl(38,70%,42%)', CREAM = 'hsl(38,45%,92%)',
+      BROWN = 'hsl(28,45%,32%)', GREEN = 'hsl(150,45%,45%)', RED = 'hsl(6,70%,55%)',
+      PLATE = 'hsl(35,40%,88%)';
+
+  function plate(inner) {
+    return '<svg class="ffa-illus" viewBox="0 0 120 120" aria-hidden="true">' +
+      '<ellipse cx="60" cy="88" rx="46" ry="10" fill="' + PLATE + '" opacity="0.6"/>' +
+      '<circle cx="60" cy="58" r="46" fill="' + CREAM + '"/>' +
+      inner +
+      '</svg>';
+  }
+
+  var ILLUS = {
+    friedRice: plate(
+      '<circle cx="60" cy="58" r="34" fill="' + GOLD + '" opacity="0.18"/>' +
+      Array.from({length:16}).map(function(_,i){
+        var a = (i/16)*Math.PI*2, r = 14 + (i%3)*7;
+        var x = 60 + Math.cos(a)*r, y = 58 + Math.sin(a)*r*0.7;
+        var c = i%4===0 ? GREEN : (i%3===0 ? RED : GOLD_D);
+        return '<ellipse cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" rx="3.2" ry="2.1" fill="'+c+'"/>';
+      }).join('')
+    ),
+    curry: plate(
+      '<circle cx="52" cy="60" r="30" fill="' + RED + '" opacity="0.85"/>' +
+      '<path d="M28 55c8-4 48-4 56 0" stroke="hsl(30,70%,92%)" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.7"/>' +
+      '<ellipse cx="88" cy="66" rx="16" ry="12" fill="hsl(0,0%,98%)"/>' +
+      '<circle cx="40" cy="48" r="2" fill="' + GREEN + '"/><circle cx="60" cy="42" r="2" fill="' + GREEN + '"/>'
+    ),
+    bubbleSqueak: plate(
+      '<ellipse cx="60" cy="60" rx="30" ry="14" fill="' + BROWN + '" opacity="0.25"/>' +
+      '<ellipse cx="60" cy="56" rx="27" ry="16" fill="' + GOLD_D + '"/>' +
+      '<circle cx="48" cy="52" r="2.4" fill="' + GREEN + '"/><circle cx="66" cy="48" r="2.4" fill="' + GREEN + '"/><circle cx="58" cy="62" r="2.4" fill="' + GREEN + '"/>'
+    ),
+    potatoCakes: plate(
+      '<ellipse cx="52" cy="66" rx="24" ry="10" fill="' + GOLD_D + '"/>' +
+      '<ellipse cx="66" cy="54" rx="24" ry="10" fill="' + GOLD + '"/>'
+    ),
+    frittata: plate(
+      '<circle cx="60" cy="58" r="32" fill="hsl(30,15%,25%)" opacity="0.12"/>' +
+      '<circle cx="60" cy="58" r="27" fill="hsl(48,85%,62%)"/>' +
+      '<circle cx="50" cy="50" r="3" fill="' + RED + '"/><circle cx="70" cy="64" r="3" fill="' + RED + '"/><circle cx="66" cy="46" r="2" fill="' + GREEN + '"/>'
+    ),
+    pastaBake: plate(
+      '<rect x="30" y="42" width="60" height="32" rx="6" fill="' + GOLD_D + '" opacity="0.9"/>' +
+      '<path d="M34 50c8-4 16 4 24 0s16 4 24 0" stroke="hsl(45,90%,90%)" stroke-width="3" fill="none" stroke-linecap="round"/>' +
+      '<path d="M34 60c8-4 16 4 24 0s16 4 24 0" stroke="hsl(45,90%,90%)" stroke-width="3" fill="none" stroke-linecap="round"/>' +
+      '<circle cx="44" cy="46" r="2.4" fill="' + RED + '"/><circle cx="76" cy="68" r="2.4" fill="' + RED + '"/>'
+    ),
+    pastaSalad: plate(
+      '<path d="M36 50c6-6 12 6 18 0s12 6 18 0 12 6 18 0" stroke="' + GOLD_D + '" stroke-width="6" fill="none" stroke-linecap="round"/>' +
+      '<path d="M36 64c6-6 12 6 18 0s12 6 18 0 12 6 18 0" stroke="' + GOLD_D + '" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.75"/>' +
+      '<circle cx="44" cy="42" r="3" fill="' + RED + '"/><circle cx="70" cy="74" r="3" fill="' + RED + '"/><circle cx="80" cy="44" r="2.4" fill="' + GREEN + '"/>'
+    ),
+    soup: plate(
+      '<path d="M30 52a30 30 0 0 0 60 0z" fill="' + RED + '" opacity="0.85"/>' +
+      '<path d="M30 52h60" stroke="' + RED + '" stroke-width="2" opacity="0.85"/>' +
+      '<path d="M46 26c-2 4 4 5 2 9M62 26c-2 4 4 5 2 9" stroke="hsl(210,15%,70%)" stroke-width="2.4" fill="none" stroke-linecap="round" opacity="0.8"/>' +
+      '<rect x="86" y="58" width="14" height="4" rx="2" fill="' + BROWN + '" transform="rotate(28 86 58)"/>'
+    ),
+    sandwich: plate(
+      '<path d="M32 66l28-30 28 30z" fill="' + GOLD_D + '"/>' +
+      '<rect x="34" y="60" width="52" height="6" fill="' + GREEN + '"/>' +
+      '<rect x="34" y="66" width="52" height="6" fill="' + RED + '" opacity="0.85"/>' +
+      '<path d="M30 72l30-28 30 28z" fill="' + GOLD + '"/>'
+    ),
+    frenchToast: plate(
+      '<rect x="38" y="60" width="44" height="16" rx="4" fill="' + GOLD_D + '"/>' +
+      '<rect x="34" y="48" width="44" height="16" rx="4" fill="' + GOLD + '"/>' +
+      '<path d="M30 44c6-4 8 4 14 0s8 4 14 0 8 4 14 0" stroke="' + BROWN + '" stroke-width="2.4" fill="none" stroke-linecap="round" opacity="0.7"/>' +
+      '<circle cx="46" cy="70" r="2.6" fill="hsl(230,45%,35%)"/><circle cx="60" cy="58" r="2.6" fill="hsl(230,45%,35%)"/><circle cx="70" cy="70" r="2.6" fill="hsl(230,45%,35%)"/>'
+    ),
+    croutons: plate(
+      Array.from({length:9}).map(function(_,i){
+        var x = 40 + (i%3)*16, y = 44 + Math.floor(i/3)*16;
+        return '<rect x="'+x+'" y="'+y+'" width="12" height="12" rx="2.5" fill="' + (i%2===0?GOLD_D:GOLD) + '"/>';
+      }).join('')
+    ),
+    cheeseBoard: plate(
+      '<rect x="26" y="46" width="68" height="28" rx="6" fill="' + BROWN + '" opacity="0.8"/>' +
+      '<path d="M36 68V54l16 14z" fill="hsl(48,85%,70%)"/>' +
+      '<circle cx="66" cy="60" r="10" fill="hsl(45,70%,80%)"/>' +
+      '<circle cx="63" cy="57" r="1.4" fill="' + BROWN + '"/><circle cx="69" cy="63" r="1.4" fill="' + BROWN + '"/>' +
+      '<circle cx="84" cy="64" r="3" fill="' + RED + '"/><circle cx="88" cy="60" r="3" fill="' + RED + '"/>'
+    ),
+    gravy: plate(
+      '<path d="M42 38h26v18c0 12-5 26-13 26s-13-14-13-26V38z" fill="' + BROWN + '"/>' +
+      '<path d="M68 46c8 0 13 4 13 9s-5 9-13 9" stroke="' + BROWN + '" stroke-width="5" fill="none" stroke-linecap="round"/>' +
+      '<path d="M40 38h30" stroke="' + BROWN + '" stroke-width="3" stroke-linecap="round"/>'
+    ),
+    eggsIllus: plate(
+      '<ellipse cx="46" cy="60" rx="16" ry="20" fill="hsl(45,60%,96%)"/>' +
+      '<ellipse cx="74" cy="60" rx="16" ry="20" fill="hsl(45,60%,96%)"/>' +
+      '<circle cx="46" cy="62" r="6" fill="' + GOLD + '"/><circle cx="74" cy="62" r="6" fill="' + GOLD + '"/>'
+    ),
+    mystery: plate(
+      '<ellipse cx="60" cy="66" rx="34" ry="14" fill="hsl(220,15%,22%)"/>' +
+      '<rect x="94" y="60" width="20" height="7" rx="3.5" fill="hsl(220,15%,22%)"/>' +
+      '<text x="60" y="60" font-size="26" font-weight="800" fill="' + GOLD_D + '" text-anchor="middle" font-family="sans-serif">?</text>'
+    )
+  };
+
+  /* ---------- recipe rules, most specific combos first, single items last ---------- */
+  var RULES = [
+    { need: ['rice','chicken','veg'], name: 'Fried Rice with Chicken & Veg',
+      method: "Get a wok or wide pan properly hot with a splash of oil, then fry the cold rice hard and fast with the chopped chicken and whatever veg needs using up. Keep it all moving so nothing catches, and finish with a slug of soy sauce and a touch of sesame oil.",
+      svg: 'friedRice' },
+    { need: ['rice','veg'], name: 'Veggie Fried Rice',
+      method: "Cold rice fries up better than fresh, since the grains stay separate instead of turning gluey. Get the pan properly hot, add your chopped veg first, then the rice, and keep it moving until everything's hot through. Soy sauce and a touch of sesame oil to finish.",
+      svg: 'friedRice' },
+    { need: ['rice','chicken'], name: 'Chicken Fried Rice',
+      method: "Fry the cold rice hard and fast in a hot, oiled wok, then stir the chopped chicken through right at the end so it warms without drying out. A splash of soy sauce and it's basically a takeaway.",
+      svg: 'friedRice' },
+    { need: ['mash','veg'], name: 'Bubble and Squeak',
+      method: "Fry the mash together with whatever cooked veg you've got — cabbage, carrots, sprouts, all of it — until it picks up a proper golden crust on the outside. A classic for a reason, and it'll clear more odds and ends than almost anything else on this list.",
+      svg: 'bubbleSqueak' },
+    { need: ['mash','sauce'], name: 'Loaded Potato Cakes',
+      method: "Mix the mash with an egg and a handful of flour, shape into patties, and fry in butter until crisp on both sides. Serve with your leftover gravy poured straight over the top — no shepherd's pie required.",
+      svg: 'potatoCakes' },
+    { need: ['pasta','veg'], name: 'Leftover Pasta Frittata',
+      method: "Whisk a couple of eggs with a splash of milk, stir through the cold pasta and whatever veg is lurking in the fridge, then pour into a hot, oiled pan. Cook low and slow until set, finishing under the grill if the top needs it.",
+      svg: 'frittata' },
+    { need: ['pasta','cheese'], name: 'Cheesy Pasta Bake',
+      method: "Toss the cold pasta with a splash more sauce (or a knob of butter if you're out), tip into a dish, bury it under every cheese end you've got, and bake until bubbling and properly golden.",
+      svg: 'pastaBake' },
+    { need: ['veg','beans'], name: 'Leftover Veg & Bean Soup',
+      method: "Chuck whatever veg you've got into a pot with stock and a tin of beans, and simmer until everything's soft. Blend it smooth or leave it chunky, whichever you prefer — either way it's one of the easiest ways to clear the crisper drawer in one go.",
+      svg: 'soup' },
+    { need: ['chicken','bread'], name: 'Crispy Chicken Toastie',
+      method: "Shred the chicken, toss it with a little mayo or leftover sauce, and pile it onto your stale bread. Fry in butter until the outside's crisp and golden — stale bread genuinely holds up better here than fresh.",
+      svg: 'sandwich' },
+    { need: ['chicken','veg'], name: 'Quick Chicken & Veg Soup',
+      method: "Simmer the chicken with stock, your leftover veg and a chopped onion for 20 to 30 minutes. Add rice or noodles near the end if you want it to go further.",
+      svg: 'soup' },
+    { need: ['bread','eggs'], name: 'Proper French Toast',
+      method: "Whisk the eggs with a splash of milk and a bit of cinnamon, dunk the stale bread, and fry it in butter until golden on both sides. Stale bread actually works better here — it soaks up the custard without falling apart.",
+      svg: 'frenchToast' },
+    { need: ['bacon','eggs','bread'], name: 'Bacon & Egg Bread Bake',
+      method: "Tear the bread into a dish, scatter over the chopped bacon, then pour over the beaten eggs and a splash of milk. Bake until set and golden — basically a lazy, savoury bread pudding that clears three things at once.",
+      svg: 'frenchToast' },
+    { need: ['cheese','bread'], name: 'Leftover Cheese Toastie',
+      method: "Butter the stale bread, pile in every cheese end you've got, and fry until the outside's crisp and the middle's properly melted. Simple, and it always works.",
+      svg: 'sandwich' },
+    { need: ['pasta','sauce'], name: 'Pasta in Leftover Sauce',
+      method: "Warm your leftover sauce or gravy through in a pan, stir in the cold pasta, and heat until everything's coated and steaming. A splash of pasta water (or plain water) loosens it up if it's gone thick.",
+      svg: 'pastaBake' },
+    { need: ['beans','bread'], name: 'Beans on Toast, Upgraded',
+      method: "Warm the beans through with a pinch of chilli flakes and a splash of Worcestershire sauce, then pile onto your stale bread, toasted. Grate over any cheese ends you've got while you're at it.",
+      svg: 'sandwich' },
+    { need: ['bacon','bread'], name: 'Bacon Butty',
+      method: "Fry the bacon up hot and crisp, then pile it into your stale bread with a good squeeze of ketchup or brown sauce. Some problems don't need solving, they need eating.",
+      svg: 'sandwich' },
+    { need: ['eggs','veg'], name: 'Veg & Egg Frittata',
+      method: "Whisk the eggs, stir through whatever veg needs using up, and pour into a hot, oiled pan. Cook low and slow until set, finishing under the grill — veg plus egg is nearly always a meal.",
+      svg: 'frittata' },
+    { need: ['rice','sauce'], name: 'Gravy-Loaded Rice',
+      method: "Fry the cold rice hard and fast to warm it through, then pour your leftover sauce or gravy over the top right at the end. Ridiculously easy, ridiculously good.",
+      svg: 'friedRice' },
+    /* single-item fallbacks */
+    { need: ['rice'], name: 'Simple Fried Rice',
+      method: "Get a wok or wide pan properly hot, add a splash of oil, then fry the cold rice hard and fast so the grains separate instead of turning gluey. Finish with soy sauce and a touch of sesame oil.",
+      svg: 'friedRice' },
+    { need: ['chicken'], name: 'Simple Chicken Curry',
+      method: "Fry an onion, garlic and ginger, stir in curry powder or paste, then add a tin of tomatoes or coconut milk. Stir the shredded chicken through right at the end so it stays juicy instead of drying out further.",
+      svg: 'curry' },
+    { need: ['mash'], name: 'Crispy Potato Cakes',
+      method: "Mix the mash with an egg and a handful of flour, shape into patties, and fry in a little butter until crisp on both sides. Dunk in ketchup, brown sauce, whatever you fancy.",
+      svg: 'potatoCakes' },
+    { need: ['pasta'], name: 'Cold Pasta Salad',
+      method: "Toss the cold pasta with olive oil, a squeeze of lemon and whatever's lurking in the fridge that needs using. Eat cold, straight from the bowl, ideally standing up at the counter.",
+      svg: 'pastaSalad' },
+    { need: ['veg'], name: 'One-Pot Veg Soup',
+      method: "Simmer whatever veg you've got in stock until soft, then blend it smooth if you fancy, or leave it chunky. Genuinely the easiest thing on this whole list.",
+      svg: 'soup' },
+    { need: ['bread'], name: 'Golden Croutons',
+      method: "Cube the bread up, toss in oil and whatever herbs you've got, and bake until crisp. Keeps for weeks in a jar and makes every soup and salad better.",
+      svg: 'croutons' },
+    { need: ['cheese'], name: 'Cheese Board With a Twist',
+      method: "Honestly? Put it on a board with crackers and a bit of chutney and call it dinner. Not everything needs to be a recipe.",
+      svg: 'cheeseBoard' },
+    { need: ['bacon'], name: 'Bacon Butty',
+      method: "Fry it up hot and crisp, then pile it into whatever bread you've got with a good squeeze of ketchup. Some problems don't need solving, they need eating.",
+      svg: 'sandwich' },
+    { need: ['eggs'], name: 'Egg Mayo, Straight Up',
+      method: "Mash the boiled eggs with a spoonful of mayo, a pinch of salt and pepper, and (if you've got it) a spoonful of leftover sauce for extra flavour. Great on toast, a cracker, or straight off the spoon.",
+      svg: 'eggsIllus' },
+    { need: ['beans'], name: 'Loaded Beans',
+      method: "Warm the tin through with a pinch of chilli flakes and a splash of Worcestershire sauce, then pile onto toast or stir into whatever grain you've got. Ten minutes, done.",
+      svg: 'soup' },
+    { need: ['sauce'], name: 'Gravy Rescue',
+      method: "Warm it through and pour it over literally anything — mash, rice, a fried egg, even toast. Waste not.",
+      svg: 'gravy' }
+  ];
+
+  var MYSTERY = { name: 'The Countertop Special',
+    method: "Honestly, that combo doesn't scream one specific dish — so just wing it. Heat a pan, add a splash of oil, throw everything in together, season well, and taste as you go. That's most weeknight dinners anyway.",
+    svg: 'mystery' };
+
+  function matches(need, selected) {
+    for (var j = 0; j < need.length; j++) { if (!selected.has(need[j])) return false; }
+    return true;
+  }
+
+  function pickRecipe(selected) {
+    /* With 2+ things picked, only match a rule that accounts for a real combo —
+       don't quietly fall back to a single ingredient's idea and ignore the rest. */
+    if (selected.size > 1) {
+      for (var i = 0; i < RULES.length; i++) {
+        if (RULES[i].need.length >= 2 && matches(RULES[i].need, selected)) return RULES[i];
+      }
+      return MYSTERY;
+    }
+    for (var k = 0; k < RULES.length; k++) {
+      if (RULES[k].need.length === 1 && matches(RULES[k].need, selected)) return RULES[k];
+    }
+    return MYSTERY;
+  }
+
+  /* ---------- build the picker grid ---------- */
+  var grid = document.getElementById('ffaGrid');
+  var selected = new Set();
+
+  ORDER.forEach(function (key) {
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'ffa-tile';
+    btn.setAttribute('aria-pressed', 'false');
+    btn.innerHTML = ICONS[key] + '<span>' + LABELS[key] + '</span>' +
+      '<span class="ffa-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 9 17 20 6"/></svg></span>';
+    btn.addEventListener('click', function () {
+      if (selected.has(key)) { selected.delete(key); btn.classList.remove('on'); btn.setAttribute('aria-pressed', 'false'); }
+      else { selected.add(key); btn.classList.add('on'); btn.setAttribute('aria-pressed', 'true'); }
+      go.disabled = selected.size === 0;
+      reportHeight();
+    });
+    grid.appendChild(btn);
+  });
+
+  var go = document.getElementById('ffaGo');
+  var thinking = document.getElementById('ffaThinking');
+  var result = document.getElementById('ffaResult');
+  var again = document.getElementById('ffaAgain');
+
+  go.addEventListener('click', function () {
+    if (selected.size === 0) return;
+    result.classList.remove('show');
+    go.disabled = true;
+    thinking.classList.add('show');
+    reportHeight();
+
+    var chosen = new Set(selected);
+    setTimeout(function () {
+      var recipe = pickRecipe(chosen);
+      document.getElementById('ffaName').textContent = recipe.name;
+      document.getElementById('ffaMethod').textContent = recipe.method;
+      document.getElementById('ffaIllus').innerHTML = ILLUS[recipe.svg];
+      thinking.classList.remove('show');
+      result.classList.add('show');
+      go.disabled = selected.size === 0;
+      reportHeight();
+    }, 1300 + Math.random() * 400);
+  });
+
+  again.addEventListener('click', function () {
+    result.classList.remove('show');
+    reportHeight();
+  });
+
+  /* ---------- tell the parent page how tall we are, so the iframe can resize ---------- */
+  function reportHeight() {
+    try {
+      var h = document.documentElement.scrollHeight;
+      window.parent.postMessage({ foodieflowAssistantHeight: h }, '*');
+    } catch (e) { /* standalone, no parent to report to */ }
+  }
+  window.addEventListener('load', reportHeight);
+  window.addEventListener('resize', reportHeight);
+  setTimeout(reportHeight, 300);
+})();
+</script>
+</body>
+</html>

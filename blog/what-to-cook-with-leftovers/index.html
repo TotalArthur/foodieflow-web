@@ -181,6 +181,10 @@
     .freezer-col.no li::before { content: "✕"; position: absolute; left: 0; color: var(--rose); font-weight: 700; }
     @media (max-width: 640px) { .freezer-grid { grid-template-columns: 1fr; } }
 
+    /* ASSISTANT WIDGET EMBED */
+    .widget-embed { max-width: 760px; margin: 0 auto; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); box-shadow: 0 14px 40px rgba(30,20,10,0.10); background: #fff; }
+    .widget-embed iframe { width: 100%; border: none; display: block; }
+
     /* FOODIEFLOW CALLOUT SECTION */
     .flow-section { background: hsl(222,47%,10%); border-radius: var(--radius); padding: 40px 36px; }
     .flow-section h2 { color: #fff; }
@@ -465,6 +469,16 @@
 
 <section class="block">
   <div class="wrap">
+    <h2 style="text-align:center">Try It: What's Actually In Your Fridge?</h2>
+    <p style="text-align:center; max-width:600px; margin:0 auto 24px; color:var(--muted);">Pick whatever you've really got lying around and see what Foodie Assistant reckons you should make with it.</p>
+    <div class="widget-embed">
+      <iframe id="ffa-iframe" src="/blog/what-to-cook-with-leftovers/foodieflow-assistant-widget.html" title="FoodieFlow Assistant: pick your leftovers and get a recipe idea" loading="lazy" height="620"></iframe>
+    </div>
+  </div>
+</section>
+
+<section class="block" style="background:var(--bg-warm)">
+  <div class="wrap">
     <div class="flow-section">
       <p class="eyebrow" style="color:var(--gold)">How FoodieFlow Helps</p>
       <h2>How FoodieFlow Makes This Actually Easy</h2>
@@ -616,6 +630,14 @@
       });
     });
   }
+
+  /* Let the FoodieFlow Assistant widget resize its own iframe as its content changes. */
+  window.addEventListener('message', function (e) {
+    if (e.data && typeof e.data.foodieflowAssistantHeight === 'number') {
+      var f = document.getElementById('ffa-iframe');
+      if (f) f.style.height = e.data.foodieflowAssistantHeight + 'px';
+    }
+  });
 </script>
 <script src="/pricing.js"></script>
 </body>
