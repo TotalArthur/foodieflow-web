@@ -27,8 +27,13 @@
   </url>
   <url>
     <loc>https://foodieflow.app/blog/</loc>
-    <lastmod>2026-07-05</lastmod>
+    <lastmod>2026-07-07</lastmod>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://foodieflow.app/blog/what-to-cook-with-leftovers/</loc>
+    <lastmod>2026-07-07</lastmod>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://foodieflow.app/blog/best-meal-planning-apps-2026/</loc>
