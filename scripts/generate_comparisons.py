@@ -30,7 +30,7 @@ TODAY = date.today()
 UPDATED_LABEL = TODAY.strftime("%B %Y")
 
 # Static, indexable pages that already exist in the repo, for the sitemap.
-STATIC_PAGES = ["/", "/beta/", "/support/", "/privacy/", "/terms/"]
+STATIC_PAGES = ["/", "/download/", "/support/", "/privacy/", "/terms/"]
 
 
 def esc(text):
@@ -276,7 +276,7 @@ NAV = """<!-- NAV -->
     <a href="/#how-it-works">How it works</a>
     <a href="/#pro">Pricing</a>
     <a href="/compare/">Compare</a>
-    <a href="/beta" class="nav-cta">Join the Beta</a>
+    <a href="/download" class="nav-cta">Download the App</a>
   </div>
   <button class="nav-hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
 </nav>
@@ -285,7 +285,7 @@ NAV = """<!-- NAV -->
   <a href="/#how-it-works" class="mobile-nav-link">How it works</a>
   <a href="/#pro" class="mobile-nav-link">Pricing</a>
   <a href="/compare/" class="mobile-nav-link">Compare</a>
-  <a href="/beta" class="mobile-cta mobile-nav-link">Join the Beta</a>
+  <a href="/download" class="mobile-cta mobile-nav-link">Download the App</a>
 </div>
 """
 
@@ -349,7 +349,7 @@ FOOTER = f"""<!-- FOOTER -->
 """
 
 STORE_BUTTONS = """    <div class="store-btns">
-      <a href="https://testflight.apple.com/join/kZ1grhwj" class="store-btn" target="_blank" rel="noopener noreferrer">
+      <a href="https://apps.apple.com/us/app/foodieflow-meal-planner/id6760259767" class="store-btn" target="_blank" rel="noopener noreferrer">
         <svg width="18" height="22" viewBox="0 0 814 1000" fill="#111" aria-hidden="true"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-57.8-155.5-127.4C46 790.7 0 663 0 541.8c0-207.5 135.4-317.3 269-317.3 70.1 0 128.4 46.4 172.5 46.4 42.8 0 109.6-49 192.5-49 30.9 0 113.8 2.6 168.9 98.3zm-234.8-181.4c31.3-36.9 53.7-88.1 53.7-139.3 0-7.1-.6-14.3-1.9-20.1-50.6 1.9-110.8 33.7-147.1 75.8-28.5 32.4-55.1 83.6-55.1 135.5 0 7.8 1.3 15.6 1.9 18.1 3.2.6 8.4 1.3 13.6 1.3 45.4 0 102.5-30.4 134.9-71.3z"/></svg>
         App Store
       </a>
@@ -489,7 +489,7 @@ def render_comparison(data, comp, others):
   <h1>FoodieFlow <span class="vs">vs</span> {esc(name)}</h1>
   <p class="hero-sub">{esc(comp['summary'])} Here's how the two apps compare — and why meal planners are switching to FoodieFlow.</p>
   <div class="hero-ctas">
-    <a href="/beta" class="btn-primary">Try FoodieFlow free</a>
+    <a href="/download" class="btn-primary">Try FoodieFlow free</a>
     <a href="#compare" class="btn-ghost">See the comparison</a>
   </div>
 </header>
@@ -647,7 +647,7 @@ def render_hub(data):
   <h1>FoodieFlow vs <span class="brand">the alternatives</span></h1>
   <p class="hero-sub">Thinking of switching meal planning apps? Here's FoodieFlow next to Mealime, Paprika and Plan to Eat — including the smart-planning and recipe-import features you won't find elsewhere.</p>
   <div class="hero-ctas">
-    <a href="/beta" class="btn-primary">Try FoodieFlow free</a>
+    <a href="/download" class="btn-primary">Try FoodieFlow free</a>
   </div>
 </header>
 
