@@ -182,6 +182,27 @@
     veg: 'Mixed Veg', bread: 'Stale Bread', cheese: 'Cheese Ends', bacon: 'Cooked Bacon',
     eggs: 'Boiled Eggs', beans: 'Tinned Beans', sauce: 'Leftover Sauce / Gravy'
   };
+  /* Natural-sentence versions of the labels above, for the dynamic "you've also got..." clause. */
+  var LOWER_LABELS = {
+    rice: 'rice', chicken: 'roast chicken', mash: 'mashed potato', pasta: 'pasta',
+    veg: 'mixed veg', bread: 'stale bread', cheese: 'cheese ends', bacon: 'cooked bacon',
+    eggs: 'boiled eggs', beans: 'tinned beans', sauce: 'leftover sauce or gravy'
+  };
+  /* A short, casual stir-in suggestion for each ingredient, used when it's selected
+     but isn't part of the matched dish — so nothing picked gets silently ignored. */
+  var EXTRAS = {
+    rice: "stir a handful of the rice through to bulk it out",
+    chicken: "shred the chicken in too, right at the end so it doesn't dry out",
+    mash: "a spoonful of the mash stirred through will thicken it up nicely",
+    pasta: "chuck the pasta in as well, it'll go further",
+    veg: "throw in whatever veg needs using up",
+    bread: "a slice of toasted stale bread on the side never hurts",
+    cheese: "grate the cheese ends over the top to finish",
+    bacon: "fry the bacon off and scatter it over the top",
+    eggs: "a chopped boiled egg on top adds some protein",
+    beans: "tip in the tinned beans for extra body",
+    sauce: "loosen it all with a splash of the leftover sauce or gravy"
+  };
   var ORDER = ['rice','chicken','mash','pasta','veg','bread','cheese','bacon','eggs','beans','sauce'];
 
   /* ---------- result illustrations (flat, warm-palette SVGs) ---------- */
@@ -342,6 +363,42 @@
     { need: ['rice','sauce'], name: 'Gravy-Loaded Rice',
       method: "Fry the cold rice hard and fast to warm it through, then pour your leftover sauce or gravy over the top right at the end. Ridiculously easy, ridiculously good.",
       svg: 'friedRice' },
+    { need: ['chicken','cheese'], name: 'Chicken & Cheese Quesadillas',
+      method: "Shred the chicken, scatter it over a tortilla with every cheese end you've got, fold in half, and fry until the outside's crisp and the cheese has properly melted.",
+      svg: 'sandwich' },
+    { need: ['chicken','mash'], name: 'Quick Chicken Cottage Pie',
+      method: "Mix the shredded chicken with a splash of stock or gravy, tip it into a dish, spread the mash over the top, dot with butter, and bake until golden and bubbling at the edges.",
+      svg: 'bubbleSqueak' },
+    { need: ['chicken','sauce'], name: 'Chicken in Gravy',
+      method: "Warm the shredded chicken through in your leftover sauce or gravy until it's coated and steaming hot. Serve it over rice, mash, or just a thick slice of bread.",
+      svg: 'curry' },
+    { need: ['chicken','pasta'], name: 'Chicken Pasta Bake',
+      method: "Toss the cold pasta with the shredded chicken and a splash more sauce, tip into a dish, top with any cheese you've got, and bake until bubbling.",
+      svg: 'pastaBake' },
+    { need: ['bacon','eggs'], name: 'Bacon & Egg Hash',
+      method: "Fry the bacon until crisp, chop the boiled eggs through it, and warm it all together in the pan for a minute. Sounds odd, eats brilliantly.",
+      svg: 'frittata' },
+    { need: ['bacon','cheese'], name: 'Melted Bacon & Cheese',
+      method: "Fry the bacon crisp, then crumble your cheese ends over it while it's still hot in the pan so they melt through. Pile onto anything, or eat straight from the pan.",
+      svg: 'sandwich' },
+    { need: ['beans','chicken'], name: 'Chicken & Bean Stew',
+      method: "Simmer the shredded chicken with a tin of beans and a splash of stock until it thickens into a rough stew. Cheap, filling, and better the next day.",
+      svg: 'soup' },
+    { need: ['veg','sauce'], name: 'Veg in Gravy',
+      method: "Warm your leftover veg through in the sauce or gravy until it's all coated and steaming. Serve over rice or mash if you've got it, or just eat it as is.",
+      svg: 'soup' },
+    { need: ['mash','cheese'], name: 'Cheesy Mash Bake',
+      method: "Mix the mash with most of your cheese ends, spread it into a dish, top with what's left of the cheese, and bake until the top's golden and bubbling.",
+      svg: 'pastaBake' },
+    { need: ['rice','cheese'], name: 'Cheesy Rice Bake',
+      method: "Stir most of the cheese through the warm rice until it melts in, tip into a dish, top with the rest, and bake for a few minutes until golden on top.",
+      svg: 'friedRice' },
+    { need: ['pasta','eggs'], name: 'Leftover Pasta Carbonara-ish',
+      method: "Toss the hot pasta with a beaten egg off the heat so it turns silky rather than scrambled, then grate over any cheese ends you've got for good measure.",
+      svg: 'frittata' },
+    { need: ['bread','veg'], name: 'Veg Panzanella',
+      method: "Toast and tear the stale bread, toss it with the veg, a good glug of olive oil and a splash of vinegar, and let it sit for 20 minutes so the bread soaks everything up.",
+      svg: 'pastaSalad' },
     /* single-item fallbacks */
     { need: ['rice'], name: 'Simple Fried Rice',
       method: "Get a wok or wide pan properly hot, add a splash of oil, then fry the cold rice hard and fast so the grains separate instead of turning gluey. Finish with soy sauce and a touch of sesame oil.",
@@ -387,19 +444,42 @@
     return true;
   }
 
+  function humanizeList(arr) {
+    if (arr.length === 1) return arr[0];
+    if (arr.length === 2) return arr[0] + ' and ' + arr[1];
+    return arr.slice(0, -1).join(', ') + ' and ' + arr[arr.length - 1];
+  }
+
+  /* Anything picked that the matched dish doesn't already use gets folded in here,
+     instead of just being dropped on the floor once a rule matches. */
+  function buildExtrasClause(leftoverKeys) {
+    if (!leftoverKeys.length) return '';
+    var names = leftoverKeys.map(function (k) { return LOWER_LABELS[k]; });
+    var clauses = leftoverKeys.map(function (k) { return EXTRAS[k]; });
+    return " You've also got " + humanizeList(names) + " kicking around — " + clauses.join('; ') + '.';
+  }
+
   function pickRecipe(selected) {
-    /* With 2+ things picked, only match a rule that accounts for a real combo —
-       don't quietly fall back to a single ingredient's idea and ignore the rest. */
-    if (selected.size > 1) {
-      for (var i = 0; i < RULES.length; i++) {
-        if (RULES[i].need.length >= 2 && matches(RULES[i].need, selected)) return RULES[i];
-      }
-      return MYSTERY;
+    /* Score every rule that's fully covered by what's selected, and take the one
+       that explains the MOST of the picks (need.length), not just the first hit
+       in list order. rice+chicken+veg beats rice+veg beats rice alone this way,
+       regardless of how the RULES array happens to be ordered. */
+    var best = null;
+    for (var i = 0; i < RULES.length; i++) {
+      var rule = RULES[i];
+      if (matches(rule.need, selected) && (!best || rule.need.length > best.need.length)) best = rule;
     }
-    for (var k = 0; k < RULES.length; k++) {
-      if (RULES[k].need.length === 1 && matches(RULES[k].need, selected)) return RULES[k];
-    }
-    return MYSTERY;
+    if (!best) return MYSTERY;
+
+    var leftover = [];
+    selected.forEach(function (k) { if (best.need.indexOf(k) === -1) leftover.push(k); });
+
+    /* Picked four or more things but the closest match only explains one of them?
+       That's too scattered to pass off as one clean dish — be honest about it
+       instead of stretching a single-ingredient idea to cover everything. */
+    if (best.need.length === 1 && selected.size >= 4) return MYSTERY;
+
+    return { name: best.name, method: best.method + buildExtrasClause(leftover), svg: best.svg };
   }
 
   /* ---------- build the picker grid ---------- */
