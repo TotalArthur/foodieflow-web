@@ -61,6 +61,20 @@
         "plan-to-eat": false
       },
       {
+        "label": "Automatic metric/imperial conversion",
+        "foodieflow": true,
+        "mealime": false,
+        "paprika": false,
+        "plan-to-eat": false
+      },
+      {
+        "label": "Per-day servings override",
+        "foodieflow": true,
+        "mealime": false,
+        "paprika": false,
+        "plan-to-eat": false
+      },
+      {
         "label": "Pantry-aware suggestions",
         "foodieflow": true,
         "mealime": false,
@@ -75,11 +89,25 @@
         "plan-to-eat": false
       },
       {
+        "label": "Dedicated Pantry tab",
+        "foodieflow": true,
+        "mealime": false,
+        "paprika": true,
+        "plan-to-eat": false
+      },
+      {
         "label": "Auto aisle-sorted shopping list",
         "foodieflow": true,
         "mealime": true,
         "paprika": true,
         "plan-to-eat": true
+      },
+      {
+        "label": "By-recipe shopping list view",
+        "foodieflow": true,
+        "mealime": false,
+        "paprika": false,
+        "plan-to-eat": false
       },
       {
         "label": "Import recipes from a web link",
@@ -103,9 +131,23 @@
         "plan-to-eat": false
       },
       {
+        "label": "Disliked-ingredient exclusion",
+        "foodieflow": true,
+        "mealime": false,
+        "paprika": false,
+        "plan-to-eat": false
+      },
+      {
         "label": "Nutrition (macros & calories)",
         "foodieflow": true,
         "mealime": true,
+        "paprika": false,
+        "plan-to-eat": false
+      },
+      {
+        "label": "Auto-estimated nutrition, even on imports",
+        "foodieflow": true,
+        "mealime": false,
         "paprika": false,
         "plan-to-eat": false
       },
@@ -115,6 +157,27 @@
         "mealime": false,
         "paprika": false,
         "plan-to-eat": false
+      },
+      {
+        "label": "Meal History log",
+        "foodieflow": true,
+        "mealime": false,
+        "paprika": false,
+        "plan-to-eat": false
+      },
+      {
+        "label": "Household mode (multiple individual users)",
+        "foodieflow": true,
+        "mealime": false,
+        "paprika": false,
+        "plan-to-eat": true
+      },
+      {
+        "label": "Real-time sync between household members",
+        "foodieflow": true,
+        "mealime": false,
+        "paprika": false,
+        "plan-to-eat": true
       },
       {
         "label": "Guest mode (no signup)",

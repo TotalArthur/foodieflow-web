@@ -253,6 +253,7 @@ def head(title, description, canonical, jsonld=""):
   <meta name="theme-color" content="#2a7c8a" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="{esc(canonical)}" />
+  <meta property="og:site_name" content="FoodieFlow" />
   <meta property="og:title" content="{esc(title)}" />
   <meta property="og:description" content="{esc(description)}" />
   <meta property="og:image" content="{SITE_URL}/logo.png" />
@@ -276,6 +277,7 @@ NAV = """<!-- NAV -->
     <a href="/#how-it-works">How it works</a>
     <a href="/#pro">Pricing</a>
     <a href="/compare/">Compare</a>
+    <a href="/blog/">Blog</a>
     <a href="/download" class="nav-cta">Download the App</a>
   </div>
   <button class="nav-hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
@@ -285,6 +287,7 @@ NAV = """<!-- NAV -->
   <a href="/#how-it-works" class="mobile-nav-link">How it works</a>
   <a href="/#pro" class="mobile-nav-link">Pricing</a>
   <a href="/compare/" class="mobile-nav-link">Compare</a>
+  <a href="/blog/" class="mobile-nav-link">Blog</a>
   <a href="/download" class="mobile-cta mobile-nav-link">Download the App</a>
 </div>
 """
@@ -301,6 +304,7 @@ FOOTER = f"""<!-- FOOTER -->
       <a href="/#features">Features</a>
       <a href="/#how-it-works">How it works</a>
       <a href="/compare/">Compare</a>
+      <a href="/blog/">Blog</a>
       <a href="/#download">Download</a>
     </div>
     <div class="footer-col">
