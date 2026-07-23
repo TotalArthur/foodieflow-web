@@ -175,13 +175,12 @@
     table.matrix th, table.matrix td { padding: 13px 12px; border-bottom: 1px solid var(--border); text-align: center; }
     table.matrix tbody td { background: var(--card); }
     table.matrix thead th { background: var(--secondary); font-size: 0.82rem; font-weight: 700; }
-    table.matrix thead th.col-us, table.matrix td.col-us { background: hsl(205,55%,97%); }
-    table.matrix thead th.col-us { color: var(--primary-dark); }
+    table.matrix td.col-us { background: hsl(205,55%,97%); color: var(--primary-dark); }
     table.matrix th.rowlabel, table.matrix td.rowlabel { text-align: left; font-weight: 700; font-size: 0.9rem; }
     table.matrix tbody tr:last-child td { border-bottom: none; }
-    table.matrix .col-us { border-left: 2px solid var(--blue); border-right: 2px solid var(--blue); }
-    table.matrix thead th.col-us { border-top: 2px solid var(--blue); border-top-left-radius: 12px; border-top-right-radius: 12px; }
-    table.matrix tbody tr:last-child td.col-us { border-bottom: 2px solid var(--blue); border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; }
+    table.matrix tbody tr.row-us td { border-top: 2px solid var(--blue); border-bottom: 2px solid var(--blue); }
+    table.matrix tbody tr.row-us td:first-child { border-left: 2px solid var(--blue); border-top-left-radius: 12px; border-bottom-left-radius: 12px; }
+    table.matrix tbody tr.row-us td:last-child { border-right: 2px solid var(--blue); border-top-right-radius: 12px; border-bottom-right-radius: 12px; }
     .lucide { width: 22px; height: 22px; fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; vertical-align: middle; }
     .lucide.tick { stroke: var(--good); }
     .lucide.cross { stroke: var(--bad); }
@@ -355,16 +354,48 @@
       <div class="matrix-scroll">
         <table class="matrix">
           <thead>
-            <tr><th class="rowlabel">Feature</th><th class="col-us">FoodieFlow</th><th>Paprika 3</th><th>Mealime</th><th>AnyList</th><th>Plan to Eat</th></tr>
+            <tr><th class="rowlabel">App</th><th>Imports recipes from TikTok / YouTube</th></tr>
           </thead>
           <tbody>
-            <tr>
-              <td class="rowlabel">Imports recipes from TikTok / YouTube</td>
+            <tr class="row-us">
+              <td class="rowlabel col-us">FoodieFlow</td>
               <td class="col-us"><svg class="lucide tick" viewBox="0 0 24 24" role="img" aria-label="FoodieFlow imports recipes from TikTok and YouTube"><path d="M20 6 9 17l-5-5"/></svg></td>
+            </tr>
+            <tr>
+              <td class="rowlabel">Paprika 3</td>
               <td><svg class="lucide cross" viewBox="0 0 24 24" role="img" aria-label="Paprika 3 does not import recipes from TikTok or YouTube"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg></td>
+            </tr>
+            <tr>
+              <td class="rowlabel">Mealime</td>
               <td><svg class="lucide cross" viewBox="0 0 24 24" role="img" aria-label="Mealime does not import recipes from TikTok or YouTube"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg></td>
+            </tr>
+            <tr>
+              <td class="rowlabel">AnyList</td>
               <td><svg class="lucide cross" viewBox="0 0 24 24" role="img" aria-label="AnyList does not import recipes from TikTok or YouTube"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg></td>
+            </tr>
+            <tr>
+              <td class="rowlabel">Plan to Eat</td>
               <td><svg class="lucide cross" viewBox="0 0 24 24" role="img" aria-label="Plan to Eat does not import recipes from TikTok or YouTube"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg></td>
+            </tr>
+            <tr>
+              <td class="rowlabel">Yummly</td>
+              <td><svg class="lucide cross" viewBox="0 0 24 24" role="img" aria-label="Yummly does not import recipes from TikTok or YouTube"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg></td>
+            </tr>
+            <tr>
+              <td class="rowlabel">BigOven</td>
+              <td><svg class="lucide cross" viewBox="0 0 24 24" role="img" aria-label="BigOven does not import recipes from TikTok or YouTube"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg></td>
+            </tr>
+            <tr>
+              <td class="rowlabel">SideChef</td>
+              <td><svg class="lucide cross" viewBox="0 0 24 24" role="img" aria-label="SideChef does not import recipes from TikTok or YouTube"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg></td>
+            </tr>
+            <tr>
+              <td class="rowlabel">Whisk (Samsung Food)</td>
+              <td><svg class="lucide cross" viewBox="0 0 24 24" role="img" aria-label="Whisk, now Samsung Food, does not import recipes from TikTok or YouTube"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg></td>
+            </tr>
+            <tr>
+              <td class="rowlabel">Prepear</td>
+              <td><svg class="lucide cross" viewBox="0 0 24 24" role="img" aria-label="Prepear does not import recipes from TikTok or YouTube"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg></td>
             </tr>
           </tbody>
         </table>
