@@ -93,11 +93,6 @@
     /* LAYOUT */
     .wrap { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
     .eyebrow { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue); margin-bottom: 12px; }
-    /* Breadcrumb is a <nav> for a11y but must NOT inherit the sticky header styles above. */
-    nav.breadcrumb { position: static; z-index: auto; height: auto; display: block; background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; border-bottom: none; max-width: 960px; margin: 0 auto; padding: 20px 2rem 0; font-size: 0.8rem; color: var(--muted); }
-    .breadcrumb a { text-decoration: none; color: var(--muted); border-bottom: 1px solid transparent; }
-    .breadcrumb a:hover { color: var(--blue); border-bottom-color: var(--blue); }
-    .breadcrumb span { color: var(--fore); }
 
     /* HERO */
     .hero { text-align: center; padding: 40px 2rem 8px; max-width: 780px; margin: 0 auto; }
@@ -216,7 +211,6 @@
     }
     @media (max-width: 600px) {
       .wrap { padding: 0 1.25rem; }
-      .breadcrumb { padding: 16px 1.25rem 0; }
       table.compare th, table.compare td { padding: 11px 12px; font-size: 0.84rem; }
       .footer-inner { grid-template-columns: 1fr; }
     }
@@ -246,9 +240,6 @@
   <a href="/download" class="mobile-cta mobile-nav-link">Download the App</a>
 </div>
 
-<nav class="breadcrumb" aria-label="Breadcrumb">
-  <a href="/">Home</a> &rsaquo; <span>Compare</span>
-</nav>
 
 <header class="hero">
   <p class="eyebrow">Comparisons</p>
