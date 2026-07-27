@@ -56,20 +56,26 @@
     :focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; border-radius: 4px; }
 
     /* ── NAV ── */
+    /* Frosted bar floating over the hero. The negative bottom margin cancels its
+       own height so the hero still starts at the top of the page. */
     nav {
-      position: sticky; top: 0; z-index: 200;
+      position: sticky; top: 14px; z-index: 200;
       height: var(--nav-h);
-      padding: 0 clamp(16px, 5vw, 80px);
+      width: min(1360px, calc(100% - clamp(24px, 5vw, 72px)));
+      margin: 14px auto calc((var(--nav-h) + 14px) * -1);
+      padding: 0 clamp(14px, 3vw, 26px);
       display: flex; align-items: center; justify-content: space-between;
-      background: transparent;
-      border-bottom: 1px solid transparent;
-      transition: background 0.3s, border-color 0.3s, backdrop-filter 0.3s;
+      background: rgba(255,255,255,0.5);
+      backdrop-filter: blur(20px) saturate(150%);
+      -webkit-backdrop-filter: blur(20px) saturate(150%);
+      border: 1px solid rgba(255,255,255,0.55);
+      border-radius: 18px;
+      box-shadow: 0 10px 34px rgba(20,40,70,0.12);
+      transition: background 0.3s, box-shadow 0.3s;
     }
     nav.scrolled {
-      background: rgba(255,255,255,0.75);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom-color: rgba(0,0,0,0.08);
+      background: rgba(255,255,255,0.74);
+      box-shadow: 0 12px 40px rgba(20,40,70,0.18);
     }
     .logo { display: flex; align-items: center; text-decoration: none; }
     .logo img { height: 44px; width: auto; object-fit: contain; }
@@ -93,7 +99,7 @@
     .nav-hamburger.open span:nth-child(2) { opacity: 0; }
     .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
     .mobile-menu {
-      display: none; position: fixed; top: var(--nav-h); left: 0; right: 0; bottom: 0;
+      display: none; position: fixed; top: calc(var(--nav-h) + 28px); left: 0; right: 0; bottom: 0;
       background: rgba(249,248,245,0.97); backdrop-filter: blur(16px);
       z-index: 199; flex-direction: column; align-items: center; justify-content: center; gap: 2rem;
     }
@@ -123,7 +129,8 @@
       display: grid; grid-template-columns: 55fr 45fr;
       align-items: center; gap: 4rem;
       max-width: 1160px; margin: 0 auto;
-      padding: 80px clamp(16px, 5vw, 80px) 60px;
+      /* top padding clears the floating nav */
+      padding: 128px clamp(16px, 5vw, 80px) 60px;
       position: relative; z-index: 1;
     }
     .hero-text { max-width: 540px; }
@@ -332,24 +339,26 @@
     .zz-link { font-size: 0.85rem; font-weight: 700; color: var(--blue); text-decoration: none; }
     .zz-link:hover { text-decoration: underline; }
     .zz-phone-col { display: flex; justify-content: center; align-items: center; position: relative; }
-    /* Saturated organic blob behind each phone, one colour per flow. */
+    /* Big organic shape behind each phone. These are decorative and deliberately
+       varied -- the app blue stays the brand accent on labels, links and buttons. */
     .zz-phone-col::before {
       content: ''; position: absolute; z-index: 0;
-      width: 336px; height: 324px; top: 52%; left: 50%; transform: translate(-50%,-50%);
-      border-radius: 46% 54% 62% 38% / 48% 40% 60% 52%;
+      width: 432px; height: 372px; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      border-radius: 42% 58% 54% 46% / 48% 42% 58% 52%;
     }
-    .blob-deep::before { background: hsl(205, 62%, 32%); }
-    .blob-blue::before { background: hsl(205, 68%, 50%); }
-    .blob-sky::before  { background: hsl(202, 62%, 70%); }
-    .blob-pale::before { background: hsl(205, 55%, 84%); }
+    .blob-teal::before   { background: hsl(191, 52%, 24%); }
+    .blob-orange::before { background: hsl(22, 86%, 57%); }
+    .blob-green::before  { background: hsl(88, 36%, 62%); }
+    .blob-blue::before   { background: hsl(205, 68%, 55%); }
 
     /* Dashed trail linking one flow to the next. */
     .flow-trail { max-width: 1160px; margin: 0 auto; padding: 0 clamp(16px, 5vw, 80px); }
-    .flow-trail svg { display: block; width: 100%; height: 92px; overflow: visible; }
-    .flow-trail path {
-      fill: none; stroke: var(--amber); stroke-width: 2.5;
-      stroke-dasharray: 7 10; stroke-linecap: round; opacity: 0.5;
-    }
+    .flow-trail svg { display: block; width: 100%; height: 118px; overflow: visible; }
+    .flow-trail path { fill: none; stroke-width: 2.5; stroke-linecap: round; opacity: 0.85; }
+    /* Each trail carries the colour of the flow it leads into. */
+    .trail-to-orange path { stroke: hsl(22, 86%, 57%); }
+    .trail-to-green  path { stroke: hsl(88, 36%, 48%); }
+    .trail-to-blue   path { stroke: hsl(205, 68%, 55%); }
     .zz-phone { position: relative; z-index: 2; order: 1; width: 240px; background: hsl(222,47%,13%); border-radius: 36px; padding: 10px; box-shadow: 0 28px 70px rgba(20,40,70,0.18); }
 
     /* Supporting illustration alongside each phone. Backgrounds (not <img>) so a
@@ -399,35 +408,46 @@
     .mini-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
 
     /* ── HOW IT WORKS ── */
-    .how-section { background: var(--bg-hero); padding: 80px 0; }
+    /* Dark band carries the heading; the steps sit on a light panel below whose
+       top edge peaks in the middle, as in the design. */
+    .how-section { background: var(--bg-hero); padding: 80px 0 0; }
     .how-section .section-title { color: var(--hero-fore); }
     .how-section .section-sub { color: rgba(255,255,255,0.55); }
-    .how-section .section-eyebrow { color: var(--amber); }
+    .how-section .section-eyebrow { color: var(--blue-mid); }
+    .how-panel {
+      background: var(--bg); margin-top: 52px;
+      padding: 118px 0 84px;
+      clip-path: polygon(0 64px, 50% 0, 100% 64px, 100% 100%, 0 100%);
+    }
     .how-inner { max-width: 1160px; margin: 0 auto; padding: 0 clamp(16px, 5vw, 80px); }
     .how-header { text-align: center; margin-bottom: 56px; }
     .how-header .section-sub { margin: 0 auto; }
     .how-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
     .how-steps { display: flex; flex-direction: column; }
+    /* Frosted step cards on the light panel */
     .how-step {
-      display: flex; gap: 18px; padding: 22px 18px;
-      margin-bottom: 10px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.09);
+      display: flex; gap: 18px; padding: 20px 20px;
+      margin-bottom: 12px;
+      background: linear-gradient(120deg, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.66) 100%);
+      backdrop-filter: blur(14px) saturate(140%);
+      -webkit-backdrop-filter: blur(14px) saturate(140%);
+      border: 1px solid rgba(255,255,255,0.9);
+      box-shadow: 0 10px 30px rgba(20,40,70,0.08);
       cursor: pointer;
-      transition: border-color 0.2s, background 0.2s;
-      border-radius: 14px;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+      border-radius: 16px;
     }
-    .how-step:hover { background: rgba(255,255,255,0.09); }
-    .how-step.active { border-color: var(--amber); background: rgba(255,255,255,0.11); }
+    .how-step:hover { transform: translateX(3px); box-shadow: 0 14px 36px rgba(20,40,70,0.13); }
+    .how-step.active { border-color: var(--blue); box-shadow: 0 14px 38px rgba(20,80,140,0.18); }
     .how-num {
       width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
-      background: rgba(255,255,255,0.08); border: 2px solid rgba(255,255,255,0.16);
-      display: grid; place-items: center; font-size: 0.9rem; font-weight: 700; color: rgba(255,255,255,0.6);
+      background: var(--card); border: 2px solid var(--border);
+      display: grid; place-items: center; font-size: 0.9rem; font-weight: 700; color: var(--muted);
       transition: background 0.2s, color 0.2s, border-color 0.2s;
     }
-    .how-step.active .how-num { background: var(--amber); color: white; border-color: var(--amber); }
-    .how-step-text h4 { font-size: 0.98rem; font-weight: 700; margin-bottom: 5px; color: var(--hero-fore); }
-    .how-step-text p { font-size: 0.86rem; color: rgba(255,255,255,0.5); line-height: 1.65; }
+    .how-step.active .how-num { background: var(--blue); color: white; border-color: var(--blue); }
+    .how-step-text h4 { font-size: 0.98rem; font-weight: 700; margin-bottom: 5px; color: var(--fore); }
+    .how-step-text p { font-size: 0.86rem; color: var(--muted); line-height: 1.65; }
     .how-visual { position: sticky; top: calc(var(--nav-h) + 20px); }
     .how-phone { width: 260px; margin: 0 auto; background: hsl(222,47%,13%); border-radius: 38px; padding: 12px; box-shadow: 0 30px 80px rgba(20,40,70,0.2); }
     .how-screen { border-radius: 28px; height: 460px; overflow: hidden; position: relative; background: var(--bg); }
@@ -475,12 +495,24 @@
     .pro-benefit p { font-size: 0.86rem; color: rgba(255,255,255,0.48); line-height: 1.6; }
     .pro-card-col { }
     .pro-card {
-      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 22px; padding: 34px; position: relative;
+      background: linear-gradient(155deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.06) 55%, rgba(255,255,255,0.10) 100%);
+      backdrop-filter: blur(22px) saturate(150%);
+      -webkit-backdrop-filter: blur(22px) saturate(150%);
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 22px; padding: 34px; position: relative; overflow: hidden;
+      isolation: isolate; /* keeps the bloom below scoped to the card */
+      box-shadow: 0 24px 60px rgba(0,0,0,0.34), inset 0 1px 0 rgba(255,255,255,0.25);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    .pro-card:hover { transform: scale(1.02); box-shadow: 0 8px 40px rgba(0,0,0,0.2); }
-    .pro-badge { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--amber); color: white; font-size: 0.72rem; font-weight: 700; padding: 5px 18px; border-radius: 100px; white-space: nowrap; }
+    /* Soft colour bloom behind the glass, so it reads as frosted rather than flat. */
+    .pro-card::after {
+      content: ''; position: absolute; z-index: -1; pointer-events: none;
+      width: 260px; height: 260px; top: -60px; right: -70px; border-radius: 50%;
+      background: radial-gradient(circle, hsla(205,80%,60%,0.5) 0%, transparent 70%);
+    }
+    .pro-card:hover { transform: scale(1.02); box-shadow: 0 28px 70px rgba(0,0,0,0.42), inset 0 1px 0 rgba(255,255,255,0.3); }
+    /* Sits inside the card: the glass card clips its overflow for the colour bloom. */
+    .pro-badge { position: absolute; top: 18px; right: 20px; background: var(--amber); color: white; font-size: 0.72rem; font-weight: 700; padding: 5px 16px; border-radius: 100px; white-space: nowrap; box-shadow: 0 4px 14px rgba(0,0,0,0.25); }
     .pro-price { margin-bottom: 22px; margin-top: 10px; }
     .pro-price-lbl { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 8px; }
     .pro-price-val { font-family: "Playfair Display", serif; font-size: 3rem; font-weight: 700; line-height: 1; }
@@ -806,7 +838,7 @@
       <p>Tell Foodie Assistant what's in your fridge and what you're craving — it delivers personalised meal ideas in seconds, tailored to your dietary goals and pantry.</p>
       <a href="#how-it-works" class="zz-link">See how it works →</a>
     </div>
-    <div class="zz-phone-col reveal from-right blob-deep">
+    <div class="zz-phone-col reveal from-right blob-teal">
       <div class="zz-phone">
         <div class="zz-phone-inner">
           <img src="/FoodieAssistant.PNG" alt="Foodie Assistant screen" style="width:100%;height:100%;object-fit:cover;object-position:top" />
@@ -816,13 +848,13 @@
     </div>
   </div>
 
-  <div class="flow-trail" aria-hidden="true">
-    <svg viewBox="0 0 1160 92" preserveAspectRatio="none"><path d="M846,0 C846,58 314,34 314,92" /></svg>
+  <div class="flow-trail trail-to-orange" aria-hidden="true">
+    <svg viewBox="0 0 1160 118" preserveAspectRatio="none"><path d="M846,0 C846,74 314,44 314,118" /></svg>
   </div>
 
   <!-- Row 2: Weekly Planner (flipped) -->
   <div class="zigzag-row">
-    <div class="zz-phone-col reveal from-left blob-blue">
+    <div class="zz-phone-col reveal from-left blob-orange">
       <div class="zz-phone">
         <div class="zz-phone-inner">
           <img src="/WeeklyPlanner.png" alt="Weekly Planner screen" style="width:100%;height:100%;object-fit:cover;object-position:top" />
@@ -838,8 +870,8 @@
     </div>
   </div>
 
-  <div class="flow-trail" aria-hidden="true">
-    <svg viewBox="0 0 1160 92" preserveAspectRatio="none"><path d="M314,0 C314,58 846,34 846,92" /></svg>
+  <div class="flow-trail trail-to-green" aria-hidden="true">
+    <svg viewBox="0 0 1160 118" preserveAspectRatio="none"><path d="M314,0 C314,74 846,44 846,118" /></svg>
   </div>
 
   <!-- Row 3: Smart Shopping Lists -->
@@ -850,7 +882,7 @@
       <p>Your shopping list writes itself. Every ingredient from your weekly plan is pulled together and sorted by grocery aisle — so you can shop without doubling back.</p>
       <a href="#how-it-works" class="zz-link">See how it works →</a>
     </div>
-    <div class="zz-phone-col reveal from-right blob-sky">
+    <div class="zz-phone-col reveal from-right blob-green">
       <div class="zz-phone">
         <div class="zz-phone-inner">
           <img src="/ShoppingList.png" alt="Shopping List screen" style="width:100%;height:100%;object-fit:cover;object-position:top" />
@@ -860,13 +892,13 @@
     </div>
   </div>
 
-  <div class="flow-trail" aria-hidden="true">
-    <svg viewBox="0 0 1160 92" preserveAspectRatio="none"><path d="M846,0 C846,58 314,34 314,92" /></svg>
+  <div class="flow-trail trail-to-blue" aria-hidden="true">
+    <svg viewBox="0 0 1160 118" preserveAspectRatio="none"><path d="M846,0 C846,74 314,44 314,118" /></svg>
   </div>
 
   <!-- Row 4: Dietary Preferences (flipped) -->
   <div class="zigzag-row">
-    <div class="zz-phone-col reveal from-left blob-pale">
+    <div class="zz-phone-col reveal from-left blob-blue">
       <div class="zz-phone">
         <div class="zz-phone-inner">
           <img src="/DietaryPreferences.PNG" alt="Dietary Preferences screen" style="width:100%;height:100%;object-fit:cover;object-position:top" />
@@ -925,7 +957,10 @@
       <h2 class="section-title">From fridge to table in four steps.</h2>
       <p class="section-sub">Getting started takes minutes. Everything else happens automatically.</p>
     </div>
-    <div class="how-grid">
+  </div>
+  <div class="how-panel">
+    <div class="how-inner">
+      <div class="how-grid">
       <!-- Steps -->
       <div class="how-steps">
         <div class="how-step active" data-step="0">
@@ -980,12 +1015,13 @@
           </div>
         </div>
       </div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- Wave into pro -->
-<div class="wave" aria-hidden="true" style="background:var(--bg-hero)">
+<div class="wave" aria-hidden="true" style="background:var(--bg)">
   <svg viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
     <path d="M0,20 C480,60 960,0 1440,32 L1440,56 L0,56 Z" fill="var(--fore)"/>
   </svg>
