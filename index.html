@@ -56,26 +56,13 @@
     :focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; border-radius: 4px; }
 
     /* ── NAV ── */
-    /* Frosted bar floating over the hero. The negative bottom margin cancels its
-       own height so the hero still starts at the top of the page. */
-    nav {
-      position: sticky; top: 14px; z-index: 200;
-      height: var(--nav-h);
-      width: min(1360px, calc(100% - clamp(24px, 5vw, 72px)));
-      margin: 14px auto calc((var(--nav-h) + 14px) * -1);
-      padding: 0 clamp(14px, 3vw, 26px);
-      display: flex; align-items: center; justify-content: space-between;
-      background: rgba(255,255,255,0.5);
-      backdrop-filter: blur(20px) saturate(150%);
-      -webkit-backdrop-filter: blur(20px) saturate(150%);
-      border: 1px solid rgba(255,255,255,0.55);
-      border-radius: 18px;
-      box-shadow: 0 10px 34px rgba(20,40,70,0.12);
-      transition: background 0.3s, box-shadow 0.3s;
-    }
-    nav.scrolled {
-      background: rgba(255,255,255,0.74);
-      box-shadow: 0 12px 40px rgba(20,40,70,0.18);
+    /* The bar itself is styled site-wide in /assets/site-glass.css. Here it only
+       needs to stop occupying space, so the kitchen artwork starts at the very
+       top of the page and the bar floats over it. The class selector outranks
+       the shared file's plain `nav` rules whichever order they load in. */
+    nav.nav-overlay { margin-bottom: calc((var(--nav-h) + 14px) * -1); }
+    @media (max-width: 767px) {
+      nav.nav-overlay { margin-bottom: -68px; }
     }
     .logo { display: flex; align-items: center; text-decoration: none; }
     .logo img { height: 44px; width: auto; object-fit: contain; }
@@ -99,7 +86,7 @@
     .nav-hamburger.open span:nth-child(2) { opacity: 0; }
     .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
     .mobile-menu {
-      display: none; position: fixed; top: calc(var(--nav-h) + 28px); left: 0; right: 0; bottom: 0;
+      display: none; position: fixed; left: 0; right: 0; bottom: 0;
       background: rgba(249,248,245,0.97); backdrop-filter: blur(16px);
       z-index: 199; flex-direction: column; align-items: center; justify-content: center; gap: 2rem;
     }
@@ -313,7 +300,10 @@
 
     /* ── WAVE DIVIDERS ── */
     .wave { display: block; width: 100%; overflow: hidden; line-height: 0; }
-    .wave svg { display: block; width: 100%; }
+    /* The svg height is derived from its viewBox, so at most widths it lands on a
+       fractional pixel and leaves a hairline of the divider's own background
+       showing against the section below. Overlap by a pixel to close the seam. */
+    .wave svg { display: block; width: 100%; margin-bottom: -1px; }
 
     /* ── FEATURES ── */
     .features-section { background: white; padding: 80px 0 40px; }
@@ -400,8 +390,28 @@
 
     /* Mini features grid */
     .features-grid-mini { max-width: 1160px; margin: 0 auto; padding: 0 clamp(16px, 5vw, 80px) 60px; display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; border-top: 1px solid var(--border); padding-top: 52px; }
-    .mini-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; transition: box-shadow 0.2s, transform 0.2s; }
-    .mini-card:hover { box-shadow: 0 8px 30px rgba(30,80,140,0.09); transform: translateY(-3px); }
+    /* Frosted cards. The section behind them is plain white, so a soft colour wash
+       sits under the row to give the glass something to pick up. */
+    .features-grid-mini { position: relative; }
+    .features-grid-mini::before {
+      content: ''; position: absolute; z-index: 0; pointer-events: none;
+      inset: 34px clamp(0px, 2vw, 30px) 34px;
+      border-radius: 46px;
+      background:
+        radial-gradient(58% 100% at 26% 50%, hsla(205,72%,58%,0.13) 0%, transparent 72%),
+        radial-gradient(52% 100% at 84% 42%, hsla(150,48%,52%,0.11) 0%, transparent 72%);
+    }
+    .mini-card {
+      position: relative; z-index: 1;
+      background: linear-gradient(140deg, rgba(255,255,255,0.92) 0%, rgba(248,251,254,0.62) 100%);
+      backdrop-filter: blur(16px) saturate(145%);
+      -webkit-backdrop-filter: blur(16px) saturate(145%);
+      border: 1px solid rgba(255,255,255,0.92);
+      box-shadow: 0 10px 30px rgba(20,40,70,0.09);
+      border-radius: var(--radius); padding: 28px;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .mini-card:hover { box-shadow: 0 16px 42px rgba(20,40,70,0.15); transform: translateY(-3px); }
     .mini-icon { width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; margin-bottom: 16px; }
     .mini-icon svg { width: 28px; height: 28px; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
     .mini-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
@@ -634,11 +644,12 @@
       .ing-herbs   { width: 86px;  height: 86px;  top: 14px; right: -32px; }
     }
   </style>
+  <link rel="stylesheet" href="/assets/site-glass.css" />
 </head>
 <body>
 
 <!-- ── NAV ── -->
-<nav id="main-nav">
+<nav id="main-nav" class="nav-overlay">
   <a href="/" class="logo"><img src="/logo.png" alt="FoodieFlow" /></a>
   <div class="nav-links">
     <a href="#features">Features</a>
