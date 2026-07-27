@@ -1,0 +1,101 @@
+/* ──────────────────────────────────────────────────────────────
+   Shared frosted navigation bar.
+
+   Every page carries its own inline <style> with its own `nav {}` rule, so
+   this file is linked *after* that block in each <head>. At equal specificity
+   the later rule wins, which lets one file restyle the bar site-wide without
+   touching 19 separate inline blocks.
+
+   Pages that need the bar to overlay artwork behind it (the homepage hero)
+   add `class="nav-overlay"` and cancel the bar's height locally. That rule is
+   `nav.nav-overlay`, which outranks the plain `nav` selectors here regardless
+   of source order.
+   ────────────────────────────────────────────────────────────── */
+
+nav {
+  position: sticky;
+  top: 14px;
+  z-index: 200;
+  box-sizing: border-box;
+  height: 64px;
+  width: min(1360px, calc(100% - clamp(24px, 5vw, 72px)));
+  margin: 14px auto 0;
+  padding: 0 clamp(14px, 3vw, 26px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: rgba(255, 255, 255, 0.5);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 18px;
+  box-shadow: 0 10px 34px rgba(20, 40, 70, 0.12);
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+/* Pages whose script adds .scrolled get a firmer bar once the page moves. */
+nav.scrolled {
+  background: rgba(255, 255, 255, 0.74);
+  box-shadow: 0 12px 40px rgba(20, 40, 70, 0.18);
+}
+
+/* ── Mobile menu ──────────────────────────────────────────────
+   Pages render this as a full-bleed sheet pinned to the viewport edges, which
+   next to the floating bar left a strip of page showing through and read as a
+   separate, unrelated layer. Instead it hangs directly beneath the bar as a
+   panel of the same width, radius and frosting, so the two read as one control.
+   ────────────────────────────────────────────────────────────── */
+.mobile-menu {
+  /* clears the floating bar: 14px offset + 64px bar + 14px breathing room */
+  top: 92px;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  transform: translateX(-50%);
+  box-sizing: border-box;
+  width: min(1360px, calc(100% - clamp(24px, 5vw, 72px)));
+  max-height: calc(100vh - 116px);
+  overflow-y: auto;
+
+  justify-content: flex-start;
+  gap: 0.4rem;
+  padding: 20px 16px 24px;
+
+  background: rgba(255, 255, 255, 0.62);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  backdrop-filter: blur(24px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 18px;
+  box-shadow: 0 20px 54px rgba(20, 40, 70, 0.2);
+}
+
+/* Full-width rows so the tap target matches the panel, not just the label. */
+.mobile-menu a {
+  width: 100%;
+  justify-content: center;
+  padding: 13px 10px;
+  border-radius: 12px;
+}
+
+/* Browsers without backdrop-filter (older Firefox) would render these
+   near-transparent, so fall back to a mostly opaque panel. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  nav { background: rgba(255, 255, 255, 0.93); }
+  nav.scrolled { background: rgba(255, 255, 255, 0.97); }
+  .mobile-menu { background: rgba(255, 255, 255, 0.96); }
+}
+
+@media (max-width: 767px) {
+  nav {
+    height: 58px;
+    border-radius: 15px;
+    margin-top: 10px;
+    top: 10px;
+  }
+  .mobile-menu {
+    top: 78px;
+    border-radius: 15px;
+    max-height: calc(100vh - 96px);
+  }
+}
