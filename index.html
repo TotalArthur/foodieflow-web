@@ -26,24 +26,27 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg:         hsl(200, 20%, 96%);
-      --bg-warm:    hsl(195, 18%, 93%);
-      --bg-hero:    hsl(196, 38%, 15%);
+      --bg:         hsl(210, 28%, 95%);
+      --bg-warm:    hsl(210, 22%, 92%);
+      /* Dark canvas for the hero-adjacent sections: the app's navy, not a teal */
+      --bg-hero:    hsl(222, 45%, 14%);
       --hero-fore:  hsl(0, 0%, 100%);
       /* Light off-white for raised surfaces (cards, phone interiors) */
       --surface:    #F9F8F5;
       --card:       hsl(0, 0%, 100%);
-      --fore:       hsl(196, 38%, 14%);
-      --muted:      hsl(205, 14%, 48%);
-      --blue:       hsl(184, 45%, 40%);
-      --blue-mid:   hsl(184, 40%, 55%);
-      --blue-lt:    hsl(184, 45%, 91%);
-      --blue-pale:  hsl(184, 35%, 96%);
-      --amber:      hsl(18, 88%, 58%);
-      --amber-dark: hsl(18, 82%, 48%);
-      --amber-lt:   hsl(18, 90%, 94%);
+      --fore:       hsl(222, 47%, 13%);
+      --muted:      hsl(215, 16%, 50%);
+      --blue:       hsl(205, 68%, 50%);
+      --blue-mid:   hsl(205, 60%, 62%);
+      --blue-lt:    hsl(205, 55%, 90%);
+      --blue-pale:  hsl(205, 45%, 96%);
+      /* The accent is the app blue. These keep the --amber name only because it is
+         referenced throughout; there is no orange in the palette. */
+      --amber:      hsl(205, 68%, 50%);
+      --amber-dark: hsl(205, 75%, 40%);
+      --amber-lt:   hsl(205, 55%, 90%);
       --gold:       hsl(42, 90%, 52%);
-      --border:     hsl(200, 20%, 88%);
+      --border:     hsl(210, 28%, 88%);
       --radius:     1.3rem;
       --nav-h:      64px;
     }
@@ -69,13 +72,10 @@
       border-bottom-color: rgba(0,0,0,0.08);
     }
     .logo { display: flex; align-items: center; text-decoration: none; }
-    .logo img { height: 44px; width: auto; object-fit: contain; filter: brightness(0) invert(1); transition: filter 0.3s; }
-    nav.scrolled .logo img { filter: none; }
+    .logo img { height: 44px; width: auto; object-fit: contain; }
     .nav-links { display: flex; align-items: center; gap: 1.8rem; }
-    .nav-links a { font-size: 0.88rem; color: rgba(255,255,255,0.8); text-decoration: none; font-weight: 700; opacity: 1; transition: color 0.2s, opacity 0.2s; }
-    .nav-links a:hover { color: white; opacity: 1; }
-    nav.scrolled .nav-links a { color: var(--fore); opacity: 0.65; }
-    nav.scrolled .nav-links a:hover { color: var(--blue); opacity: 1; }
+    .nav-links a { font-size: 0.88rem; color: var(--fore); text-decoration: none; font-weight: 700; opacity: 0.7; transition: color 0.2s, opacity 0.2s; }
+    .nav-links a:hover { color: var(--blue); opacity: 1; }
     .nav-cta {
       display: inline-flex; align-items: center; min-height: 44px;
       background: var(--amber); color: white;
@@ -88,8 +88,7 @@
     nav.scrolled .nav-links a.nav-cta { color: white; opacity: 1; }
     .nav-cta:hover { background: var(--amber-dark); transform: translateY(-1px); }
     .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 6px; min-height: 44px; min-width: 44px; align-items: center; justify-content: center; flex-direction: column; gap: 5px; }
-    .nav-hamburger span { display: block; width: 22px; height: 2px; background: white; border-radius: 2px; transition: 0.25s; }
-    nav.scrolled .nav-hamburger span { background: var(--fore); }
+    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--fore); border-radius: 2px; transition: 0.25s; }
     .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .nav-hamburger.open span:nth-child(2) { opacity: 0; }
     .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
@@ -105,15 +104,19 @@
     .mobile-menu .mobile-cta:hover { background: var(--amber-dark); color: white; }
 
     /* ── HERO ── */
-    .hero-wrapper { background: var(--bg-hero); position: relative; overflow: hidden; }
-    /* Illustration band along the base of the hero. The gradient mask dissolves its
-       light backdrop into the navy so there is no hard seam across the top edge. */
-    .hero-counter {
-      display: block; width: 100%;
-      height: clamp(130px, 17vw, 230px);
-      background: url('/illustrations/kitchen-counter.png') no-repeat bottom center / cover;
-      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 34%);
-      mask-image: linear-gradient(to bottom, transparent 0%, #000 34%);
+    /* The kitchen illustration is the hero itself -- shown whole, uncropped by any
+       overlay. Only a soft white veil sits over the text column for legibility
+       where the copy crosses the produce on the counter. */
+    .hero-wrapper {
+      position: relative; overflow: hidden;
+      background: hsl(40, 14%, 93%) url('/illustrations/kitchen-counter.png') no-repeat center bottom / cover;
+    }
+    .hero-wrapper::before {
+      content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        /* soft pool of light where the CTA copy crosses the produce */
+        radial-gradient(112% 62% at 20% 82%, rgba(255,255,255,0.82) 0%, rgba(255,255,255,0.34) 46%, rgba(255,255,255,0) 72%),
+        linear-gradient(100deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.18) 36%, rgba(255,255,255,0) 58%);
     }
     .hero {
       min-height: 88vh;
@@ -128,7 +131,7 @@
       font-family: "Playfair Display", serif;
       font-size: clamp(36px, 6vw, 64px);
       font-weight: 900; line-height: 1.08;
-      letter-spacing: -0.02em; margin-bottom: 24px; color: var(--hero-fore);
+      letter-spacing: -0.02em; margin-bottom: 24px; color: var(--fore);
     }
     .hero-last-line { display: block; position: relative; width: fit-content; }
     .hero-last-line em { color: var(--amber); font-style: normal; }
@@ -140,16 +143,18 @@
       animation: drawWave 0.8s ease-out 0.3s forwards;
     }
     @keyframes drawWave { to { stroke-dashoffset: 0; } }
-    .hero-sub { font-size: 1.08rem; color: rgba(255,255,255,0.72); line-height: 1.7; margin-bottom: 36px; max-width: 440px; }
+    .hero-sub { font-size: 1.08rem; color: hsl(215,20%,28%); line-height: 1.7; margin-bottom: 36px; max-width: 440px; }
     .hero-cta-block { display: flex; flex-direction: column; gap: 14px; }
     .hero-store-btns { display: flex; gap: 12px; flex-wrap: wrap; }
-    .hero-sub-note { font-size: 0.82rem; color: rgba(255,255,255,0.5); }
+    /* These sit over the produce on the counter, so they carry more weight than
+       the equivalent muted text elsewhere on the page. */
+    .hero-sub-note { font-size: 0.82rem; color: hsl(215,22%,30%); font-weight: 700; }
     .hero-rating { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     .stars { display: flex; gap: 2px; }
     .star-svg { width: 16px; height: 16px; fill: hsl(42,90%,52%); }
-    .rating-text { font-size: 0.85rem; font-weight: 700; color: var(--hero-fore); }
-    .rating-div { width: 1px; height: 14px; background: rgba(255,255,255,0.25); }
-    .rating-platform { font-size: 0.82rem; color: rgba(255,255,255,0.5); }
+    .rating-text { font-size: 0.85rem; font-weight: 700; color: var(--fore); }
+    .rating-div { width: 1px; height: 14px; background: hsl(215,16%,62%); }
+    .rating-platform { font-size: 0.82rem; color: hsl(215,22%,30%); font-weight: 700; }
 
     /* Store buttons */
     .appstore-btn, .playstore-btn {
@@ -169,7 +174,7 @@
     .hero-visual { position: relative; display: flex; justify-content: center; align-items: center; padding: 40px 20px; }
     .hero-visual::before {
       content: ''; position: absolute; width: 420px; height: 420px;
-      background: radial-gradient(circle, hsla(18,88%,58%,0.16) 0%, transparent 70%);
+      background: radial-gradient(circle, hsla(205,68%,50%,0.16) 0%, transparent 70%);
       top: 50%; left: 50%; transform: translate(-50%,-50%);
       pointer-events: none; z-index: 0;
     }
@@ -327,13 +332,24 @@
     .zz-link { font-size: 0.85rem; font-weight: 700; color: var(--blue); text-decoration: none; }
     .zz-link:hover { text-decoration: underline; }
     .zz-phone-col { display: flex; justify-content: center; align-items: center; position: relative; }
+    /* Saturated organic blob behind each phone, one colour per flow. */
     .zz-phone-col::before {
       content: ''; position: absolute; z-index: 0;
-      width: 300px; height: 300px; top: 50%; left: 50%; transform: translate(-50%,-50%);
-      border-radius: 44% 56% 62% 38% / 46% 40% 60% 54%;
+      width: 336px; height: 324px; top: 52%; left: 50%; transform: translate(-50%,-50%);
+      border-radius: 46% 54% 62% 38% / 48% 40% 60% 52%;
     }
-    .zz-phone-col.from-right::before { background: var(--blue-lt); }
-    .zz-phone-col.from-left::before { background: var(--amber-lt); }
+    .blob-deep::before { background: hsl(205, 62%, 32%); }
+    .blob-blue::before { background: hsl(205, 68%, 50%); }
+    .blob-sky::before  { background: hsl(202, 62%, 70%); }
+    .blob-pale::before { background: hsl(205, 55%, 84%); }
+
+    /* Dashed trail linking one flow to the next. */
+    .flow-trail { max-width: 1160px; margin: 0 auto; padding: 0 clamp(16px, 5vw, 80px); }
+    .flow-trail svg { display: block; width: 100%; height: 92px; overflow: visible; }
+    .flow-trail path {
+      fill: none; stroke: var(--amber); stroke-width: 2.5;
+      stroke-dasharray: 7 10; stroke-linecap: round; opacity: 0.5;
+    }
     .zz-phone { position: relative; z-index: 2; order: 1; width: 240px; background: hsl(222,47%,13%); border-radius: 36px; padding: 10px; box-shadow: 0 28px 70px rgba(20,40,70,0.18); }
 
     /* Supporting illustration alongside each phone. Backgrounds (not <img>) so a
@@ -486,7 +502,7 @@
     .pro-faq-answer { padding: 0 18px 14px; font-size: 0.84rem; color: rgba(255,255,255,0.4); line-height: 1.65; }
 
     /* ── DOWNLOAD ── */
-    .download-section { position: relative; text-align: center; padding: 100px clamp(16px, 5vw, 80px); background: hsl(196,38%,10%); overflow: hidden; }
+    .download-section { position: relative; text-align: center; padding: 100px clamp(16px, 5vw, 80px); background: hsl(222,45%,10%); overflow: hidden; }
     .dl-bg { position: absolute; inset: 0; z-index: 0; }
     .dl-bg img { width: 100%; height: 100%; object-fit: cover; opacity: 0.22; }
     .dl-content { position: relative; z-index: 1; }
@@ -559,7 +575,8 @@
       .zigzag-row .zz-phone-col { order: -1; }
       .zz-phone { width: 200px; }
       .zz-phone-inner { height: 355px; }
-      .zz-phone-col::before { width: 230px; height: 230px; }
+      .zz-phone-col::before { width: 250px; height: 250px; }
+      .flow-trail { display: none; }
       .zz-illustration { margin-bottom: 18px; }
       .zz-ill-mascot { width: 104px; }
       .zz-ill-fridge { width: 132px; }
@@ -699,8 +716,6 @@
     </div>
   </div>
 
-  <!-- Kitchen-counter illustration band, faded into the hero at the top edge -->
-  <div class="hero-counter" aria-hidden="true"></div>
 </div>
 
 <!-- ── MARQUEE ── -->
@@ -787,11 +802,11 @@
   <div class="zigzag-row">
     <div class="zigzag-text reveal from-left">
       <span class="flow-label">Flow 1</span>
-      <h3>Meet your Foodie Assistant</h3>
+      <h3>Foodie Assistant</h3>
       <p>Tell Foodie Assistant what's in your fridge and what you're craving — it delivers personalised meal ideas in seconds, tailored to your dietary goals and pantry.</p>
       <a href="#how-it-works" class="zz-link">See how it works →</a>
     </div>
-    <div class="zz-phone-col reveal from-right">
+    <div class="zz-phone-col reveal from-right blob-deep">
       <div class="zz-phone">
         <div class="zz-phone-inner">
           <img src="/FoodieAssistant.PNG" alt="Foodie Assistant screen" style="width:100%;height:100%;object-fit:cover;object-position:top" />
@@ -801,9 +816,13 @@
     </div>
   </div>
 
+  <div class="flow-trail" aria-hidden="true">
+    <svg viewBox="0 0 1160 92" preserveAspectRatio="none"><path d="M846,0 C846,58 314,34 314,92" /></svg>
+  </div>
+
   <!-- Row 2: Weekly Planner (flipped) -->
   <div class="zigzag-row">
-    <div class="zz-phone-col reveal from-left">
+    <div class="zz-phone-col reveal from-left blob-blue">
       <div class="zz-phone">
         <div class="zz-phone-inner">
           <img src="/WeeklyPlanner.png" alt="Weekly Planner screen" style="width:100%;height:100%;object-fit:cover;object-position:top" />
@@ -813,21 +832,25 @@
     </div>
     <div class="zigzag-text reveal from-right">
       <span class="flow-label">Flow 2</span>
-      <h3>Plan smarter, spend better</h3>
+      <h3>Weekly Planner</h3>
       <p>Plan your meals for every day of the week. See your full schedule at a glance, drag meals between days, and never scramble for ideas at the last minute.</p>
       <a href="#how-it-works" class="zz-link">See how it works →</a>
     </div>
+  </div>
+
+  <div class="flow-trail" aria-hidden="true">
+    <svg viewBox="0 0 1160 92" preserveAspectRatio="none"><path d="M314,0 C314,58 846,34 846,92" /></svg>
   </div>
 
   <!-- Row 3: Smart Shopping Lists -->
   <div class="zigzag-row">
     <div class="zigzag-text reveal from-left">
       <span class="flow-label">Flow 3</span>
-      <h3>One tap to organised grocery runs</h3>
+      <h3>Smart Shopping Lists</h3>
       <p>Your shopping list writes itself. Every ingredient from your weekly plan is pulled together and sorted by grocery aisle — so you can shop without doubling back.</p>
       <a href="#how-it-works" class="zz-link">See how it works →</a>
     </div>
-    <div class="zz-phone-col reveal from-right">
+    <div class="zz-phone-col reveal from-right blob-sky">
       <div class="zz-phone">
         <div class="zz-phone-inner">
           <img src="/ShoppingList.png" alt="Shopping List screen" style="width:100%;height:100%;object-fit:cover;object-position:top" />
@@ -837,9 +860,13 @@
     </div>
   </div>
 
+  <div class="flow-trail" aria-hidden="true">
+    <svg viewBox="0 0 1160 92" preserveAspectRatio="none"><path d="M846,0 C846,58 314,34 314,92" /></svg>
+  </div>
+
   <!-- Row 4: Dietary Preferences (flipped) -->
   <div class="zigzag-row">
-    <div class="zz-phone-col reveal from-left">
+    <div class="zz-phone-col reveal from-left blob-pale">
       <div class="zz-phone">
         <div class="zz-phone-inner">
           <img src="/DietaryPreferences.PNG" alt="Dietary Preferences screen" style="width:100%;height:100%;object-fit:cover;object-position:top" />
@@ -848,7 +875,7 @@
     </div>
     <div class="zigzag-text reveal from-right">
       <span class="flow-label">Flow 4</span>
-      <h3>Cook like a chef, stress-free</h3>
+      <h3>Dietary Preferences</h3>
       <p>Set your allergies, dietary restrictions, and dislikes once. FoodieFlow filters every suggestion around them — so you never need to repeat yourself.</p>
       <a href="#how-it-works" class="zz-link">See how it works →</a>
     </div>
