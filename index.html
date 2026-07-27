@@ -26,21 +26,24 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg:         hsl(210, 28%, 95%);
-      --bg-warm:    hsl(210, 22%, 92%);
-      --bg-hero:    #F9F8F5;
+      --bg:         hsl(200, 20%, 96%);
+      --bg-warm:    hsl(195, 18%, 93%);
+      --bg-hero:    hsl(196, 38%, 15%);
+      --hero-fore:  hsl(0, 0%, 100%);
+      /* Light off-white for raised surfaces (cards, phone interiors) */
+      --surface:    #F9F8F5;
       --card:       hsl(0, 0%, 100%);
-      --fore:       hsl(222, 47%, 13%);
-      --muted:      hsl(215, 16%, 50%);
-      --blue:       hsl(205, 68%, 50%);
-      --blue-mid:   hsl(205, 60%, 62%);
-      --blue-lt:    hsl(205, 55%, 90%);
-      --blue-pale:  hsl(205, 45%, 96%);
-      --amber:      hsl(205, 68%, 50%);
-      --amber-dark: hsl(205, 75%, 40%);
-      --amber-lt:   hsl(205, 55%, 90%);
+      --fore:       hsl(196, 38%, 14%);
+      --muted:      hsl(205, 14%, 48%);
+      --blue:       hsl(184, 45%, 40%);
+      --blue-mid:   hsl(184, 40%, 55%);
+      --blue-lt:    hsl(184, 45%, 91%);
+      --blue-pale:  hsl(184, 35%, 96%);
+      --amber:      hsl(18, 88%, 58%);
+      --amber-dark: hsl(18, 82%, 48%);
+      --amber-lt:   hsl(18, 90%, 94%);
       --gold:       hsl(42, 90%, 52%);
-      --border:     hsl(210, 28%, 88%);
+      --border:     hsl(200, 20%, 88%);
       --radius:     1.3rem;
       --nav-h:      64px;
     }
@@ -66,10 +69,13 @@
       border-bottom-color: rgba(0,0,0,0.08);
     }
     .logo { display: flex; align-items: center; text-decoration: none; }
-    .logo img { height: 44px; width: auto; object-fit: contain; }
+    .logo img { height: 44px; width: auto; object-fit: contain; filter: brightness(0) invert(1); transition: filter 0.3s; }
+    nav.scrolled .logo img { filter: none; }
     .nav-links { display: flex; align-items: center; gap: 1.8rem; }
-    .nav-links a { font-size: 0.88rem; color: var(--fore); text-decoration: none; font-weight: 700; opacity: 0.65; transition: color 0.2s, opacity 0.2s; }
-    .nav-links a:hover { color: var(--blue); opacity: 1; }
+    .nav-links a { font-size: 0.88rem; color: rgba(255,255,255,0.8); text-decoration: none; font-weight: 700; opacity: 1; transition: color 0.2s, opacity 0.2s; }
+    .nav-links a:hover { color: white; opacity: 1; }
+    nav.scrolled .nav-links a { color: var(--fore); opacity: 0.65; }
+    nav.scrolled .nav-links a:hover { color: var(--blue); opacity: 1; }
     .nav-cta {
       display: inline-flex; align-items: center; min-height: 44px;
       background: var(--amber); color: white;
@@ -78,10 +84,12 @@
       transition: background 0.2s, transform 0.15s;
     }
     /* Beat `.nav-links a` specificity so the CTA text stays white, not grey. */
-    .nav-links a.nav-cta { color: white; opacity: 1; }
+    .nav-links a.nav-cta,
+    nav.scrolled .nav-links a.nav-cta { color: white; opacity: 1; }
     .nav-cta:hover { background: var(--amber-dark); transform: translateY(-1px); }
     .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 6px; min-height: 44px; min-width: 44px; align-items: center; justify-content: center; flex-direction: column; gap: 5px; }
-    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--fore); border-radius: 2px; transition: 0.25s; }
+    .nav-hamburger span { display: block; width: 22px; height: 2px; background: white; border-radius: 2px; transition: 0.25s; }
+    nav.scrolled .nav-hamburger span { background: var(--fore); }
     .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .nav-hamburger.open span:nth-child(2) { opacity: 0; }
     .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
@@ -98,6 +106,15 @@
 
     /* ── HERO ── */
     .hero-wrapper { background: var(--bg-hero); position: relative; overflow: hidden; }
+    /* Illustration band along the base of the hero. The gradient mask dissolves its
+       light backdrop into the navy so there is no hard seam across the top edge. */
+    .hero-counter {
+      display: block; width: 100%;
+      height: clamp(130px, 17vw, 230px);
+      background: url('/illustrations/kitchen-counter.png') no-repeat bottom center / cover;
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 34%);
+      mask-image: linear-gradient(to bottom, transparent 0%, #000 34%);
+    }
     .hero {
       min-height: 88vh;
       display: grid; grid-template-columns: 55fr 45fr;
@@ -108,10 +125,10 @@
     }
     .hero-text { max-width: 540px; }
     h1 {
-      font-family: "PT Sans", sans-serif;
-      font-size: clamp(36px, 6vw, 68px);
-      font-weight: 900; line-height: 1.05;
-      letter-spacing: -0.02em; margin-bottom: 24px; color: var(--fore);
+      font-family: "Playfair Display", serif;
+      font-size: clamp(36px, 6vw, 64px);
+      font-weight: 900; line-height: 1.08;
+      letter-spacing: -0.02em; margin-bottom: 24px; color: var(--hero-fore);
     }
     .hero-last-line { display: block; position: relative; width: fit-content; }
     .hero-last-line em { color: var(--amber); font-style: normal; }
@@ -123,26 +140,27 @@
       animation: drawWave 0.8s ease-out 0.3s forwards;
     }
     @keyframes drawWave { to { stroke-dashoffset: 0; } }
-    .hero-sub { font-size: 1.08rem; color: hsl(215,20%,40%); line-height: 1.7; margin-bottom: 36px; max-width: 440px; }
+    .hero-sub { font-size: 1.08rem; color: rgba(255,255,255,0.72); line-height: 1.7; margin-bottom: 36px; max-width: 440px; }
     .hero-cta-block { display: flex; flex-direction: column; gap: 14px; }
     .hero-store-btns { display: flex; gap: 12px; flex-wrap: wrap; }
-    .hero-sub-note { font-size: 0.82rem; color: var(--muted); }
+    .hero-sub-note { font-size: 0.82rem; color: rgba(255,255,255,0.5); }
     .hero-rating { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     .stars { display: flex; gap: 2px; }
     .star-svg { width: 16px; height: 16px; fill: hsl(42,90%,52%); }
-    .rating-text { font-size: 0.85rem; font-weight: 700; color: var(--fore); }
-    .rating-div { width: 1px; height: 14px; background: var(--border); }
-    .rating-platform { font-size: 0.82rem; color: var(--muted); }
+    .rating-text { font-size: 0.85rem; font-weight: 700; color: var(--hero-fore); }
+    .rating-div { width: 1px; height: 14px; background: rgba(255,255,255,0.25); }
+    .rating-platform { font-size: 0.82rem; color: rgba(255,255,255,0.5); }
 
     /* Store buttons */
     .appstore-btn, .playstore-btn {
       display: inline-flex; align-items: center; gap: 11px;
-      background: var(--fore); color: white;
+      background: hsl(0, 0%, 9%); color: white;
+      border: 1px solid rgba(255,255,255,0.14);
       padding: 11px 22px; border-radius: 13px; text-decoration: none;
       min-height: 52px; min-width: 160px;
-      transition: background 0.2s, transform 0.15s;
+      transition: background 0.2s, transform 0.15s, border-color 0.2s;
     }
-    .appstore-btn:hover, .playstore-btn:hover { background: var(--blue); transform: translateY(-2px); }
+    .appstore-btn:hover, .playstore-btn:hover { background: var(--blue); border-color: var(--blue); transform: translateY(-2px); }
     .appstore-btn-text, .playstore-btn-text { display: flex; flex-direction: column; line-height: 1.2; }
     .appstore-btn-label, .playstore-btn-label { font-size: 0.62rem; font-weight: 400; opacity: 0.75; letter-spacing: 0.03em; }
     .appstore-btn-name, .playstore-btn-name { font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; }
@@ -151,7 +169,7 @@
     .hero-visual { position: relative; display: flex; justify-content: center; align-items: center; padding: 40px 20px; }
     .hero-visual::before {
       content: ''; position: absolute; width: 420px; height: 420px;
-      background: radial-gradient(circle, hsla(140,50%,55%,0.12) 0%, transparent 70%);
+      background: radial-gradient(circle, hsla(18,88%,58%,0.16) 0%, transparent 70%);
       top: 50%; left: 50%; transform: translate(-50%,-50%);
       pointer-events: none; z-index: 0;
     }
@@ -161,9 +179,9 @@
     .phone-back {
       position: absolute; right: -44px; top: 32px;
       width: 185px; background: hsl(222,47%,13%); border-radius: 28px;
-      padding: 8px; z-index: 2; opacity: 0.82;
+      padding: 8px; z-index: 2; opacity: 0.9;
       transform: rotate(6deg);
-      box-shadow: 0 28px 60px rgba(20,40,70,0.16), 0 0 0 1px rgba(255,255,255,0.04);
+      box-shadow: 0 28px 60px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.1);
     }
     .phone-back-inner { background: var(--blue-pale); border-radius: 22px; height: 320px; overflow: hidden; position: relative; }
     .phone-back-hdr { padding: 12px 10px 8px; background: white; border-bottom: 1px solid var(--border); }
@@ -181,17 +199,17 @@
       position: absolute; left: 0; top: 0;
       width: 232px; background: hsl(222,47%,13%); border-radius: 36px;
       padding: 10px; z-index: 3;
-      box-shadow: 0 40px 90px rgba(20,40,70,0.25), 0 0 0 1px rgba(255,255,255,0.05);
+      box-shadow: 0 40px 90px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.12);
       animation: floatPhone 3.5s ease-in-out infinite;
     }
     @keyframes floatPhone { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-    .phone-front-inner { background: var(--bg-hero); border-radius: 28px; height: 406px; overflow: hidden; position: relative; }
-    .pf-status { background: var(--bg-hero); padding: 12px 14px 4px; display: flex; justify-content: space-between; align-items: center; }
+    .phone-front-inner { background: var(--surface); border-radius: 28px; height: 406px; overflow: hidden; position: relative; }
+    .pf-status { background: var(--surface); padding: 12px 14px 4px; display: flex; justify-content: space-between; align-items: center; }
     .pf-time { font-size: 0.7rem; font-weight: 700; color: var(--fore); }
     .pf-hdr { padding: 4px 12px 8px; border-bottom: 1px solid var(--border); }
     .pf-name { font-size: 0.82rem; font-weight: 700; }
     .pf-shortcuts { display: flex; gap: 6px; padding: 8px 12px 5px; }
-    .pf-sc-amber { flex: 1; background: hsl(42,90%,52%); color: var(--fore); border-radius: 8px; padding: 7px 4px; font-size: 0.52rem; font-weight: 700; text-align: center; }
+    .pf-sc-amber { flex: 1; background: var(--amber); color: white; border-radius: 8px; padding: 7px 4px; font-size: 0.52rem; font-weight: 700; text-align: center; }
     .pf-sc-blue { flex: 1; background: var(--blue-lt); color: var(--blue); border-radius: 8px; padding: 7px 4px; font-size: 0.52rem; font-weight: 700; text-align: center; }
     .pf-body { padding: 5px 12px; flex: 1; overflow: hidden; }
     .pf-label { font-size: 0.48rem; font-weight: 700; color: var(--muted); letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 5px; }
@@ -221,12 +239,16 @@
     .rf-name { font-size: 0.66rem; font-weight: 700; color: var(--fore); line-height: 1.2; margin-bottom: 4px; }
     .rf-badge { display: inline-flex; align-items: center; gap: 3px; background: var(--amber-lt); color: var(--amber-dark); padding: 2px 7px; border-radius: 100px; font-size: 0.52rem; font-weight: 700; }
 
-    /* Food ingredient cutouts */
-    .ingredient { position: absolute; pointer-events: none; z-index: 4; filter: drop-shadow(0 6px 14px rgba(0,0,0,0.13)); }
-    .ing-avocado { width: 88px; height: 88px; top: -18px; left: -36px; animation: floatA 3.2s ease-in-out infinite; }
-    .ing-tomato  { width: 78px; height: 78px; bottom: 24px; right: -46px; animation: floatB 4.1s ease-in-out infinite 0.5s; }
-    .ing-herbs   { width: 72px; height: 72px; top: 12px; right: -26px; animation: floatC 3.8s ease-in-out infinite 1s; }
-    .ingredient img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+    /* Food ingredient badges */
+    .ingredient {
+      position: absolute; z-index: 4; border-radius: 50%; pointer-events: none;
+      display: grid; place-items: center;
+      box-shadow: 0 14px 30px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.08);
+      font-size: 2.2rem; line-height: 1;
+    }
+    .ing-avocado { width: 88px; height: 88px; top: -18px; left: -36px; background: var(--blue-lt); animation: floatA 3.2s ease-in-out infinite; }
+    .ing-tomato  { width: 78px; height: 78px; bottom: 24px; right: -46px; background: var(--amber-lt); animation: floatB 4.1s ease-in-out infinite 0.5s; }
+    .ing-herbs   { width: 72px; height: 72px; top: 12px; right: -26px; background: hsl(140,45%,92%); animation: floatC 3.8s ease-in-out infinite 1s; }
 
     /* Reliable full-bleed rendering for all phone screen images */
     .phone-front-inner img,
@@ -254,9 +276,9 @@
 
     /* ── SOCIAL PROOF BANNER ── */
     .proof-banner {
-      background: hsl(35,50%,96%);
-      border-top: 1px solid hsl(35,30%,90%);
-      border-bottom: 1px solid hsl(35,30%,90%);
+      background: var(--bg-warm);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
       padding: 40px clamp(16px, 5vw, 80px);
     }
     .proof-inner { max-width: 1160px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px; align-items: center; }
@@ -304,9 +326,38 @@
     .zigzag-text p { font-size: 0.95rem; color: var(--muted); line-height: 1.75; margin-bottom: 16px; }
     .zz-link { font-size: 0.85rem; font-weight: 700; color: var(--blue); text-decoration: none; }
     .zz-link:hover { text-decoration: underline; }
-    .zz-phone-col { display: flex; justify-content: center; }
-    .zz-phone { width: 240px; background: hsl(222,47%,13%); border-radius: 36px; padding: 10px; box-shadow: 0 28px 70px rgba(20,40,70,0.18); }
-    .zz-phone-inner { border-radius: 28px; height: 426px; overflow: hidden; background: var(--bg-hero); position: relative; }
+    .zz-phone-col { display: flex; justify-content: center; align-items: center; position: relative; }
+    .zz-phone-col::before {
+      content: ''; position: absolute; z-index: 0;
+      width: 300px; height: 300px; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      border-radius: 44% 56% 62% 38% / 46% 40% 60% 54%;
+    }
+    .zz-phone-col.from-right::before { background: var(--blue-lt); }
+    .zz-phone-col.from-left::before { background: var(--amber-lt); }
+    .zz-phone { position: relative; z-index: 1; order: 1; width: 240px; background: hsl(222,47%,13%); border-radius: 36px; padding: 10px; box-shadow: 0 28px 70px rgba(20,40,70,0.18); }
+
+    /* Supporting illustration alongside each phone. Backgrounds (not <img>) so a
+       missing file collapses to empty space instead of a broken-image icon. */
+    .zz-illustration {
+      position: relative; z-index: 2; align-self: flex-end;
+      margin-bottom: 34px; flex-shrink: 0;
+      background-repeat: no-repeat; background-position: center bottom; background-size: contain;
+      filter: drop-shadow(0 14px 26px rgba(20,40,70,0.18));
+    }
+    /* Sit the illustration on the outer edge of the row, tucked behind the phone. */
+    .zz-phone-col.from-right .zz-illustration { order: 2; margin-left: -38px; }
+    .zz-phone-col.from-left  .zz-illustration { order: 0; margin-right: -38px; }
+    .zz-ill-mascot { width: 168px; aspect-ratio: 461 / 551; background-image: url('/illustrations/chef-mascot.png'); }
+    .zz-ill-fridge { width: 220px; aspect-ratio: 1029 / 691; background-image: url('/illustrations/fridge.png'); }
+    .zz-ill-cart   { width: 200px; aspect-ratio: 673 / 594;  background-image: url('/illustrations/grocery-cart.png'); }
+
+    /* Flow step label above each feature heading */
+    .flow-label {
+      display: block; font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--amber); margin-bottom: 10px;
+    }
+    .zz-phone-inner { border-radius: 28px; height: 426px; overflow: hidden; background: var(--surface); position: relative; }
     .zz-phone-inner img { width: 100%; height: 100%; object-fit: cover; }
     .zz-placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, var(--blue-pale) 0%, var(--blue-lt) 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; }
     .zz-ph-icon { width: 52px; height: 52px; background: white; border-radius: 16px; display: grid; place-items: center; margin-bottom: 14px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
@@ -321,7 +372,7 @@
 
     /* Mini features grid */
     .features-grid-mini { max-width: 1160px; margin: 0 auto; padding: 0 clamp(16px, 5vw, 80px) 60px; display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; border-top: 1px solid var(--border); padding-top: 52px; }
-    .mini-card { background: var(--bg-hero); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; transition: box-shadow 0.2s, transform 0.2s; }
+    .mini-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; transition: box-shadow 0.2s, transform 0.2s; }
     .mini-card:hover { box-shadow: 0 8px 30px rgba(30,80,140,0.09); transform: translateY(-3px); }
     .mini-icon { width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; margin-bottom: 16px; }
     .mini-icon svg { width: 28px; height: 28px; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
@@ -329,31 +380,35 @@
     .mini-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
 
     /* ── HOW IT WORKS ── */
-    .how-section { background: var(--bg-warm); padding: 80px 0; }
+    .how-section { background: var(--bg-hero); padding: 80px 0; }
+    .how-section .section-title { color: var(--hero-fore); }
+    .how-section .section-sub { color: rgba(255,255,255,0.55); }
+    .how-section .section-eyebrow { color: var(--amber); }
     .how-inner { max-width: 1160px; margin: 0 auto; padding: 0 clamp(16px, 5vw, 80px); }
     .how-header { text-align: center; margin-bottom: 56px; }
     .how-header .section-sub { margin: 0 auto; }
     .how-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
     .how-steps { display: flex; flex-direction: column; }
     .how-step {
-      display: flex; gap: 18px; padding: 22px 16px;
-      border-bottom: 1px solid var(--border);
+      display: flex; gap: 18px; padding: 22px 18px;
+      margin-bottom: 10px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.09);
       cursor: pointer;
-      border-left: 3px solid transparent;
       transition: border-color 0.2s, background 0.2s;
-      border-radius: 0 8px 8px 0;
+      border-radius: 14px;
     }
-    .how-step:last-child { border-bottom: none; }
-    .how-step.active { border-left-color: var(--amber); background: rgba(255,255,255,0.55); }
+    .how-step:hover { background: rgba(255,255,255,0.09); }
+    .how-step.active { border-color: var(--amber); background: rgba(255,255,255,0.11); }
     .how-num {
       width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
-      background: var(--bg); border: 2px solid var(--border);
-      display: grid; place-items: center; font-size: 0.9rem; font-weight: 700; color: var(--muted);
+      background: rgba(255,255,255,0.08); border: 2px solid rgba(255,255,255,0.16);
+      display: grid; place-items: center; font-size: 0.9rem; font-weight: 700; color: rgba(255,255,255,0.6);
       transition: background 0.2s, color 0.2s, border-color 0.2s;
     }
     .how-step.active .how-num { background: var(--amber); color: white; border-color: var(--amber); }
-    .how-step-text h4 { font-size: 0.98rem; font-weight: 700; margin-bottom: 5px; }
-    .how-step-text p { font-size: 0.86rem; color: var(--muted); line-height: 1.65; }
+    .how-step-text h4 { font-size: 0.98rem; font-weight: 700; margin-bottom: 5px; color: var(--hero-fore); }
+    .how-step-text p { font-size: 0.86rem; color: rgba(255,255,255,0.5); line-height: 1.65; }
     .how-visual { position: sticky; top: calc(var(--nav-h) + 20px); }
     .how-phone { width: 260px; margin: 0 auto; background: hsl(222,47%,13%); border-radius: 38px; padding: 12px; box-shadow: 0 30px 80px rgba(20,40,70,0.2); }
     .how-screen { border-radius: 28px; height: 460px; overflow: hidden; position: relative; background: var(--bg); }
@@ -428,7 +483,7 @@
     .pro-faq-answer { padding: 0 18px 14px; font-size: 0.84rem; color: rgba(255,255,255,0.4); line-height: 1.65; }
 
     /* ── DOWNLOAD ── */
-    .download-section { position: relative; text-align: center; padding: 100px clamp(16px, 5vw, 80px); background: hsl(222,47%,10%); overflow: hidden; }
+    .download-section { position: relative; text-align: center; padding: 100px clamp(16px, 5vw, 80px); background: hsl(196,38%,10%); overflow: hidden; }
     .dl-bg { position: absolute; inset: 0; z-index: 0; }
     .dl-bg img { width: 100%; height: 100%; object-fit: cover; opacity: 0.22; }
     .dl-content { position: relative; z-index: 1; }
@@ -442,20 +497,20 @@
     .dl-trust-item path, .dl-trust-item polyline, .dl-trust-item rect, .dl-trust-item line, .dl-trust-item circle { stroke: rgba(255,255,255,0.6); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
     /* ── FOOTER ── */
-    footer { border-top: 1px solid var(--border); padding: 48px clamp(16px, 5vw, 80px) 28px; background: var(--card); }
+    footer { padding: 56px clamp(16px, 5vw, 80px) 28px; background: var(--bg-hero); }
     .footer-inner { max-width: 1160px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 36px; }
-    .footer-brand img { height: 44px; margin-bottom: 8px; display: block; }
-    .footer-tagline { font-size: 0.84rem; color: var(--muted); font-style: italic; margin-bottom: 10px; }
-    .footer-brand p { font-size: 0.84rem; color: var(--muted); line-height: 1.65; max-width: 240px; }
+    .footer-brand img { height: 44px; margin-bottom: 8px; display: block; filter: brightness(0) invert(1); }
+    .footer-tagline { font-size: 0.84rem; color: rgba(255,255,255,0.55); font-style: italic; margin-bottom: 10px; }
+    .footer-brand p { font-size: 0.84rem; color: rgba(255,255,255,0.42); line-height: 1.65; max-width: 240px; }
     .footer-social { display: flex; gap: 10px; margin-top: 14px; }
-    .footer-social a { width: 36px; height: 36px; border-radius: 50%; background: var(--bg); border: 1px solid var(--border); display: grid; place-items: center; color: var(--muted); text-decoration: none; transition: background 0.2s, border-color 0.2s; }
-    .footer-social a:hover { background: var(--amber-lt); border-color: var(--amber-lt); color: var(--amber-dark); }
+    .footer-social a { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14); display: grid; place-items: center; color: rgba(255,255,255,0.6); text-decoration: none; transition: background 0.2s, border-color 0.2s, color 0.2s; }
+    .footer-social a:hover { background: var(--amber); border-color: var(--amber); color: white; }
     .footer-social svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-    .footer-col h4 { font-size: 0.77rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--fore); margin-bottom: 14px; }
-    .footer-col a { display: block; font-size: 0.84rem; color: var(--muted); text-decoration: none; margin-bottom: 8px; min-height: 24px; transition: color 0.2s; }
+    .footer-col h4 { font-size: 0.77rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--hero-fore); margin-bottom: 14px; }
+    .footer-col a { display: block; font-size: 0.84rem; color: rgba(255,255,255,0.45); text-decoration: none; margin-bottom: 8px; min-height: 24px; transition: color 0.2s; }
     .footer-col a:hover { color: var(--amber); }
-    .footer-bottom { max-width: 1160px; margin: 0 auto; padding-top: 22px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-    .footer-bottom span { font-size: 0.77rem; color: var(--muted); }
+    .footer-bottom { max-width: 1160px; margin: 0 auto; padding-top: 22px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+    .footer-bottom span { font-size: 0.77rem; color: rgba(255,255,255,0.35); }
 
     /* ── ANIMATIONS ── */
     @keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
@@ -501,6 +556,13 @@
       .zigzag-row .zz-phone-col { order: -1; }
       .zz-phone { width: 200px; }
       .zz-phone-inner { height: 355px; }
+      .zz-phone-col::before { width: 230px; height: 230px; }
+      .zz-illustration { margin-bottom: 18px; }
+      .zz-ill-mascot { width: 104px; }
+      .zz-ill-fridge { width: 132px; }
+      .zz-ill-cart   { width: 118px; }
+      .zz-phone-col.from-right .zz-illustration { margin-left: -22px; }
+      .zz-phone-col.from-left  .zz-illustration { margin-right: -22px; }
       .features-grid-mini { grid-template-columns: 1fr; }
       .how-grid { grid-template-columns: 1fr; gap: 28px; }
       .how-visual { position: static; }
@@ -626,19 +688,16 @@
           </div>
         </div>
 
-        <!-- Ingredient cutouts -->
-        <div class="ingredient ing-avocado" aria-hidden="true">
-          <img src="https://images.unsplash.com/photo-1519162808019-7de1683fa2ad?w=400&q=85" alt="" />
-        </div>
-        <div class="ingredient ing-tomato" aria-hidden="true">
-          <img src="https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=400&q=85" alt="" />
-        </div>
-        <div class="ingredient ing-herbs" aria-hidden="true">
-          <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?w=400&q=85" alt="" />
-        </div>
+        <!-- Ingredient badges -->
+        <div class="ingredient ing-avocado" aria-hidden="true">🥑</div>
+        <div class="ingredient ing-tomato" aria-hidden="true">🍅</div>
+        <div class="ingredient ing-herbs" aria-hidden="true">🌿</div>
       </div>
     </div>
   </div>
+
+  <!-- Kitchen-counter illustration band, faded into the hero at the top edge -->
+  <div class="hero-counter" aria-hidden="true"></div>
 </div>
 
 <!-- ── MARQUEE ── -->
@@ -716,16 +775,16 @@
 <!-- ── FEATURES (ZIG-ZAG) ── -->
 <section class="features-section" id="features">
   <div class="features-header">
-    <p class="section-eyebrow">What FoodieFlow does</p>
-    <h2 class="section-title">Everything you need to eat well, every week.</h2>
+    <p class="section-eyebrow">Features</p>
+    <h2 class="section-title">Your integrated food flow.</h2>
     <p class="section-sub">One app for your entire meal planning routine — from saving recipes to walking out of the supermarket.</p>
   </div>
 
   <!-- Row 1: Foodie Assistant -->
   <div class="zigzag-row">
     <div class="zigzag-text reveal from-left">
-      <span class="cat-pill pill-amber">AI Powered</span>
-      <h3>Foodie Assistant</h3>
+      <span class="flow-label">Flow 1</span>
+      <h3>Meet your Foodie Assistant</h3>
       <p>Tell Foodie Assistant what's in your fridge and what you're craving — it delivers personalised meal ideas in seconds, tailored to your dietary goals and pantry.</p>
       <a href="#how-it-works" class="zz-link">See how it works →</a>
     </div>
@@ -735,6 +794,7 @@
           <img src="/FoodieAssistant.PNG" alt="Foodie Assistant screen" style="width:100%;height:100%;object-fit:cover;object-position:top" />
         </div>
       </div>
+      <div class="zz-illustration zz-ill-mascot" role="img" aria-label="Illustration of the Foodie Assistant robot chef holding a whisk"></div>
     </div>
   </div>
 
@@ -746,10 +806,11 @@
           <img src="/WeeklyPlanner.png" alt="Weekly Planner screen" style="width:100%;height:100%;object-fit:cover;object-position:top" />
         </div>
       </div>
+      <div class="zz-illustration zz-ill-fridge" role="img" aria-label="Illustration of an open fridge stocked with fresh food"></div>
     </div>
     <div class="zigzag-text reveal from-right">
-      <span class="cat-pill pill-green">Planning</span>
-      <h3>Weekly Planner</h3>
+      <span class="flow-label">Flow 2</span>
+      <h3>Plan smarter, spend better</h3>
       <p>Plan your meals for every day of the week. See your full schedule at a glance, drag meals between days, and never scramble for ideas at the last minute.</p>
       <a href="#how-it-works" class="zz-link">See how it works →</a>
     </div>
@@ -758,8 +819,8 @@
   <!-- Row 3: Smart Shopping Lists -->
   <div class="zigzag-row">
     <div class="zigzag-text reveal from-left">
-      <span class="cat-pill pill-blue">Smart Lists</span>
-      <h3>Smart Shopping Lists</h3>
+      <span class="flow-label">Flow 3</span>
+      <h3>One tap to organised grocery runs</h3>
       <p>Your shopping list writes itself. Every ingredient from your weekly plan is pulled together and sorted by grocery aisle — so you can shop without doubling back.</p>
       <a href="#how-it-works" class="zz-link">See how it works →</a>
     </div>
@@ -769,6 +830,7 @@
           <img src="/ShoppingList.png" alt="Shopping List screen" style="width:100%;height:100%;object-fit:cover;object-position:top" />
         </div>
       </div>
+      <div class="zz-illustration zz-ill-cart" role="img" aria-label="Illustration of a shopping trolley full of groceries"></div>
     </div>
   </div>
 
@@ -782,8 +844,8 @@
       </div>
     </div>
     <div class="zigzag-text reveal from-right">
-      <span class="cat-pill pill-purple">Personalised</span>
-      <h3>Dietary Preferences</h3>
+      <span class="flow-label">Flow 4</span>
+      <h3>Cook like a chef, stress-free</h3>
       <p>Set your allergies, dietary restrictions, and dislikes once. FoodieFlow filters every suggestion around them — so you never need to repeat yourself.</p>
       <a href="#how-it-works" class="zz-link">See how it works →</a>
     </div>
@@ -792,7 +854,7 @@
   <!-- Supplementary 3-card grid -->
   <div class="features-grid-mini">
     <div class="mini-card">
-      <div class="mini-icon" style="background:hsl(205,55%,92%)">
+      <div class="mini-icon" style="background:var(--blue-lt)">
         <svg viewBox="0 0 24 24" style="stroke:var(--blue)"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="9" y1="12" x2="13" y2="12"/></svg>
       </div>
       <span class="cat-pill pill-blue" style="margin-bottom:10px">Library</span>
@@ -821,7 +883,7 @@
 <!-- Wave into how it works -->
 <div class="wave" aria-hidden="true" style="background:white">
   <svg viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-    <path d="M0,0 C360,56 720,0 1080,40 C1260,58 1380,20 1440,28 L1440,56 L0,56 Z" fill="var(--bg-warm)"/>
+    <path d="M0,0 C360,56 720,0 1080,40 C1260,58 1380,20 1440,28 L1440,56 L0,56 Z" fill="var(--bg-hero)"/>
   </svg>
 </div>
 
@@ -893,7 +955,7 @@
 </section>
 
 <!-- Wave into pro -->
-<div class="wave" aria-hidden="true" style="background:var(--bg-warm)">
+<div class="wave" aria-hidden="true" style="background:var(--bg-hero)">
   <svg viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
     <path d="M0,20 C480,60 960,0 1440,32 L1440,56 L0,56 Z" fill="var(--fore)"/>
   </svg>
