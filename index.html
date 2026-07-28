@@ -629,14 +629,31 @@
     }
     @media (max-width: 767px) {
       :root { --nav-h: 56px; }
-      .hero { grid-template-columns: 1fr; text-align: center; min-height: auto; padding-top: 52px; padding-bottom: 40px; gap: 2.5rem; }
+      /* On a phone the headline and the store buttons are the hero. The mockup
+         used to sit above them, which pushed the pitch itself below the fold --
+         and a 190px phone was never going to sell the app the way the sentence
+         does. It steps out entirely here; the app screens still get six full
+         rows of their own further down.
+         The kitchen illustration then becomes a band beneath the copy rather
+         than a cover-cropped backdrop, so it reads as artwork instead of a
+         blurred texture behind the text. */
+      .hero { grid-template-columns: 1fr; text-align: center; min-height: auto; padding-top: 100px; padding-bottom: 28px; gap: 0; }
       .hero-text { max-width: 100%; }
-      .hero-sub { margin: 0 auto 32px; }
+      .hero-sub { margin: 0 auto 30px; font-size: 1.02rem; }
       .hero-cta-block { align-items: center; }
       .hero-store-btns { justify-content: center; }
       .hero-rating { justify-content: center; }
-      .hero-visual { order: -1; }
+      .hero-visual { display: none; }
       .hero-last-line { margin: 0 auto; }
+      h1 { font-size: clamp(38px, 11vw, 52px); margin-bottom: 20px; }
+      .hero-wrapper {
+        background-size: auto 190px;
+        background-position: center bottom;
+        padding-bottom: 190px;
+      }
+      /* The veil exists to lift the copy off the produce it crosses on desktop.
+         Nothing crosses anything now, and it only greys the band. */
+      .hero-wrapper::before { display: none; }
       .phone-cluster { width: 230px; height: 420px; }
       .phone-front { width: 190px; }
       .phone-front-inner { height: 330px; }
@@ -671,7 +688,9 @@
       .dl-trust { gap: 16px; flex-direction: column; align-items: center; }
     }
     @media (max-width: 480px) {
-      .hero-store-btns { flex-direction: column; align-items: center; }
+      .hero-store-btns { flex-wrap: nowrap; gap: 10px; width: 100%; }
+      .hero-store-btns .appstore-btn,
+      .hero-store-btns .playstore-btn { flex: 1 1 0; min-width: 0; padding: 10px 12px; gap: 8px; }
       .dl-btns { flex-direction: column; align-items: center; }
     }
     /* Wide screens have the room, and the mockups need it: a phone frame drawn
