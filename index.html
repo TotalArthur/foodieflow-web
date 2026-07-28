@@ -4,18 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="google-site-verification" content="PAcCoOvk9KpyAOeQAypE_TA3ntky-MoMxfE9lYJ3PAI" />
-  <title>FoodieFlow — Meal Planner &amp; Recipe Importer</title>
-  <meta name="description" content="FoodieFlow organises your week and builds your shopping list. Instantly import and save recipes directly from TikTok, Instagram, URLs, and photos." />
+  <title>FoodieFlow — Meal Planner, Recipe Importer &amp; Household Mode</title>
+  <meta name="description" content="Plan your week, auto-build your shopping list, and import recipes from TikTok, Instagram, URLs, and photos. Now with Household Mode for planning together." />
   <meta name="theme-color" content="#2a7c8a" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://foodieflow.app/" />
   <meta property="og:site_name" content="FoodieFlow" />
-  <meta property="og:title" content="FoodieFlow — Meal Planner &amp; Recipe Importer" />
-  <meta property="og:description" content="FoodieFlow organises your week and builds your shopping list. Instantly import and save recipes directly from TikTok, Instagram, URLs, and photos." />
+  <meta property="og:title" content="FoodieFlow — Meal Planner, Recipe Importer &amp; Household Mode" />
+  <meta property="og:description" content="Plan your week, auto-build your shopping list, and import recipes from TikTok, Instagram, URLs, and photos. Now with Household Mode for planning together." />
   <meta property="og:image" content="https://foodieflow.app/logo.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="FoodieFlow — Meal Planner &amp; Recipe Importer" />
-  <meta name="twitter:description" content="FoodieFlow organises your week and builds your shopping list. Instantly import and save recipes directly from TikTok, Instagram, URLs, and photos." />
+  <meta name="twitter:title" content="FoodieFlow — Meal Planner, Recipe Importer &amp; Household Mode" />
+  <meta name="twitter:description" content="Plan your week, auto-build your shopping list, and import recipes from TikTok, Instagram, URLs, and photos. Now with Household Mode for planning together." />
   <meta name="twitter:image" content="https://foodieflow.app/logo.png" />
   <link rel="canonical" href="https://foodieflow.app/" />
   <link rel="icon" href="/favicon.png" type="image/png" />
@@ -177,12 +177,12 @@
     /* Back phone */
     .phone-back {
       position: absolute; right: -44px; top: 32px;
-      width: 185px; background: hsl(222,47%,13%); border-radius: 28px;
-      padding: 8px; z-index: 2; opacity: 0.9;
+      width: 185px; background: hsl(222,47%,13%); border-radius: 26px;
+      padding: 5px; z-index: 2; opacity: 0.96;
       transform: rotate(6deg);
       box-shadow: 0 28px 60px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.1);
     }
-    .phone-back-inner { background: var(--blue-pale); border-radius: 22px; height: 320px; overflow: hidden; position: relative; }
+    .phone-back-inner { background: var(--blue-pale); border-radius: 21px; height: 320px; overflow: hidden; position: relative; }
     .phone-back-hdr { padding: 12px 10px 8px; background: white; border-bottom: 1px solid var(--border); }
     .phone-back-title { font-size: 0.6rem; font-weight: 700; color: var(--fore); }
     .phone-back-sub { font-size: 0.48rem; color: var(--muted); }
@@ -196,8 +196,8 @@
     /* Front phone */
     .phone-front {
       position: absolute; left: 0; top: 0;
-      width: 232px; background: hsl(222,47%,13%); border-radius: 36px;
-      padding: 10px; z-index: 3;
+      width: 232px; background: hsl(222,47%,13%); border-radius: 34px;
+      padding: 6px; z-index: 3;
       box-shadow: 0 40px 90px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.12);
       animation: floatPhone 3.5s ease-in-out infinite;
     }
@@ -340,6 +340,8 @@
     .blob-orange::before { background: hsl(22, 86%, 57%); }
     .blob-green::before  { background: hsl(88, 36%, 62%); }
     .blob-blue::before   { background: hsl(205, 68%, 55%); }
+    .blob-plum::before   { background: hsl(288, 40%, 48%); }
+    .blob-coral::before  { background: hsl(6, 74%, 60%); }
 
     /* Dashed trail linking one flow to the next. */
     .flow-trail { max-width: 1160px; margin: 0 auto; padding: 0 clamp(16px, 5vw, 80px); }
@@ -349,7 +351,9 @@
     .trail-to-orange path { stroke: hsl(22, 86%, 57%); }
     .trail-to-green  path { stroke: hsl(88, 36%, 48%); }
     .trail-to-blue   path { stroke: hsl(205, 68%, 55%); }
-    .zz-phone { position: relative; z-index: 2; order: 1; width: 240px; background: hsl(222,47%,13%); border-radius: 36px; padding: 10px; box-shadow: 0 28px 70px rgba(20,40,70,0.18); }
+    .trail-to-plum   path { stroke: hsl(288, 42%, 55%); }
+    .trail-to-coral  path { stroke: hsl(6, 78%, 62%); }
+    .zz-phone { position: relative; z-index: 2; order: 1; width: 240px; background: hsl(222,47%,13%); border-radius: 34px; padding: 6px; box-shadow: 0 28px 70px rgba(20,40,70,0.18); }
 
     /* Supporting illustration alongside each phone. Backgrounds (not <img>) so a
        missing file collapses to empty space instead of a broken-image icon.
@@ -368,6 +372,22 @@
     .zz-ill-mascot { width: 172px; aspect-ratio: 360 / 439; background-image: url('/illustrations/chef-mascot.png'); transform: scaleX(-1); }
     .zz-ill-fridge { width: 236px; aspect-ratio: 480 / 317; background-image: url('/illustrations/fridge.png'); }
     .zz-ill-cart   { width: 210px; aspect-ratio: 440 / 389; background-image: url('/illustrations/grocery-cart.png'); }
+    .zz-ill-planner   { width: 180px; aspect-ratio: 360 / 308; background-image: url('/illustrations/planner.png'); }
+    .zz-ill-dietary   { width: 168px; aspect-ratio: 350 / 436; background-image: url('/illustrations/dietary.png'); }
+    .zz-ill-import    { width: 232px; aspect-ratio: 480 / 308; background-image: url('/illustrations/import.png'); }
+    .zz-ill-household { width: 236px; aspect-ratio: 480 / 297; background-image: url('/illustrations/household.png'); }
+    /* The chef and the trolley have empty space at their edges, so tucking them
+       38px behind the phone costs nothing. These four are drawn edge to edge --
+       at that depth the phone eats a third of the calendar and a whole diner --
+       so they sit almost flush instead. */
+    .zz-phone-col.from-right .zz-ill-planner,
+    .zz-phone-col.from-right .zz-ill-dietary,
+    .zz-phone-col.from-right .zz-ill-import,
+    .zz-phone-col.from-right .zz-ill-household { margin-left: -10px; }
+    .zz-phone-col.from-left .zz-ill-planner,
+    .zz-phone-col.from-left .zz-ill-dietary,
+    .zz-phone-col.from-left .zz-ill-import,
+    .zz-phone-col.from-left .zz-ill-household { margin-right: -10px; }
 
     /* Flow step label above each feature heading */
     .flow-label {
@@ -471,7 +491,7 @@
     .how-step-text h4 { font-size: 0.98rem; font-weight: 700; margin-bottom: 5px; color: var(--fore); }
     .how-step-text p { font-size: 0.86rem; color: var(--muted); line-height: 1.65; }
     .how-visual { position: sticky; top: calc(var(--nav-h) + 20px); }
-    .how-phone { width: 260px; margin: 0 auto; background: hsl(222,47%,13%); border-radius: 38px; padding: 12px; box-shadow: 0 30px 80px rgba(20,40,70,0.2); }
+    .how-phone { width: 260px; margin: 0 auto; background: hsl(222,47%,13%); border-radius: 36px; padding: 7px; box-shadow: 0 30px 80px rgba(20,40,70,0.2); }
     .how-screen { border-radius: 28px; height: 460px; overflow: hidden; position: relative; background: var(--bg); }
     .how-screen-pane { position: absolute; inset: 0; opacity: 0; transition: opacity 0.25s ease; }
     .how-screen-pane.active { opacity: 1; }
@@ -635,6 +655,10 @@
       .zz-ill-mascot { width: 104px; }
       .zz-ill-fridge { width: 132px; }
       .zz-ill-cart   { width: 118px; }
+      .zz-ill-planner   { width: 102px; }
+      .zz-ill-dietary   { width: 96px; }
+      .zz-ill-import    { width: 130px; }
+      .zz-ill-household { width: 132px; }
       .zz-phone-col.from-right .zz-illustration { margin-left: -22px; }
       .zz-phone-col.from-left  .zz-illustration { margin-right: -22px; }
       .features-grid-mini { grid-template-columns: 1fr; }
@@ -664,29 +688,37 @@
          always clipped the phone's top corner; that was invisible while the
          screenshot was too small to read, but at this size the badge would sit
          squarely on the app's own name. */
-      .ing-avocado { width: 104px; height: 104px; top: -40px; left: -66px; }
+      .ing-avocado { width: 104px; height: 104px; top: -48px; left: -76px; }
       .ing-tomato  { width: 92px;  height: 92px;  bottom: 34px; right: -62px; }
       .ing-herbs   { width: 86px;  height: 86px;  top: -6px; right: -38px; }
 
       /* Hero cluster: 212 -> 276 and 169 -> 221 of drawn screenshot. */
       .phone-cluster { width: 378px; height: 664px; }
-      .phone-front { width: 302px; padding: 13px; border-radius: 46px; }
+      .phone-front { width: 302px; padding: 8px; border-radius: 44px; }
       .phone-front-inner { height: 529px; border-radius: 36px; }
-      .phone-back { width: 241px; padding: 10px; border-radius: 36px; right: -50px; top: 42px; }
+      .phone-back { width: 241px; padding: 6px; border-radius: 34px; right: -50px; top: 42px; }
       .phone-back-inner { height: 418px; border-radius: 28px; }
       .recipe-float { left: -34px; bottom: -10px; }
 
       /* Flow rows: 220 -> 254. Held back relative to the rest because the
          illustration sits beside the phone in a 468px column -- the pair only
          fits by deepening the overlap a little as the phone grows. */
-      .zz-phone { width: 280px; padding: 13px; border-radius: 46px; }
+      .zz-phone { width: 280px; padding: 8px; border-radius: 44px; }
       .zz-phone-inner { height: 492px; border-radius: 36px; }
       .zz-phone-col.from-right .zz-illustration { margin-left: -52px; }
       .zz-phone-col.from-left  .zz-illustration { margin-right: -52px; }
+      .zz-phone-col.from-right .zz-ill-planner,
+      .zz-phone-col.from-right .zz-ill-dietary,
+      .zz-phone-col.from-right .zz-ill-import,
+      .zz-phone-col.from-right .zz-ill-household { margin-left: -10px; }
+      .zz-phone-col.from-left .zz-ill-planner,
+      .zz-phone-col.from-left .zz-ill-dietary,
+      .zz-phone-col.from-left .zz-ill-import,
+      .zz-phone-col.from-left .zz-ill-household { margin-right: -10px; }
       .zz-phone-col::before { width: 500px; height: 430px; }
 
       /* How it works: 236 -> 306, the largest screenshot on the page. */
-      .how-phone { width: 338px; padding: 16px; border-radius: 49px; }
+      .how-phone { width: 338px; padding: 10px; border-radius: 47px; }
       .how-screen { height: 596px; border-radius: 36px; }
     }
   </style>
@@ -777,7 +809,7 @@
           <div class="phone-back-inner" style="background:#fff">
             <img src="/screens/shopping-list-320.png"
                  srcset="/screens/shopping-list-180.png 180w, /screens/shopping-list-240.png 240w, /screens/shopping-list-280.png 280w, /screens/shopping-list-320.png 320w, /screens/shopping-list-480.png 480w, /screens/shopping-list-620.png 620w, /screens/shopping-list-900.png 900w"
-                 sizes="(max-width: 767px) 139px, (min-width: 1280px) 221px, 169px"
+                 sizes="(max-width: 767px) 145px, (min-width: 1280px) 229px, 175px"
                  alt="Shopping List screen" />
           </div>
         </div>
@@ -786,8 +818,8 @@
         <div class="phone-front" aria-hidden="true">
           <div class="phone-front-inner" style="background:#fff">
             <img src="/screens/home-320.png"
-                 srcset="/screens/home-180.png 180w, /screens/home-240.png 240w, /screens/home-280.png 280w, /screens/home-320.png 320w, /screens/home-480.png 480w, /screens/home-600.png 600w"
-                 sizes="(max-width: 767px) 170px, (min-width: 1280px) 276px, 212px"
+                 srcset="/screens/home-180.png 180w, /screens/home-240.png 240w, /screens/home-280.png 280w, /screens/home-320.png 320w, /screens/home-480.png 480w, /screens/home-620.png 620w"
+                 sizes="(max-width: 767px) 178px, (min-width: 1280px) 286px, 220px"
                  alt="FoodieFlow home screen" />
           </div>
         </div>
@@ -795,8 +827,8 @@
         <!-- Floating recipe card -->
         <div class="recipe-float" aria-hidden="true">
           <div class="rf-img">
-            <img src="/screens/meal-library-180.png"
-                 srcset="/screens/meal-library-48.png 48w, /screens/meal-library-120.png 120w, /screens/meal-library-180.png 180w, /screens/meal-library-220.png 220w"
+            <img src="/screens/meal-library-320.png"
+                 srcset="/screens/meal-library-48.png 48w, /screens/meal-library-120.png 120w, /screens/meal-library-180.png 180w, /screens/meal-library-240.png 240w, /screens/meal-library-280.png 280w, /screens/meal-library-320.png 320w, /screens/meal-library-480.png 480w, /screens/meal-library-620.png 620w, /screens/meal-library-900.png 900w"
                  sizes="38px"
                  alt="Herb Chicken"
                  loading="lazy" />
@@ -910,7 +942,7 @@
         <div class="zz-phone-inner">
           <img src="/screens/foodie-assistant-320.png"
                srcset="/screens/foodie-assistant-180.png 180w, /screens/foodie-assistant-240.png 240w, /screens/foodie-assistant-280.png 280w, /screens/foodie-assistant-320.png 320w, /screens/foodie-assistant-480.png 480w, /screens/foodie-assistant-620.png 620w, /screens/foodie-assistant-900.png 900w"
-               sizes="(max-width: 767px) 180px, (min-width: 1280px) 254px, 220px"
+               sizes="(max-width: 767px) 188px, (min-width: 1280px) 264px, 228px"
                alt="Foodie Assistant screen"
                loading="lazy" />
         </div>
@@ -929,13 +961,13 @@
       <div class="zz-phone">
         <div class="zz-phone-inner">
           <img src="/screens/weekly-planner-320.png"
-               srcset="/screens/weekly-planner-180.png 180w, /screens/weekly-planner-240.png 240w, /screens/weekly-planner-280.png 280w, /screens/weekly-planner-320.png 320w, /screens/weekly-planner-480.png 480w, /screens/weekly-planner-600.png 600w"
-               sizes="(max-width: 767px) 180px, (min-width: 1280px) 254px, 220px"
+               srcset="/screens/weekly-planner-180.png 180w, /screens/weekly-planner-240.png 240w, /screens/weekly-planner-280.png 280w, /screens/weekly-planner-320.png 320w, /screens/weekly-planner-480.png 480w, /screens/weekly-planner-620.png 620w"
+               sizes="(max-width: 767px) 188px, (min-width: 1280px) 264px, 228px"
                alt="Weekly Planner screen"
                loading="lazy" />
         </div>
       </div>
-      <div class="zz-illustration zz-ill-fridge" role="img" aria-label="Illustration of an open fridge stocked with fresh food"></div>
+      <div class="zz-illustration zz-ill-planner" role="img" aria-label="Illustration of a weekly meal calendar with a dish planned on each day"></div>
     </div>
     <div class="zigzag-text reveal from-right">
       <span class="flow-label">Flow 2</span>
@@ -962,7 +994,7 @@
         <div class="zz-phone-inner">
           <img src="/screens/shopping-list-320.png"
                srcset="/screens/shopping-list-180.png 180w, /screens/shopping-list-240.png 240w, /screens/shopping-list-280.png 280w, /screens/shopping-list-320.png 320w, /screens/shopping-list-480.png 480w, /screens/shopping-list-620.png 620w, /screens/shopping-list-900.png 900w"
-               sizes="(max-width: 767px) 180px, (min-width: 1280px) 254px, 220px"
+               sizes="(max-width: 767px) 188px, (min-width: 1280px) 264px, 228px"
                alt="Shopping List screen"
                loading="lazy" />
         </div>
@@ -981,17 +1013,70 @@
       <div class="zz-phone">
         <div class="zz-phone-inner">
           <img src="/screens/dietary-preferences-320.png"
-               srcset="/screens/dietary-preferences-180.png 180w, /screens/dietary-preferences-240.png 240w, /screens/dietary-preferences-280.png 280w, /screens/dietary-preferences-320.png 320w, /screens/dietary-preferences-480.png 480w, /screens/dietary-preferences-600.png 600w"
-               sizes="(max-width: 767px) 180px, (min-width: 1280px) 254px, 220px"
+               srcset="/screens/dietary-preferences-180.png 180w, /screens/dietary-preferences-240.png 240w, /screens/dietary-preferences-280.png 280w, /screens/dietary-preferences-320.png 320w, /screens/dietary-preferences-480.png 480w, /screens/dietary-preferences-620.png 620w"
+               sizes="(max-width: 767px) 188px, (min-width: 1280px) 264px, 228px"
                alt="Dietary Preferences screen"
                loading="lazy" />
         </div>
       </div>
+      <div class="zz-illustration zz-ill-dietary" role="img" aria-label="Illustration of a checklist marking off allergens and disliked ingredients"></div>
     </div>
     <div class="zigzag-text reveal from-right">
       <span class="flow-label">Flow 4</span>
       <h3>Dietary Preferences</h3>
       <p>Set your allergies, dietary restrictions, and dislikes once. FoodieFlow filters every suggestion around them — so you never need to repeat yourself.</p>
+      <a href="#how-it-works" class="zz-link">See how it works →</a>
+    </div>
+  </div>
+
+  <div class="flow-trail trail-to-plum" aria-hidden="true">
+    <svg viewBox="0 0 1160 118" preserveAspectRatio="none"><path d="M314,0 C314,74 846,44 846,118" /></svg>
+  </div>
+
+  <!-- Row 5: Import Recipe -->
+  <div class="zigzag-row">
+    <div class="zigzag-text reveal from-left">
+      <span class="flow-label">Flow 5</span>
+      <h3>Import Recipe</h3>
+      <p>Paste a TikTok or Instagram link, drop in any recipe URL, or snap a photo of a handwritten card. FoodieFlow pulls out the ingredients and steps automatically and adds it straight to your library.</p>
+      <a href="#how-it-works" class="zz-link">See how it works →</a>
+    </div>
+    <div class="zz-phone-col reveal from-right blob-plum">
+      <div class="zz-phone">
+        <div class="zz-phone-inner">
+          <img src="/screens/import-recipe-320.png"
+               srcset="/screens/import-recipe-180.png 180w, /screens/import-recipe-240.png 240w, /screens/import-recipe-280.png 280w, /screens/import-recipe-320.png 320w, /screens/import-recipe-480.png 480w, /screens/import-recipe-620.png 620w"
+               sizes="(max-width: 767px) 188px, (min-width: 1280px) 264px, 228px"
+               alt="Import Recipe screen"
+               loading="lazy" />
+        </div>
+      </div>
+      <div class="zz-illustration zz-ill-import" role="img" aria-label="Illustration of a recipe flying from social media into a phone"></div>
+    </div>
+  </div>
+
+  <div class="flow-trail trail-to-coral" aria-hidden="true">
+    <svg viewBox="0 0 1160 118" preserveAspectRatio="none"><path d="M846,0 C846,74 314,44 314,118" /></svg>
+  </div>
+
+  <!-- Row 6: Household Mode (flipped) -->
+  <div class="zigzag-row">
+    <div class="zz-phone-col reveal from-left blob-coral">
+      <div class="zz-phone">
+        <div class="zz-phone-inner">
+          <img src="/screens/household-mode-320.png"
+               srcset="/screens/household-mode-180.png 180w, /screens/household-mode-240.png 240w, /screens/household-mode-280.png 280w, /screens/household-mode-320.png 320w, /screens/household-mode-480.png 480w, /screens/household-mode-620.png 620w"
+               sizes="(max-width: 767px) 188px, (min-width: 1280px) 264px, 228px"
+               alt="Household Mode screen"
+               loading="lazy" />
+        </div>
+      </div>
+      <div class="zz-illustration zz-ill-household" role="img" aria-label="Illustration of three people sharing a meal together"></div>
+    </div>
+    <div class="zigzag-text reveal from-right">
+      <span class="flow-label">Flow 6</span>
+      <h3>Household Mode</h3>
+      <p>Add everyone in your household as their own chef profile. Plan meals together, share one shopping list, and keep everyone's allergies and preferences in view.</p>
       <a href="#how-it-works" class="zz-link">See how it works →</a>
     </div>
   </div>
@@ -1004,7 +1089,7 @@
       </div>
       <span class="cat-pill pill-blue" style="margin-bottom:10px">Library</span>
       <h3>Your Meal Library</h3>
-      <p>Import recipes straight from TikTok, Instagram, and URLs, or snap a photo of a handwritten card — FoodieFlow saves them to your library and Foodie Assistant uses them to suggest meals that suit your household.</p>
+      <p>Every recipe you save or import lands in one searchable library, filterable by meal type and tagged with your favourites. Foodie Assistant draws on it to suggest meals that suit your household.</p>
     </div>
     <div class="mini-card">
       <div class="mini-icon" style="background:hsl(140,50%,92%)">
@@ -1037,7 +1122,7 @@
   <div class="how-inner">
     <div class="how-header">
       <p class="section-eyebrow">How it works</p>
-      <h2 class="section-title">From fridge to table in four steps.</h2>
+      <h2 class="section-title">From fridge to table in five steps.</h2>
       <p class="section-sub">Getting started takes minutes. Everything else happens automatically.</p>
     </div>
   </div>
@@ -1050,25 +1135,32 @@
           <div class="how-num">1</div>
           <div class="how-step-text">
             <h4>Set up your profile</h4>
-            <p>Add your dietary preferences, allergies, and anything you want to avoid. Takes two minutes.</p>
+            <p>Add your dietary preferences, allergies, and anything you want to avoid — then add the rest of your household as their own chef profiles. Takes two minutes.</p>
           </div>
         </div>
         <div class="how-step" data-step="1">
           <div class="how-num">2</div>
           <div class="how-step-text">
-            <h4>Generate meal ideas</h4>
-            <p>Tap Generate and FoodieFlow produces personalised meal suggestions based on your preferences and what you have at home.</p>
+            <h4>Import your recipes</h4>
+            <p>Bring in recipes you already love from TikTok, Instagram, a URL, or a photo. They'll sit in your library alongside Foodie Assistant's suggestions.</p>
           </div>
         </div>
         <div class="how-step" data-step="2">
           <div class="how-num">3</div>
           <div class="how-step-text">
-            <h4>Plan your week</h4>
-            <p>Drop meals into your weekly planner. Mix Foodie Assistant suggestions with meals from your personal library.</p>
+            <h4>Generate meal ideas</h4>
+            <p>Tap Generate and FoodieFlow produces personalised meal suggestions based on your preferences and what you have at home.</p>
           </div>
         </div>
         <div class="how-step" data-step="3">
           <div class="how-num">4</div>
+          <div class="how-step-text">
+            <h4>Plan your week</h4>
+            <p>Drop meals into your weekly planner. Mix Foodie Assistant suggestions with meals from your personal library.</p>
+          </div>
+        </div>
+        <div class="how-step" data-step="4">
+          <div class="how-num">5</div>
           <div class="how-step-text">
             <h4>Shop and cook</h4>
             <p>Your shopping list is automatically generated from your plan, grouped by aisle. Walk in prepared.</p>
@@ -1082,32 +1174,40 @@
             <!-- Step 0: Profile setup -->
             <div class="how-screen-pane active" data-pane="0">
               <img src="/screens/dietary-preferences-320.png"
-                   srcset="/screens/dietary-preferences-180.png 180w, /screens/dietary-preferences-240.png 240w, /screens/dietary-preferences-280.png 280w, /screens/dietary-preferences-320.png 320w, /screens/dietary-preferences-480.png 480w, /screens/dietary-preferences-600.png 600w"
-                   sizes="(max-width: 767px) 176px, (max-width: 1023px) 196px, (min-width: 1280px) 306px, 236px"
-                   alt="Set up your dietary preferences"
+                   srcset="/screens/dietary-preferences-180.png 180w, /screens/dietary-preferences-240.png 240w, /screens/dietary-preferences-280.png 280w, /screens/dietary-preferences-320.png 320w, /screens/dietary-preferences-480.png 480w, /screens/dietary-preferences-620.png 620w"
+                   sizes="(max-width: 767px) 186px, (max-width: 1023px) 206px, (min-width: 1280px) 318px, 246px"
+                   alt="Set up your dietary preferences and household"
                    loading="lazy" />
             </div>
-            <!-- Step 1: Generate ideas -->
+            <!-- Step 1: Import recipes -->
             <div class="how-screen-pane" data-pane="1">
+              <img src="/screens/import-recipe-320.png"
+                   srcset="/screens/import-recipe-180.png 180w, /screens/import-recipe-240.png 240w, /screens/import-recipe-280.png 280w, /screens/import-recipe-320.png 320w, /screens/import-recipe-480.png 480w, /screens/import-recipe-620.png 620w"
+                   sizes="(max-width: 767px) 186px, (max-width: 1023px) 206px, (min-width: 1280px) 318px, 246px"
+                   alt="Import recipes from a link or a photo"
+                   loading="lazy" />
+            </div>
+            <!-- Step 2: Generate ideas -->
+            <div class="how-screen-pane" data-pane="2">
               <img src="/screens/foodie-assistant-320.png"
                    srcset="/screens/foodie-assistant-180.png 180w, /screens/foodie-assistant-240.png 240w, /screens/foodie-assistant-280.png 280w, /screens/foodie-assistant-320.png 320w, /screens/foodie-assistant-480.png 480w, /screens/foodie-assistant-620.png 620w, /screens/foodie-assistant-900.png 900w"
-                   sizes="(max-width: 767px) 176px, (max-width: 1023px) 196px, (min-width: 1280px) 306px, 236px"
+                   sizes="(max-width: 767px) 186px, (max-width: 1023px) 206px, (min-width: 1280px) 318px, 246px"
                    alt="Generate meal ideas with Foodie Assistant"
                    loading="lazy" />
             </div>
-            <!-- Step 2: Plan week -->
-            <div class="how-screen-pane" data-pane="2">
+            <!-- Step 3: Plan week -->
+            <div class="how-screen-pane" data-pane="3">
               <img src="/screens/weekly-planner-320.png"
-                   srcset="/screens/weekly-planner-180.png 180w, /screens/weekly-planner-240.png 240w, /screens/weekly-planner-280.png 280w, /screens/weekly-planner-320.png 320w, /screens/weekly-planner-480.png 480w, /screens/weekly-planner-600.png 600w"
-                   sizes="(max-width: 767px) 176px, (max-width: 1023px) 196px, (min-width: 1280px) 306px, 236px"
+                   srcset="/screens/weekly-planner-180.png 180w, /screens/weekly-planner-240.png 240w, /screens/weekly-planner-280.png 280w, /screens/weekly-planner-320.png 320w, /screens/weekly-planner-480.png 480w, /screens/weekly-planner-620.png 620w"
+                   sizes="(max-width: 767px) 186px, (max-width: 1023px) 206px, (min-width: 1280px) 318px, 246px"
                    alt="Plan your week"
                    loading="lazy" />
             </div>
-            <!-- Step 3: Shopping list -->
-            <div class="how-screen-pane" data-pane="3">
+            <!-- Step 4: Shopping list -->
+            <div class="how-screen-pane" data-pane="4">
               <img src="/screens/shopping-list-320.png"
                    srcset="/screens/shopping-list-180.png 180w, /screens/shopping-list-240.png 240w, /screens/shopping-list-280.png 280w, /screens/shopping-list-320.png 320w, /screens/shopping-list-480.png 480w, /screens/shopping-list-620.png 620w, /screens/shopping-list-900.png 900w"
-                   sizes="(max-width: 767px) 176px, (max-width: 1023px) 196px, (min-width: 1280px) 306px, 236px"
+                   sizes="(max-width: 767px) 186px, (max-width: 1023px) 206px, (min-width: 1280px) 318px, 246px"
                    alt="Shop from your auto-generated list"
                    loading="lazy" />
             </div>
