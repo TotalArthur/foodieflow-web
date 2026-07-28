@@ -637,7 +637,7 @@
          The kitchen illustration then becomes a band beneath the copy rather
          than a cover-cropped backdrop, so it reads as artwork instead of a
          blurred texture behind the text. */
-      .hero { grid-template-columns: 1fr; text-align: center; min-height: auto; padding-top: 100px; padding-bottom: 28px; gap: 0; }
+      .hero { grid-template-columns: 1fr; text-align: center; min-height: auto; padding-top: 100px; padding-bottom: 124px; gap: 0; }
       .hero-text { max-width: 100%; }
       .hero-sub { margin: 0 auto 30px; font-size: 1.02rem; }
       .hero-cta-block { align-items: center; }
@@ -646,13 +646,27 @@
       .hero-visual { display: none; }
       .hero-last-line { margin: 0 auto; }
       h1 { font-size: clamp(38px, 11vw, 52px); margin-bottom: 20px; }
-      .hero-wrapper {
-        background-size: auto 190px;
-        background-position: center bottom;
-        padding-bottom: 190px;
+      /* The artwork moves onto its own layer so it can be masked. As a plain
+         background it could only ever be a band with a hard top edge, which cost
+         a strip of height and read as a seam across the page. Masked, it fades up
+         out of the cream instead: solid across the counter at the bottom, gone by
+         the time it reaches the copy, with the rating line sitting over the part
+         that is already mostly faded. */
+      .hero-wrapper { background-image: none; }
+      .hero-wrapper::after {
+        content: ''; position: absolute; left: 0; right: 0; bottom: 0;
+        height: 260px; z-index: 0; pointer-events: none;
+        background: url('/illustrations/kitchen-counter.png') no-repeat center bottom;
+        background-size: auto 260px;
+        /* The produce band occupies the bottom 35% of the artwork, and small
+           text is not readable over it. The ramp is timed to reach full opacity
+           right where that band starts, and to stay faint above it, so the copy
+           crosses only the pale tiles and cupboards. */
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.07) 42%, rgba(0,0,0,0.38) 58%, #000 68%);
+        mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.07) 42%, rgba(0,0,0,0.38) 58%, #000 68%);
       }
       /* The veil exists to lift the copy off the produce it crosses on desktop.
-         Nothing crosses anything now, and it only greys the band. */
+         The mask does that job here. */
       .hero-wrapper::before { display: none; }
       .phone-cluster { width: 230px; height: 420px; }
       .phone-front { width: 190px; }
@@ -686,6 +700,23 @@
       .footer-inner { grid-template-columns: 1fr; }
       .footer-bottom { flex-direction: column; align-items: flex-start; }
       .dl-trust { gap: 16px; flex-direction: column; align-items: center; }
+    }
+    /* Narrow phones only: the rating line wraps to two, and the second lands on
+       the produce where it cannot be read. The platform note is the part to lose
+       -- the two store badges directly above it already say iOS and Android. */
+    @media (max-width: 400px) {
+      .hero-rating .rating-div,
+      .hero-rating .rating-platform { display: none; }
+      /* At 320px the illustration and the phone together are wider than the
+         column, which pushed the features section a few pixels past the
+         viewport. */
+      .zz-ill-mascot    { width: 92px; }
+      .zz-ill-fridge    { width: 100px; }
+      .zz-ill-cart      { width: 96px; }
+      .zz-ill-planner   { width: 92px; }
+      .zz-ill-dietary   { width: 84px; }
+      .zz-ill-import    { width: 100px; }
+      .zz-ill-household { width: 100px; }
     }
     @media (max-width: 480px) {
       .hero-store-btns { flex-wrap: nowrap; gap: 10px; width: 100%; }
