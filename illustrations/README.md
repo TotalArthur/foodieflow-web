@@ -10,6 +10,18 @@ page stays intact, it just loses the artwork.
 | `chef-mascot.png` | Flow 1 — Foodie Assistant | Needs a transparent background. |
 | `fridge.png` | Flow 2 — Weekly Planner | Needs a transparent background. |
 | `grocery-cart.png` | Flow 3 — Shopping list | Needs a transparent background. |
+| `planner.png` | Flow 2 — Weekly Planner | From `raw/PlannerIcon.png`. |
+| `dietary.png` | Flow 4 — Dietary Preferences | From `raw/DietaryIcon.png`. |
+| `import.png` | Flow 5 — Import Recipe | From `raw/ImportIcon.png`. |
+| `household.png` | Flow 6 — Household Mode | From `raw/HouseholdIcon.png`. |
+
+`fridge.png` is no longer referenced: Flow 2 used it as a stand-in until the
+calendar mascot existed. It is kept in case a future row wants it.
+
+The four mascots above are drawn edge to edge, unlike the chef and the trolley
+which carry empty space at their margins. The layout tucks illustrations behind
+the phone, so those four get a much shallower overlap — at the default depth the
+phone eats a third of the calendar and a whole diner.
 
 ## Preparing a new export
 
