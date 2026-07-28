@@ -215,8 +215,12 @@
       min-height: 52px; min-width: 160px;
       transition: background 0.2s, transform 0.15s, border-color 0.2s;
     }
-    .appstore-btn:hover, .playstore-btn:hover { background: var(--blue); border-color: var(--blue); transform: translateY(-2px); }
-    .appstore-btn-text, .playstore-btn-text { display: flex; flex-direction: column; line-height: 1.2; }
+    /* The store badges stay black on hover. A blue fill reads as a tint over the
+       official badge artwork rather than as a state change. */
+    .appstore-btn:hover, .playstore-btn:hover { background: hsl(0, 0%, 18%); border-color: rgba(255,255,255,0.24); transform: translateY(-2px); }
+    /* text-align is explicit because the hero centres its text on a phone, which
+       would otherwise centre the badge's small label over its name. */
+    .appstore-btn-text, .playstore-btn-text { display: flex; flex-direction: column; line-height: 1.2; text-align: left; }
     .appstore-btn-label, .playstore-btn-label { font-size: 0.62rem; font-weight: 400; opacity: 0.75; letter-spacing: 0.03em; }
     .appstore-btn-name, .playstore-btn-name { font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; }
 
@@ -779,6 +783,11 @@
       .phone-back { right: -28px; width: 155px; }
       .phone-back-inner { height: 265px; }
       .ingredient, .recipe-float { display: none; }
+      /* The artwork is only 260px tall here and bottom-anchored, so the curve
+         lands in the middle of the produce and reads as a white stripe across
+         it. The artwork already ends on the straight line of the counter, which
+         is a clean enough edge into the features section on its own. */
+      .wave-over-hero { display: none; }
       .proof-banner { padding: 56px clamp(16px, 5vw, 80px); }
       .proof-quotes { grid-template-columns: 1fr; }
       .zigzag-row { grid-template-columns: 1fr; gap: 28px; padding: 40px clamp(16px, 5vw, 80px); }
@@ -824,9 +833,12 @@
       .zz-ill-household { width: 100px; }
     }
     @media (max-width: 480px) {
-      .hero-store-btns { flex-wrap: nowrap; gap: 10px; width: 100%; }
+      /* Stretched to fill the row these read as two black slabs rather than
+         store badges. They hug their own content here, the way the pair on
+         /download/ does, and wrap to a centred stack if they cannot both fit. */
+      .hero-store-btns { flex-wrap: wrap; gap: 12px; width: auto; }
       .hero-store-btns .appstore-btn,
-      .hero-store-btns .playstore-btn { flex: 1 1 0; min-width: 0; padding: 10px 12px; gap: 8px; }
+      .hero-store-btns .playstore-btn { flex: 0 0 auto; min-width: 0; padding: 12px 18px; gap: 10px; }
       .dl-btns { flex-direction: column; align-items: center; }
     }
     /* Wide screens have the room, and the mockups need it: a phone frame drawn
