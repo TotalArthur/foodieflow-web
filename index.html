@@ -650,10 +650,44 @@
       .hero-store-btns { flex-direction: column; align-items: center; }
       .dl-btns { flex-direction: column; align-items: center; }
     }
+    /* Wide screens have the room, and the mockups need it: a phone frame drawn
+       at 236px gets 236 device pixels on a 1x monitor however good the source
+       is, and the app UI inside it lands around 5px of text. Growing the frames
+       is the only thing that raises that ceiling -- the screenshot ladder in
+       screens/ already carries variants for these larger sizes, and each img's
+       `sizes` attribute lists the widths below so the right one gets picked.
+       Heights track their original aspect so the `object-fit: cover` crop is
+       unchanged; paddings and radii scale with the frame so the bezel keeps its
+       proportions. */
     @media (min-width: 1280px) {
-      .ing-avocado { width: 104px; height: 104px; top: -22px; left: -44px; }
-      .ing-tomato  { width: 92px;  height: 92px;  bottom: 28px; right: -54px; }
-      .ing-herbs   { width: 86px;  height: 86px;  top: 14px; right: -32px; }
+      /* Pushed further off the cluster than the smaller breakpoints need. They
+         always clipped the phone's top corner; that was invisible while the
+         screenshot was too small to read, but at this size the badge would sit
+         squarely on the app's own name. */
+      .ing-avocado { width: 104px; height: 104px; top: -40px; left: -66px; }
+      .ing-tomato  { width: 92px;  height: 92px;  bottom: 34px; right: -62px; }
+      .ing-herbs   { width: 86px;  height: 86px;  top: -6px; right: -38px; }
+
+      /* Hero cluster: 212 -> 276 and 169 -> 221 of drawn screenshot. */
+      .phone-cluster { width: 378px; height: 664px; }
+      .phone-front { width: 302px; padding: 13px; border-radius: 46px; }
+      .phone-front-inner { height: 529px; border-radius: 36px; }
+      .phone-back { width: 241px; padding: 10px; border-radius: 36px; right: -50px; top: 42px; }
+      .phone-back-inner { height: 418px; border-radius: 28px; }
+      .recipe-float { left: -34px; bottom: -10px; }
+
+      /* Flow rows: 220 -> 254. Held back relative to the rest because the
+         illustration sits beside the phone in a 468px column -- the pair only
+         fits by deepening the overlap a little as the phone grows. */
+      .zz-phone { width: 280px; padding: 13px; border-radius: 46px; }
+      .zz-phone-inner { height: 492px; border-radius: 36px; }
+      .zz-phone-col.from-right .zz-illustration { margin-left: -52px; }
+      .zz-phone-col.from-left  .zz-illustration { margin-right: -52px; }
+      .zz-phone-col::before { width: 500px; height: 430px; }
+
+      /* How it works: 236 -> 306, the largest screenshot on the page. */
+      .how-phone { width: 338px; padding: 16px; border-radius: 49px; }
+      .how-screen { height: 596px; border-radius: 36px; }
     }
   </style>
   <link rel="stylesheet" href="/assets/site-glass.css" />
@@ -741,9 +775,9 @@
         <!-- Back phone: Shopping List -->
         <div class="phone-back" aria-hidden="true">
           <div class="phone-back-inner" style="background:#fff">
-            <img src="/screens/shopping-list-540.png"
-                 srcset="/screens/shopping-list-180.png 180w, /screens/shopping-list-240.png 240w, /screens/shopping-list-360.png 360w, /screens/shopping-list-540.png 540w, /screens/shopping-list-900.png 900w"
-                 sizes="(max-width: 767px) 139px, 169px"
+            <img src="/screens/shopping-list-320.png"
+                 srcset="/screens/shopping-list-180.png 180w, /screens/shopping-list-240.png 240w, /screens/shopping-list-280.png 280w, /screens/shopping-list-320.png 320w, /screens/shopping-list-480.png 480w, /screens/shopping-list-620.png 620w, /screens/shopping-list-900.png 900w"
+                 sizes="(max-width: 767px) 139px, (min-width: 1280px) 221px, 169px"
                  alt="Shopping List screen" />
           </div>
         </div>
@@ -751,9 +785,9 @@
         <!-- Front phone: Home Screen -->
         <div class="phone-front" aria-hidden="true">
           <div class="phone-front-inner" style="background:#fff">
-            <img src="/screens/home-540.png"
-                 srcset="/screens/home-180.png 180w, /screens/home-240.png 240w, /screens/home-360.png 360w, /screens/home-540.png 540w"
-                 sizes="(max-width: 767px) 170px, 212px"
+            <img src="/screens/home-320.png"
+                 srcset="/screens/home-180.png 180w, /screens/home-240.png 240w, /screens/home-280.png 280w, /screens/home-320.png 320w, /screens/home-480.png 480w, /screens/home-600.png 600w"
+                 sizes="(max-width: 767px) 170px, (min-width: 1280px) 276px, 212px"
                  alt="FoodieFlow home screen" />
           </div>
         </div>
@@ -761,8 +795,8 @@
         <!-- Floating recipe card -->
         <div class="recipe-float" aria-hidden="true">
           <div class="rf-img">
-            <img src="/screens/meal-library-220.png"
-                 srcset="/screens/meal-library-180.png 180w, /screens/meal-library-220.png 220w"
+            <img src="/screens/meal-library-180.png"
+                 srcset="/screens/meal-library-48.png 48w, /screens/meal-library-120.png 120w, /screens/meal-library-180.png 180w, /screens/meal-library-220.png 220w"
                  sizes="38px"
                  alt="Herb Chicken"
                  loading="lazy" />
@@ -874,9 +908,9 @@
     <div class="zz-phone-col reveal from-right blob-teal">
       <div class="zz-phone">
         <div class="zz-phone-inner">
-          <img src="/screens/foodie-assistant-540.png"
-               srcset="/screens/foodie-assistant-180.png 180w, /screens/foodie-assistant-240.png 240w, /screens/foodie-assistant-360.png 360w, /screens/foodie-assistant-540.png 540w, /screens/foodie-assistant-900.png 900w"
-               sizes="(max-width: 767px) 180px, 220px"
+          <img src="/screens/foodie-assistant-320.png"
+               srcset="/screens/foodie-assistant-180.png 180w, /screens/foodie-assistant-240.png 240w, /screens/foodie-assistant-280.png 280w, /screens/foodie-assistant-320.png 320w, /screens/foodie-assistant-480.png 480w, /screens/foodie-assistant-620.png 620w, /screens/foodie-assistant-900.png 900w"
+               sizes="(max-width: 767px) 180px, (min-width: 1280px) 254px, 220px"
                alt="Foodie Assistant screen"
                loading="lazy" />
         </div>
@@ -894,9 +928,9 @@
     <div class="zz-phone-col reveal from-left blob-orange">
       <div class="zz-phone">
         <div class="zz-phone-inner">
-          <img src="/screens/weekly-planner-540.png"
-               srcset="/screens/weekly-planner-180.png 180w, /screens/weekly-planner-240.png 240w, /screens/weekly-planner-360.png 360w, /screens/weekly-planner-540.png 540w"
-               sizes="(max-width: 767px) 180px, 220px"
+          <img src="/screens/weekly-planner-320.png"
+               srcset="/screens/weekly-planner-180.png 180w, /screens/weekly-planner-240.png 240w, /screens/weekly-planner-280.png 280w, /screens/weekly-planner-320.png 320w, /screens/weekly-planner-480.png 480w, /screens/weekly-planner-600.png 600w"
+               sizes="(max-width: 767px) 180px, (min-width: 1280px) 254px, 220px"
                alt="Weekly Planner screen"
                loading="lazy" />
         </div>
@@ -926,9 +960,9 @@
     <div class="zz-phone-col reveal from-right blob-green">
       <div class="zz-phone">
         <div class="zz-phone-inner">
-          <img src="/screens/shopping-list-540.png"
-               srcset="/screens/shopping-list-180.png 180w, /screens/shopping-list-240.png 240w, /screens/shopping-list-360.png 360w, /screens/shopping-list-540.png 540w, /screens/shopping-list-900.png 900w"
-               sizes="(max-width: 767px) 180px, 220px"
+          <img src="/screens/shopping-list-320.png"
+               srcset="/screens/shopping-list-180.png 180w, /screens/shopping-list-240.png 240w, /screens/shopping-list-280.png 280w, /screens/shopping-list-320.png 320w, /screens/shopping-list-480.png 480w, /screens/shopping-list-620.png 620w, /screens/shopping-list-900.png 900w"
+               sizes="(max-width: 767px) 180px, (min-width: 1280px) 254px, 220px"
                alt="Shopping List screen"
                loading="lazy" />
         </div>
@@ -946,9 +980,9 @@
     <div class="zz-phone-col reveal from-left blob-blue">
       <div class="zz-phone">
         <div class="zz-phone-inner">
-          <img src="/screens/dietary-preferences-540.png"
-               srcset="/screens/dietary-preferences-180.png 180w, /screens/dietary-preferences-240.png 240w, /screens/dietary-preferences-360.png 360w, /screens/dietary-preferences-540.png 540w"
-               sizes="(max-width: 767px) 180px, 220px"
+          <img src="/screens/dietary-preferences-320.png"
+               srcset="/screens/dietary-preferences-180.png 180w, /screens/dietary-preferences-240.png 240w, /screens/dietary-preferences-280.png 280w, /screens/dietary-preferences-320.png 320w, /screens/dietary-preferences-480.png 480w, /screens/dietary-preferences-600.png 600w"
+               sizes="(max-width: 767px) 180px, (min-width: 1280px) 254px, 220px"
                alt="Dietary Preferences screen"
                loading="lazy" />
         </div>
@@ -1047,33 +1081,33 @@
           <div class="how-screen">
             <!-- Step 0: Profile setup -->
             <div class="how-screen-pane active" data-pane="0">
-              <img src="/screens/dietary-preferences-540.png"
-                   srcset="/screens/dietary-preferences-180.png 180w, /screens/dietary-preferences-240.png 240w, /screens/dietary-preferences-360.png 360w, /screens/dietary-preferences-540.png 540w"
-                   sizes="(max-width: 767px) 176px, (max-width: 1023px) 196px, 236px"
+              <img src="/screens/dietary-preferences-320.png"
+                   srcset="/screens/dietary-preferences-180.png 180w, /screens/dietary-preferences-240.png 240w, /screens/dietary-preferences-280.png 280w, /screens/dietary-preferences-320.png 320w, /screens/dietary-preferences-480.png 480w, /screens/dietary-preferences-600.png 600w"
+                   sizes="(max-width: 767px) 176px, (max-width: 1023px) 196px, (min-width: 1280px) 306px, 236px"
                    alt="Set up your dietary preferences"
                    loading="lazy" />
             </div>
             <!-- Step 1: Generate ideas -->
             <div class="how-screen-pane" data-pane="1">
-              <img src="/screens/foodie-assistant-540.png"
-                   srcset="/screens/foodie-assistant-180.png 180w, /screens/foodie-assistant-240.png 240w, /screens/foodie-assistant-360.png 360w, /screens/foodie-assistant-540.png 540w, /screens/foodie-assistant-900.png 900w"
-                   sizes="(max-width: 767px) 176px, (max-width: 1023px) 196px, 236px"
+              <img src="/screens/foodie-assistant-320.png"
+                   srcset="/screens/foodie-assistant-180.png 180w, /screens/foodie-assistant-240.png 240w, /screens/foodie-assistant-280.png 280w, /screens/foodie-assistant-320.png 320w, /screens/foodie-assistant-480.png 480w, /screens/foodie-assistant-620.png 620w, /screens/foodie-assistant-900.png 900w"
+                   sizes="(max-width: 767px) 176px, (max-width: 1023px) 196px, (min-width: 1280px) 306px, 236px"
                    alt="Generate meal ideas with Foodie Assistant"
                    loading="lazy" />
             </div>
             <!-- Step 2: Plan week -->
             <div class="how-screen-pane" data-pane="2">
-              <img src="/screens/weekly-planner-540.png"
-                   srcset="/screens/weekly-planner-180.png 180w, /screens/weekly-planner-240.png 240w, /screens/weekly-planner-360.png 360w, /screens/weekly-planner-540.png 540w"
-                   sizes="(max-width: 767px) 176px, (max-width: 1023px) 196px, 236px"
+              <img src="/screens/weekly-planner-320.png"
+                   srcset="/screens/weekly-planner-180.png 180w, /screens/weekly-planner-240.png 240w, /screens/weekly-planner-280.png 280w, /screens/weekly-planner-320.png 320w, /screens/weekly-planner-480.png 480w, /screens/weekly-planner-600.png 600w"
+                   sizes="(max-width: 767px) 176px, (max-width: 1023px) 196px, (min-width: 1280px) 306px, 236px"
                    alt="Plan your week"
                    loading="lazy" />
             </div>
             <!-- Step 3: Shopping list -->
             <div class="how-screen-pane" data-pane="3">
-              <img src="/screens/shopping-list-540.png"
-                   srcset="/screens/shopping-list-180.png 180w, /screens/shopping-list-240.png 240w, /screens/shopping-list-360.png 360w, /screens/shopping-list-540.png 540w, /screens/shopping-list-900.png 900w"
-                   sizes="(max-width: 767px) 176px, (max-width: 1023px) 196px, 236px"
+              <img src="/screens/shopping-list-320.png"
+                   srcset="/screens/shopping-list-180.png 180w, /screens/shopping-list-240.png 240w, /screens/shopping-list-280.png 280w, /screens/shopping-list-320.png 320w, /screens/shopping-list-480.png 480w, /screens/shopping-list-620.png 620w, /screens/shopping-list-900.png 900w"
+                   sizes="(max-width: 767px) 176px, (max-width: 1023px) 196px, (min-width: 1280px) 306px, 236px"
                    alt="Shop from your auto-generated list"
                    loading="lazy" />
             </div>

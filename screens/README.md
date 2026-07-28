@@ -34,6 +34,25 @@ source gets a ladder of widths, handed to the browser as `srcset` + `sizes` so
 every display picks the variant closest to its own pixel grid — and the resize
 itself is Lanczos plus a light unsharp pass, which beats what the GPU does inline.
 
+The ladder is tight at the bottom and loose at the top. At 1x every slot lands
+within 10% of a rung, so the browser draws essentially pixel-for-pixel; at 2x and
+3x the rungs are further apart and a slot may downscale by up to 1.4x, which is
+fine — that density is exactly where the original bug was invisible.
+
+## The other half: frame size
+
+Better resampling removes the artifacts but cannot raise the ceiling. A phone
+frame 236 CSS pixels wide gets 236 device pixels on a 1x monitor no matter what
+is fed to it, and the app UI inside lands around 5px of text. So `index.html`
+also grows the frames at `@media (min-width: 1280px)` — hero 212→276, flow rows
+220→254, how-it-works 236→306 — which is what actually makes them legible on a
+large desktop display. The flow rows grow least: the illustration sits beside the
+phone in a 468px column, and the pair only fits by deepening the overlap.
+
+**The `sizes` attribute on each `<img>` lists these widths, and has to keep
+matching the CSS.** If a frame's width changes, update the `sizes` attribute and
+the slot list in the tool together.
+
 ## Regenerating
 
 After replacing or adding a source screenshot:
@@ -44,9 +63,9 @@ python3 tools/prep-screens.py --check  # verifies each expected variant exists
 ```
 
 The rung ladder and the list of slots each screenshot is rendered into live at the
-top of that script. **If you change a phone frame's width in the CSS, update the
-slot list there too** — the `sizes` attribute in the markup has to keep matching
-the CSS, or the browser goes back to picking the wrong variant.
+top of that script. A screenshot can also declare extra rungs of its own —
+`meal-library` does, because the hero recipe card draws it at 38px and the
+phone-frame ladder would overshoot that by nearly 5x.
 
 ## Known gap
 

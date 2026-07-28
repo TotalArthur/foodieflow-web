@@ -32,53 +32,64 @@ from PIL import Image, ImageFilter
 ROOT = Path(__file__).resolve().parent.parent
 OUT_DIR = ROOT / "screens"
 
-# Width rungs, in CSS pixels of the widest variant. Chosen to cover every
-# rendered slot below at 1x, 2x and 3x without shipping near-duplicate files:
-# 180 covers the small frames at 1x, 240 the large ones, 360 the small frames at
-# 2x, 540 the large frames at 2x and the small ones at 3x, 900 the blog figures
-# at 2x. Rungs above a source's own width are dropped -- upscaling invents
-# nothing.
-RUNGS = (180, 240, 360, 540, 900)
+# Width rungs, in CSS pixels. The ladder is deliberately tight at the bottom and
+# loose at the top, because the two ends are not equally forgiving.
+#
+# At 1x every slot below lands within 10% of a rung, so the browser draws
+# essentially pixel-for-pixel: 169->180, 212/221/236->240, 254/276->280,
+# 306->320. That end matters most -- a 1x display has no spare pixels to hide a
+# resample in, which is why this bug was only ever visible there.
+#
+# At 2x and 3x the rungs are further apart (480, 620, 900) and a slot can end up
+# downscaling by as much as 1.4x. That is fine, and is precisely why nobody
+# noticed the original bug on a Retina screen: at those densities the resample
+# lands below the eye's resolution.
+#
+# Rungs above a source's own width are dropped -- upscaling invents nothing.
+RUNGS = (180, 240, 280, 320, 480, 620, 900)
 
 # Every slot each screenshot is rendered into, as CSS pixels of *drawn* width.
 # The phone frames are wider in aspect than a 9:19.5 screenshot, so `object-fit:
 # cover` always scales to the slot width and crops the height; the width alone
 # decides how many pixels the browser needs. Values are the inner width of the
 # frame -- the outer width minus its two paddings.
+#
+# An optional third entry adds rungs only that screenshot needs. The ladder above
+# is built for phone-frame-sized slots and overshoots a small thumbnail badly.
 SCREENS = {
     "home": (
         "HomeScreen.png",
-        ["hero front phone 212 (170 <=767px)"],
+        ["hero front phone 212 (170 <=767px, 276 >=1280px)"],
     ),
     "shopping-list": (
         "ShoppingList.png",
         [
-            "hero back phone 169 (139 <=767px)",
-            "flow 3 phone 220 (180 <=767px)",
-            "how-it-works phone 236 (196 <=1023px, 176 <=767px)",
+            "hero back phone 169 (139 <=767px, 221 >=1280px)",
+            "flow 3 phone 220 (180 <=767px, 254 >=1280px)",
+            "how-it-works phone 236 (176 <=767px, 196 <=1023px, 306 >=1280px)",
             "blog figure up to 420",
         ],
     ),
     "foodie-assistant": (
         "FoodieAssistant.PNG",
         [
-            "flow 1 phone 220 (180 <=767px)",
-            "how-it-works phone 236 (196 <=1023px, 176 <=767px)",
+            "flow 1 phone 220 (180 <=767px, 254 >=1280px)",
+            "how-it-works phone 236 (176 <=767px, 196 <=1023px, 306 >=1280px)",
             "blog figure up to 420",
         ],
     ),
     "weekly-planner": (
         "WeeklyPlanner.png",
         [
-            "flow 2 phone 220 (180 <=767px)",
-            "how-it-works phone 236 (196 <=1023px, 176 <=767px)",
+            "flow 2 phone 220 (180 <=767px, 254 >=1280px)",
+            "how-it-works phone 236 (176 <=767px, 196 <=1023px, 306 >=1280px)",
         ],
     ),
     "dietary-preferences": (
         "DietaryPreferences.PNG",
         [
-            "flow 4 phone 220 (180 <=767px)",
-            "how-it-works phone 236 (196 <=1023px, 176 <=767px)",
+            "flow 4 phone 220 (180 <=767px, 254 >=1280px)",
+            "how-it-works phone 236 (176 <=767px, 196 <=1023px, 306 >=1280px)",
         ],
     ),
     # 220x478 at source -- the only screenshot the layout has to *upscale*. The
@@ -88,6 +99,10 @@ SCREENS = {
     "meal-library": (
         "MealLibrary.png",
         ["hero recipe card thumbnail 38", "blog figure up to 420"],
+        # The hero thumbnail is 38px. Without these it would pull the 180 rung
+        # and downscale it nearly 5x -- the same fault this tool exists to fix,
+        # just on a small enough element that it is easy to miss.
+        (48, 120),
     ),
     "leftovers-recipe-box": ("LeftoversRecipeBox.jpg", ["blog figure up to 420"]),
     "leftovers-meal-plan": ("LeftoversMealPlan.jpg", ["blog figure up to 420"]),
@@ -107,20 +122,21 @@ UNSHARP = ImageFilter.UnsharpMask(radius=0.6, percent=55, threshold=3)
 JPEG_OPTS = dict(quality=88, subsampling=0, progressive=True, optimize=True)
 
 
-def variants_for(source: Image.Image) -> list[int]:
+def variants_for(source: Image.Image, extra: tuple = ()) -> list[int]:
     """The rungs this source can actually fill, plus the source width itself.
 
-    The source width is kept as the top rung only when it clears the rung below
-    by a useful margin -- a 600px source next to a 540px rung is not worth a
-    second file.
+    The source's own width is always kept as the top rung when it exceeds the
+    ladder: the widest phone frame at 2x asks for 552px, which the fixed rungs
+    would answer with 540 and a hair of upscaling. Every pixel a source has is
+    worth offering.
     """
-    widths = [w for w in RUNGS if w <= source.width]
-    if not widths or source.width >= widths[-1] * 1.15:
+    widths = sorted(w for w in set(RUNGS) | set(extra) if w <= source.width)
+    if not widths or source.width > widths[-1]:
         widths.append(source.width)
     return widths
 
 
-def render(src_path: Path, slug: str, check: bool) -> list[tuple[Path, int, int]]:
+def render(src_path: Path, slug: str, check: bool, extra: tuple = ()) -> list[tuple[Path, int, int]]:
     source = Image.open(src_path)
     if source.mode not in ("RGB", "L"):
         source = source.convert("RGB")
@@ -129,7 +145,7 @@ def render(src_path: Path, slug: str, check: bool) -> list[tuple[Path, int, int]
     suffix = ".jpg" if jpeg else ".png"
 
     built = []
-    for width in variants_for(source):
+    for width in variants_for(source, extra):
         height = round(source.height * width / source.width)
         out_path = OUT_DIR / f"{slug}-{width}{suffix}"
 
@@ -151,12 +167,15 @@ def main(check: bool = False) -> None:
     if not check:
         OUT_DIR.mkdir(exist_ok=True)
 
-    for slug, (source_name, slots) in SCREENS.items():
+    for slug, entry in SCREENS.items():
+        source_name, slots = entry[0], entry[1]
+        extra = entry[2] if len(entry) > 2 else ()
+
         src_path = ROOT / source_name
         if not src_path.exists():
             raise SystemExit(f"missing source: {source_name}")
 
-        built = render(src_path, slug, check)
+        built = render(src_path, slug, check, extra)
         rungs = ", ".join(f"{w}x{h}" for _, w, h in built)
         print(f"{source_name} -> screens/{slug}-* [{rungs}]")
         for slot in slots:
