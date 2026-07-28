@@ -18,6 +18,60 @@
   <meta name="twitter:description" content="Plan your week, auto-build your shopping list, and import recipes from TikTok, Instagram, URLs, and photos. Now with Household Mode for planning together." />
   <meta name="twitter:image" content="https://foodieflow.app/logo.png" />
   <link rel="canonical" href="https://foodieflow.app/" />
+  <!--
+    SoftwareApplication schema. `aggregateRating` is deliberately absent: Google's
+    structured-data policy requires the value and review count to match the real
+    store listings, so pull the current numbers from App Store Connect / Play
+    Console and add a block of this shape before shipping it:
+
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "<real value>",
+        "reviewCount": "<real count>"
+      },
+
+    The `review` below is the Google Play review already quoted on the page.
+  -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "FoodieFlow",
+    "url": "https://foodieflow.app/",
+    "description": "Meal planner and recipe organizer that plans your week, auto-builds your shopping list, and imports recipes from TikTok, Instagram, URLs, and photos.",
+    "applicationCategory": "LifestyleApplication",
+    "operatingSystem": "iOS, Android",
+    "image": "https://foodieflow.app/logo.png",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "review": [
+      {
+        "@type": "Review",
+        "name": "A lifesaver for saved recipes!",
+        "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+        "author": { "@type": "Person", "name": "Chloe P." },
+        "reviewBody": "I used to lose track of all the food videos I saved on Instagram and TikTok. Being able to import them directly into my weekly plan is brilliant. It completely takes the headache out of deciding what to make for dinner, and the automated grocery lists are like magic."
+      },
+      {
+        "@type": "Review",
+        "name": "Perfect for couples and shared routines",
+        "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+        "author": { "@type": "Person", "name": "David M." },
+        "reviewBody": "My partner and I constantly struggled with keeping our grocery shopping synced and planning meals together. This app has completely streamlined our weekly routine. The shared grocery management is flawless, and it saves us so much back-and-forth texting about what we need from the store."
+      },
+      {
+        "@type": "Review",
+        "name": "Finally, an app that makes sense",
+        "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+        "author": { "@type": "Person", "name": "Jessica T." },
+        "reviewBody": "I’ve tried so many meal planners over the years, but this one actually gets it right. The interface is super clean, and it doesn’t overcomplicate things. It genuinely lives up to the promise of making meal planning simple. Highly recommend!"
+      }
+    ]
+  }
+  </script>
   <link rel="icon" href="/favicon.png" type="image/png" />
   <link rel="apple-touch-icon" href="/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -120,10 +174,12 @@
       padding: 128px clamp(16px, 5vw, 80px) 60px;
       position: relative; z-index: 1;
     }
-    .hero-text { max-width: 540px; }
+    .hero-text { max-width: 600px; }
     h1 {
       font-family: "PT Sans", sans-serif;
-      font-size: clamp(36px, 6vw, 68px);
+      /* The headline leads with the category keywords, so it runs longer than a
+         two-word tagline would; the ramp is sized to keep it to two lines. */
+      font-size: clamp(32px, 5vw, 58px);
       font-weight: 900; line-height: 1.05;
       letter-spacing: -0.02em; margin-bottom: 24px; color: var(--fore);
     }
@@ -266,37 +322,82 @@
     @keyframes floatB { 0%,100% { transform: translateY(0) rotate(9deg); } 50% { transform: translateY(-10px) rotate(9deg); } }
     @keyframes floatC { 0%,100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-14px) rotate(-3deg); } }
 
-    /* ── MARQUEE ── */
-    .strip { background: var(--fore); padding: 16px 0; overflow: hidden; }
-    .strip-inner { display: flex; gap: 3rem; align-items: center; animation: marquee 26s linear infinite; white-space: nowrap; width: max-content; }
-    .strip-item { display: flex; align-items: center; gap: 8px; font-size: 0.82rem; font-weight: 700; color: rgba(255,255,255,0.7); }
-    .strip-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--amber); }
-    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
-    /* ── SOCIAL PROOF BANNER ── */
+    /* ── SOCIAL PROOF / REVIEWS ── */
     .proof-banner {
       background: var(--bg-warm);
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
-      padding: 40px clamp(16px, 5vw, 80px);
+      padding: 72px clamp(16px, 5vw, 80px);
     }
-    .proof-inner { max-width: 1160px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px; align-items: center; }
-    .proof-star-row { display: flex; gap: 3px; align-items: center; margin-bottom: 8px; }
-    .proof-star { width: 22px; height: 22px; fill: hsl(42,90%,52%); }
-    .proof-rating-val { font-size: 1.1rem; font-weight: 700; color: var(--fore); margin-bottom: 4px; }
-    .proof-rating-sub { font-size: 0.78rem; color: var(--muted); }
-    .proof-carousel { position: relative; min-height: 100px; }
-    .proof-quote { display: none; gap: 12px; align-items: flex-start; }
-    .proof-quote.active { display: flex; animation: fadeQuote 0.6s ease; }
-    @keyframes fadeQuote { from { opacity: 0; } to { opacity: 1; } }
-    .proof-avatar { width: 40px; height: 40px; border-radius: 50%; overflow: hidden; flex-shrink: 0; background: var(--border); }
+    .proof-inner { max-width: 1160px; margin: 0 auto; }
+    .proof-header { text-align: center; margin-bottom: 40px; }
+    .proof-header .section-sub { margin: 0 auto; }
+    /* The reviews are a swipeable track: native horizontal scrolling with snap
+       points, so a touch swipe works without any JS. The arrows and dots below
+       drive the same scroll for pointer users. */
+    .proof-carousel { position: relative; max-width: 1040px; margin: 0 auto; }
+    .proof-quotes {
+      display: flex; align-items: stretch; gap: 20px;
+      overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none; -ms-overflow-style: none;
+    }
+    .proof-quotes::-webkit-scrollbar { display: none; }
+    /* One card at a time on a phone, widening to two and then three slimmer
+       columns as there is room for them. The track keeps scrolling and snapping
+       at every size — the wide layouts just show more of it at once. */
+    .proof-quote {
+      flex: 0 0 100%; scroll-snap-align: start;
+      display: flex; flex-direction: column;
+      background: white; border: 1px solid rgba(0,0,0,0.08);
+      border-radius: var(--radius); padding: 24px 26px;
+    }
+    .proof-quote-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+    .proof-quote-who { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    @media (min-width: 720px) { .proof-quote { flex-basis: calc((100% - 20px) / 2); } }
+    @media (min-width: 1100px) { .proof-quote { flex-basis: calc((100% - 40px) / 3); padding: 24px; } }
+    .proof-avatar {
+      width: 34px; height: 34px; border-radius: 50%; overflow: hidden; flex-shrink: 0;
+      background: var(--blue-lt); display: flex; align-items: center; justify-content: center;
+    }
     .proof-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    /* An icon rather than a stock portrait: these are store reviews, and a stock
+       face would imply a photo the reviewer never gave us. */
+    .proof-avatar-icon { width: 17px; height: 20px; fill: none; stroke: var(--amber-dark); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .proof-quote-stars { display: flex; gap: 2px; flex-shrink: 0; }
+    .proof-quote-star { width: 14px; height: 14px; fill: hsl(42,90%,52%); }
+    .proof-quote-author { font-size: 0.85rem; font-weight: 700; color: var(--fore); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .proof-quote-title { font-size: 0.95rem; font-weight: 700; color: var(--fore); margin-bottom: 8px; }
     .proof-quote-text { font-size: 0.88rem; color: var(--fore); line-height: 1.65; font-style: italic; }
-    .proof-quote-author { font-size: 0.75rem; color: var(--muted); margin-top: 6px; font-style: normal; font-weight: 700; }
-    .proof-trust { display: flex; flex-direction: column; gap: 10px; }
-    .trust-pill { display: flex; align-items: center; gap: 10px; background: white; border: 1px solid rgba(0,0,0,0.08); border-radius: 100px; padding: 9px 16px; font-size: 0.82rem; font-weight: 700; }
-    .trust-pill-icon { width: 16px; height: 16px; flex-shrink: 0; }
-    .trust-pill-icon path, .trust-pill-icon polyline, .trust-pill-icon rect, .trust-pill-icon circle, .trust-pill-icon line { stroke: var(--amber); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .proof-nav {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 40px; height: 40px; border-radius: 50%;
+      background: white; border: 1px solid var(--border); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06); transition: background 0.2s, opacity 0.2s;
+    }
+    .proof-nav:hover { background: var(--blue-pale); }
+    .proof-nav[disabled] { opacity: 0.35; cursor: default; }
+    .proof-nav svg { width: 18px; height: 18px; fill: none; stroke: var(--fore); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+    /* The arrows tuck against the track edge rather than sitting in an outer
+       gutter: at the widths where they are needed the section padding has
+       already eaten that gutter, and pushing them out overflowed the page. */
+    .proof-prev { left: -18px; }
+    .proof-next { right: -18px; }
+    .is-static .proof-nav, .is-static .proof-dots { display: none; }
+    .proof-dots { display: flex; justify-content: center; gap: 8px; margin-top: 24px; }
+    .proof-dot {
+      width: 8px; height: 8px; border-radius: 50%; padding: 0; cursor: pointer;
+      border: none; background: var(--border); transition: background 0.2s, width 0.2s;
+    }
+    .proof-dot.active { background: var(--amber); width: 22px; border-radius: 100px; }
+    /* One card per view: swiping it is the natural gesture, and the arrows would
+       have to sit on top of the card to fit. */
+    @media (max-width: 719px) { .proof-nav { display: none; } }
+    /* One card per view: the reviews differ enough in length that stretching a
+       short one to the height of the longest leaves a lot of empty card. Side by
+       side they stay stretched, so the row of cards lines up. */
+    @media (max-width: 719px) { .proof-quote { align-self: flex-start; } }
 
     /* ── WAVE DIVIDERS ── */
     .wave { display: block; width: 100%; overflow: hidden; line-height: 0; }
@@ -304,6 +405,12 @@
        fractional pixel and leaves a hairline of the divider's own background
        showing against the section below. Overlap by a pixel to close the seam. */
     .wave svg { display: block; width: 100%; margin-bottom: -1px; }
+    /* This one has no background of its own, so it is pulled up over the hero:
+       the white curve rises straight out of the kitchen artwork instead of
+       leaving a band of page background between the two. The hero is short
+       enough on a phone that the overlap would reach the rating line, so the
+       pull-up is desktop only. */
+    .wave-over-hero { margin-top: -56px; position: relative; z-index: 2; }
 
     /* ── FEATURES ── */
     .features-section { background: white; padding: 80px 0 40px; }
@@ -624,8 +731,6 @@
       .nav-links { display: none; }
       .nav-hamburger { display: flex; }
       .footer-inner { grid-template-columns: 1fr 1fr; }
-      .proof-inner { grid-template-columns: 1fr 1fr; }
-      .proof-trust { grid-column: 1 / -1; flex-direction: row; justify-content: center; flex-wrap: wrap; }
     }
     @media (max-width: 767px) {
       :root { --nav-h: 56px; }
@@ -645,7 +750,7 @@
       .hero-rating { justify-content: center; }
       .hero-visual { display: none; }
       .hero-last-line { margin: 0 auto; }
-      h1 { font-size: clamp(38px, 11vw, 52px); margin-bottom: 20px; }
+      h1 { font-size: clamp(32px, 9.4vw, 46px); margin-bottom: 20px; }
       /* The artwork moves onto its own layer so it can be masked. As a plain
          background it could only ever be a band with a hard top edge, which cost
          a strip of height and read as a seam across the page. Masked, it fades up
@@ -674,8 +779,8 @@
       .phone-back { right: -28px; width: 155px; }
       .phone-back-inner { height: 265px; }
       .ingredient, .recipe-float { display: none; }
-      .proof-inner { grid-template-columns: 1fr; gap: 24px; }
-      .proof-trust { flex-direction: column; }
+      .proof-banner { padding: 56px clamp(16px, 5vw, 80px); }
+      .proof-quotes { grid-template-columns: 1fr; }
       .zigzag-row { grid-template-columns: 1fr; gap: 28px; padding: 40px clamp(16px, 5vw, 80px); }
       .zigzag-row .zz-phone-col { order: -1; }
       .zz-phone { width: 200px; }
@@ -805,9 +910,9 @@
   <div class="hero">
     <div class="hero-text">
       <h1>
-        Meal planning,<br />
+        The Ultimate Recipe Organizer<br />
         <span class="hero-last-line">
-          <em>finally simple.</em>
+          <em>&amp; Meal Planner.</em>
           <svg class="wavy-wrap" viewBox="0 0 230 14" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <path class="wavy-path" d="M4,7 Q20,1 40,7 Q60,13 80,7 Q100,1 120,7 Q140,13 160,7 Q180,1 200,7 Q215,11 226,7" />
           </svg>
@@ -899,73 +1004,8 @@
 
 </div>
 
-<!-- ── MARQUEE ── -->
-<div class="strip" aria-hidden="true">
-  <div class="strip-inner">
-    <span class="strip-item"><span class="strip-dot"></span> Import recipes from TikTok &amp; Instagram</span>
-    <span class="strip-item"><span class="strip-dot"></span> Save your favourite meals</span>
-    <span class="strip-item"><span class="strip-dot"></span> Foodie Assistant meal suggestions</span>
-    <span class="strip-item"><span class="strip-dot"></span> Auto-generated shopping lists</span>
-    <span class="strip-item"><span class="strip-dot"></span> Plan your entire week</span>
-    <span class="strip-item"><span class="strip-dot"></span> Dietary &amp; allergy preferences</span>
-    <span class="strip-item"><span class="strip-dot"></span> Use what you already have</span>
-    <span class="strip-item"><span class="strip-dot"></span> Import recipes from TikTok &amp; Instagram</span>
-    <span class="strip-item"><span class="strip-dot"></span> Save your favourite meals</span>
-    <span class="strip-item"><span class="strip-dot"></span> Foodie Assistant meal suggestions</span>
-    <span class="strip-item"><span class="strip-dot"></span> Auto-generated shopping lists</span>
-    <span class="strip-item"><span class="strip-dot"></span> Plan your entire week</span>
-    <span class="strip-item"><span class="strip-dot"></span> Dietary &amp; allergy preferences</span>
-    <span class="strip-item"><span class="strip-dot"></span> Use what you already have</span>
-  </div>
-</div>
-
-<!-- ── SOCIAL PROOF BANNER ── -->
-<div class="proof-banner">
-  <div class="proof-inner">
-    <!-- Star rating -->
-    <div class="proof-stars">
-      <div class="proof-star-row" aria-label="4.8 out of 5 stars">
-        <svg class="proof-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        <svg class="proof-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        <svg class="proof-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        <svg class="proof-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        <svg class="proof-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-      </div>
-      <div class="proof-rating-val">5 / 5</div>
-      <div class="proof-rating-sub">Rated on Google Play</div>
-    </div>
-
-    <!-- Testimonial carousel -->
-    <div class="proof-carousel" id="proof-carousel" aria-live="polite">
-      <div class="proof-quote active" data-idx="0">
-        <div class="proof-avatar"><img src="https://i.pravatar.cc/40?img=8" alt="Google Play reviewer" loading="lazy" /></div>
-        <div>
-          <p class="proof-quote-text">"Incredibly useful! This app is fantastic and really easy to use — especially for keeping my day-by-day routine organised and on track."</p>
-          <p class="proof-quote-author">— Google Play reviewer ★★★★★</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Trust pills -->
-    <div class="proof-trust">
-      <div class="trust-pill">
-        <svg class="trust-pill-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        Your data stays private
-      </div>
-      <div class="trust-pill">
-        <svg class="trust-pill-icon" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
-        iOS &amp; Android
-      </div>
-      <div class="trust-pill">
-        <svg class="trust-pill-icon" viewBox="0 0 24 24"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
-        Free to download
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- Wave into features -->
-<div class="wave" aria-hidden="true">
+<div class="wave wave-over-hero" aria-hidden="true">
   <svg viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
     <path d="M0,28 C240,56 480,0 720,28 C960,56 1200,0 1440,28 L1440,56 L0,56 Z" fill="white"/>
   </svg>
@@ -1160,8 +1200,101 @@
   </div>
 </section>
 
+<!-- ── REVIEWS ── -->
+<div class="proof-banner" id="reviews">
+  <div class="proof-inner">
+    <div class="proof-header">
+      <p class="section-eyebrow">Reviews</p>
+      <h2 class="section-title">Trusted by cooks.</h2>
+      <p class="section-sub">Real reviews from people planning their week with FoodieFlow.</p>
+    </div>
+
+    <!--
+      Review cards. Every quote here is a review as it was left on the store
+      listing — do not add invented testimonials, both because that is deceptive
+      advertising and because the SoftwareApplication schema in <head> mirrors
+      this list, and Google requires that markup to describe genuine reviews.
+
+      To add one, copy a card and fill in the title, quote, and the reviewer's
+      name as it appears on the listing. Keep the avatar as the icon unless the
+      reviewer supplied a portrait. If a review is anything other than 5 stars,
+      drop the matching number of <svg class="proof-quote-star"> elements from
+      its star row. Add the review to the "review" array in <head> too.
+    -->
+    <div class="proof-carousel">
+      <button class="proof-nav proof-prev" type="button" aria-label="Previous review" aria-controls="proof-track">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div class="proof-quotes" id="proof-track" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Reviews">
+      <article class="proof-quote" role="group" aria-roledescription="review" aria-label="Review 1 of 3">
+        <div class="proof-quote-head">
+          <div class="proof-quote-who">
+            <div class="proof-avatar" aria-hidden="true">
+              <svg class="proof-avatar-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <span class="proof-quote-author">Chloe P.</span>
+          </div>
+          <div class="proof-quote-stars" aria-label="5 out of 5 stars">
+            <svg class="proof-quote-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="proof-quote-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="proof-quote-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="proof-quote-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="proof-quote-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+        </div>
+        <p class="proof-quote-title">A lifesaver for saved recipes!</p>
+        <p class="proof-quote-text">"I used to lose track of all the food videos I saved on Instagram and TikTok. Being able to import them directly into my weekly plan is brilliant. It completely takes the headache out of deciding what to make for dinner, and the automated grocery lists are like magic."</p>
+      </article>
+      <article class="proof-quote" role="group" aria-roledescription="review" aria-label="Review 2 of 3">
+        <div class="proof-quote-head">
+          <div class="proof-quote-who">
+            <div class="proof-avatar" aria-hidden="true">
+              <svg class="proof-avatar-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <span class="proof-quote-author">David M.</span>
+          </div>
+          <div class="proof-quote-stars" aria-label="5 out of 5 stars">
+            <svg class="proof-quote-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="proof-quote-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="proof-quote-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="proof-quote-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="proof-quote-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+        </div>
+        <p class="proof-quote-title">Perfect for couples and shared routines</p>
+        <p class="proof-quote-text">"My partner and I constantly struggled with keeping our grocery shopping synced and planning meals together. This app has completely streamlined our weekly routine. The shared grocery management is flawless, and it saves us so much back-and-forth texting about what we need from the store."</p>
+      </article>
+      <article class="proof-quote" role="group" aria-roledescription="review" aria-label="Review 3 of 3">
+        <div class="proof-quote-head">
+          <div class="proof-quote-who">
+            <div class="proof-avatar" aria-hidden="true">
+              <svg class="proof-avatar-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <span class="proof-quote-author">Jessica T.</span>
+          </div>
+          <div class="proof-quote-stars" aria-label="5 out of 5 stars">
+            <svg class="proof-quote-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="proof-quote-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="proof-quote-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="proof-quote-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="proof-quote-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+        </div>
+        <p class="proof-quote-title">Finally, an app that makes sense</p>
+        <p class="proof-quote-text">"I’ve tried so many meal planners over the years, but this one actually gets it right. The interface is super clean, and it doesn’t overcomplicate things. It genuinely lives up to the promise of making meal planning simple. Highly recommend!"</p>
+      </article>
+    </div>
+      <button class="proof-nav proof-next" type="button" aria-label="Next review" aria-controls="proof-track">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <div class="proof-dots" id="proof-dots" role="tablist" aria-label="Choose a review"></div>
+    </div>
+
+  </div>
+</div>
+
 <!-- Wave into how it works -->
-<div class="wave" aria-hidden="true" style="background:white">
+<div class="wave" aria-hidden="true" style="background:var(--bg-warm)">
   <svg viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
     <path d="M0,0 C360,56 720,0 1080,40 C1260,58 1380,20 1440,28 L1440,56 L0,56 Z" fill="var(--bg-hero)"/>
   </svg>
@@ -1463,15 +1596,74 @@
     });
   });
 
-  /* ── Testimonial carousel ── */
-  var quotes = document.querySelectorAll('.proof-quote');
-  var quoteIdx = 0;
-  if (quotes.length > 1) {
-    setInterval(function () {
-      quotes[quoteIdx].classList.remove('active');
-      quoteIdx = (quoteIdx + 1) % quotes.length;
-      quotes[quoteIdx].classList.add('active');
-    }, 3000);
+  /* ── Review carousel ──
+     The track scrolls and snaps on its own, so this only mirrors that scroll
+     position into the dots and arrows and drives it back when they are used.
+     Once the viewport is wide enough to show every review at once there is
+     nothing left to scroll, so the controls take themselves out. */
+  var track = document.getElementById('proof-track');
+  if (track) {
+    var carousel = track.closest('.proof-carousel');
+    var cards = track.querySelectorAll('.proof-quote');
+    var dotsWrap = document.getElementById('proof-dots');
+    var prevBtn = document.querySelector('.proof-prev');
+    var nextBtn = document.querySelector('.proof-next');
+    var dots = [];
+
+    cards.forEach(function (card, i) {
+      var dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'proof-dot';
+      dot.setAttribute('role', 'tab');
+      dot.setAttribute('aria-label', 'Review ' + (i + 1));
+      dot.addEventListener('click', function () { goTo(i); });
+      dotsWrap.appendChild(dot);
+      dots.push(dot);
+    });
+
+    function goTo(i) {
+      track.scrollTo({ left: cards[i].offsetLeft - cards[0].offsetLeft, behavior: 'smooth' });
+    }
+
+    function refresh() {
+      var max = track.scrollWidth - track.clientWidth;
+      carousel.classList.toggle('is-static', max <= 4);
+
+      var nearest = 0;
+      var best = Infinity;
+      cards.forEach(function (card, i) {
+        var d = Math.abs(card.offsetLeft - cards[0].offsetLeft - track.scrollLeft);
+        if (d < best) { best = d; nearest = i; }
+      });
+      dots.forEach(function (dot, n) {
+        dot.classList.toggle('active', n === nearest);
+        dot.setAttribute('aria-selected', n === nearest ? 'true' : 'false');
+      });
+
+      prevBtn.disabled = track.scrollLeft <= 2;
+      nextBtn.disabled = track.scrollLeft >= max - 2;
+    }
+
+    prevBtn.addEventListener('click', function () {
+      goTo(Math.max(0, [].indexOf.call(dots, dotsWrap.querySelector('.active')) - 1));
+    });
+    nextBtn.addEventListener('click', function () {
+      goTo(Math.min(cards.length - 1, [].indexOf.call(dots, dotsWrap.querySelector('.active')) + 1));
+    });
+
+    track.addEventListener('keydown', function (e) {
+      var i = [].indexOf.call(dots, dotsWrap.querySelector('.active'));
+      if (e.key === 'ArrowRight') { e.preventDefault(); goTo(Math.min(cards.length - 1, i + 1)); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(Math.max(0, i - 1)); }
+    });
+
+    var scrollTimer;
+    track.addEventListener('scroll', function () {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(refresh, 90);
+    }, { passive: true });
+    window.addEventListener('resize', refresh);
+    refresh();
   }
 
   /* ── How it works step-through ── */
