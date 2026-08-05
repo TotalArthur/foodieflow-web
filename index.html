@@ -19,18 +19,27 @@
   <meta name="twitter:image" content="https://foodieflow.app/logo.png" />
   <link rel="canonical" href="https://foodieflow.app/" />
   <!--
-    SoftwareApplication schema. `aggregateRating` is deliberately absent: Google's
-    structured-data policy requires the value and review count to match the real
-    store listings, so pull the current numbers from App Store Connect / Play
-    Console and add a block of this shape before shipping it:
+    SoftwareApplication schema. Both `aggregateRating` and `review` are
+    deliberately absent, and they have to come back together.
+
+    Google rejects an entity that carries more than one `review` without an
+    `aggregateRating` alongside it ("Multiple reviews without aggregateRating
+    object"), which made this whole item ineligible for rich results. The
+    reviews quoted on the page are still there — only the markup was removed —
+    so nothing user-facing changed.
+
+    To restore it: pull the live average and total count from App Store Connect
+    or Play Console (the policy requires them to match the real store listings,
+    so never estimate), then add both blocks in one go:
 
       "aggregateRating": {
         "@type": "AggregateRating",
         "ratingValue": "<real value>",
         "reviewCount": "<real count>"
       },
+      "review": [ ... one entry per review card in the carousel below ... ]
 
-    The `review` below is the Google Play review already quoted on the page.
+    Adding `review` back on its own re-breaks the page in Search Console.
   -->
   <script type="application/ld+json">
   {
@@ -46,30 +55,7 @@
       "@type": "Offer",
       "price": "0",
       "priceCurrency": "USD"
-    },
-    "review": [
-      {
-        "@type": "Review",
-        "name": "A lifesaver for saved recipes!",
-        "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
-        "author": { "@type": "Person", "name": "Chloe P." },
-        "reviewBody": "I used to lose track of all the food videos I saved on Instagram and TikTok. Being able to import them directly into my weekly plan is brilliant. It completely takes the headache out of deciding what to make for dinner, and the automated grocery lists are like magic."
-      },
-      {
-        "@type": "Review",
-        "name": "Perfect for couples and shared routines",
-        "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
-        "author": { "@type": "Person", "name": "David M." },
-        "reviewBody": "My partner and I constantly struggled with keeping our grocery shopping synced and planning meals together. This app has completely streamlined our weekly routine. The shared grocery management is flawless, and it saves us so much back-and-forth texting about what we need from the store."
-      },
-      {
-        "@type": "Review",
-        "name": "Finally, an app that makes sense",
-        "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
-        "author": { "@type": "Person", "name": "Jessica T." },
-        "reviewBody": "I’ve tried so many meal planners over the years, but this one actually gets it right. The interface is super clean, and it doesn’t overcomplicate things. It genuinely lives up to the promise of making meal planning simple. Highly recommend!"
-      }
-    ]
+    }
   }
   </script>
   <link rel="icon" href="/favicon.png" type="image/png" />
@@ -1224,14 +1210,20 @@
     <!--
       Review cards. Every quote here is a review as it was left on the store
       listing — do not add invented testimonials, both because that is deceptive
-      advertising and because the SoftwareApplication schema in <head> mirrors
-      this list, and Google requires that markup to describe genuine reviews.
+      advertising and because these cards are the source this page's review
+      markup is rebuilt from, and Google requires that markup to describe
+      genuine reviews.
 
       To add one, copy a card and fill in the title, quote, and the reviewer's
       name as it appears on the listing. Keep the avatar as the icon unless the
       reviewer supplied a portrait. If a review is anything other than 5 stars,
       drop the matching number of <svg class="proof-quote-star"> elements from
-      its star row. Add the review to the "review" array in <head> too.
+      its star row.
+
+      There is no matching "review" array in <head> at the moment — it was
+      removed because Google requires an aggregateRating next to multiple
+      reviews. See the comment on the schema block in <head> before adding
+      one back.
     -->
     <div class="proof-carousel">
       <button class="proof-nav proof-prev" type="button" aria-label="Previous review" aria-controls="proof-track">
