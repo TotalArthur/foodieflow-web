@@ -14,6 +14,8 @@
   <meta property="og:description" content="Meal planning guides, recipe ideas, and nutrition tips from the FoodieFlow team — practical advice for eating well without the stress." />
   <meta property="og:image" content="https://foodieflow.app/logo.png" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Blog — Meal Planning &amp; Nutrition Tips | FoodieFlow" />
+  <meta name="twitter:description" content="Meal planning guides, recipe ideas, and nutrition tips from the FoodieFlow team — practical advice for eating well without the stress." />
   <meta name="twitter:image" content="https://foodieflow.app/logo.png" />
   <link rel="icon" href="/favicon.png" type="image/png" />
   <link rel="apple-touch-icon" href="/favicon.png" />
@@ -100,13 +102,14 @@
 
     /* CATEGORY FILTER PILLS */
     .cat-filter { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; padding: 30px 0 8px; }
-    .cat-filter a {
+    .cat-filter button {
       display: inline-flex; align-items: center; padding: 8px 18px; border-radius: 100px;
-      font-size: 0.82rem; font-weight: 700; text-decoration: none; color: var(--muted);
-      background: var(--card); border: 1px solid var(--border); transition: border-color 0.2s, color 0.2s;
+      font-family: inherit; font-size: 0.82rem; font-weight: 700; color: var(--muted);
+      background: var(--card); border: 1px solid var(--border); cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
     }
-    .cat-filter a:hover { border-color: var(--blue); color: var(--blue); }
-    .cat-filter a.active { background: var(--fore); color: #fff; border-color: var(--fore); }
+    .cat-filter button:hover { border-color: var(--blue); color: var(--blue); }
+    .cat-filter button.active { background: var(--fore); color: #fff; border-color: var(--fore); }
 
     /* BLOG GRID */
     section.block { padding: 40px 0 70px; }
@@ -118,6 +121,8 @@
       transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     }
     .blog-card:hover { transform: translateY(-4px); box-shadow: 0 14px 40px rgba(30,80,140,0.12); border-color: transparent; }
+    /* Needed because the display:flex above outranks the UA [hidden] rule. */
+    .blog-card[hidden] { display: none; }
     .blog-card-img { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--blue-lt); }
     .blog-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.35s ease; }
     .blog-card:hover .blog-card-img img { transform: scale(1.05); }
@@ -132,6 +137,15 @@
     .blog-card h3 { font-size: 1.08rem; font-weight: 700; line-height: 1.32; }
     .blog-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.6; flex: 1; }
     .blog-card-readmore { font-size: 0.82rem; font-weight: 700; color: var(--blue); margin-top: 4px; }
+
+    /* Upcoming posts are rendered as plain cards, not links — there is no
+       published URL to point at yet, and linking them back to /blog/ made
+       them dead self-referential links. */
+    .blog-card--upcoming { cursor: default; }
+    .blog-card--upcoming:hover { transform: none; box-shadow: none; border-color: var(--border); }
+    .blog-card--upcoming:hover .blog-card-img img { transform: none; }
+    .blog-card--upcoming .blog-card-img img { filter: grayscale(0.35); opacity: 0.85; }
+    .blog-card-pending { font-size: 0.82rem; font-weight: 700; color: var(--muted); margin-top: 4px; }
 
     .updated { text-align: center; font-size: 0.78rem; color: var(--muted); margin-top: 44px; }
 
@@ -201,15 +215,18 @@
 </header>
 
 <!--
-  Category filter pills — purely visual/organisational for now.
-  Wire these up to real tag pages once there are enough posts to filter.
+  Category filter pills. These filter the grid below in the browser rather than
+  navigating — they were previously anchors pointing at /blog/ itself, which made
+  every pill a dead self-referential link. Swap them for real tag pages if the
+  post count ever justifies separate indexable URLs. With JS off, all posts show.
 -->
-<div class="cat-filter">
-  <a href="/blog/" class="active">All Posts</a>
-  <a href="/blog/">Meal Planning</a>
-  <a href="/blog/">Recipes</a>
-  <a href="/blog/">Nutrition</a>
-  <a href="/blog/">Shopping &amp; Prep</a>
+<div class="cat-filter" role="group" aria-label="Filter posts by category">
+  <button type="button" class="active" data-cat="all" aria-pressed="true">All Posts</button>
+  <button type="button" data-cat="Meal Planning" aria-pressed="false">Meal Planning</button>
+  <button type="button" data-cat="App Comparisons" aria-pressed="false">App Comparisons</button>
+  <button type="button" data-cat="Recipes" aria-pressed="false">Recipes</button>
+  <button type="button" data-cat="Nutrition" aria-pressed="false">Nutrition</button>
+  <button type="button" data-cat="Shopping &amp; Prep" aria-pressed="false">Shopping &amp; Prep</button>
 </div>
 
 <section class="block">
@@ -287,7 +304,7 @@
         </div>
       </a>
 
-      <a class="blog-card" href="/blog/">
+      <div class="blog-card blog-card--upcoming">
         <div class="blog-card-img">
           <span class="blog-card-tag">Meal Planning</span>
           <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=700&q=80" alt="Weekly meal plan laid out with fresh ingredients" loading="lazy" />
@@ -296,11 +313,11 @@
           <span class="blog-card-date">Coming soon</span>
           <h3>How to Build a Weekly Meal Plan You'll Actually Stick To</h3>
           <p>A simple, repeatable framework for planning meals around your schedule — without spending your whole Sunday on it.</p>
-          <span class="blog-card-readmore">Read more &rarr;</span>
+          <span class="blog-card-pending">Not published yet</span>
         </div>
-      </a>
+      </div>
 
-      <a class="blog-card" href="/blog/">
+      <div class="blog-card blog-card--upcoming">
         <div class="blog-card-img">
           <span class="blog-card-tag">Shopping &amp; Prep</span>
           <img src="https://images.unsplash.com/photo-1584362917165-526a968579e8?w=700&q=80" alt="Pantry shelves stocked with staple ingredients" loading="lazy" />
@@ -309,11 +326,11 @@
           <span class="blog-card-date">Coming soon</span>
           <h3>10 Pantry Staples for Effortless Weeknight Dinners</h3>
           <p>Keep these on hand and you're always a few steps from a real meal, even on the nights you didn't plan for.</p>
-          <span class="blog-card-readmore">Read more &rarr;</span>
+          <span class="blog-card-pending">Not published yet</span>
         </div>
-      </a>
+      </div>
 
-      <a class="blog-card" href="/blog/">
+      <div class="blog-card blog-card--upcoming">
         <div class="blog-card-img">
           <span class="blog-card-tag">Nutrition</span>
           <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=700&q=80" alt="Colourful bowl of balanced, nutritious food" loading="lazy" />
@@ -322,9 +339,9 @@
           <span class="blog-card-date">Coming soon</span>
           <h3>Balanced Plates 101: Protein, Carbs &amp; Veg Without the Math</h3>
           <p>A no-nonsense way to think about balance at every meal — no calorie counting required.</p>
-          <span class="blog-card-readmore">Read more &rarr;</span>
+          <span class="blog-card-pending">Not published yet</span>
         </div>
-      </a>
+      </div>
 
     </div>
 
@@ -389,6 +406,29 @@
         btn.classList.remove('open');
         menu.classList.remove('open');
         document.body.style.overflow = '';
+      });
+    });
+  }
+
+  /* Category filtering. Each card's category is read straight off its
+     .blog-card-tag, so adding a post needs no extra wiring here — only a new
+     pill if it introduces a category that doesn't have one yet. */
+  var pills = document.querySelectorAll('.cat-filter button');
+  var cards = document.querySelectorAll('.blog-grid .blog-card');
+  if (pills.length && cards.length) {
+    pills.forEach(function (pill) {
+      pill.addEventListener('click', function () {
+        var cat = pill.dataset.cat;
+        pills.forEach(function (p) {
+          var on = p === pill;
+          p.classList.toggle('active', on);
+          p.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        cards.forEach(function (card) {
+          var tagEl = card.querySelector('.blog-card-tag');
+          var tag = tagEl ? tagEl.textContent.trim() : '';
+          card.hidden = !(cat === 'all' || tag === cat);
+        });
       });
     });
   }
