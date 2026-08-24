@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FoodieFlow — Get the app</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="/favicon.png" type="image/png" />
+  <script>
+    (function () {
+      // Campaign tags let us separate QR scans from normal store traffic in
+      // App Store Connect (ct) and Play Console (referrer).
+      var IOS_URL     = 'https://apps.apple.com/us/app/foodieflow-meal-planner/id6760259767?ct=qr-get';
+      var ANDROID_URL = 'https://play.google.com/store/apps/details?id=com.foodieflow.app&referrer=utm_source%3Dqr%26utm_medium%3Dqr%26utm_campaign%3Dget-redirect';
+      var FALLBACK_URL = '/';
+
+      var ua = navigator.userAgent || '';
+      var dest = FALLBACK_URL;
+
+      if (/android/i.test(ua)) {
+        dest = ANDROID_URL;
+      } else if (
+        /iPhone|iPad|iPod/i.test(ua) ||
+        // iPadOS 13+ reports a desktop Safari UA; touch points give it away.
+        (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1)
+      ) {
+        dest = IOS_URL;
+      }
+
+      window.location.replace(dest);
+    })();
+  </script>
+  <style>
+    body { font-family: "PT Sans", Arial, sans-serif; background: hsl(210,28%,95%); color: hsl(222,47%,13%); display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; text-align: center; padding: 0 1.5rem; }
+    a { color: hsl(205,68%,50%); }
+  </style>
+</head>
+<body>
+  <!-- Only ever seen if JS is disabled or the redirect is slow. -->
+  <noscript>
+    <p>Get FoodieFlow on the
+      <a href="https://apps.apple.com/us/app/foodieflow-meal-planner/id6760259767">App Store</a> or
+      <a href="https://play.google.com/store/apps/details?id=com.foodieflow.app">Google Play</a>.</p>
+  </noscript>
+</body>
+</html>
