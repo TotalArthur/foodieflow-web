@@ -87,13 +87,12 @@
       letter-spacing: -0.02em; color: var(--fore); margin-bottom: 10px; line-height: 1.25;
     }
     .card p { font-size: 0.95rem; color: var(--muted); line-height: 1.65; }
-    .stats { display: flex; gap: 8px; justify-content: center; margin: 22px 0 26px; flex-wrap: wrap; }
-    .stat {
-      background: var(--blue-pale); border-radius: 14px;
-      padding: 10px 16px; min-width: 88px;
+    .notes {
+      margin: 14px 0 26px;
+      font-size: 0.95rem; color: var(--muted); line-height: 1.65;
+      display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 6; overflow: hidden;
     }
-    .stat-label { display: block; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
-    .stat-value { display: block; font-size: 1.05rem; font-weight: 700; color: var(--fore); margin-top: 2px; }
+    .notes:empty { display: none; }
     .btn-primary {
       display: block; width: 100%; padding: 15px 20px;
       background: var(--fore); color: white;
@@ -104,16 +103,6 @@
       transition: background 0.2s, transform 0.15s;
     }
     .btn-primary:hover { background: var(--blue); transform: translateY(-1px); }
-    .btn-secondary {
-      display: block; width: 100%; padding: 13px 20px; margin-top: 10px;
-      background: transparent; color: var(--fore);
-      border: 1px solid var(--border); border-radius: 100px;
-      font-family: "PT Sans", sans-serif;
-      font-size: 0.95rem; font-weight: 700;
-      text-decoration: none; cursor: pointer;
-      transition: border-color 0.2s, color 0.2s;
-    }
-    .btn-secondary:hover { border-color: var(--blue); color: var(--blue); }
     .divider { height: 1px; background: var(--border); margin: 24px 0 18px; }
     .store-btn-row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 14px; }
     .appstore-btn, .playstore-btn {
@@ -174,10 +163,9 @@
         <div class="icon-bubble">🍲</div>
         <p class="kicker" id="recipe-kicker"></p>
         <h1 id="recipe-name">A recipe was shared with you</h1>
-        <div class="stats" id="recipe-stats"></div>
+        <p class="notes" id="recipe-notes"></p>
         <a href="#" id="open-app" class="btn-primary">Open in FoodieFlow</a>
-        <a href="#" id="open-web" class="btn-secondary">Open in this browser instead</a>
-        <p class="hint">The whole recipe travels inside the link, so you can add it to your own library in a tap.</p>
+        <p class="hint">Opens in the FoodieFlow app, where you can add it to your own library in a tap.</p>
         <div class="divider"></div>
         <p style="font-size:0.85rem;">Don't have the app yet?</p>
         <div class="store-btn-row">
@@ -231,10 +219,8 @@
 <!-- Shared recipe links land here as /r/?recipe=<token>. The token is the whole
      recipe: deflate-compressed JSON in base64url, written by the app's share
      sheet. This page unpacks it only to show what's in the link, then hands the
-     token to the installed app (foodieflow://recipe?d=…) or on to the web app. -->
+     token to the installed app over foodieflow://recipe?d=… -->
 <script>
-  var WEB_APP_URL = 'https://studio-1440362352-d1bfa.web.app';
-
   function show(id) {
     var states = document.querySelectorAll('.state');
     for (var i = 0; i < states.length; i++) states[i].classList.remove('active');
@@ -263,29 +249,13 @@
     return recipe && recipe.v === 1 && recipe.n ? recipe : null;
   }
 
-  function addStat(label, value) {
-    if (!value) return;
-    var stat = document.createElement('div');
-    stat.className = 'stat';
-    var l = document.createElement('span');
-    l.className = 'stat-label';
-    l.textContent = label;
-    var v = document.createElement('span');
-    v.className = 'stat-value';
-    v.textContent = value;
-    stat.appendChild(l);
-    stat.appendChild(v);
-    document.getElementById('recipe-stats').appendChild(stat);
-  }
-
   (async function () {
     var token = new URLSearchParams(window.location.search).get('recipe');
     if (!token) return;
 
-    // The links go straight through even if the recipe can't be unpacked here —
+    // The link goes straight through even if the recipe can't be unpacked here —
     // an older browser without DecompressionStream shouldn't block the app.
     document.getElementById('open-app').href = 'foodieflow://recipe?d=' + encodeURIComponent(token);
-    document.getElementById('open-web').href = WEB_APP_URL + '/?recipe=' + encodeURIComponent(token);
 
     var recipe = null;
     try {
@@ -305,11 +275,8 @@
     var kicker = [recipe.c, recipe.m].filter(Boolean).join(' · ');
     if (kicker) document.getElementById('recipe-kicker').textContent = kicker;
 
-    var minutes = (recipe.p || 0) + (recipe.k || 0);
-    addStat('Time', minutes ? minutes + 'm' : '');
-    addStat('Serves', recipe.s ? String(recipe.s) : '');
-    addStat('Level', recipe.df || '');
-    addStat('Steps', Array.isArray(recipe.st) && recipe.st.length ? String(recipe.st.length) : '');
+    // The sender's own notes say more about a recipe than a row of numbers.
+    if (recipe.d) document.getElementById('recipe-notes').textContent = recipe.d;
 
     document.title = recipe.n + ' — shared on FoodieFlow';
     show('state-recipe');
