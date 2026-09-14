@@ -117,6 +117,14 @@
     .prose ul.plain li { padding-left: 22px; position: relative; line-height: 1.6; }
     .prose ul.plain li::before { content: "•"; position: absolute; left: 2px; color: var(--blue); font-weight: 700; }
 
+    /* CATEGORY TAG — bright, rotating accent per food type */
+    .cat-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px; }
+    .cat-tag .dot { width: 9px; height: 9px; border-radius: 50%; }
+    .cat-gold  { color: hsl(38, 75%, 38%); } .cat-gold .dot  { background: var(--gold); }
+    .cat-rose  { color: var(--rose); }        .cat-rose .dot  { background: var(--rose); }
+    .cat-blue  { color: var(--primary-dark); } .cat-blue .dot { background: var(--blue); }
+    .cat-good  { color: hsl(150, 55%, 30%); } .cat-good .dot { background: var(--good); }
+
     /* IN-ARTICLE APP SCREENSHOTS */
     .article-image { margin: 8px 0 22px; }
     .article-image img { width: 100%; max-width: 420px; display: block; margin: 0 auto; border-radius: var(--radius); border: 1px solid var(--border); }
@@ -156,6 +164,62 @@
     .lucide.cross { stroke: var(--bad); }
     .matrix-legend { display: flex; gap: 22px; justify-content: center; flex-wrap: wrap; margin-top: 18px; font-size: 0.84rem; color: var(--muted); }
     .matrix-legend span { display: inline-flex; align-items: center; gap: 7px; }
+
+    /* CHART: shared figure furniture */
+    figure.viz { margin: 0; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 26px 28px; }
+    figure.viz figcaption { font-size: 0.95rem; font-weight: 700; color: var(--fore); margin-bottom: 4px; }
+    figure.viz .viz-sub { font-size: 0.84rem; color: var(--muted); margin-bottom: 20px; line-height: 1.55; }
+    figure.viz .viz-note { font-size: 0.78rem; color: var(--muted); margin: 18px 0 0; line-height: 1.55; }
+
+    /* CHART: basket comparison, horizontal bars from a zero baseline */
+    .basket { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .basket li { display: grid; grid-template-columns: 92px minmax(0, 1fr) 68px; align-items: center; gap: 12px; }
+    .basket .who { font-size: 0.85rem; font-weight: 700; color: var(--fore); }
+    .basket .track { height: 20px; border-radius: 3px; background: var(--bg); overflow: visible; }
+    .basket .fill { display: block; height: 100%; background: hsl(215, 16%, 72%); border-radius: 3px 4px 4px 3px; }
+    .basket li.is-pick .fill { background: var(--blue); }
+    .basket li.is-pick .who { color: var(--primary-dark); }
+    .basket .amount { font-size: 0.85rem; font-weight: 700; color: var(--fore); text-align: right; font-variant-numeric: tabular-nums; }
+    @media (max-width: 560px) {
+      .basket li { grid-template-columns: 78px minmax(0, 1fr) 60px; gap: 8px; }
+      .basket .who, .basket .amount { font-size: 0.78rem; }
+    }
+
+    /* CHART: Eatwell proportions, one stacked bar */
+    .eatwell-bar { display: flex; height: 34px; border-radius: 6px; overflow: hidden; gap: 2px; background: var(--card); }
+    .eatwell-bar span { display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 700; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.28); }
+    .eatwell-bar span:first-child { border-radius: 6px 0 0 6px; }
+    .eatwell-bar span:last-child { border-radius: 0 6px 6px 0; }
+    .eatwell-key { list-style: none; display: flex; flex-direction: column; gap: 9px; margin-top: 18px; }
+    .eatwell-key li { display: grid; grid-template-columns: 12px minmax(0, 1fr) 40px; align-items: baseline; gap: 11px; font-size: 0.88rem; }
+    .eatwell-key .swatch { width: 12px; height: 12px; border-radius: 3px; }
+    .eatwell-key .pct { text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--fore); }
+    .eatwell-key .what { color: var(--muted); }
+
+    /* INTERACTIVE TOOLS: savings and caffeine */
+    .tool { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 26px 28px; }
+    .tool[hidden] { display: none; }
+    .tool h3 { font-size: 1.05rem; font-weight: 900; margin-bottom: 4px; }
+    .tool .tool-sub { font-size: 0.84rem; color: var(--muted); margin-bottom: 20px; line-height: 1.55; }
+    .tool-field { margin-bottom: 18px; }
+    .tool-field label { display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+    .tool-field select { width: 100%; min-height: 44px; padding: 10px 12px; font: inherit; font-size: 0.92rem; font-weight: 700; color: var(--fore); background: var(--bg); border: 1px solid var(--border); border-radius: 10px; }
+    .tool-field input[type="range"] { width: 100%; accent-color: var(--blue); min-height: 32px; }
+    .tool-field .readout { display: block; font-size: 0.88rem; font-weight: 700; color: var(--fore); margin-top: 4px; font-variant-numeric: tabular-nums; }
+    .tool-out { background: var(--bg); border-radius: 14px; padding: 20px 22px; text-align: center; }
+    .tool-out .lbl { display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+    .tool-out .big { display: block; font-family: "Playfair Display", serif; font-size: clamp(2rem, 6vw, 2.7rem); font-weight: 900; line-height: 1.1; color: var(--primary-dark); font-variant-numeric: tabular-nums; }
+    .tool-out .sub { display: block; font-size: 0.84rem; color: var(--muted); margin-top: 8px; line-height: 1.55; }
+    .meter { height: 12px; border-radius: 6px; background: var(--bg); margin: 4px 0 12px; overflow: hidden; }
+    .meter span { display: block; height: 100%; border-radius: 6px; background: var(--good); transition: width 0.2s, background 0.2s; }
+    .meter.warn span { background: var(--gold); }
+    .meter.over span { background: var(--rose); }
+    .tool-status { display: inline-flex; align-items: center; gap: 8px; font-size: 0.84rem; font-weight: 700; color: var(--fore); }
+    .tool-status .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--good); }
+    .tool-status.warn .dot { background: var(--gold); }
+    .tool-status.over .dot { background: var(--rose); }
+    .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+    @media (max-width: 720px) { .tool-grid { grid-template-columns: 1fr; gap: 18px; } }
     /* flow-section lists sit outside .prose, so restate the bullet styling here */
     .flow-section ul.plain { list-style: none; display: flex; flex-direction: column; gap: 10px; margin: 4px 0 18px; }
     .flow-section ul.plain li { padding-left: 22px; position: relative; line-height: 1.6; }
@@ -281,6 +345,45 @@
     <p>This is the single biggest lever you have, and it is a one-off decision rather than something you have to keep doing. Basket tracking through mid-2026 has Aldi as the cheapest supermarket in the UK, with Lidl a pound or two behind, and a gap to the big four that loyalty pricing does not close.</p>
   </div>
   <div class="wrap" style="margin-top:22px">
+      <figure class="viz">
+        <figcaption>The same 95-item basket, six supermarkets</figcaption>
+        <p class="viz-sub">Bars start at zero, so the visual gap is the real gap. The discounters are highlighted.</p>
+        <ul class="basket">
+        <li class="is-pick">
+          <span class="who">Aldi</span>
+          <span class="track"><span class="fill" style="width:71.1%"></span></span>
+          <span class="amount">&pound;163.34</span>
+        </li>
+        <li class="is-pick">
+          <span class="who">Lidl</span>
+          <span class="track"><span class="fill" style="width:71.7%"></span></span>
+          <span class="amount">&pound;164.79</span>
+        </li>
+        <li>
+          <span class="who">Asda</span>
+          <span class="track"><span class="fill" style="width:82.8%"></span></span>
+          <span class="amount">&pound;190.39</span>
+        </li>
+        <li>
+          <span class="who">Sainsbury's</span>
+          <span class="track"><span class="fill" style="width:84.1%"></span></span>
+          <span class="amount">&pound;193.30</span>
+        </li>
+        <li>
+          <span class="who">Tesco</span>
+          <span class="track"><span class="fill" style="width:84.7%"></span></span>
+          <span class="amount">&pound;194.67</span>
+        </li>
+        <li>
+          <span class="who">Waitrose</span>
+          <span class="track"><span class="fill" style="width:100.0%"></span></span>
+          <span class="amount">&pound;229.88</span>
+        </li>
+        </ul>
+        <p class="viz-note">Tracked June 2026. Tesco and Sainsbury's figures already include Clubcard and Nectar pricing. Full figures, loyalty schemes and the gap to Aldi are in the table below.</p>
+      </figure>
+  </div>
+  <div class="wrap" style="margin-top:22px">
     <div class="table-card">
       <div class="matrix-scroll">
         <table class="matrix">
@@ -340,6 +443,38 @@
     <p>Two practical notes. First, Tesco and Sainsbury's figures above already assume you have a Clubcard or Nectar card, so the gap is not something you can close by signing up for things. Second, if there is no Aldi or Lidl near you, Asda has the lowest base prices of the big four, which makes it the one worth using for an online delivery split between housemates.</p>
     <p>A realistic target: do your bulk shop at a discounter once a week or once a fortnight, and treat the expensive local supermarket as a top-up shop for milk and bread only.</p>
   </div>
+  <div class="wrap" style="margin-top:26px">
+      <div class="tool" id="savings" hidden>
+        <h3>What switching your main shop is worth</h3>
+        <p class="tool-sub">Based on the basket gaps above. It assumes you move your bulk shop to Aldi and keep spending on the same sort of food.</p>
+        <div class="tool-grid">
+          <div>
+            <div class="tool-field">
+              <label for="sv-shop">Where you shop now</label>
+              <select id="sv-shop">
+                <option value="Waitrose">Waitrose</option>
+                <option value="Tesco" selected>Tesco</option>
+                <option value="Sainsbury's">Sainsbury's</option>
+                <option value="Asda">Asda</option>
+                <option value="Lidl">Lidl</option>
+              </select>
+            </div>
+            <div class="tool-field">
+              <label for="sv-spend">What you spend on food a month</label>
+              <input type="range" id="sv-spend" min="60" max="300" step="5" value="160" />
+              <span class="readout" id="sv-spend-out">&pound;160 a month</span>
+            </div>
+          </div>
+          <div class="tool-out">
+            <span class="lbl">Roughly saved a year</span>
+            <span class="big" id="sv-year">&pound;0</span>
+            <span class="sub" id="sv-sub">That is about <strong>&pound;0</strong> a month back, or <strong>&pound;0</strong> across a three-year degree.</span>
+          </div>
+        </div>
+        <p class="viz-note">A rough guide, not a promise. It scales the June 2026 basket gap to your own spend, and assumes you buy comparable things.</p>
+      </div>
+
+  </div>
 </section>
 
 <section class="block">
@@ -366,6 +501,25 @@
   <div class="wrap prose">
     <h2>Eating properly on that budget</h2>
     <p>Cheap and healthy are not opposites, but they do come apart if you are not paying attention. The <a href="https://www.nutrition.org.uk/nutrition-for/students/">British Nutrition Foundation's guidance for students</a> is the sensible baseline, and it maps onto a tight budget surprisingly well.</p>
+  </div>
+  <div class="wrap" style="margin:22px 0 26px">
+      <figure class="viz">
+        <figcaption>What a balanced day actually looks like</figcaption>
+        <p class="viz-sub">The Eatwell Guide proportions, as a share of what you eat across a day rather than on every single plate.</p>
+        <div class="eatwell-bar" role="img" aria-label="Eatwell Guide proportions: fruit and vegetables 39 percent, starchy carbohydrates 37 percent, proteins 12 percent, dairy and alternatives 8 percent, oils and spreads 1 percent">
+          <span style="background:#2a78d6;flex:39 0 0" title="Fruit and vegetables: 39%">39%</span><span style="background:#eb6834;flex:37 0 0" title="Potatoes, bread, rice, pasta and other starchy carbs: 37%">37%</span><span style="background:#1baf7a;flex:12 0 0" title="Beans, pulses, fish, eggs, meat and other proteins: 12%">12%</span><span style="background:#eda100;flex:8 0 0" title="Dairy and alternatives: 8%">8%</span><span style="background:#e87ba4;flex:1 0 0" title="Oils and spreads: 1%"></span>
+        </div>
+        <ul class="eatwell-key">
+          <li><span class="swatch" style="background:#2a78d6"></span><span class="what">Fruit and vegetables</span><span class="pct">39%</span></li>
+          <li><span class="swatch" style="background:#eb6834"></span><span class="what">Potatoes, bread, rice, pasta and other starchy carbs</span><span class="pct">37%</span></li>
+          <li><span class="swatch" style="background:#1baf7a"></span><span class="what">Beans, pulses, fish, eggs, meat and other proteins</span><span class="pct">12%</span></li>
+          <li><span class="swatch" style="background:#eda100"></span><span class="what">Dairy and alternatives</span><span class="pct">8%</span></li>
+          <li><span class="swatch" style="background:#e87ba4"></span><span class="what">Oils and spreads</span><span class="pct">1%</span></li>
+        </ul>
+        <p class="viz-note">Source: <a href="https://www.gov.uk/government/publications/the-eatwell-guide-and-resources/the-eatwell-guide-and-resources">the Eatwell Guide, GOV.UK</a>. Foods high in fat, salt and sugar sit outside the guide rather than in it.</p>
+      </figure>
+  </div>
+  <div class="wrap prose">
     <ul class="plain">
       <li><strong>About a third of what you eat should be starchy carbs</strong>, and the wholemeal versions are the same price. Wholemeal pasta, brown rice, oats and potatoes with the skin on release energy slowly instead of spiking you and dropping you an hour later.</li>
       <li><strong>Protein does not have to mean meat.</strong> Lentils, beans and chickpeas are the cheapest good protein in the shop. Tinned oily fish like sardines or mackerel gives you protein and omega-3, which your brain is literally built out of, for around a pound a tin.</li>
@@ -373,6 +527,35 @@
       <li><strong>Drink 1.5 to 2 litres of fluid a day.</strong> Dull advice, genuinely effective. Mild dehydration feels a lot like being unable to concentrate.</li>
       <li><strong>Cap caffeine at 400mg a day</strong>, roughly four cups of instant coffee. Energy drinks in exam season are a false economy: the sugar and caffeine together wreck your sleep, push your blood pressure up and make anxiety worse, all while costing more than a jar of coffee.</li>
     </ul>
+  </div>
+  <div class="wrap" style="margin-top:26px">
+      <div class="tool" id="caffeine" hidden>
+        <h3>Exam week caffeine check</h3>
+        <p class="tool-sub">The British Nutrition Foundation puts the daily ceiling at 400mg. Counting roughly 100mg for a cup of instant coffee and 160mg for a large energy drink.</p>
+        <div class="tool-grid">
+          <div>
+            <div class="tool-field">
+              <label for="cf-coffee">Cups of coffee</label>
+              <input type="range" id="cf-coffee" min="0" max="8" step="1" value="3" />
+              <span class="readout" id="cf-coffee-out">3 cups &middot; 300mg</span>
+            </div>
+            <div class="tool-field">
+              <label for="cf-energy">Energy drinks</label>
+              <input type="range" id="cf-energy" min="0" max="4" step="1" value="0" />
+              <span class="readout" id="cf-energy-out">0 cans &middot; 0mg</span>
+            </div>
+          </div>
+          <div class="tool-out">
+            <span class="lbl">Your day</span>
+            <span class="big" id="cf-total">300mg</span>
+            <div class="meter" id="cf-meter"><span style="width:75%"></span></div>
+            <span class="tool-status" id="cf-status"><span class="dot"></span><span id="cf-status-text">Under the 400mg ceiling</span></span>
+            <span class="sub" id="cf-sub">Fine. Just keep the last one well before bed.</span>
+          </div>
+        </div>
+        <p class="viz-note">Caffeine content varies a lot by brand and by how strong you make it, so treat this as a ballpark. Energy drinks also stack a lot of free sugar on top, which is its own problem.</p>
+      </div>
+
   </div>
 </section>
 
@@ -578,5 +761,74 @@
   }
 </script>
 <script src="/pricing.js"></script>
+
+<script>
+/* The two calculators are progressive enhancements: with JS off they stay
+   hidden, and the prose and table around them already carry the numbers. */
+(function () {
+  /* ---- switching savings, derived from the basket figures above -------- */
+  var BASKET = { "Aldi": 163.34, "Lidl": 164.79, "Asda": 190.39, "Sainsbury's": 193.30, "Tesco": 194.67, "Waitrose": 229.88 };
+  var sv = document.getElementById('savings');
+  if (sv) {
+    var shop = document.getElementById('sv-shop');
+    var spend = document.getElementById('sv-spend');
+    var spendOut = document.getElementById('sv-spend-out');
+    var year = document.getElementById('sv-year');
+    var sub = document.getElementById('sv-sub');
+
+    var money = function (n) {
+      return '\u00a3' + Math.round(n).toLocaleString('en-GB');
+    };
+    var draw = function () {
+      var monthly = parseFloat(spend.value);
+      var here = BASKET[shop.value];
+      var ratio = (here - BASKET.Aldi) / here;       /* share of the bill that goes away */
+      var perYear = monthly * 12 * ratio;
+      spendOut.innerHTML = '\u00a3' + monthly + ' a month';
+      year.innerHTML = money(perYear);
+      sub.innerHTML = 'That is about <strong>' + money(perYear / 12) + '</strong> a month back, or <strong>' +
+                      money(perYear * 3) + '</strong> across a three-year degree.';
+    };
+    shop.addEventListener('change', draw);
+    spend.addEventListener('input', draw);
+    sv.hidden = false;
+    draw();
+  }
+
+  /* ---- caffeine ceiling ------------------------------------------------ */
+  var cf = document.getElementById('caffeine');
+  if (cf) {
+    var COFFEE = 100, ENERGY = 160, CAP = 400;
+    var coffee = document.getElementById('cf-coffee');
+    var energy = document.getElementById('cf-energy');
+    var meter = document.getElementById('cf-meter');
+    var status = document.getElementById('cf-status');
+
+    var tick = function () {
+      var c = parseInt(coffee.value, 10), e = parseInt(energy.value, 10);
+      var total = c * COFFEE + e * ENERGY;
+      document.getElementById('cf-coffee-out').innerHTML = c + (c === 1 ? ' cup' : ' cups') + ' \u00b7 ' + (c * COFFEE) + 'mg';
+      document.getElementById('cf-energy-out').innerHTML = e + (e === 1 ? ' can' : ' cans') + ' \u00b7 ' + (e * ENERGY) + 'mg';
+      document.getElementById('cf-total').textContent = total + 'mg';
+      meter.firstElementChild.style.width = Math.min(100, total / CAP * 100) + '%';
+
+      var state = total > CAP ? 'over' : (total > CAP * 0.75 ? 'warn' : '');
+      meter.className = 'meter' + (state ? ' ' + state : '');
+      status.className = 'tool-status' + (state ? ' ' + state : '');
+      document.getElementById('cf-status-text').textContent =
+        state === 'over' ? 'Over the 400mg ceiling' :
+        state === 'warn' ? 'Close to the 400mg ceiling' : 'Under the 400mg ceiling';
+      document.getElementById('cf-sub').textContent =
+        state === 'over' ? 'This is the range where sleep, blood pressure and anxiety start taking the hit, which is the opposite of what revision needs.' :
+        state === 'warn' ? 'Still within the guideline, but worth stopping early in the afternoon so it is out of your system by bedtime.' :
+        'Fine. Just keep the last one well before bed.';
+    };
+    coffee.addEventListener('input', tick);
+    energy.addEventListener('input', tick);
+    cf.hidden = false;
+    tick();
+  }
+})();
+</script>
 </body>
 </html>
