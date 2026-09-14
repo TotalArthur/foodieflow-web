@@ -27,8 +27,18 @@
   </url>
   <url>
     <loc>https://foodieflow.app/blog/</loc>
-    <lastmod>2026-07-23</lastmod>
+    <lastmod>2026-09-14</lastmod>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://foodieflow.app/blog/cheap-student-meals/</loc>
+    <lastmod>2026-09-14</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://foodieflow.app/blog/student-food-budget/</loc>
+    <lastmod>2026-09-14</lastmod>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://foodieflow.app/blog/ai-meal-planning-apps-2026-compared/</loc>
