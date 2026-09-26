@@ -404,11 +404,10 @@ def render_comparison(data, comp, others):
     slug = comp["slug"]
     canonical = f"{SITE_URL}/compare/foodieflow-vs-{slug}/"
 
-    title = f"FoodieFlow vs {name}: Which Meal Planning App Wins? (2026)"
+    title = f"{name} Alternative: FoodieFlow vs {name} Compared"
     description = (
-        f"FoodieFlow vs {name} compared feature by feature — smart meal suggestions, "
-        f"weekly planning, automatic shopping lists, recipe import and pantry awareness. "
-        f"See why people switch to FoodieFlow."
+        f"Looking for a {name} alternative? We compared FoodieFlow and {name} on meal "
+        f"ideas, weekly planning, shopping lists, recipe import and price."
     )
 
     # Comparison table rows — same matrix as the hub, two columns (us vs this competitor).
@@ -581,11 +580,10 @@ def render_comparison(data, comp, others):
 
 def render_hub(data):
     canonical = f"{SITE_URL}/compare/"
-    title = "FoodieFlow vs the Alternatives — Meal Planning App Comparison (2026)"
+    title = "FoodieFlow vs Mealime, Paprika & Plan to Eat (2026)"
     description = (
-        "See FoodieFlow vs Mealime, Paprika and Plan to Eat in one table. Smart Meal "
-        "Assistant, one-tap weekly plans, pantry-aware shopping lists and recipe import "
-        "from web links and video — compared feature by feature."
+        "Which meal planning app is best? FoodieFlow, Mealime, Paprika and Plan to Eat "
+        "compared side by side on meal ideas, weekly plans, shopping lists and recipe import."
     )
     comps = data["competitors"]
     name_by_slug = {c["slug"]: c["name"] for c in comps}
