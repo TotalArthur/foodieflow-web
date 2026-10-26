@@ -21,7 +21,7 @@
   <link rel="apple-touch-icon" href="/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=PT+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -157,45 +157,53 @@
       .footer-bottom { flex-direction: column; align-items: flex-start; }
     }
   </style>
-  <link rel="stylesheet" href="/assets/site-glass.css" />
+  <link rel="stylesheet" href="/assets/ff26.css" />
+  <link rel="stylesheet" href="/assets/ff26-article.css" />
 </head>
-<body>
+<body class="ff-article">
 
-<!-- NAV -->
-<nav id="main-nav">
-  <a href="/" class="logo">
-    <img src="/logo.png" alt="FoodieFlow" />
-  </a>
-  <div class="nav-links">
-    <a href="/support/">Support</a>
-    <a href="/privacy/">Privacy</a>
-    <a href="/terms/">Terms of Use</a>
+<div class="ff-top">
+  <div class="ff-wrap">
+    <nav id="main-nav" class="ff-nav" aria-label="Main">
+      <a class="ff-brand" href="/" aria-label="FoodieFlow home"><img src="/favicon.png" alt="" width="40" height="40" /><span>FoodieFlow</span></a>
+      <div class="ff-navlinks">
+        <a href="/#features">Features</a>
+        <a href="/#pro">Pro</a>
+        <a href="/compare/">Compare</a>
+        <a href="/blog/">Blog</a>
+        <a href="/support/">Support</a>
+      </div>
+      <div class="ff-navend">
+        <a class="ff-btn ff-btn--sm" href="/#download">Get the app <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <button class="ff-menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="ff-sheet"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg></button>
+      </div>
+    </nav>
   </div>
-  <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
-<div class="mobile-menu" id="mobile-menu">
-  <a href="/support/" class="mobile-nav-link">Support</a>
-  <a href="/privacy/" class="mobile-nav-link">Privacy</a>
-  <a href="/terms/" class="mobile-nav-link">Terms of Use</a>
 </div>
-<script>
-  var btn = document.getElementById('hamburger');
-  var menu = document.getElementById('mobile-menu');
-  btn.addEventListener('click', function() {
-    btn.classList.toggle('open');
-    menu.classList.toggle('open');
-    document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
-  });
-  document.querySelectorAll('.mobile-nav-link').forEach(function(link) {
-    link.addEventListener('click', function() {
-      btn.classList.remove('open');
-      menu.classList.remove('open');
-      document.body.style.overflow = '';
-    });
-  });
-</script>
+
+<div class="ff-sheet" id="ff-sheet" hidden>
+  <div class="ff-sheet__scrim" data-close></div>
+  <section class="ff-sheet__panel" role="dialog" aria-modal="true" aria-label="Menu">
+    <span class="ff-sheet__grip" aria-hidden="true"></span>
+    <div class="ff-sheet__head">
+      <span class="ff-brand"><img src="/favicon.png" alt="" width="36" height="36" /><span>FoodieFlow</span></span>
+      <button class="ff-sheet__close" type="button" aria-label="Close menu" data-close><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="ff-sheet__links" role="navigation" aria-label="Menu links">
+      <a href="/#features">Features<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9AA0A8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+      <a href="/#how-it-works">How it works<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9AA0A8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+      <a href="/#pro">Pro Chef<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9AA0A8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+      <a href="/compare/">Compare apps<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9AA0A8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+      <a href="/blog/">Blog<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9AA0A8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+      <a href="/support/">Support<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9AA0A8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+    </div>
+    <div class="ff-sheet__stores">
+      <a href="https://apps.apple.com/us/app/foodieflow-meal-planner/id6760259767" target="_blank" rel="noopener noreferrer">App Store</a>
+      <a href="https://play.google.com/store/apps/details?id=com.foodieflow.app" target="_blank" rel="noopener noreferrer">Google Play</a>
+    </div>
+    <p class="ff-sheet__note">Free to download. Pro Chef from <span class="rc-price-inline">£3.99</span> a month.</p>
+  </section>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -407,33 +415,20 @@
 </div>
 
 <!-- FOOTER (matches index.html exactly) -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <img src="/logo.png" alt="FoodieFlow" />
-      <p>Meal planning made simple. Organise your meals, discover new recipes, and shop smarter — all in one app.</p>
-    </div>
-    <div class="footer-col">
-      <h4>Product</h4>
-      <a href="/#features">Features</a>
-      <a href="/#how-it-works">How it works</a>
-      <a href="/#pro">Pro</a>
-      <a href="/#download">Download</a>
-    </div>
-    <div class="footer-col">
-      <h4>Company</h4>
-      <a href="/privacy/">Privacy Policy</a>
-      <a href="/terms/">Terms of Use</a>
-    </div>
-    <div class="footer-col">
-      <h4>Contact</h4>
+<footer class="ff-footer">
+  <div class="ff-footer__compact">
+    <span><img src="/favicon.png" alt="" width="28" height="28" loading="lazy" /><span>© <span data-year>2026</span> AWD Labs</span></span>
+    <div class="ff-footer__links" role="navigation" aria-label="Footer">
+      <a href="/compare/">Compare</a>
+      <a href="/food-waste-calculator/">Food waste calculator</a>
       <a href="/support/">Support</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/terms/">Terms</a>
     </div>
-  </div>
-  <div class="footer-bottom">
-    <span>© 2026 FoodieFlow. All rights reserved. FoodieFlow is an independent software product.</span>
   </div>
 </footer>
 
+<script src="/assets/ff26.js" defer></script>
+<script src="/pricing.js"></script>
 </body>
 </html>

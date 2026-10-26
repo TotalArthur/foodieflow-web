@@ -134,6 +134,29 @@ SCREENS = {
         slots=[PHONE_FLOW],
         max_rung=620,
     ),
+    # The October 2026 UI, as drawn in the 2026 site redesign. Rendered from the
+    # design canvas at 390x844 and 3x, so 1170x2532 rather than a phone export.
+    # The frame aspect matches the source exactly, so none of these need a crop.
+    "app-home": Screen(
+        source="raw/AppHome.png",
+        slots=["hero centre phone 312 (234 <=640px)"],
+        max_rung=620,
+    ),
+    "app-plan": Screen(
+        source="raw/AppPlan.png",
+        slots=["hero side phone 254", "bento phone 273 (232 <=640px)"],
+        max_rung=620,
+    ),
+    "app-list": Screen(
+        source="raw/AppList.png",
+        slots=["hero side phone 254", "bento phone 273 (232 <=640px)"],
+        max_rung=620,
+    ),
+    "app-assistant": Screen(
+        source="raw/AppAssistant.png",
+        slots=["bento phone 273 (232 <=640px)"],
+        max_rung=620,
+    ),
     # Blog-only, and still the pre-refresh exports -- there is no 1320px source
     # for these two.
     "leftovers-recipe-box": Screen(

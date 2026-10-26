@@ -6,7 +6,7 @@
   <meta name="google-site-verification" content="PAcCoOvk9KpyAOeQAypE_TA3ntky-MoMxfE9lYJ3PAI" />
   <title>FoodieFlow: Recipe Organizer &amp; Meal Planner App</title>
   <meta name="description" content="Save recipes from TikTok, Instagram or any website, plan your week in a tap and get a shopping list that writes itself. Free on iPhone and Android." />
-  <meta name="theme-color" content="#2a7c8a" />
+  <meta name="theme-color" content="#F3F3F0" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://foodieflow.app/" />
   <meta property="og:site_name" content="FoodieFlow" />
@@ -81,1647 +81,709 @@
   <link rel="apple-touch-icon" href="/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=PT+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/ff26.css" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --bg:         hsl(210, 28%, 95%);
-      --bg-warm:    hsl(210, 22%, 92%);
-      /* Dark canvas for the hero-adjacent sections: the app's navy, not a teal */
-      --bg-hero:    hsl(222, 45%, 14%);
-      --hero-fore:  hsl(0, 0%, 100%);
-      /* Light off-white for raised surfaces (cards, phone interiors) */
-      --surface:    #F9F8F5;
-      --card:       hsl(0, 0%, 100%);
-      --fore:       hsl(222, 47%, 13%);
-      --muted:      hsl(215, 16%, 50%);
-      --blue:       hsl(205, 68%, 50%);
-      --blue-mid:   hsl(205, 60%, 62%);
-      --blue-lt:    hsl(205, 55%, 90%);
-      --blue-pale:  hsl(205, 45%, 96%);
-      /* The accent is the app blue. These keep the --amber name only because it is
-         referenced throughout; there is no orange in the palette. */
-      --amber:      hsl(205, 68%, 50%);
-      --amber-dark: hsl(205, 75%, 40%);
-      --amber-lt:   hsl(205, 55%, 90%);
-      --gold:       hsl(42, 90%, 52%);
-      --border:     hsl(210, 28%, 88%);
-      --radius:     1.3rem;
-      --nav-h:      64px;
-    }
-    html { scroll-behavior: smooth; }
-    body { font-family: "PT Sans", sans-serif; background: var(--bg); color: var(--fore); min-height: 100vh; overflow-x: hidden; }
-    [id] { scroll-margin-top: calc(var(--nav-h) + 16px); }
-    :focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; border-radius: 4px; }
+    /* ── Hero ── */
+    .hero { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); gap: 24px; align-items: center; padding-top: 48px; padding-bottom: 40px; }
+    .hero-copy { display: flex; flex-direction: column; gap: 28px; padding: 24px 0; }
+    .badge-new { align-self: flex-start; height: 36px; padding: 0 14px 0 6px; border-radius: 18px; background: #fff; display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600; box-shadow: 0 1px 2px rgba(14,17,22,.05); }
+    .badge-new b { height: 24px; padding: 0 9px; border-radius: 12px; background: var(--ink); color: #fff; display: flex; align-items: center; font-size: 11px; font-weight: 700; letter-spacing: .3px; }
+    .hero h1 { font-family: var(--display); font-size: 108px; font-weight: 700; letter-spacing: -4.6px; line-height: .92; margin: 0; }
+    .hero h1 em { font-style: normal; color: var(--blue); }
+    .hero-lede { margin: 0; max-width: 470px; font-size: 19px; line-height: 1.55; color: var(--ink-3); }
+    .checks { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; font-size: 13px; color: var(--muted); margin: 0; padding: 0; list-style: none; }
+    .checks li { display: flex; align-items: center; gap: 6px; }
+    .checks .stars { color: var(--amber); display: flex; gap: 1px; }
 
-    /* ── NAV ── */
-    /* The bar itself is styled site-wide in /assets/site-glass.css. Here it only
-       needs to stop occupying space, so the kitchen artwork starts at the very
-       top of the page and the bar floats over it. The class selector outranks
-       the shared file's plain `nav` rules whichever order they load in. */
-    #main-nav.nav-overlay { margin-bottom: calc((var(--nav-h) + 14px) * -1); }
-    @media (max-width: 767px) {
-      #main-nav.nav-overlay { margin-bottom: -68px; }
-    }
-    .logo { display: flex; align-items: center; text-decoration: none; }
-    .logo img { height: 44px; width: auto; object-fit: contain; }
-    .nav-links { display: flex; align-items: center; gap: 1.8rem; }
-    .nav-links a { font-size: 0.88rem; color: var(--fore); text-decoration: none; font-weight: 700; opacity: 0.7; transition: color 0.2s, opacity 0.2s; }
-    .nav-links a:hover { color: var(--blue); opacity: 1; }
-    .nav-cta {
-      display: inline-flex; align-items: center; min-height: 44px;
-      background: var(--amber); color: white;
-      padding: 10px 22px; border-radius: 8px;
-      font-size: 0.88rem; font-weight: 700; text-decoration: none;
-      transition: background 0.2s, transform 0.15s;
-    }
-    /* Beat `.nav-links a` specificity so the CTA text stays white, not grey. */
-    .nav-links a.nav-cta,
-    nav.scrolled .nav-links a.nav-cta { color: white; opacity: 1; }
-    .nav-cta:hover { background: var(--amber-dark); transform: translateY(-1px); }
-    .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 6px; min-height: 44px; min-width: 44px; align-items: center; justify-content: center; flex-direction: column; gap: 5px; }
-    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--fore); border-radius: 2px; transition: 0.25s; }
-    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
-    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    .mobile-menu {
-      display: none; position: fixed; left: 0; right: 0; bottom: 0;
-      background: rgba(249,248,245,0.97); backdrop-filter: blur(16px);
-      z-index: 199; flex-direction: column; align-items: center; justify-content: center; gap: 2rem;
-    }
-    .mobile-menu.open { display: flex; }
-    .mobile-menu a { font-size: 1.4rem; font-weight: 700; color: var(--fore); text-decoration: none; min-height: 44px; display: flex; align-items: center; transition: color 0.2s; }
-    .mobile-menu a:hover { color: var(--amber); }
-    .mobile-menu .mobile-cta { background: var(--amber); color: white; padding: 14px 36px; border-radius: 8px; font-size: 1rem; }
-    .mobile-menu .mobile-cta:hover { background: var(--amber-dark); color: white; }
+    .stage { position: relative; height: 720px; width: 100%; max-width: 600px; justify-self: end; border-radius: 44px; overflow: hidden; background: #fff; }
+    .stage .ff-blob.amber { left: -90px; top: 360px; width: 440px; height: 440px; background: var(--amber); }
+    .stage .ff-blob.blue { right: -70px; top: -50px; width: 380px; height: 380px; background: var(--blue); }
+    .stage .side { position: absolute; top: 170px; }
+    .stage .side .ff-phone { padding: 8px; border-radius: 46px; }
+    .stage .side .ff-phone__screen { width: 254px; border-radius: 38px; }
+    .stage .side.l { left: -78px; transform: rotate(-8deg); }
+    .stage .side.r { right: -78px; top: 200px; transform: rotate(8deg); }
+    .stage .centre { position: absolute; left: 50%; top: 56px; margin-left: -166px; }
+    .stage .centre .ff-phone { padding: 10px; border-radius: 56px; }
+    .stage .centre .ff-phone__screen { width: 312px; border-radius: 46px; }
+    .float { position: absolute; border-radius: 24px; background: #fff; padding: 12px 22px 12px 12px; display: flex; align-items: center; gap: 12px; box-shadow: 0 30px 60px -28px rgba(14,17,22,.45); }
+    .float span.t { display: flex; flex-direction: column; }
+    .float b { font-family: var(--display); font-size: 18px; font-weight: 700; letter-spacing: -.3px; }
+    .float small { font-size: 12px; color: var(--muted); }
+    .float.f1 { left: 24px; top: 600px; rotate: -4deg; }
+    .float.f2 { right: 24px; top: 96px; rotate: 3deg; background: var(--ink); color: #fff; box-shadow: 0 30px 60px -28px rgba(14,17,22,.6); }
+    .float.f2 small { color: rgba(255,255,255,.7); }
 
-    /* ── HERO ── */
-    /* The kitchen illustration is the hero itself -- shown whole, uncropped by any
-       overlay. Only a soft white veil sits over the text column for legibility
-       where the copy crosses the produce on the counter. */
-    .hero-wrapper {
-      position: relative; overflow: hidden;
-      background: hsl(40, 14%, 93%) url('/illustrations/kitchen-counter.png') no-repeat center bottom / cover;
-    }
-    .hero-wrapper::before {
-      content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
-      background:
-        /* soft pool of light where the CTA copy crosses the produce */
-        radial-gradient(112% 62% at 20% 82%, rgba(255,255,255,0.82) 0%, rgba(255,255,255,0.34) 46%, rgba(255,255,255,0) 72%),
-        linear-gradient(100deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.18) 36%, rgba(255,255,255,0) 58%);
-    }
-    .hero {
-      min-height: 88vh;
-      display: grid; grid-template-columns: 55fr 45fr;
-      align-items: center; gap: 4rem;
-      max-width: 1160px; margin: 0 auto;
-      /* top padding clears the floating nav */
-      padding: 128px clamp(16px, 5vw, 80px) 60px;
-      position: relative; z-index: 1;
-    }
-    .hero-text { max-width: 600px; }
-    h1 {
-      font-family: "PT Sans", sans-serif;
-      /* The headline leads with the category keywords, so it runs longer than a
-         two-word tagline would; the ramp is sized to keep it to two lines. */
-      font-size: clamp(32px, 5vw, 58px);
-      font-weight: 900; line-height: 1.05;
-      letter-spacing: -0.02em; margin-bottom: 24px; color: var(--fore);
-    }
-    .hero-last-line { display: block; position: relative; width: fit-content; }
-    .hero-last-line em { color: var(--amber); font-style: normal; }
-    .wavy-wrap { display: block; width: 100%; margin-top: 3px; overflow: visible; }
-    .wavy-path {
-      stroke: var(--amber); stroke-width: 3.5; fill: none;
-      stroke-dasharray: 230; stroke-dashoffset: 230;
-      stroke-linecap: round;
-      animation: drawWave 0.8s ease-out 0.3s forwards;
-    }
-    @keyframes drawWave { to { stroke-dashoffset: 0; } }
-    .hero-sub { font-size: 1.08rem; color: hsl(215,20%,28%); line-height: 1.7; margin-bottom: 36px; max-width: 440px; }
-    .hero-cta-block { display: flex; flex-direction: column; gap: 14px; }
-    .hero-store-btns { display: flex; gap: 12px; flex-wrap: wrap; }
-    /* These sit over the produce on the counter, so they carry more weight than
-       the equivalent muted text elsewhere on the page. */
-    .hero-sub-note { font-size: 0.82rem; color: hsl(215,22%,30%); font-weight: 700; }
-    .hero-rating { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-    .stars { display: flex; gap: 2px; }
-    .star-svg { width: 16px; height: 16px; fill: hsl(42,90%,52%); }
-    .rating-text { font-size: 0.85rem; font-weight: 700; color: var(--fore); }
-    .rating-div { width: 1px; height: 14px; background: hsl(215,16%,62%); }
-    .rating-platform { font-size: 0.82rem; color: hsl(215,22%,30%); font-weight: 700; }
+    .facts { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 22px 0; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 14px 20px; font-size: 14px; font-weight: 500; color: var(--ink-3); margin: 0 0 96px; list-style: none; }
+    .facts li { display: flex; align-items: center; gap: 10px; }
+    .facts li::before { content: ""; width: 6px; height: 6px; border-radius: 3px; background: var(--blue); }
 
-    /* Store buttons */
-    .appstore-btn, .playstore-btn {
-      display: inline-flex; align-items: center; gap: 11px;
-      background: hsl(0, 0%, 9%); color: white;
-      border: 1px solid rgba(255,255,255,0.14);
-      padding: 11px 22px; border-radius: 13px; text-decoration: none;
-      min-height: 52px; min-width: 160px;
-      transition: background 0.2s, transform 0.15s, border-color 0.2s;
-    }
-    /* The store badges stay black on hover. A blue fill reads as a tint over the
-       official badge artwork rather than as a state change. */
-    .appstore-btn:hover, .playstore-btn:hover { background: hsl(0, 0%, 18%); border-color: rgba(255,255,255,0.24); transform: translateY(-2px); }
-    /* text-align is explicit because the hero centres its text on a phone, which
-       would otherwise centre the badge's small label over its name. */
-    .appstore-btn-text, .playstore-btn-text { display: flex; flex-direction: column; line-height: 1.2; text-align: left; }
-    .appstore-btn-label, .playstore-btn-label { font-size: 0.62rem; font-weight: 400; opacity: 0.75; letter-spacing: 0.03em; }
-    .appstore-btn-name, .playstore-btn-name { font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; }
+    /* ── Section heads ── */
+    .sec { padding-bottom: 120px; }
+    .sec-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px 40px; padding-bottom: 40px; }
+    .sec-head > div { display: flex; flex-direction: column; gap: 14px; max-width: 640px; }
+    .sec-head p { margin: 0; max-width: 380px; font-size: 17px; line-height: 1.55; color: var(--ink-3); }
+    .sec-head.centre { flex-direction: column; align-items: center; text-align: center; padding-bottom: 56px; }
+    .sec-head.centre > div { align-items: center; }
 
-    /* ── HERO VISUAL ── */
-    .hero-visual { position: relative; display: flex; justify-content: center; align-items: center; padding: 40px 20px; }
-    .hero-visual::before {
-      content: ''; position: absolute; width: 420px; height: 420px;
-      background: radial-gradient(circle, hsla(205,68%,50%,0.16) 0%, transparent 70%);
-      top: 50%; left: 50%; transform: translate(-50%,-50%);
-      pointer-events: none; z-index: 0;
-    }
-    .phone-cluster { position: relative; width: 290px; height: 510px; z-index: 1; }
+    /* ── Bento ── */
+    .bento { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 20px; }
+    .s7 { grid-column: span 7; } .s5 { grid-column: span 5; } .s3 { grid-column: span 3; } .s4 { grid-column: span 4; }
+    .feat { position: relative; overflow: hidden; height: 600px; border-radius: 36px; background: #fff; box-sizing: border-box; }
+    .feat.tall { height: 640px; }
+    .feat.dark { background: var(--ink); color: #fff; }
+    .feat-copy { position: relative; padding: 44px; display: flex; flex-direction: column; gap: 18px; box-sizing: border-box; }
+    .feat-copy p { margin: 0; font-size: 16px; line-height: 1.55; color: var(--ink-3); }
+    .feat.dark .feat-copy p { color: rgba(255,255,255,.72); }
+    .feat h3 { margin: 0; font-family: var(--display); font-size: 40px; font-weight: 700; letter-spacing: -1.4px; line-height: 1; }
+    .tag-dark { align-self: flex-start; height: 32px; padding: 0 12px 0 8px; border-radius: 16px; background: rgba(255,255,255,.1); display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; }
+    .moods { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 6px; }
+    .moods span { height: 34px; padding: 0 14px; border-radius: 17px; border: 1px solid rgba(255,255,255,.2); display: flex; align-items: center; font-size: 13px; font-weight: 500; transition: background-color .5s, color .5s, border-color .5s; }
+    .moods span.on { background: #fff; color: var(--ink); border-color: #fff; font-weight: 600; }
+    .feat .phone-slot { position: absolute; }
+    .feat .ff-phone__screen { width: 273px; }
+    .feat.dark .ff-phone { background: #2A2F38; box-shadow: 0 40px 80px -30px rgba(0,0,0,.8); }
+    .slot-assist { right: 44px; top: 70px; }
+    .slot-plan { left: 50%; margin-left: -146px; top: 330px; }
+    .slot-list { right: 44px; top: 60px; }
+    .feat .phone-slot .ff-phone { transition: transform .8s var(--ease); }
+    .feat:hover .phone-slot .ff-phone { transform: translateY(-10px); }
 
-    /* Back phone */
-    .phone-back {
-      position: absolute; right: -44px; top: 32px;
-      width: 185px; background: hsl(222,47%,13%); border-radius: 26px;
-      padding: 5px; z-index: 2; opacity: 0.96;
-      transform: rotate(6deg);
-      box-shadow: 0 28px 60px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.1);
-    }
-    .phone-back-inner { background: var(--blue-pale); border-radius: 21px; height: 320px; overflow: hidden; position: relative; }
-    .phone-back-hdr { padding: 12px 10px 8px; background: white; border-bottom: 1px solid var(--border); }
-    .phone-back-title { font-size: 0.6rem; font-weight: 700; color: var(--fore); }
-    .phone-back-sub { font-size: 0.48rem; color: var(--muted); }
-    .phone-back-items { padding: 10px 10px; display: flex; flex-direction: column; gap: 7px; }
-    .phone-back-item { display: flex; align-items: center; gap: 7px; background: white; border-radius: 9px; padding: 7px 9px; }
-    .pbi-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-    .pbi-name { font-size: 0.52rem; font-weight: 700; flex: 1; }
-    .pbi-chk { width: 13px; height: 13px; border-radius: 50%; background: var(--blue); display: grid; place-items: center; flex-shrink: 0; }
-    .pbi-chk::after { content: "✓"; font-size: 0.38rem; color: white; font-weight: 700; }
+    .importer { margin-top: auto; border-radius: 28px; background: var(--paper); padding: 14px; display: flex; flex-direction: column; gap: 12px; }
+    .importer .field { height: 52px; border-radius: 26px; background: #fff; display: flex; align-items: center; gap: 10px; padding: 0 6px 0 16px; }
+    .importer .url { flex-grow: 1; min-width: 0; font-size: 14px; color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: opacity .35s; }
+    .importer .go { height: 40px; padding: 0 16px; border-radius: 20px; background: var(--blue); color: #fff; display: flex; align-items: center; font-size: 13px; font-weight: 600; }
+    .steps { display: flex; flex-direction: column; gap: 10px; padding: 4px 8px 6px; margin: 0; list-style: none; }
+    .steps li { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; color: var(--muted); transition: color .3s; }
+    .steps .mark { position: relative; width: 22px; height: 22px; border-radius: 11px; box-sizing: border-box; border: 2px solid var(--line); display: flex; align-items: center; justify-content: center; color: #fff; transition: background-color .3s, border-color .3s; }
+    .steps .mark svg { opacity: 0; transform: scale(.4); transition: opacity .3s, transform .3s var(--ease); }
+    .steps li.done { color: var(--ink); }
+    .steps li.done .mark { background: var(--green); border-color: var(--green); }
+    .steps li.done .mark svg { opacity: 1; transform: none; }
+    .steps li.busy .mark { border-color: var(--blue); border-right-color: transparent; animation: ff-spin .8s linear infinite; }
 
-    /* Front phone */
-    .phone-front {
-      position: absolute; left: 0; top: 0;
-      width: 232px; background: hsl(222,47%,13%); border-radius: 34px;
-      padding: 6px; z-index: 3;
-      box-shadow: 0 40px 90px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.12);
-      animation: floatPhone 3.5s ease-in-out infinite;
-    }
-    @keyframes floatPhone { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-    .phone-front-inner { background: var(--surface); border-radius: 28px; height: 406px; overflow: hidden; position: relative; }
-    .pf-status { background: var(--surface); padding: 12px 14px 4px; display: flex; justify-content: space-between; align-items: center; }
-    .pf-time { font-size: 0.7rem; font-weight: 700; color: var(--fore); }
-    .pf-hdr { padding: 4px 12px 8px; border-bottom: 1px solid var(--border); }
-    .pf-name { font-size: 0.82rem; font-weight: 700; }
-    .pf-shortcuts { display: flex; gap: 6px; padding: 8px 12px 5px; }
-    .pf-sc-amber { flex: 1; background: var(--amber); color: white; border-radius: 8px; padding: 7px 4px; font-size: 0.52rem; font-weight: 700; text-align: center; }
-    .pf-sc-blue { flex: 1; background: var(--blue-lt); color: var(--blue); border-radius: 8px; padding: 7px 4px; font-size: 0.52rem; font-weight: 700; text-align: center; }
-    .pf-body { padding: 5px 12px; flex: 1; overflow: hidden; }
-    .pf-label { font-size: 0.48rem; font-weight: 700; color: var(--muted); letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 5px; }
-    .pf-card { background: white; border-radius: 11px; padding: 8px 10px; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: flex-start; }
-    .pf-card-title { font-size: 0.68rem; font-weight: 700; margin-bottom: 2px; }
-    .pf-card-sub { font-size: 0.5rem; color: var(--muted); }
-    .pf-card-stat { font-size: 0.46rem; color: var(--blue); font-weight: 700; }
-    .pf-prog { height: 3px; background: var(--border); border-radius: 2px; width: 52px; margin-top: 3px; overflow: hidden; }
-    .pf-prog-fill { height: 100%; background: var(--blue); border-radius: 2px; }
-    .pf-meal { background: white; border-radius: 10px; padding: 7px 9px; display: flex; align-items: center; gap: 7px; margin-bottom: 5px; }
-    .pf-meal-icon { width: 26px; height: 26px; border-radius: 7px; background: var(--blue-lt); flex-shrink: 0; display: grid; place-items: center; font-size: 0.85rem; }
-    .pf-meal-day { font-size: 0.46rem; color: var(--amber); font-weight: 700; text-transform: uppercase; }
-    .pf-meal-name { font-size: 0.56rem; font-weight: 700; }
+    .points { display: flex; flex-direction: column; gap: 14px; padding-top: 10px; margin: 0; list-style: none; }
+    .points li { display: flex; gap: 12px; font-size: 15px; line-height: 1.45; }
+    .points .n { font-family: var(--display); font-size: 15px; font-weight: 700; color: var(--blue); width: 22px; flex-shrink: 0; }
+    .points small { display: block; font-size: 15px; color: var(--muted); }
 
-    /* Recipe float card */
-    .recipe-float {
-      position: absolute; bottom: -8px; left: -28px;
-      background: white; border-radius: 16px; padding: 11px 13px;
-      box-shadow: 0 8px 32px rgba(30,60,100,0.14);
-      z-index: 5; display: flex; align-items: center; gap: 10px;
-      min-width: 168px; border: 1px solid rgba(0,0,0,0.06);
-      animation: floatCard 2.9s ease-in-out infinite;
-    }
-    @keyframes floatCard { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-    .rf-img { width: 38px; height: 38px; border-radius: 10px; overflow: hidden; flex-shrink: 0; background: var(--blue-lt); }
-    .rf-img img { width: 100%; height: 100%; object-fit: cover; }
-    .rf-name { font-size: 0.66rem; font-weight: 700; color: var(--fore); line-height: 1.2; margin-bottom: 4px; }
-    .rf-badge { display: inline-flex; align-items: center; gap: 3px; background: var(--amber-lt); color: var(--amber-dark); padding: 2px 7px; border-radius: 100px; font-size: 0.52rem; font-weight: 700; }
+    .mini { border-radius: 32px; background: #fff; padding: 28px; display: flex; flex-direction: column; gap: 14px; min-height: 220px; box-sizing: border-box; }
+    .mini h3 { margin: 0; font-family: var(--display); font-size: 22px; font-weight: 700; letter-spacing: -.5px; }
+    .mini p { margin: 0; font-size: 14px; line-height: 1.55; color: var(--muted); }
 
-    /* Food ingredient badges */
-    .ingredient {
-      position: absolute; z-index: 4; border-radius: 50%; pointer-events: none;
-      display: grid; place-items: center;
-      box-shadow: 0 14px 30px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.08);
-      font-size: 2.2rem; line-height: 1;
-    }
-    .ing-avocado { width: 88px; height: 88px; top: -18px; left: -36px; background: var(--blue-lt); animation: floatA 3.2s ease-in-out infinite; }
-    .ing-tomato  { width: 78px; height: 78px; bottom: 24px; right: -46px; background: var(--amber-lt); animation: floatB 4.1s ease-in-out infinite 0.5s; }
-    .ing-herbs   { width: 72px; height: 72px; top: 12px; right: -26px; background: hsl(140,45%,92%); animation: floatC 3.8s ease-in-out infinite 1s; }
+    /* ── How it works ── */
+    .how-step { display: flex; flex-direction: column; gap: 14px; padding: 0 8px; }
+    .how-step .num { font-family: var(--display); font-size: 96px; font-weight: 700; letter-spacing: -4px; line-height: .9; color: #DCDCD6; transition: color .6s; }
+    .how-step:hover .num { color: var(--blue); }
+    .how-step .rule { height: 2px; width: 40px; background: var(--ink); transition: width .6s var(--ease); }
+    .how-step.is-in .rule { width: 72px; }
+    .how-step h3 { margin: 0; font-family: var(--display); font-size: 26px; font-weight: 700; letter-spacing: -.6px; }
+    .how-step p { margin: 0; font-size: 15px; line-height: 1.6; color: var(--ink-3); }
 
-    /* Reliable full-bleed rendering for all phone screen images */
-    .phone-front-inner img,
-    .phone-back-inner img,
-    .zz-phone-inner img,
-    .how-screen-pane img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: top center;
-      display: block;
-    }
-    @keyframes floatA { 0%,100% { transform: translateY(0) rotate(-6deg); } 50% { transform: translateY(-12px) rotate(-6deg); } }
-    @keyframes floatB { 0%,100% { transform: translateY(0) rotate(9deg); } 50% { transform: translateY(-10px) rotate(9deg); } }
-    @keyframes floatC { 0%,100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-14px) rotate(-3deg); } }
+    /* ── Reviews ── */
+    .reviews { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+    .review { border-radius: 32px; background: #fff; padding: 32px; display: flex; flex-direction: column; gap: 14px; margin: 0; }
+    .review .stars { display: flex; gap: 2px; color: var(--amber); }
+    .review h3 { margin: 0; font-family: var(--display); font-size: 22px; font-weight: 700; letter-spacing: -.5px; line-height: 1.15; }
+    .review blockquote { margin: 0; font-size: 15px; line-height: 1.6; color: var(--ink-3); }
+    .review figcaption { margin-top: auto; display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; }
+    .review figcaption span.av { width: 36px; height: 36px; border-radius: 18px; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; }
+    .review figcaption small { display: block; font-size: 12px; font-weight: 400; color: var(--muted); }
+    .rating-sum { display: flex; align-items: center; gap: 12px; padding: 14px 20px 14px 14px; border-radius: 28px; background: #fff; }
+    .rating-sum b { font-family: var(--display); font-size: 34px; letter-spacing: -1px; line-height: 1; }
+    .rating-sum > span { display: flex; flex-direction: column; font-size: 13px; color: var(--muted); }
 
-    /* ── SOCIAL PROOF / REVIEWS ── */
-    .proof-banner {
-      background: var(--bg-warm);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 72px clamp(16px, 5vw, 80px);
-    }
-    .proof-inner { max-width: 1160px; margin: 0 auto; }
-    .proof-header { text-align: center; margin-bottom: 40px; }
-    .proof-header .section-sub { margin: 0 auto; }
-    /* The reviews are a swipeable track: native horizontal scrolling with snap
-       points, so a touch swipe works without any JS. The arrows and dots below
-       drive the same scroll for pointer users. */
-    .proof-carousel { position: relative; max-width: 1040px; margin: 0 auto; }
-    .proof-quotes {
-      display: flex; align-items: stretch; gap: 20px;
-      overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none; -ms-overflow-style: none;
-    }
-    .proof-quotes::-webkit-scrollbar { display: none; }
-    /* One card at a time on a phone, widening to two and then three slimmer
-       columns as there is room for them. The track keeps scrolling and snapping
-       at every size — the wide layouts just show more of it at once. */
-    .proof-quote {
-      flex: 0 0 100%; scroll-snap-align: start;
-      display: flex; flex-direction: column;
-      background: white; border: 1px solid rgba(0,0,0,0.08);
-      border-radius: var(--radius); padding: 24px 26px;
-    }
-    .proof-quote-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
-    .proof-quote-who { display: flex; align-items: center; gap: 10px; min-width: 0; }
-    @media (min-width: 720px) { .proof-quote { flex-basis: calc((100% - 20px) / 2); } }
-    @media (min-width: 1100px) { .proof-quote { flex-basis: calc((100% - 40px) / 3); padding: 24px; } }
-    .proof-avatar {
-      width: 34px; height: 34px; border-radius: 50%; overflow: hidden; flex-shrink: 0;
-      background: var(--blue-lt); display: flex; align-items: center; justify-content: center;
-    }
-    .proof-avatar img { width: 100%; height: 100%; object-fit: cover; }
-    /* An icon rather than a stock portrait: these are store reviews, and a stock
-       face would imply a photo the reviewer never gave us. */
-    .proof-avatar-icon { width: 17px; height: 20px; fill: none; stroke: var(--amber-dark); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-    .proof-quote-stars { display: flex; gap: 2px; flex-shrink: 0; }
-    .proof-quote-star { width: 14px; height: 14px; fill: hsl(42,90%,52%); }
-    .proof-quote-author { font-size: 0.85rem; font-weight: 700; color: var(--fore); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .proof-quote-title { font-size: 0.95rem; font-weight: 700; color: var(--fore); margin-bottom: 8px; }
-    .proof-quote-text { font-size: 0.88rem; color: var(--fore); line-height: 1.65; font-style: italic; }
-    .proof-nav {
-      position: absolute; top: 50%; transform: translateY(-50%);
-      width: 40px; height: 40px; border-radius: 50%;
-      background: white; border: 1px solid var(--border); cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.06); transition: background 0.2s, opacity 0.2s;
-    }
-    .proof-nav:hover { background: var(--blue-pale); }
-    .proof-nav[disabled] { opacity: 0.35; cursor: default; }
-    .proof-nav svg { width: 18px; height: 18px; fill: none; stroke: var(--fore); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-    /* The arrows tuck against the track edge rather than sitting in an outer
-       gutter: at the widths where they are needed the section padding has
-       already eaten that gutter, and pushing them out overflowed the page. */
-    .proof-prev { left: -18px; }
-    .proof-next { right: -18px; }
-    .is-static .proof-nav, .is-static .proof-dots { display: none; }
-    .proof-dots { display: flex; justify-content: center; gap: 8px; margin-top: 24px; }
-    .proof-dot {
-      width: 8px; height: 8px; border-radius: 50%; padding: 0; cursor: pointer;
-      border: none; background: var(--border); transition: background 0.2s, width 0.2s;
-    }
-    .proof-dot.active { background: var(--amber); width: 22px; border-radius: 100px; }
-    /* One card per view: swiping it is the natural gesture, and the arrows would
-       have to sit on top of the card to fit. */
-    @media (max-width: 719px) { .proof-nav { display: none; } }
-    /* One card per view: the reviews differ enough in length that stretching a
-       short one to the height of the longest leaves a lot of empty card. Side by
-       side they stay stretched, so the row of cards lines up. */
-    @media (max-width: 719px) { .proof-quote { align-self: flex-start; } }
+    /* ── Pro ── */
+    .pro { position: relative; overflow: hidden; border-radius: 44px; background: var(--ink); color: #fff; padding: 72px; }
+    .pro .ff-blob.a { left: -160px; bottom: -220px; width: 560px; height: 560px; background: rgba(245,185,53,.14); }
+    .pro .ff-blob.b { right: -100px; top: -160px; width: 380px; height: 380px; background: rgba(30,111,224,.22); }
+    .pro-grid { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 56px; align-items: center; }
+    .pro-copy { display: flex; flex-direction: column; gap: 22px; }
+    .pro-tag { align-self: flex-start; height: 36px; padding: 0 14px 0 6px; border-radius: 18px; background: rgba(245,185,53,.14); display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 700; color: var(--amber); }
+    .pro-tag i { width: 26px; height: 26px; border-radius: 13px; background: var(--amber); color: var(--amber-ink); display: flex; align-items: center; justify-content: center; }
+    .pro-copy > p { margin: 0; font-size: 17px; line-height: 1.55; color: rgba(255,255,255,.72); max-width: 420px; }
+    .price { display: flex; align-items: baseline; gap: 8px; padding-top: 6px; }
+    .price b { font-family: var(--display); font-size: 64px; font-weight: 700; letter-spacing: -2.5px; line-height: 1; }
+    .price span { font-size: 16px; color: rgba(255,255,255,.6); }
+    .pro-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
+    .pro-cta small { font-size: 13px; line-height: 1.45; color: rgba(255,255,255,.6); max-width: 240px; }
+    .tiers { border-radius: 32px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); padding: 10px 8px; -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+    .tiers table { width: 100%; border-collapse: collapse; font-size: 15px; }
+    .tiers th { text-align: left; padding: 14px 20px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,.6); }
+    .tiers th.p { color: var(--amber); }
+    .tiers td { padding: 16px 20px; border-top: 1px solid rgba(255,255,255,.08); }
+    .tiers td:first-child { font-weight: 500; width: 46%; }
+    .tiers td.f { color: rgba(255,255,255,.6); }
+    .tiers td.p { font-weight: 600; }
+    .tiers small { display: none; }
+    .tiers tbody tr { transition: background-color .3s; }
+    .tiers tbody tr:hover { background: rgba(255,255,255,.04); }
 
-    /* ── WAVE DIVIDERS ── */
-    .wave { display: block; width: 100%; overflow: hidden; line-height: 0; }
-    /* The svg height is derived from its viewBox, so at most widths it lands on a
-       fractional pixel and leaves a hairline of the divider's own background
-       showing against the section below. Overlap by a pixel to close the seam. */
-    .wave svg { display: block; width: 100%; margin-bottom: -1px; }
-    /* This one has no background of its own, so it is pulled up over the hero:
-       the white curve rises straight out of the kitchen artwork instead of
-       leaving a band of page background between the two. The hero is short
-       enough on a phone that the overlap would reach the rating line, so the
-       pull-up is desktop only. */
-    .wave-over-hero { margin-top: -56px; position: relative; z-index: 2; }
+    /* ── Maker ── */
+    .maker { border-radius: 40px; background: #fff; padding: 56px; display: flex; flex-wrap: wrap; align-items: center; gap: 32px 56px; }
+    .maker img { width: 112px; height: 112px; border-radius: 34px; background: var(--paper); padding: 10px; box-sizing: border-box; }
+    .maker div { flex: 1 1 420px; display: flex; flex-direction: column; gap: 14px; }
+    .maker p { margin: 0; font-family: var(--display); font-size: 34px; font-weight: 600; letter-spacing: -1px; line-height: 1.15; }
+    .maker span { font-size: 14px; color: var(--muted); }
 
-    /* ── FEATURES ── */
-    .features-section { background: white; padding: 80px 0 40px; }
-    .features-header { max-width: 1160px; margin: 0 auto; padding: 0 clamp(16px, 5vw, 80px) 56px; }
-    .section-eyebrow { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue); margin-bottom: 12px; }
-    .section-title { font-family: "Playfair Display", serif; font-size: clamp(28px, 4vw, 46px); font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 16px; }
-    .section-sub { font-size: 1rem; color: var(--muted); line-height: 1.7; max-width: 480px; }
+    /* ── Download ── */
+    .dl { position: relative; padding: 0 0 120px; }
+    .collage { position: relative; height: 300px; overflow: hidden; }
+    .collage .row { position: absolute; left: -60px; right: -60px; top: -40px; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; rotate: -4deg; }
+    .collage img { width: 100%; height: 220px; border-radius: 32px; object-fit: cover; display: block; background: var(--paper-2); }
+    .collage img:nth-child(1) { margin-top: 40px; } .collage img:nth-child(2) { height: 260px; }
+    .collage img:nth-child(3) { margin-top: 70px; } .collage img:nth-child(4) { height: 240px; margin-top: 20px; }
+    .collage img:nth-child(5) { margin-top: 60px; } .collage img:nth-child(6) { height: 250px; margin-top: 10px; }
+    .collage .row { animation: slide 40s linear infinite alternate; }
+    @keyframes slide { from { translate: 0 0; } to { translate: -40px 0; } }
+    .collage .fade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(243,243,240,0) 30%, rgba(243,243,240,.85) 75%, var(--paper) 100%); }
+    .dl-copy { position: relative; display: flex; flex-direction: column; align-items: center; gap: 24px; text-align: center; margin-top: -40px; }
+    .dl-copy > img { width: 84px; height: 84px; border-radius: 26px; background: #fff; box-shadow: 0 16px 32px -16px rgba(14,17,22,.35); }
+    .dl-copy h2 { font-size: 76px; letter-spacing: -3px; line-height: .95; max-width: 800px; }
+    .dl-copy p { margin: 0; font-size: 18px; line-height: 1.55; color: var(--ink-3); max-width: 520px; }
+    .dl-copy .ff-stores { justify-content: center; padding-top: 6px; }
+    .socials { display: flex; gap: 8px; }
+    .socials a { width: 40px; height: 40px; border-radius: 20px; background: #fff; display: flex; align-items: center; justify-content: center; color: var(--ink) !important; transition: transform .25s var(--ease); }
+    .socials a:hover { transform: translateY(-2px); }
 
-    .zigzag-row {
-      max-width: 1160px; margin: 0 auto;
-      padding: 52px clamp(16px, 5vw, 80px);
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 64px; align-items: center;
-      border-top: 1px solid var(--border);
+    /* ── Phone dock: a get-the-app bar on the first screens of a phone ── */
+    .dock { display: none; }
+    @media (max-width: 640px) {
+      .dock { position: fixed; left: 16px; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom)); z-index: 150; height: 64px; border-radius: 32px; background: rgba(14,17,22,.86); -webkit-backdrop-filter: blur(24px) saturate(160%); backdrop-filter: blur(24px) saturate(160%); border: 1px solid rgba(255,255,255,.12); box-shadow: 0 20px 40px -14px rgba(14,17,22,.5); display: flex; align-items: center; justify-content: space-between; padding: 0 8px 0 10px; color: #fff; transition: transform .5s var(--ease), opacity .5s; }
+      .dock.is-hidden { transform: translateY(140%); opacity: 0; pointer-events: none; }
+      .dock > span { display: flex; align-items: center; gap: 10px; }
+      .dock img { width: 40px; height: 40px; border-radius: 12px; background: #fff; }
+      .dock b { display: block; font-size: 14px; font-weight: 600; }
+      .dock small { font-size: 12px; color: rgba(255,255,255,.65); }
+      .dock a { height: 48px; padding: 0 18px; border-radius: 24px; background: #fff; color: var(--ink) !important; display: flex; align-items: center; font-size: 14px; font-weight: 600; text-decoration: none; }
     }
-    .cat-pill { display: inline-flex; align-items: center; padding: 4px 13px; border-radius: 100px; font-size: 0.72rem; font-weight: 700; margin-bottom: 16px; }
-    .pill-amber { background: var(--amber-lt); color: var(--amber-dark); }
-    .pill-green { background: hsl(140,50%,92%); color: hsl(140,50%,30%); }
-    .pill-blue  { background: var(--blue-lt); color: var(--blue); }
-    .pill-purple{ background: hsl(270,50%,93%); color: hsl(270,50%,40%); }
-    .zigzag-text h3 { font-size: clamp(22px, 2.5vw, 32px); font-weight: 700; line-height: 1.2; margin-bottom: 14px; }
-    .zigzag-text p { font-size: 0.95rem; color: var(--muted); line-height: 1.75; margin-bottom: 16px; }
-    .zz-link { font-size: 0.85rem; font-weight: 700; color: var(--blue); text-decoration: none; }
-    .zz-link:hover { text-decoration: underline; }
-    .zz-phone-col { display: flex; justify-content: center; align-items: center; position: relative; }
-    /* Big organic shape behind each phone. These are decorative and deliberately
-       varied -- the app blue stays the brand accent on labels, links and buttons. */
-    .zz-phone-col::before {
-      content: ''; position: absolute; z-index: 0;
-      width: 432px; height: 372px; top: 50%; left: 50%; transform: translate(-50%,-50%);
-      border-radius: 42% 58% 54% 46% / 48% 42% 58% 52%;
-    }
-    .blob-teal::before   { background: hsl(191, 52%, 24%); }
-    .blob-orange::before { background: hsl(22, 86%, 57%); }
-    .blob-green::before  { background: hsl(88, 36%, 62%); }
-    .blob-blue::before   { background: hsl(205, 68%, 55%); }
-    .blob-plum::before   { background: hsl(288, 40%, 48%); }
-    .blob-coral::before  { background: hsl(6, 74%, 60%); }
 
-    /* Dashed trail linking one flow to the next. */
-    .flow-trail { max-width: 1160px; margin: 0 auto; padding: 0 clamp(16px, 5vw, 80px); }
-    .flow-trail svg { display: block; width: 100%; height: 118px; overflow: visible; }
-    .flow-trail path { fill: none; stroke-width: 2.5; stroke-linecap: round; opacity: 0.85; }
-    /* Each trail carries the colour of the flow it leads into. */
-    .trail-to-orange path { stroke: hsl(22, 86%, 57%); }
-    .trail-to-green  path { stroke: hsl(88, 36%, 48%); }
-    .trail-to-blue   path { stroke: hsl(205, 68%, 55%); }
-    .trail-to-plum   path { stroke: hsl(288, 42%, 55%); }
-    .trail-to-coral  path { stroke: hsl(6, 78%, 62%); }
-    .zz-phone { position: relative; z-index: 2; order: 1; width: 240px; background: hsl(222,47%,13%); border-radius: 34px; padding: 6px; box-shadow: 0 28px 70px rgba(20,40,70,0.18); }
-
-    /* Supporting illustration alongside each phone. Backgrounds (not <img>) so a
-       missing file collapses to empty space instead of a broken-image icon.
-       Layered under the phone so the app screenshot is never obscured. */
-    .zz-illustration {
-      position: relative; z-index: 1; align-self: flex-end;
-      margin-bottom: 34px; flex-shrink: 0;
-      background-repeat: no-repeat; background-position: center bottom; background-size: contain;
-      filter: drop-shadow(0 14px 26px rgba(20,40,70,0.18));
+    /* ── Responsive ── */
+    @media (max-width: 1180px) {
+      .hero h1 { font-size: 88px; letter-spacing: -3.6px; }
     }
-    /* Sit the illustration on the outer edge of the row, tucked behind the phone. */
-    .zz-phone-col.from-right .zz-illustration { order: 2; margin-left: -38px; }
-    .zz-phone-col.from-left  .zz-illustration { order: 0; margin-right: -38px; }
-    /* Mirrored so the raised whisk falls on the outer edge rather than being
-       hidden behind the phone. */
-    .zz-ill-mascot { width: 172px; aspect-ratio: 360 / 439; background-image: url('/illustrations/chef-mascot.png'); transform: scaleX(-1); }
-    .zz-ill-fridge { width: 236px; aspect-ratio: 480 / 317; background-image: url('/illustrations/fridge.png'); }
-    .zz-ill-cart   { width: 210px; aspect-ratio: 440 / 389; background-image: url('/illustrations/grocery-cart.png'); }
-    .zz-ill-planner   { width: 180px; aspect-ratio: 360 / 308; background-image: url('/illustrations/planner.png'); }
-    .zz-ill-dietary   { width: 168px; aspect-ratio: 350 / 436; background-image: url('/illustrations/dietary.png'); }
-    .zz-ill-import    { width: 232px; aspect-ratio: 480 / 308; background-image: url('/illustrations/import.png'); }
-    .zz-ill-household { width: 236px; aspect-ratio: 480 / 297; background-image: url('/illustrations/household.png'); }
-    /* The chef and the trolley have empty space at their edges, so tucking them
-       38px behind the phone costs nothing. These four are drawn edge to edge --
-       at that depth the phone eats a third of the calendar and a whole diner --
-       so they sit almost flush instead. */
-    .zz-phone-col.from-right .zz-ill-planner,
-    .zz-phone-col.from-right .zz-ill-dietary,
-    .zz-phone-col.from-right .zz-ill-import,
-    .zz-phone-col.from-right .zz-ill-household { margin-left: -10px; }
-    .zz-phone-col.from-left .zz-ill-planner,
-    .zz-phone-col.from-left .zz-ill-dietary,
-    .zz-phone-col.from-left .zz-ill-import,
-    .zz-phone-col.from-left .zz-ill-household { margin-right: -10px; }
-
-    /* Flow step label above each feature heading */
-    .flow-label {
-      display: block; font-size: 0.72rem; font-weight: 700;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--amber); margin-bottom: 10px;
+    @media (max-width: 1020px) {
+      .hero { grid-template-columns: 1fr; }
+      .stage { justify-self: center; margin: 0 auto; }
+      .s7, .s5, .s4 { grid-column: span 12; } .s3 { grid-column: span 6; }
+      .pro-grid { grid-template-columns: 1fr; }
+      .reviews { grid-template-columns: 1fr; }
+      .pro { padding: 56px 40px; }
     }
-    .zz-phone-inner { border-radius: 28px; height: 426px; overflow: hidden; background: var(--surface); position: relative; }
-    .zz-phone-inner img { width: 100%; height: 100%; object-fit: cover; }
-    .zz-placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, var(--blue-pale) 0%, var(--blue-lt) 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; }
-    .zz-ph-icon { width: 52px; height: 52px; background: white; border-radius: 16px; display: grid; place-items: center; margin-bottom: 14px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
-    .zz-ph-icon svg { width: 28px; height: 28px; fill: none; stroke: var(--blue); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-    .zz-ph-label { font-size: 0.75rem; font-weight: 700; color: var(--blue); }
-
-    /* Scroll reveal */
-    .reveal { opacity: 0; transition: opacity 0.5s ease, transform 0.5s ease; }
-    .reveal.from-left { transform: translateX(-40px); }
-    .reveal.from-right { transform: translateX(40px); }
-    .reveal.visible { opacity: 1 !important; transform: none !important; }
-
-    /* Mini features grid */
-    .features-grid-mini { max-width: 1160px; margin: 0 auto; padding: 0 clamp(16px, 5vw, 80px) 60px; display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; border-top: 1px solid var(--border); padding-top: 52px; }
-    /* Frosted cards. The section behind them is plain white, so a soft colour wash
-       sits under the row to give the glass something to pick up. */
-    .features-grid-mini { position: relative; }
-    .features-grid-mini::before {
-      content: ''; position: absolute; z-index: 0; pointer-events: none;
-      inset: 34px clamp(0px, 2vw, 30px) 34px;
-      border-radius: 46px;
-      background:
-        radial-gradient(58% 104% at 24% 48%, hsla(205,74%,56%,0.26) 0%, transparent 72%),
-        radial-gradient(54% 104% at 82% 40%, hsla(150,50%,50%,0.22) 0%, transparent 72%),
-        radial-gradient(46% 90% at 56% 92%, hsla(28,80%,60%,0.14) 0%, transparent 74%);
+    @media (max-width: 640px) {
+      .hero { padding-top: 32px; }
+      .hero-copy { gap: 22px; padding: 0; }
+      .hero h1 { font-size: 64px; letter-spacing: -2.6px; }
+      .hero-lede { font-size: 17px; }
+      .stage { height: 560px; border-radius: 36px; }
+      .stage .side, .float.f2 { display: none; }
+      .stage .centre { top: 40px; margin-left: -127px; }
+      .stage .centre .ff-phone { padding: 8px; border-radius: 46px; }
+      .stage .centre .ff-phone__screen { width: 238px; border-radius: 38px; }
+      .float.f1 { left: 16px; top: auto; bottom: 28px; }
+      .facts { margin-bottom: 64px; }
+      .sec { padding-bottom: 72px; }
+      .ff-h2 { font-size: 40px; letter-spacing: -1.4px; }
+      .s3 { grid-column: span 12; }
+      .feat, .feat.tall { height: auto; border-radius: 32px; }
+      .feat-copy { padding: 28px; max-width: none !important; }
+      .feat h3 { font-size: 32px; letter-spacing: -1px; }
+      .feat .phone-slot { position: relative; inset: auto; margin: 4px auto 0; height: 360px; overflow: hidden; display: flex; justify-content: center; }
+      .feat .phone-slot .ff-phone__screen { width: 232px; }
+      .feat-import .feat-copy { height: auto !important; }
+      .importer { margin-top: 8px; }
+      .how-step { flex-direction: row; flex-wrap: wrap; gap: 6px 16px; }
+      .how-step .num { font-size: 56px; letter-spacing: -2px; width: 72px; }
+      .how-step .rule { display: none; }
+      .how-step > div { flex: 1 1 200px; display: flex; flex-direction: column; gap: 8px; }
+      .pro { padding: 32px 24px 24px; border-radius: 36px; }
+      .price b { font-size: 48px; }
+      .tiers { border-radius: 24px; padding: 4px 4px; }
+      .tiers thead { display: none; }
+      .tiers td { padding: 14px 12px; }
+      .tiers td:first-child { width: auto; }
+      .tiers td.f { display: none; }
+      .tiers td.p { text-align: right; color: var(--amber); }
+      .tiers small { display: block; font-size: 12px; font-weight: 400; color: rgba(255,255,255,.55); margin-top: 2px; }
+      .tiers tbody tr:first-child td { border-top: 0; }
+      .maker { padding: 28px; border-radius: 32px; }
+      .maker p { font-size: 24px; letter-spacing: -.6px; }
+      .collage { height: 200px; }
+      .collage .row { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .collage img { height: 150px !important; border-radius: 24px; }
+      .collage img:nth-child(n+5) { display: none; }
+      .dl-copy h2 { font-size: 44px; letter-spacing: -1.6px; }
+      .dl { padding-bottom: 72px; }
+      .ff-footer { padding-bottom: 104px !important; }
     }
-    .mini-card {
-      position: relative; z-index: 1;
-      background: linear-gradient(140deg, rgba(255,255,255,0.66) 0%, rgba(255,255,255,0.30) 100%);
-      backdrop-filter: blur(30px) saturate(190%);
-      -webkit-backdrop-filter: blur(30px) saturate(190%);
-      border: 1px solid rgba(255,255,255,0.75);
-      box-shadow: 0 14px 40px rgba(20,40,70,0.13), inset 0 1px 0 rgba(255,255,255,0.9);
-      border-radius: var(--radius); padding: 28px;
-      transition: box-shadow 0.2s, transform 0.2s;
-    }
-    .mini-card:hover { box-shadow: 0 16px 42px rgba(20,40,70,0.15); transform: translateY(-3px); }
-    .mini-icon { width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; margin-bottom: 16px; }
-    .mini-icon svg { width: 28px; height: 28px; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-    .mini-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
-    .mini-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
-
-    /* ── HOW IT WORKS ── */
-    /* Dark band carries the heading; the steps sit on a light panel below whose
-       top edge peaks in the middle, as in the design. */
-    .how-section { background: var(--bg-hero); padding: 80px 0 0; }
-    .how-section .section-title { color: var(--hero-fore); }
-    .how-section .section-sub { color: rgba(255,255,255,0.55); }
-    .how-section .section-eyebrow { color: var(--blue-mid); }
-    .how-panel {
-      background: var(--bg); margin-top: 52px;
-      padding: 118px 0 84px;
-      clip-path: polygon(0 64px, 50% 0, 100% 64px, 100% 100%, 0 100%);
-      position: relative;
-    }
-    /* Colour behind the frosted step cards, otherwise they blur a flat panel and
-       the glass has nothing to show. */
-    .how-panel::before {
-      content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
-      background:
-        radial-gradient(44% 52% at 24% 34%, hsla(205,74%,56%,0.30) 0%, transparent 70%),
-        radial-gradient(40% 48% at 70% 68%, hsla(150,50%,50%,0.24) 0%, transparent 70%),
-        radial-gradient(38% 44% at 84% 22%, hsla(28,82%,60%,0.18) 0%, transparent 72%);
-    }
-    .how-panel .how-inner { position: relative; z-index: 1; }
-    .how-inner { max-width: 1160px; margin: 0 auto; padding: 0 clamp(16px, 5vw, 80px); }
-    .how-header { text-align: center; margin-bottom: 56px; }
-    .how-header .section-sub { margin: 0 auto; }
-    .how-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
-    .how-steps { display: flex; flex-direction: column; }
-    /* Frosted step cards on the light panel */
-    .how-step {
-      display: flex; gap: 18px; padding: 20px 20px;
-      margin-bottom: 12px;
-      background: linear-gradient(125deg, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0.34) 100%);
-      backdrop-filter: blur(30px) saturate(190%);
-      -webkit-backdrop-filter: blur(30px) saturate(190%);
-      border: 1px solid rgba(255,255,255,0.8);
-      box-shadow: 0 14px 40px rgba(20,40,70,0.12), inset 0 1px 0 rgba(255,255,255,0.9);
-      cursor: pointer;
-      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
-      border-radius: 16px;
-    }
-    .how-step:hover { transform: translateX(3px); box-shadow: 0 14px 36px rgba(20,40,70,0.13); }
-    .how-step.active { border-color: var(--blue); box-shadow: 0 14px 38px rgba(20,80,140,0.18); }
-    .how-num {
-      width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
-      background: var(--card); border: 2px solid var(--border);
-      display: grid; place-items: center; font-size: 0.9rem; font-weight: 700; color: var(--muted);
-      transition: background 0.2s, color 0.2s, border-color 0.2s;
-    }
-    .how-step.active .how-num { background: var(--blue); color: white; border-color: var(--blue); }
-    .how-step-text h4 { font-size: 0.98rem; font-weight: 700; margin-bottom: 5px; color: var(--fore); }
-    .how-step-text p { font-size: 0.86rem; color: var(--muted); line-height: 1.65; }
-    .how-visual { position: sticky; top: calc(var(--nav-h) + 20px); }
-    .how-phone { width: 260px; margin: 0 auto; background: hsl(222,47%,13%); border-radius: 36px; padding: 7px; box-shadow: 0 30px 80px rgba(20,40,70,0.2); }
-    .how-screen { border-radius: 28px; height: 460px; overflow: hidden; position: relative; background: var(--bg); }
-    .how-screen-pane { position: absolute; inset: 0; opacity: 0; transition: opacity 0.25s ease; }
-    .how-screen-pane.active { opacity: 1; }
-    .hsp-hdr { padding: 16px 14px 10px; background: white; border-bottom: 1px solid var(--border); }
-    .hsp-title { font-size: 0.82rem; font-weight: 700; }
-    .hsp-sub { font-size: 0.58rem; color: var(--muted); margin-top: 1px; }
-    .hsp-body { padding: 12px 14px; flex: 1; overflow: hidden; }
-    .hsp-pref-row { display: flex; align-items: center; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--border); }
-    .hsp-pref-label { font-size: 0.72rem; font-weight: 700; }
-    .hsp-pref-val { font-size: 0.65rem; color: var(--blue); font-weight: 700; background: var(--blue-lt); padding: 3px 10px; border-radius: 100px; }
-    .hsp-ai-msg { background: var(--blue-lt); border-radius: 12px 12px 12px 0; padding: 10px 12px; margin-bottom: 10px; font-size: 0.68rem; color: var(--fore); line-height: 1.55; }
-    .hsp-recipe-card { background: white; border-radius: 12px; padding: 10px 12px; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; border: 1px solid var(--border); }
-    .hsp-recipe-icon { width: 36px; height: 36px; border-radius: 9px; background: var(--amber-lt); display: grid; place-items: center; flex-shrink: 0; font-size: 1.1rem; }
-    .hsp-recipe-name { font-size: 0.7rem; font-weight: 700; margin-bottom: 2px; }
-    .hsp-recipe-time { font-size: 0.56rem; color: var(--muted); }
-    .hsp-day-row { display: flex; gap: 5px; margin-bottom: 10px; }
-    .hsp-day { flex: 1; background: white; border-radius: 8px; padding: 6px 4px; text-align: center; border: 1px solid var(--border); }
-    .hsp-day.active-day { background: var(--amber); border-color: var(--amber); }
-    .hsp-day-name { font-size: 0.42rem; font-weight: 700; color: var(--muted); text-transform: uppercase; }
-    .hsp-day.active-day .hsp-day-name { color: rgba(255,255,255,0.8); }
-    .hsp-day-meal { font-size: 0.48rem; font-weight: 700; color: var(--fore); margin-top: 4px; }
-    .hsp-day.active-day .hsp-day-meal { color: white; }
-    .hsp-shop-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 0.72rem; }
-    .hsp-shop-chk { width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0; }
-    .hsp-shop-chk.done { background: var(--blue); display: grid; place-items: center; }
-    .hsp-shop-chk.done::after { content: "✓"; font-size: 0.5rem; color: white; font-weight: 700; }
-    .hsp-shop-chk.todo { border: 1.5px solid var(--border); }
-    .hsp-shop-name { flex: 1; }
-    .hsp-shop-cat { font-size: 0.58rem; color: var(--muted); background: var(--bg); padding: 2px 7px; border-radius: 100px; }
-
-    /* ── PRO SECTION ── */
-    .pro-section { background: var(--fore); color: white; padding: 80px 0; }
-    .pro-inner { max-width: 1160px; margin: 0 auto; padding: 0 clamp(16px, 5vw, 80px); display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-    .pro-header { margin-bottom: 40px; }
-    .pro-header .section-eyebrow { color: var(--blue-mid); }
-    .pro-header .section-title { color: white; }
-    .pro-header .section-sub { color: rgba(255,255,255,0.5); }
-    .pro-benefits { display: flex; flex-direction: column; gap: 28px; }
-    .pro-benefit { display: flex; gap: 18px; align-items: flex-start; }
-    .pro-benefit-icon { width: 52px; height: 52px; border-radius: 14px; flex-shrink: 0; background: rgba(255,255,255,0.08); display: grid; place-items: center; }
-    .pro-benefit-icon svg { width: 26px; height: 26px; fill: none; stroke: var(--amber); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-    .pro-benefit h4 { font-size: 0.98rem; font-weight: 700; margin-bottom: 5px; }
-    .pro-benefit p { font-size: 0.86rem; color: rgba(255,255,255,0.48); line-height: 1.6; }
-    .pro-card-col { }
-    .pro-card {
-      background: linear-gradient(155deg, rgba(255,255,255,0.24) 0%, rgba(255,255,255,0.07) 55%, rgba(255,255,255,0.14) 100%);
-      backdrop-filter: blur(34px) saturate(190%);
-      -webkit-backdrop-filter: blur(34px) saturate(190%);
-      border: 1px solid rgba(255,255,255,0.3);
-      border-radius: 22px; padding: 34px; position: relative; overflow: hidden;
-      isolation: isolate; /* keeps the bloom below scoped to the card */
-      box-shadow: 0 24px 60px rgba(0,0,0,0.34), inset 0 1px 0 rgba(255,255,255,0.25);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    /* Soft colour bloom behind the glass, so it reads as frosted rather than flat. */
-    .pro-card::after {
-      content: ''; position: absolute; z-index: -1; pointer-events: none;
-      width: 260px; height: 260px; top: -60px; right: -70px; border-radius: 50%;
-      background: radial-gradient(circle, hsla(205,80%,60%,0.5) 0%, transparent 70%);
-    }
-    .pro-card:hover { transform: scale(1.02); box-shadow: 0 28px 70px rgba(0,0,0,0.42), inset 0 1px 0 rgba(255,255,255,0.3); }
-    /* Sits inside the card: the glass card clips its overflow for the colour bloom. */
-    .pro-badge { position: absolute; top: 18px; right: 20px; background: var(--amber); color: white; font-size: 0.72rem; font-weight: 700; padding: 5px 16px; border-radius: 100px; white-space: nowrap; box-shadow: 0 4px 14px rgba(0,0,0,0.25); }
-    .pro-price { margin-bottom: 22px; margin-top: 10px; }
-    .pro-price-lbl { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 8px; }
-    .pro-price-val { font-family: "Playfair Display", serif; font-size: 3rem; font-weight: 700; line-height: 1; }
-    .pro-price-val sup { font-size: 1.2rem; vertical-align: super; }
-    .pro-price-val sub { font-size: 0.9rem; font-weight: 400; color: rgba(255,255,255,0.35); vertical-align: baseline; }
-    .pro-price-note { font-size: 0.74rem; color: rgba(255,255,255,0.3); margin-top: 6px; }
-    .pro-includes { display: flex; flex-direction: column; gap: 12px; margin-bottom: 26px; }
-    .pro-include { display: flex; align-items: center; gap: 12px; font-size: 0.9rem; color: rgba(255,255,255,0.9); }
-    .pro-chk { width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0; background: hsl(140,60%,40%); display: grid; place-items: center; }
-    .pro-chk svg { width: 12px; height: 12px; stroke: white; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
-    .btn-amber { display: block; text-align: center; background: var(--amber); color: white; padding: 16px; border-radius: 12px; font-weight: 700; font-size: 0.95rem; text-decoration: none; transition: background 0.2s, transform 0.15s; }
-    .btn-amber:hover { background: var(--amber-dark); transform: translateY(-2px); }
-    .pro-faq { margin-top: 18px; border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; overflow: hidden; }
-    .pro-faq summary { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; cursor: pointer; list-style: none; font-size: 0.88rem; font-weight: 700; color: rgba(255,255,255,0.65); min-height: 44px; }
-    .pro-faq summary::-webkit-details-marker { display: none; }
-    .pro-faq-chevron { width: 16px; height: 16px; flex-shrink: 0; transition: transform 0.2s; }
-    .pro-faq-chevron line { stroke: rgba(255,255,255,0.5); stroke-width: 2; stroke-linecap: round; }
-    .pro-faq[open] .pro-faq-chevron { transform: rotate(180deg); }
-    .pro-faq-answer { padding: 0 18px 14px; font-size: 0.84rem; color: rgba(255,255,255,0.4); line-height: 1.65; }
-
-    /* ── DOWNLOAD ── */
-    .download-section { position: relative; text-align: center; padding: 100px clamp(16px, 5vw, 80px); background: hsl(222,45%,10%); overflow: hidden; }
-    .dl-bg { position: absolute; inset: 0; z-index: 0; }
-    .dl-bg img { width: 100%; height: 100%; object-fit: cover; opacity: 0.22; }
-    .dl-content { position: relative; z-index: 1; }
-    .download-section .section-eyebrow { color: var(--amber); }
-    .download-section .section-title { color: white; margin: 0 auto 14px; max-width: 600px; }
-    .download-section .section-sub { color: rgba(255,255,255,0.6); margin: 0 auto 40px; }
-    .dl-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 30px; }
-    .dl-trust { display: flex; gap: 28px; justify-content: center; flex-wrap: wrap; }
-    .dl-trust-item { display: flex; align-items: center; gap: 8px; font-size: 0.82rem; color: rgba(255,255,255,0.6); font-weight: 700; }
-    .dl-trust-item svg { width: 16px; height: 16px; }
-    .dl-trust-item path, .dl-trust-item polyline, .dl-trust-item rect, .dl-trust-item line, .dl-trust-item circle { stroke: rgba(255,255,255,0.6); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-
-    /* ── FOOTER ── */
-    footer { padding: 56px clamp(16px, 5vw, 80px) 28px; background: var(--bg-hero); }
-    .footer-inner { max-width: 1160px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 36px; }
-    .footer-brand img { height: 44px; margin-bottom: 8px; display: block; filter: brightness(0) invert(1); }
-    .footer-tagline { font-size: 0.84rem; color: rgba(255,255,255,0.55); font-style: italic; margin-bottom: 10px; }
-    .footer-brand p { font-size: 0.84rem; color: rgba(255,255,255,0.42); line-height: 1.65; max-width: 240px; }
-    .footer-social { display: flex; gap: 10px; margin-top: 14px; }
-    .footer-social a { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14); display: grid; place-items: center; color: rgba(255,255,255,0.6); text-decoration: none; transition: background 0.2s, border-color 0.2s, color 0.2s; }
-    .footer-social a:hover { background: var(--amber); border-color: var(--amber); color: white; }
-    .footer-social svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-    .footer-col h4 { font-size: 0.77rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--hero-fore); margin-bottom: 14px; }
-    .footer-col a { display: block; font-size: 0.84rem; color: rgba(255,255,255,0.45); text-decoration: none; margin-bottom: 8px; min-height: 24px; transition: color 0.2s; }
-    .footer-col a:hover { color: var(--amber); }
-    .footer-bottom { max-width: 1160px; margin: 0 auto; padding-top: 22px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-    .footer-bottom span { font-size: 0.77rem; color: rgba(255,255,255,0.35); }
-
-    /* ── ANIMATIONS ── */
-    @keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
-    .hero-text h1   { animation: fadeUp 0.5s 0.06s ease both; }
-    .hero-sub       { animation: fadeUp 0.5s 0.14s ease both; }
-    .hero-cta-block { animation: fadeUp 0.5s 0.20s ease both; }
-    .hero-visual    { animation: fadeUp 0.6s 0.10s ease both; }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 1023px) {
-      .how-phone { width: 220px; }
-      .how-screen { height: 390px; }
-      .pro-inner { grid-template-columns: 1fr; gap: 44px; }
-      .pro-card { max-width: 480px; margin: 0 auto; }
-      .reveal.from-left, .reveal.from-right { transform: none; }
-    }
-    @media (max-width: 900px) {
-      .nav-links { display: none; }
-      .nav-hamburger { display: flex; }
-      .footer-inner { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 767px) {
-      :root { --nav-h: 56px; }
-      /* On a phone the headline and the store buttons are the hero. The mockup
-         used to sit above them, which pushed the pitch itself below the fold --
-         and a 190px phone was never going to sell the app the way the sentence
-         does. It steps out entirely here; the app screens still get six full
-         rows of their own further down.
-         The kitchen illustration then becomes a band beneath the copy rather
-         than a cover-cropped backdrop, so it reads as artwork instead of a
-         blurred texture behind the text. */
-      .hero { grid-template-columns: 1fr; text-align: center; min-height: auto; padding-top: 100px; padding-bottom: 124px; gap: 0; }
-      .hero-text { max-width: 100%; }
-      .hero-sub { margin: 0 auto 30px; font-size: 1.02rem; }
-      .hero-cta-block { align-items: center; }
-      .hero-store-btns { justify-content: center; }
-      .hero-rating { justify-content: center; }
-      .hero-visual { display: none; }
-      .hero-last-line { margin: 0 auto; }
-      h1 { font-size: clamp(32px, 9.4vw, 46px); margin-bottom: 20px; }
-      /* The artwork moves onto its own layer so it can be masked. As a plain
-         background it could only ever be a band with a hard top edge, which cost
-         a strip of height and read as a seam across the page. Masked, it fades up
-         out of the cream instead: solid across the counter at the bottom, gone by
-         the time it reaches the copy, with the rating line sitting over the part
-         that is already mostly faded. */
-      .hero-wrapper { background-image: none; }
-      .hero-wrapper::after {
-        content: ''; position: absolute; left: 0; right: 0; bottom: 0;
-        height: 260px; z-index: 0; pointer-events: none;
-        background: url('/illustrations/kitchen-counter.png') no-repeat center bottom;
-        background-size: auto 260px;
-        /* The produce band occupies the bottom 35% of the artwork, and small
-           text is not readable over it. The ramp is timed to reach full opacity
-           right where that band starts, and to stay faint above it, so the copy
-           crosses only the pale tiles and cupboards. */
-        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.07) 42%, rgba(0,0,0,0.38) 58%, #000 68%);
-        mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.07) 42%, rgba(0,0,0,0.38) 58%, #000 68%);
-      }
-      /* The veil exists to lift the copy off the produce it crosses on desktop.
-         The mask does that job here. */
-      .hero-wrapper::before { display: none; }
-      .phone-cluster { width: 230px; height: 420px; }
-      .phone-front { width: 190px; }
-      .phone-front-inner { height: 330px; }
-      .phone-back { right: -28px; width: 155px; }
-      .phone-back-inner { height: 265px; }
-      .ingredient, .recipe-float { display: none; }
-      /* The artwork is only 260px tall here and bottom-anchored, so the curve
-         lands in the middle of the produce and reads as a white stripe across
-         it. The artwork already ends on the straight line of the counter, which
-         is a clean enough edge into the features section on its own. */
-      .wave-over-hero { display: none; }
-      .proof-banner { padding: 56px clamp(16px, 5vw, 80px); }
-      .proof-quotes { grid-template-columns: 1fr; }
-      .zigzag-row { grid-template-columns: 1fr; gap: 28px; padding: 40px clamp(16px, 5vw, 80px); }
-      .zigzag-row .zz-phone-col { order: -1; }
-      .zz-phone { width: 200px; }
-      .zz-phone-inner { height: 355px; }
-      .zz-phone-col::before { width: 250px; height: 250px; }
-      .flow-trail { display: none; }
-      .zz-illustration { margin-bottom: 18px; }
-      .zz-ill-mascot { width: 104px; }
-      .zz-ill-fridge { width: 132px; }
-      .zz-ill-cart   { width: 118px; }
-      .zz-ill-planner   { width: 102px; }
-      .zz-ill-dietary   { width: 96px; }
-      .zz-ill-import    { width: 130px; }
-      .zz-ill-household { width: 132px; }
-      .zz-phone-col.from-right .zz-illustration { margin-left: -22px; }
-      .zz-phone-col.from-left  .zz-illustration { margin-right: -22px; }
-      .features-grid-mini { grid-template-columns: 1fr; }
-      .how-grid { grid-template-columns: 1fr; gap: 28px; }
-      .how-visual { position: static; }
-      .how-phone { width: 200px; }
-      .how-screen { height: 355px; }
-      .footer-inner { grid-template-columns: 1fr; }
-      .footer-bottom { flex-direction: column; align-items: flex-start; }
-      .dl-trust { gap: 16px; flex-direction: column; align-items: center; }
-    }
-    /* Narrow phones only: the rating line wraps to two, and the second lands on
-       the produce where it cannot be read. The platform note is the part to lose
-       -- the two store badges directly above it already say iOS and Android. */
-    @media (max-width: 400px) {
-      .hero-rating .rating-div,
-      .hero-rating .rating-platform { display: none; }
-      /* At 320px the illustration and the phone together are wider than the
-         column, which pushed the features section a few pixels past the
-         viewport. */
-      .zz-ill-mascot    { width: 92px; }
-      .zz-ill-fridge    { width: 100px; }
-      .zz-ill-cart      { width: 96px; }
-      .zz-ill-planner   { width: 92px; }
-      .zz-ill-dietary   { width: 84px; }
-      .zz-ill-import    { width: 100px; }
-      .zz-ill-household { width: 100px; }
-    }
-    @media (max-width: 480px) {
-      /* Stretched to fill the row these read as two black slabs rather than
-         store badges. They hug their own content here, the way the pair on
-         /download/ does, and wrap to a centred stack if they cannot both fit. */
-      .hero-store-btns { flex-wrap: wrap; gap: 12px; width: auto; }
-      .hero-store-btns .appstore-btn,
-      .hero-store-btns .playstore-btn { flex: 0 0 auto; min-width: 0; padding: 12px 18px; gap: 10px; }
-      .dl-btns { flex-direction: column; align-items: center; }
-    }
-    /* Wide screens have the room, and the mockups need it: a phone frame drawn
-       at 236px gets 236 device pixels on a 1x monitor however good the source
-       is, and the app UI inside it lands around 5px of text. Growing the frames
-       is the only thing that raises that ceiling -- the screenshot ladder in
-       screens/ already carries variants for these larger sizes, and each img's
-       `sizes` attribute lists the widths below so the right one gets picked.
-       Heights track their original aspect so the `object-fit: cover` crop is
-       unchanged; paddings and radii scale with the frame so the bezel keeps its
-       proportions. */
-    @media (min-width: 1280px) {
-      /* Pushed further off the cluster than the smaller breakpoints need. They
-         always clipped the phone's top corner; that was invisible while the
-         screenshot was too small to read, but at this size the badge would sit
-         squarely on the app's own name. */
-      .ing-avocado { width: 104px; height: 104px; top: -48px; left: -76px; }
-      .ing-tomato  { width: 92px;  height: 92px;  bottom: 34px; right: -62px; }
-      .ing-herbs   { width: 86px;  height: 86px;  top: -6px; right: -38px; }
-
-      /* Hero cluster: 212 -> 276 and 169 -> 221 of drawn screenshot. */
-      .phone-cluster { width: 378px; height: 664px; }
-      .phone-front { width: 302px; padding: 8px; border-radius: 44px; }
-      .phone-front-inner { height: 529px; border-radius: 36px; }
-      .phone-back { width: 241px; padding: 6px; border-radius: 34px; right: -50px; top: 42px; }
-      .phone-back-inner { height: 418px; border-radius: 28px; }
-      .recipe-float { left: -34px; bottom: -10px; }
-
-      /* Flow rows: 220 -> 254. Held back relative to the rest because the
-         illustration sits beside the phone in a 468px column -- the pair only
-         fits by deepening the overlap a little as the phone grows. */
-      .zz-phone { width: 280px; padding: 8px; border-radius: 44px; }
-      .zz-phone-inner { height: 492px; border-radius: 36px; }
-      .zz-phone-col.from-right .zz-illustration { margin-left: -52px; }
-      .zz-phone-col.from-left  .zz-illustration { margin-right: -52px; }
-      .zz-phone-col.from-right .zz-ill-planner,
-      .zz-phone-col.from-right .zz-ill-dietary,
-      .zz-phone-col.from-right .zz-ill-import,
-      .zz-phone-col.from-right .zz-ill-household { margin-left: -10px; }
-      .zz-phone-col.from-left .zz-ill-planner,
-      .zz-phone-col.from-left .zz-ill-dietary,
-      .zz-phone-col.from-left .zz-ill-import,
-      .zz-phone-col.from-left .zz-ill-household { margin-right: -10px; }
-      .zz-phone-col::before { width: 500px; height: 430px; }
-
-      /* How it works: 236 -> 306, the largest screenshot on the page. */
-      .how-phone { width: 338px; padding: 10px; border-radius: 47px; }
-      .how-screen { height: 596px; border-radius: 36px; }
+    @media (prefers-reduced-motion: reduce) {
+      .collage .row, .steps li.busy .mark { animation: none; }
+      .feat .phone-slot .ff-phone, .moods span, .how-step .rule, .how-step .num { transition: none; }
     }
   </style>
-  <link rel="stylesheet" href="/assets/site-glass.css" />
 </head>
-<body>
+<body class="ff-page">
 
-<!-- ── NAV ── -->
-<nav id="main-nav" class="nav-overlay">
-  <a href="/" class="logo"><img src="/logo.png" alt="FoodieFlow" /></a>
-  <div class="nav-links">
-    <a href="#features">Features</a>
-    <a href="#how-it-works">How it works</a>
-    <a href="#pro">Pricing</a>
-    <a href="/compare/">Compare</a>
-    <a href="/blog/">Blog</a>
-    <a href="/download/" class="nav-cta">Download the App</a>
+<div class="ff-top">
+  <div class="ff-wrap">
+    <nav id="main-nav" class="ff-nav" aria-label="Main">
+      <a class="ff-brand" href="/" aria-label="FoodieFlow home"><img src="/favicon.png" alt="" width="40" height="40" /><span>FoodieFlow</span></a>
+      <div class="ff-navlinks">
+        <a href="#features">Features</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="#pro">Pro</a>
+        <a href="/compare/">Compare</a>
+        <a href="/blog/">Blog</a>
+      </div>
+      <div class="ff-navend">
+        <a class="ff-btn ff-btn--sm" href="#download">Get the app
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <button class="ff-menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="ff-sheet"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg></button>
+      </div>
+    </nav>
   </div>
-  <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
-<div class="mobile-menu" id="mobile-menu">
-  <a href="#features" class="mobile-nav-link">Features</a>
-  <a href="#how-it-works" class="mobile-nav-link">How it works</a>
-  <a href="#pro" class="mobile-nav-link">Pricing</a>
-  <a href="/compare/" class="mobile-nav-link">Compare</a>
-  <a href="/blog/" class="mobile-nav-link">Blog</a>
-  <a href="/download/" class="mobile-cta mobile-nav-link">Download the App</a>
 </div>
+
+<div class="ff-sheet" id="ff-sheet" hidden>
+  <div class="ff-sheet__scrim" data-close></div>
+  <section class="ff-sheet__panel" role="dialog" aria-modal="true" aria-label="Menu">
+    <span class="ff-sheet__grip" aria-hidden="true"></span>
+    <div class="ff-sheet__head">
+      <span class="ff-brand"><img src="/favicon.png" alt="" width="36" height="36" /><span>FoodieFlow</span></span>
+      <button class="ff-sheet__close" type="button" aria-label="Close menu" data-close><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="ff-sheet__links" role="navigation" aria-label="Menu links">
+      <a href="#features">Features<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9AA0A8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+      <a href="#how-it-works">How it works<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9AA0A8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+      <a href="#pro">Pro Chef<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9AA0A8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+      <a href="/compare/">Compare apps<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9AA0A8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+      <a href="/blog/">Blog<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9AA0A8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+      <a href="/support/">Support<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9AA0A8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+    </div>
+    <div class="ff-sheet__stores">
+      <a href="https://apps.apple.com/us/app/foodieflow-meal-planner/id6760259767" target="_blank" rel="noopener noreferrer">App Store</a>
+      <a href="https://play.google.com/store/apps/details?id=com.foodieflow.app" target="_blank" rel="noopener noreferrer">Google Play</a>
+    </div>
+    <p class="ff-sheet__note">Free to download. Pro Chef from <span class="rc-price-inline">£3.99</span> a month.</p>
+  </section>
+</div>
+
+<main>
 
 <!-- ── HERO ── -->
-<div class="hero-wrapper">
-  <div class="hero">
-    <div class="hero-text">
-      <h1>
-        The Ultimate Recipe Organizer<br />
-        <span class="hero-last-line">
-          <em>&amp; Meal Planner.</em>
-          <svg class="wavy-wrap" viewBox="0 0 230 14" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path class="wavy-path" d="M4,7 Q20,1 40,7 Q60,13 80,7 Q100,1 120,7 Q140,13 160,7 Q180,1 200,7 Q215,11 226,7" />
-          </svg>
-        </span>
-      </h1>
-      <p class="hero-sub">FoodieFlow organises your week, builds your shopping list, and suggests meals based on what's already in your kitchen.</p>
-      <div class="hero-cta-block">
-        <div class="hero-store-btns">
-          <a href="https://apps.apple.com/us/app/foodieflow-meal-planner/id6760259767" class="appstore-btn" target="_blank" rel="noopener noreferrer">
-            <svg width="22" height="27" viewBox="0 0 814 1000" fill="white" aria-hidden="true"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-57.8-155.5-127.4C46 790.7 0 663 0 541.8c0-207.5 135.4-317.3 269-317.3 70.1 0 128.4 46.4 172.5 46.4 42.8 0 109.6-49 192.5-49 30.9 0 113.8 2.6 168.9 98.3zm-234.8-181.4c31.3-36.9 53.7-88.1 53.7-139.3 0-7.1-.6-14.3-1.9-20.1-50.6 1.9-110.8 33.7-147.1 75.8-28.5 32.4-55.1 83.6-55.1 135.5 0 7.8 1.3 15.6 1.9 18.1 3.2.6 8.4 1.3 13.6 1.3 45.4 0 102.5-30.4 134.9-71.3z"/></svg>
-            <span class="appstore-btn-text">
-              <span class="appstore-btn-label">Download on the</span>
-              <span class="appstore-btn-name">App Store</span>
-            </span>
-          </a>
-          <a href="https://play.google.com/store/apps/details?id=com.foodieflow.app" class="playstore-btn" target="_blank" rel="noopener noreferrer">
-            <svg width="20" height="22" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M3.18 23.76a2 2 0 0 0 2.08-.21l11.39-6.58-3.22-3.22L3.18 23.76z" fill="white"/>
-              <path d="M21.28 10.4 17.64 8.3 14.1 11.86l3.54 3.54 3.64-2.1a2 2 0 0 0 0-3.46z" fill="white"/>
-              <path d="M3.18.24A2 2 0 0 0 2 2v20a2 2 0 0 0 1.18 1.76L13.38 12 3.18.24z" fill="white"/>
-              <path d="M5.26.45 16.65 7.03 13.38 10.3 3.18.24A2 2 0 0 1 5.26.45z" fill="white"/>
-            </svg>
-            <span class="playstore-btn-text">
-              <span class="playstore-btn-label">Get it on</span>
-              <span class="playstore-btn-name">Google Play</span>
-            </span>
-          </a>
-        </div>
-        <p class="hero-sub-note">Free to download. No card required.</p>
-        <div class="hero-rating">
-          <div class="stars" aria-label="5 star rating">
-            <svg class="star-svg" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            <svg class="star-svg" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            <svg class="star-svg" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            <svg class="star-svg" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            <svg class="star-svg" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          </div>
-          <span class="rating-text">5 stars</span>
-          <span class="rating-div" aria-hidden="true"></span>
-          <span class="rating-platform">Available on iOS &amp; Android</span>
-        </div>
-      </div>
+<section class="ff-wrap hero">
+  <div class="hero-copy">
+    <span class="badge-new ff-rise"><b>NEW</b>Every screen, redesigned for 2026</span>
+    <h1 class="ff-rise-2">Dinner,<br /><em>decided.</em></h1>
+    <p class="hero-lede ff-rise-2">The recipe organiser and meal planner for real kitchens. Plan the week in one tap, save a recipe from TikTok, YouTube or any recipe site, and shop one list that writes itself.</p>
+    <div class="ff-stores ff-rise-3">
+      <a class="ff-store" href="https://apps.apple.com/us/app/foodieflow-meal-planner/id6760259767" target="_blank" rel="noopener noreferrer">
+        <svg width="20" height="24" viewBox="0 0 814 1000" fill="currentColor" aria-hidden="true"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-57.8-155.5-127.4C46 790.7 0 663 0 541.8c0-207.5 135.4-317.3 269-317.3 70.1 0 128.4 46.4 172.5 46.4 42.8 0 109.6-49 192.5-49 30.9 0 113.8 2.6 168.9 98.3zm-234.8-181.4c31.3-36.9 53.7-88.1 53.7-139.3 0-7.1-.6-14.3-1.9-20.1-50.6 1.9-110.8 33.7-147.1 75.8-28.5 32.4-55.1 83.6-55.1 135.5 0 7.8 1.3 15.6 1.9 18.1 3.2.6 8.4 1.3 13.6 1.3 45.4 0 102.5-30.4 134.9-71.3z"/></svg>
+        <span><small>Download on the</small><b>App Store</b></span></a>
+      <a class="ff-store ff-store--light" href="https://play.google.com/store/apps/details?id=com.foodieflow.app" target="_blank" rel="noopener noreferrer">
+        <svg width="20" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.18 23.76a2 2 0 0 0 2.08-.21l11.39-6.58-3.22-3.22L3.18 23.76z" fill="#1E6FE0"/><path d="M21.28 10.4 17.64 8.3 14.1 11.86l3.54 3.54 3.64-2.1a2 2 0 0 0 0-3.46z" fill="#F5B935"/><path d="M3.18.24A2 2 0 0 0 2 2v20a2 2 0 0 0 1.18 1.76L13.38 12 3.18.24z" fill="#22A35A"/><path d="M5.26.45 16.65 7.03 13.38 10.3 3.18.24A2 2 0 0 1 5.26.45z" fill="#E5484D"/></svg>
+        <span><small>Get it on</small><b>Google Play</b></span></a>
     </div>
-
-    <div class="hero-visual">
-      <div class="phone-cluster">
-        <!-- Back phone: Shopping List -->
-        <div class="phone-back" aria-hidden="true">
-          <div class="phone-back-inner" style="background:#fff">
-            <img src="/screens/shopping-list-320.png"
-                 srcset="/screens/shopping-list-180.png 180w, /screens/shopping-list-240.png 240w, /screens/shopping-list-280.png 280w, /screens/shopping-list-320.png 320w, /screens/shopping-list-480.png 480w, /screens/shopping-list-620.png 620w, /screens/shopping-list-900.png 900w"
-                 sizes="(max-width: 767px) 145px, (min-width: 1280px) 229px, 175px"
-                 alt="Shopping List screen" />
-          </div>
-        </div>
-
-        <!-- Front phone: Home Screen -->
-        <div class="phone-front" aria-hidden="true">
-          <div class="phone-front-inner" style="background:#fff">
-            <img src="/screens/home-320.png"
-                 srcset="/screens/home-180.png 180w, /screens/home-240.png 240w, /screens/home-280.png 280w, /screens/home-320.png 320w, /screens/home-480.png 480w, /screens/home-620.png 620w"
-                 sizes="(max-width: 767px) 178px, (min-width: 1280px) 286px, 220px"
-                 alt="FoodieFlow home screen" />
-          </div>
-        </div>
-
-        <!-- Floating recipe card -->
-        <div class="recipe-float" aria-hidden="true">
-          <div class="rf-img">
-            <img src="/screens/meal-library-320.png"
-                 srcset="/screens/meal-library-48.png 48w, /screens/meal-library-120.png 120w, /screens/meal-library-180.png 180w, /screens/meal-library-240.png 240w, /screens/meal-library-280.png 280w, /screens/meal-library-320.png 320w, /screens/meal-library-480.png 480w, /screens/meal-library-620.png 620w, /screens/meal-library-900.png 900w"
-                 sizes="38px"
-                 alt="Herb Chicken"
-                 loading="lazy" />
-          </div>
-          <div>
-            <div class="rf-name">Herb Chicken &amp; Asparagus</div>
-            <span class="rf-badge">⏱ 30 mins</span>
-          </div>
-        </div>
-
-        <!-- Ingredient badges -->
-        <div class="ingredient ing-avocado" aria-hidden="true">🥑</div>
-        <div class="ingredient ing-tomato" aria-hidden="true">🍅</div>
-        <div class="ingredient ing-herbs" aria-hidden="true">🌿</div>
-      </div>
-    </div>
+    <ul class="checks ff-rise-3">
+      <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#17663A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Free to download</li>
+      <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#17663A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>No card needed</li>
+      <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#17663A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>iPhone and Android</li>
+      <li aria-label="Rated 5 out of 5 on the App Store"><span class="stars" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>5.0 on the App Store</li>
+    </ul>
   </div>
 
+  <div class="stage ff-pop" aria-hidden="true">
+    <div class="ff-blob amber"></div>
+    <div class="ff-blob blue"></div>
+    <div class="side l">
+      <div class="ff-phone"><div class="ff-phone__screen">
+        <img src="/screens/app-plan-320.png" srcset="/screens/app-plan-240.png 240w, /screens/app-plan-280.png 280w, /screens/app-plan-320.png 320w, /screens/app-plan-480.png 480w, /screens/app-plan-620.png 620w" sizes="254px" alt="" />
+        <span class="ff-phone__island"></span>
+      </div></div>
+    </div>
+    <div class="side r">
+      <div class="ff-phone"><div class="ff-phone__screen">
+        <img src="/screens/app-list-320.png" srcset="/screens/app-list-240.png 240w, /screens/app-list-280.png 280w, /screens/app-list-320.png 320w, /screens/app-list-480.png 480w, /screens/app-list-620.png 620w" sizes="254px" alt="" />
+        <span class="ff-phone__island"></span>
+      </div></div>
+    </div>
+    <div class="centre">
+      <div class="ff-phone"><div class="ff-phone__screen">
+        <img src="/screens/app-home-320.png" srcset="/screens/app-home-240.png 240w, /screens/app-home-280.png 280w, /screens/app-home-320.png 320w, /screens/app-home-480.png 480w, /screens/app-home-620.png 620w" sizes="(max-width: 640px) 238px, 312px" alt="" fetchpriority="high" />
+        <span class="ff-phone__island"></span>
+      </div></div>
+    </div>
+    <div class="float f1 ff-drift">
+      <span class="ff-tile ff-tile--sm ff-tile--blue"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 5h10a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V8a3 3 0 0 1 3-3zM4 10h16M9 3v4M15 3v4"/></svg></span>
+      <span class="t"><b>7 of 7 days</b><small>planned in one tap</small></span>
+    </div>
+    <div class="float f2 ff-drift-2">
+      <span class="ff-tile ff-tile--sm ff-tile--green"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h16l-1.6 9.2a2 2 0 0 1-2 1.8H7.6a2 2 0 0 1-2-1.8zM8.5 10L11 4M15.5 10L13 4"/></svg></span>
+      <span class="t"><b>Sorted by aisle</b><small>your list writes itself</small></span>
+    </div>
+  </div>
+</section>
+
+<div class="ff-wrap">
+  <ul class="facts">
+    <li data-reveal>iPhone and Android, always in sync</li>
+    <li data-reveal>Plans and lists shared with your household</li>
+    <li data-reveal>English, Deutsch, Français, Español, Italiano</li>
+    <li data-reveal>Light, Dark and Midnight themes</li>
+  </ul>
 </div>
 
-<!-- Wave into features -->
-<div class="wave wave-over-hero" aria-hidden="true">
-  <svg viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-    <path d="M0,28 C240,56 480,0 720,28 C960,56 1200,0 1440,28 L1440,56 L0,56 Z" fill="white"/>
-  </svg>
-</div>
-
-<!-- ── FEATURES (ZIG-ZAG) ── -->
-<section class="features-section" id="features">
-  <div class="features-header">
-    <p class="section-eyebrow">Features</p>
-    <h2 class="section-title">Your integrated food flow.</h2>
-    <p class="section-sub">One app for your entire meal planning routine — from saving recipes to walking out of the supermarket.</p>
+<!-- ── FEATURES ── -->
+<section id="features" class="ff-wrap sec">
+  <div class="sec-head">
+    <div>
+      <span class="ff-eyebrow">Everything in one flow</span>
+      <h2 class="ff-h2">Save it. Plan it. Shop it. Cook it.</h2>
+    </div>
+    <p>Four jobs that used to take four apps and a notes page. FoodieFlow does them in one place, and each step feeds the next.</p>
   </div>
 
-  <!-- Row 1: Foodie Assistant -->
-  <div class="zigzag-row">
-    <div class="zigzag-text reveal from-left">
-      <span class="flow-label">Flow 1</span>
-      <h3>Foodie Assistant</h3>
-      <p>Tell Foodie Assistant what's in your fridge and what you're craving — it delivers personalised meal ideas in seconds, tailored to your dietary goals and pantry.</p>
-      <a href="#how-it-works" class="zz-link">See how it works →</a>
-    </div>
-    <div class="zz-phone-col reveal from-right blob-teal">
-      <div class="zz-phone">
-        <div class="zz-phone-inner">
-          <img src="/screens/foodie-assistant-320.png"
-               srcset="/screens/foodie-assistant-180.png 180w, /screens/foodie-assistant-240.png 240w, /screens/foodie-assistant-280.png 280w, /screens/foodie-assistant-320.png 320w, /screens/foodie-assistant-480.png 480w, /screens/foodie-assistant-620.png 620w, /screens/foodie-assistant-900.png 900w"
-               sizes="(max-width: 767px) 188px, (min-width: 1280px) 264px, 228px"
-               alt="Foodie Assistant screen"
-               loading="lazy" />
+  <div class="bento">
+    <!-- Foodie Assistant -->
+    <article class="feat dark s7 ff-lift" data-reveal>
+      <div class="ff-blob" aria-hidden="true" style="right:-120px;top:-140px;width:420px;height:420px;background:rgba(245,185,53,.16)"></div>
+      <div class="feat-copy" style="max-width:360px">
+        <span class="tag-dark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5B935" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></svg>Foodie Assistant</span>
+        <h3>Ideas for any mood.</h3>
+        <p>Pick a mood, describe a craving or just hit Surprise me. Every idea comes back as a full recipe, built around your diet and what is already in your cupboards.</p>
+        <div class="moods" data-moods>
+          <span>Speedy Meals</span><span>Comfort Food</span><span class="on">High Protein</span><span>Budget Friendly</span><span>Veggie-Forward</span>
         </div>
       </div>
-      <div class="zz-illustration zz-ill-mascot" role="img" aria-label="Illustration of the Foodie Assistant robot chef holding a whisk"></div>
-    </div>
-  </div>
+      <div class="phone-slot slot-assist">
+        <div class="ff-phone"><div class="ff-phone__screen">
+          <img src="/screens/app-assistant-320.png" srcset="/screens/app-assistant-240.png 240w, /screens/app-assistant-280.png 280w, /screens/app-assistant-320.png 320w, /screens/app-assistant-480.png 480w, /screens/app-assistant-620.png 620w" sizes="(max-width: 640px) 232px, 273px" alt="The Foodie Assistant sheet, asking what you are in the mood for, with mood chips and a Surprise me button" loading="lazy" />
+        </div></div>
+      </div>
+    </article>
 
-  <div class="flow-trail trail-to-orange" aria-hidden="true">
-    <svg viewBox="0 0 1160 118" preserveAspectRatio="none"><path d="M846,0 C846,74 314,44 314,118" /></svg>
-  </div>
-
-  <!-- Row 2: Weekly Planner (flipped) -->
-  <div class="zigzag-row">
-    <div class="zz-phone-col reveal from-left blob-orange">
-      <div class="zz-phone">
-        <div class="zz-phone-inner">
-          <img src="/screens/weekly-planner-320.png"
-               srcset="/screens/weekly-planner-180.png 180w, /screens/weekly-planner-240.png 240w, /screens/weekly-planner-280.png 280w, /screens/weekly-planner-320.png 320w, /screens/weekly-planner-480.png 480w, /screens/weekly-planner-620.png 620w"
-               sizes="(max-width: 767px) 188px, (min-width: 1280px) 264px, 228px"
-               alt="Weekly Planner screen"
-               loading="lazy" />
+    <!-- Import -->
+    <article class="feat feat-import s5 ff-lift" data-reveal>
+      <div class="feat-copy" style="height:100%">
+        <span class="ff-tile ff-tile--amber"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg></span>
+        <h3>Save a recipe from anywhere.</h3>
+        <p>Paste a link from a website, TikTok or YouTube, upload a PDF, or snap a cookbook page. FoodieFlow pulls out the ingredients and steps, and you check it before it saves.</p>
+        <div class="importer" data-importer aria-hidden="true">
+          <div class="field">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1E6FE0" stroke-width="2" stroke-linecap="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>
+            <span class="url">tiktok.com/@yourfavouritecook/video</span>
+            <span class="go">Import</span>
+          </div>
+          <ol class="steps">
+            <li class="done"><span class="mark"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Reading the page</li>
+            <li class="done"><span class="mark"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Finding the ingredients</li>
+            <li class="busy"><span class="mark"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Writing out the steps</li>
+          </ol>
         </div>
       </div>
-      <div class="zz-illustration zz-ill-planner" role="img" aria-label="Illustration of a weekly meal calendar with a dish planned on each day"></div>
-    </div>
-    <div class="zigzag-text reveal from-right">
-      <span class="flow-label">Flow 2</span>
-      <h3>Weekly Planner</h3>
-      <p>Plan your meals for every day of the week. See your full schedule at a glance, drag meals between days, and never scramble for ideas at the last minute.</p>
-      <a href="#how-it-works" class="zz-link">See how it works →</a>
-    </div>
-  </div>
+    </article>
 
-  <div class="flow-trail trail-to-green" aria-hidden="true">
-    <svg viewBox="0 0 1160 118" preserveAspectRatio="none"><path d="M314,0 C314,74 846,44 846,118" /></svg>
-  </div>
-
-  <!-- Row 3: Smart Shopping Lists -->
-  <div class="zigzag-row">
-    <div class="zigzag-text reveal from-left">
-      <span class="flow-label">Flow 3</span>
-      <h3>Smart Shopping Lists</h3>
-      <p>Your shopping list writes itself. Every ingredient from your weekly plan is pulled together and sorted by grocery aisle — so you can shop without doubling back.</p>
-      <a href="#how-it-works" class="zz-link">See how it works →</a>
-    </div>
-    <div class="zz-phone-col reveal from-right blob-green">
-      <div class="zz-phone">
-        <div class="zz-phone-inner">
-          <img src="/screens/shopping-list-320.png"
-               srcset="/screens/shopping-list-180.png 180w, /screens/shopping-list-240.png 240w, /screens/shopping-list-280.png 280w, /screens/shopping-list-320.png 320w, /screens/shopping-list-480.png 480w, /screens/shopping-list-620.png 620w, /screens/shopping-list-900.png 900w"
-               sizes="(max-width: 767px) 188px, (min-width: 1280px) 264px, 228px"
-               alt="Shopping List screen"
-               loading="lazy" />
-        </div>
+    <!-- Plan -->
+    <article class="feat tall s5 ff-lift" data-reveal>
+      <div class="feat-copy" style="padding-bottom:0">
+        <span class="ff-tile ff-tile--blue"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 5h10a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V8a3 3 0 0 1 3-3zM4 10h16M9 3v4M15 3v4"/></svg></span>
+        <h3>Your week, in one tap.</h3>
+        <p>Fill My Week learns how you actually cook, from your ratings and cooking history. Repeat last week, or save a week you liked as a template.</p>
       </div>
-      <div class="zz-illustration zz-ill-cart" role="img" aria-label="Illustration of a shopping trolley full of groceries"></div>
-    </div>
-  </div>
-
-  <div class="flow-trail trail-to-blue" aria-hidden="true">
-    <svg viewBox="0 0 1160 118" preserveAspectRatio="none"><path d="M846,0 C846,74 314,44 314,118" /></svg>
-  </div>
-
-  <!-- Row 4: Dietary Preferences (flipped) -->
-  <div class="zigzag-row">
-    <div class="zz-phone-col reveal from-left blob-blue">
-      <div class="zz-phone">
-        <div class="zz-phone-inner">
-          <img src="/screens/dietary-preferences-320.png"
-               srcset="/screens/dietary-preferences-180.png 180w, /screens/dietary-preferences-240.png 240w, /screens/dietary-preferences-280.png 280w, /screens/dietary-preferences-320.png 320w, /screens/dietary-preferences-480.png 480w, /screens/dietary-preferences-620.png 620w"
-               sizes="(max-width: 767px) 188px, (min-width: 1280px) 264px, 228px"
-               alt="Dietary Preferences screen"
-               loading="lazy" />
-        </div>
+      <div class="phone-slot slot-plan">
+        <div class="ff-phone"><div class="ff-phone__screen">
+          <img src="/screens/app-plan-320.png" srcset="/screens/app-plan-240.png 240w, /screens/app-plan-280.png 280w, /screens/app-plan-320.png 320w, /screens/app-plan-480.png 480w, /screens/app-plan-620.png 620w" sizes="(max-width: 640px) 232px, 273px" alt="The weekly plan, with a meal on every day from Tuesday to Friday and an Auto-fill button" loading="lazy" />
+          <span class="ff-phone__island"></span>
+        </div></div>
       </div>
-      <div class="zz-illustration zz-ill-dietary" role="img" aria-label="Illustration of a checklist marking off allergens and disliked ingredients"></div>
-    </div>
-    <div class="zigzag-text reveal from-right">
-      <span class="flow-label">Flow 4</span>
-      <h3>Dietary Preferences</h3>
-      <p>Set your allergies, dietary restrictions, and dislikes once. FoodieFlow filters every suggestion around them — so you never need to repeat yourself.</p>
-      <a href="#how-it-works" class="zz-link">See how it works →</a>
+    </article>
+
+    <!-- List -->
+    <article class="feat tall s7 ff-lift" data-reveal>
+      <div class="feat-copy" style="max-width:330px">
+        <span class="ff-tile ff-tile--green"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10h16l-1.6 9.2a2 2 0 0 1-2 1.8H7.6a2 2 0 0 1-2-1.8zM8.5 10L11 4M15.5 10L13 4"/></svg></span>
+        <h3>A list that writes itself.</h3>
+        <p>Your plan becomes one shopping list, laid out the way a supermarket is.</p>
+        <ol class="points">
+          <li><span class="n">01</span><span><b>Grouped by aisle</b><small>Duplicates merged across the week, so 400g and 500g reads as 900g.</small></span></li>
+          <li><span class="n">02</span><span><b>Skips what you own</b><small>Pantry items stay off the list, part-stocked ones are reduced.</small></span></li>
+          <li><span class="n">03</span><span><b>Shared in real time</b><small>Tick it off together, aisle by aisle.</small></span></li>
+        </ol>
+      </div>
+      <div class="phone-slot slot-list">
+        <div class="ff-phone"><div class="ff-phone__screen">
+          <img src="/screens/app-list-320.png" srcset="/screens/app-list-240.png 240w, /screens/app-list-280.png 280w, /screens/app-list-320.png 320w, /screens/app-list-480.png 480w, /screens/app-list-620.png 620w" sizes="(max-width: 640px) 232px, 273px" alt="The shopping list, grouped by aisle, with All items, By recipe and Pantry tabs" loading="lazy" />
+          <span class="ff-phone__island"></span>
+        </div></div>
+      </div>
+    </article>
+
+    <!-- Small four -->
+    <article class="mini s3 ff-lift" data-reveal>
+      <span class="ff-tile ff-tile--sm ff-tile--purple"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5L12 4l8 6.5V20H4zM10 20v-5h4v5"/></svg></span>
+      <h3>Household mode</h3>
+      <p>One plan, one list and one cookbook for everyone at home. Invited members join for free.</p>
+    </article>
+    <article class="mini s3 ff-lift" data-reveal>
+      <span class="ff-tile ff-tile--sm ff-tile--green"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="3" width="12" height="18" rx="2.5"/><path d="M6 10h12M9 6.5v1M9 13v2"/></svg></span>
+      <h3>Use up the fridge</h3>
+      <p>Scan a barcode, add use-by dates and get a nudge with a meal built around whatever is about to go off.</p>
+    </article>
+    <article class="mini s3 ff-lift" data-reveal>
+      <span class="ff-tile ff-tile--sm ff-tile--amber"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21c-4.5-3-8-6.2-8-10.5A4.5 4.5 0 0 1 12 7a4.5 4.5 0 0 1 8 3.5C20 14.8 16.5 18 12 21z"/></svg></span>
+      <h3>Your diet, respected</h3>
+      <p>Allergies, restrictions and disliked ingredients shape every suggestion, import and list.</p>
+    </article>
+    <article class="mini s3 ff-lift" data-reveal>
+      <span class="ff-tile ff-tile--sm ff-tile--blue"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM3 12h18M12 3c2.5 2.5 3.8 5.5 3.8 9S14.5 18.5 12 21c-2.5-2.5-3.8-5.5-3.8-9S9.5 5.5 12 3z"/></svg></span>
+      <h3>Five languages</h3>
+      <p>Recipes and ideas in English, German, French, Spanish or Italian.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ── -->
+<section id="how-it-works" class="ff-wrap sec">
+  <div class="sec-head centre">
+    <div>
+      <span class="ff-eyebrow">How it works</span>
+      <h2 class="ff-h2">From fridge to table.</h2>
     </div>
   </div>
-
-  <div class="flow-trail trail-to-plum" aria-hidden="true">
-    <svg viewBox="0 0 1160 118" preserveAspectRatio="none"><path d="M314,0 C314,74 846,44 846,118" /></svg>
-  </div>
-
-  <!-- Row 5: Import Recipe -->
-  <div class="zigzag-row">
-    <div class="zigzag-text reveal from-left">
-      <span class="flow-label">Flow 5</span>
-      <h3>Import Recipe</h3>
-      <p>Paste a TikTok or Instagram link, drop in any recipe URL, or snap a photo of a handwritten card. FoodieFlow pulls out the ingredients and steps automatically and adds it straight to your library.</p>
-      <a href="#how-it-works" class="zz-link">See how it works →</a>
+  <div class="bento">
+    <div class="how-step s4" data-reveal>
+      <span class="num" aria-hidden="true">01</span>
+      <div class="rule"></div>
+      <div><h3>Build your collection</h3>
+      <p>Import favourites from links, videos, PDFs and photos, add your own, or ask Foodie Assistant for something new.</p></div>
     </div>
-    <div class="zz-phone-col reveal from-right blob-plum">
-      <div class="zz-phone">
-        <div class="zz-phone-inner">
-          <img src="/screens/import-recipe-320.png"
-               srcset="/screens/import-recipe-180.png 180w, /screens/import-recipe-240.png 240w, /screens/import-recipe-280.png 280w, /screens/import-recipe-320.png 320w, /screens/import-recipe-480.png 480w, /screens/import-recipe-620.png 620w"
-               sizes="(max-width: 767px) 188px, (min-width: 1280px) 264px, 228px"
-               alt="Import Recipe screen"
-               loading="lazy" />
-        </div>
-      </div>
-      <div class="zz-illustration zz-ill-import" role="img" aria-label="Illustration of a recipe flying from social media into a phone"></div>
+    <div class="how-step s4" data-reveal>
+      <span class="num" aria-hidden="true">02</span>
+      <div class="rule"></div>
+      <div><h3>Plan the week</h3>
+      <p>Drag meals onto days, repeat last week, drop in a saved template or let Fill My Week do it for you.</p></div>
     </div>
-  </div>
-
-  <div class="flow-trail trail-to-coral" aria-hidden="true">
-    <svg viewBox="0 0 1160 118" preserveAspectRatio="none"><path d="M846,0 C846,74 314,44 314,118" /></svg>
-  </div>
-
-  <!-- Row 6: Household Mode (flipped) -->
-  <div class="zigzag-row">
-    <div class="zz-phone-col reveal from-left blob-coral">
-      <div class="zz-phone">
-        <div class="zz-phone-inner">
-          <img src="/screens/household-mode-320.png"
-               srcset="/screens/household-mode-180.png 180w, /screens/household-mode-240.png 240w, /screens/household-mode-280.png 280w, /screens/household-mode-320.png 320w, /screens/household-mode-480.png 480w, /screens/household-mode-620.png 620w"
-               sizes="(max-width: 767px) 188px, (min-width: 1280px) 264px, 228px"
-               alt="Household Mode screen"
-               loading="lazy" />
-        </div>
-      </div>
-      <div class="zz-illustration zz-ill-household" role="img" aria-label="Illustration of three people sharing a meal together"></div>
-    </div>
-    <div class="zigzag-text reveal from-right">
-      <span class="flow-label">Flow 6</span>
-      <h3>Household Mode</h3>
-      <p>Add everyone in your household as their own chef profile. Plan meals together, share one shopping list, and keep everyone's allergies and preferences in view.</p>
-      <a href="#how-it-works" class="zz-link">See how it works →</a>
-    </div>
-  </div>
-
-  <!-- Supplementary 3-card grid -->
-  <div class="features-grid-mini">
-    <div class="mini-card">
-      <div class="mini-icon" style="background:var(--blue-lt)">
-        <svg viewBox="0 0 24 24" style="stroke:var(--blue)"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="9" y1="12" x2="13" y2="12"/></svg>
-      </div>
-      <span class="cat-pill pill-blue" style="margin-bottom:10px">Library</span>
-      <h3>Your Meal Library</h3>
-      <p>Every recipe you save or import lands in one searchable library, filterable by meal type and tagged with your favourites. Foodie Assistant draws on it to suggest meals that suit your household.</p>
-    </div>
-    <div class="mini-card">
-      <div class="mini-icon" style="background:hsl(140,50%,92%)">
-        <svg viewBox="0 0 24 24" style="stroke:hsl(140,50%,35%)"><rect x="3" y="12" width="4" height="9" rx="1"/><rect x="10" y="6" width="4" height="15" rx="1"/><rect x="17" y="9" width="4" height="12" rx="1"/><line x1="2" y1="21" x2="22" y2="21"/></svg>
-      </div>
-      <span class="cat-pill pill-green" style="margin-bottom:10px">Health</span>
-      <h3>Nutrition Tracking</h3>
-      <p>Get calorie and macro estimates for every meal at a glance. Pro unlocks full nutritional breakdowns for every recipe you plan or save.</p>
-    </div>
-    <div class="mini-card">
-      <div class="mini-icon" style="background:var(--amber-lt)">
-        <svg viewBox="0 0 24 24" style="stroke:var(--amber-dark)"><path d="M9 2h6"/><path d="M7 4h10a1 1 0 0 1 1 1v1a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3V5a1 1 0 0 1 1-1z"/><path d="M6 9v11a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V9"/><path d="M10 13h4"/><path d="M10 17h3"/></svg>
-      </div>
-      <span class="cat-pill pill-amber" style="margin-bottom:10px">Smart</span>
-      <h3>Your Pantry</h3>
-      <p>Log what you have at home. FoodieFlow excludes pantry items from your list and prioritises recipes you can make right now — cutting waste, saving money.</p>
+    <div class="how-step s4" data-reveal>
+      <span class="num" aria-hidden="true">03</span>
+      <div class="rule"></div>
+      <div><h3>Shop and cook</h3>
+      <p>Walk the shop with a list sorted by aisle, then cook from step-by-step instructions on the night.</p></div>
     </div>
   </div>
 </section>
 
 <!-- ── REVIEWS ── -->
-<div class="proof-banner" id="reviews">
-  <div class="proof-inner">
-    <div class="proof-header">
-      <p class="section-eyebrow">Reviews</p>
-      <h2 class="section-title">Trusted by cooks.</h2>
-      <p class="section-sub">Real reviews from people planning their week with FoodieFlow.</p>
+<!--
+  Every quote here is a review as it was left on the store listing. Do not add
+  invented testimonials: that is deceptive advertising, and these cards are the
+  source the review markup in <head> would be rebuilt from. See the comment on
+  the schema block before adding that markup back.
+-->
+<section id="reviews" class="ff-wrap sec">
+  <div class="sec-head">
+    <div>
+      <span class="ff-eyebrow">Reviews</span>
+      <h2 class="ff-h2">Trusted by cooks.</h2>
     </div>
-
-    <!--
-      Review cards. Every quote here is a review as it was left on the store
-      listing — do not add invented testimonials, both because that is deceptive
-      advertising and because these cards are the source this page's review
-      markup is rebuilt from, and Google requires that markup to describe
-      genuine reviews.
-
-      To add one, copy a card and fill in the title, quote, and the reviewer's
-      name as it appears on the listing. Keep the avatar as the icon unless the
-      reviewer supplied a portrait. If a review is anything other than 5 stars,
-      drop the matching number of <svg class="proof-quote-star"> elements from
-      its star row.
-
-      There is no matching "review" array in <head> at the moment — it was
-      removed because Google requires an aggregateRating next to multiple
-      reviews. See the comment on the schema block in <head> before adding
-      one back.
-    -->
-    <div class="proof-carousel">
-      <button class="proof-nav proof-prev" type="button" aria-label="Previous review" aria-controls="proof-track">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
-      </button>
-      <div class="proof-quotes" id="proof-track" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Reviews">
-      <article class="proof-quote" role="group" aria-roledescription="review" aria-label="Review 1 of 3">
-        <div class="proof-quote-head">
-          <div class="proof-quote-who">
-            <div class="proof-avatar" aria-hidden="true">
-              <svg class="proof-avatar-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            </div>
-            <span class="proof-quote-author">Chloe P.</span>
-          </div>
-          <div class="proof-quote-stars" aria-label="5 out of 5 stars">
-            <svg class="proof-quote-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            <svg class="proof-quote-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            <svg class="proof-quote-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            <svg class="proof-quote-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            <svg class="proof-quote-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          </div>
-        </div>
-        <p class="proof-quote-title">A lifesaver for saved recipes!</p>
-        <p class="proof-quote-text">"I used to lose track of all the food videos I saved on Instagram and TikTok. Being able to import them directly into my weekly plan is brilliant. It completely takes the headache out of deciding what to make for dinner, and the automated grocery lists are like magic."</p>
-      </article>
-      <article class="proof-quote" role="group" aria-roledescription="review" aria-label="Review 2 of 3">
-        <div class="proof-quote-head">
-          <div class="proof-quote-who">
-            <div class="proof-avatar" aria-hidden="true">
-              <svg class="proof-avatar-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            </div>
-            <span class="proof-quote-author">David M.</span>
-          </div>
-          <div class="proof-quote-stars" aria-label="5 out of 5 stars">
-            <svg class="proof-quote-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            <svg class="proof-quote-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            <svg class="proof-quote-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            <svg class="proof-quote-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            <svg class="proof-quote-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          </div>
-        </div>
-        <p class="proof-quote-title">Perfect for couples and shared routines</p>
-        <p class="proof-quote-text">"My partner and I constantly struggled with keeping our grocery shopping synced and planning meals together. This app has completely streamlined our weekly routine. The shared grocery management is flawless, and it saves us so much back-and-forth texting about what we need from the store."</p>
-      </article>
-      <article class="proof-quote" role="group" aria-roledescription="review" aria-label="Review 3 of 3">
-        <div class="proof-quote-head">
-          <div class="proof-quote-who">
-            <div class="proof-avatar" aria-hidden="true">
-              <svg class="proof-avatar-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            </div>
-            <span class="proof-quote-author">Jessica T.</span>
-          </div>
-          <div class="proof-quote-stars" aria-label="5 out of 5 stars">
-            <svg class="proof-quote-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            <svg class="proof-quote-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            <svg class="proof-quote-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            <svg class="proof-quote-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            <svg class="proof-quote-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          </div>
-        </div>
-        <p class="proof-quote-title">Finally, an app that makes sense</p>
-        <p class="proof-quote-text">"I’ve tried so many meal planners over the years, but this one actually gets it right. The interface is super clean, and it doesn’t overcomplicate things. It genuinely lives up to the promise of making meal planning simple. Highly recommend!"</p>
-      </article>
-    </div>
-      <button class="proof-nav proof-next" type="button" aria-label="Next review" aria-controls="proof-track">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-      </button>
-      <div class="proof-dots" id="proof-dots" role="tablist" aria-label="Choose a review"></div>
-    </div>
-
-  </div>
-</div>
-
-<!-- Wave into how it works -->
-<div class="wave" aria-hidden="true" style="background:var(--bg-warm)">
-  <svg viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-    <path d="M0,0 C360,56 720,0 1080,40 C1260,58 1380,20 1440,28 L1440,56 L0,56 Z" fill="var(--bg-hero)"/>
-  </svg>
-</div>
-
-<!-- ── HOW IT WORKS ── -->
-<section class="how-section" id="how-it-works">
-  <div class="how-inner">
-    <div class="how-header">
-      <p class="section-eyebrow">How it works</p>
-      <h2 class="section-title">From fridge to table in five steps.</h2>
-      <p class="section-sub">Getting started takes minutes. Everything else happens automatically.</p>
+    <div class="rating-sum" data-reveal>
+      <b>5.0</b>
+      <span><span class="stars" style="display:flex;gap:1px;color:var(--amber)" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>Average rating on the App Store</span>
     </div>
   </div>
-  <div class="how-panel">
-    <div class="how-inner">
-      <div class="how-grid">
-      <!-- Steps -->
-      <div class="how-steps">
-        <div class="how-step active" data-step="0">
-          <div class="how-num">1</div>
-          <div class="how-step-text">
-            <h4>Set up your profile</h4>
-            <p>Add your dietary preferences, allergies, and anything you want to avoid — then add the rest of your household as their own chef profiles. Takes two minutes.</p>
-          </div>
-        </div>
-        <div class="how-step" data-step="1">
-          <div class="how-num">2</div>
-          <div class="how-step-text">
-            <h4>Import your recipes</h4>
-            <p>Bring in recipes you already love from TikTok, Instagram, a URL, or a photo. They'll sit in your library alongside Foodie Assistant's suggestions.</p>
-          </div>
-        </div>
-        <div class="how-step" data-step="2">
-          <div class="how-num">3</div>
-          <div class="how-step-text">
-            <h4>Generate meal ideas</h4>
-            <p>Tap Generate and FoodieFlow produces personalised meal suggestions based on your preferences and what you have at home.</p>
-          </div>
-        </div>
-        <div class="how-step" data-step="3">
-          <div class="how-num">4</div>
-          <div class="how-step-text">
-            <h4>Plan your week</h4>
-            <p>Drop meals into your weekly planner. Mix Foodie Assistant suggestions with meals from your personal library.</p>
-          </div>
-        </div>
-        <div class="how-step" data-step="4">
-          <div class="how-num">5</div>
-          <div class="how-step-text">
-            <h4>Shop and cook</h4>
-            <p>Your shopping list is automatically generated from your plan, grouped by aisle. Walk in prepared.</p>
-          </div>
+  <div class="reviews">
+    <figure class="review ff-lift" data-reveal>
+      <div class="stars" aria-label="5 out of 5 stars"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+      <h3>A lifesaver for saved recipes!</h3>
+      <blockquote>“I used to lose track of all the food videos I saved on Instagram and TikTok. Being able to import them directly into my weekly plan is brilliant. It completely takes the headache out of deciding what to make for dinner, and the automated grocery lists are like magic.”</blockquote>
+      <figcaption><span class="av" style="background:var(--blue)" aria-hidden="true">C</span><span>Chloe P.<small>Store review</small></span></figcaption>
+    </figure>
+    <figure class="review ff-lift" data-reveal>
+      <div class="stars" aria-label="5 out of 5 stars"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+      <h3>Perfect for couples and shared routines</h3>
+      <blockquote>“My partner and I constantly struggled with keeping our grocery shopping synced and planning meals together. This app has completely streamlined our weekly routine. The shared grocery management is flawless, and it saves us so much back-and-forth texting about what we need from the store.”</blockquote>
+      <figcaption><span class="av" style="background:var(--green)" aria-hidden="true">D</span><span>David M.<small>Store review</small></span></figcaption>
+    </figure>
+    <figure class="review ff-lift" data-reveal>
+      <div class="stars" aria-label="5 out of 5 stars"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+      <h3>Finally, an app that makes sense</h3>
+      <blockquote>“I’ve tried so many meal planners over the years, but this one actually gets it right. The interface is super clean, and it doesn’t overcomplicate things. It genuinely lives up to the promise of making meal planning simple. Highly recommend!”</blockquote>
+      <figcaption><span class="av" style="background:var(--purple)" aria-hidden="true">J</span><span>Jessica T.<small>Store review</small></span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ── PRO ── -->
+<section id="pro" class="ff-wrap sec">
+  <div class="pro" data-reveal>
+    <div class="ff-blob a" aria-hidden="true"></div>
+    <div class="ff-blob b" aria-hidden="true"></div>
+    <div class="pro-grid">
+      <div class="pro-copy">
+        <span class="pro-tag"><i><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" aria-hidden="true"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"/></svg></i>Pro Chef</span>
+        <h2 class="ff-h2">Unlock intelligent planning.</h2>
+        <p>Free gets you planning, importing, full pantry tracking and a smart list. Pro Chef adds unlimited ideas, full nutrition and a home for the whole household.</p>
+        <div class="price"><b class="rc-price-inline">£3.99</b><span>a month</span></div>
+        <div class="pro-cta">
+          <a class="ff-btn ff-btn--amber" href="#download">Start Pro Chef
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <small>Billed through your app store. Cancel any time and keep Pro until the end of the period you paid for.</small>
         </div>
       </div>
-      <!-- Phone visual -->
-      <div class="how-visual" aria-hidden="true">
-        <div class="how-phone">
-          <div class="how-screen">
-            <!-- Step 0: Profile setup -->
-            <div class="how-screen-pane active" data-pane="0">
-              <img src="/screens/dietary-preferences-320.png"
-                   srcset="/screens/dietary-preferences-180.png 180w, /screens/dietary-preferences-240.png 240w, /screens/dietary-preferences-280.png 280w, /screens/dietary-preferences-320.png 320w, /screens/dietary-preferences-480.png 480w, /screens/dietary-preferences-620.png 620w"
-                   sizes="(max-width: 767px) 186px, (max-width: 1023px) 206px, (min-width: 1280px) 318px, 246px"
-                   alt="Set up your dietary preferences and household"
-                   loading="lazy" />
-            </div>
-            <!-- Step 1: Import recipes -->
-            <div class="how-screen-pane" data-pane="1">
-              <img src="/screens/import-recipe-320.png"
-                   srcset="/screens/import-recipe-180.png 180w, /screens/import-recipe-240.png 240w, /screens/import-recipe-280.png 280w, /screens/import-recipe-320.png 320w, /screens/import-recipe-480.png 480w, /screens/import-recipe-620.png 620w"
-                   sizes="(max-width: 767px) 186px, (max-width: 1023px) 206px, (min-width: 1280px) 318px, 246px"
-                   alt="Import recipes from a link or a photo"
-                   loading="lazy" />
-            </div>
-            <!-- Step 2: Generate ideas -->
-            <div class="how-screen-pane" data-pane="2">
-              <img src="/screens/foodie-assistant-320.png"
-                   srcset="/screens/foodie-assistant-180.png 180w, /screens/foodie-assistant-240.png 240w, /screens/foodie-assistant-280.png 280w, /screens/foodie-assistant-320.png 320w, /screens/foodie-assistant-480.png 480w, /screens/foodie-assistant-620.png 620w, /screens/foodie-assistant-900.png 900w"
-                   sizes="(max-width: 767px) 186px, (max-width: 1023px) 206px, (min-width: 1280px) 318px, 246px"
-                   alt="Generate meal ideas with Foodie Assistant"
-                   loading="lazy" />
-            </div>
-            <!-- Step 3: Plan week -->
-            <div class="how-screen-pane" data-pane="3">
-              <img src="/screens/weekly-planner-320.png"
-                   srcset="/screens/weekly-planner-180.png 180w, /screens/weekly-planner-240.png 240w, /screens/weekly-planner-280.png 280w, /screens/weekly-planner-320.png 320w, /screens/weekly-planner-480.png 480w, /screens/weekly-planner-620.png 620w"
-                   sizes="(max-width: 767px) 186px, (max-width: 1023px) 206px, (min-width: 1280px) 318px, 246px"
-                   alt="Plan your week"
-                   loading="lazy" />
-            </div>
-            <!-- Step 4: Shopping list -->
-            <div class="how-screen-pane" data-pane="4">
-              <img src="/screens/shopping-list-320.png"
-                   srcset="/screens/shopping-list-180.png 180w, /screens/shopping-list-240.png 240w, /screens/shopping-list-280.png 280w, /screens/shopping-list-320.png 320w, /screens/shopping-list-480.png 480w, /screens/shopping-list-620.png 620w, /screens/shopping-list-900.png 900w"
-                   sizes="(max-width: 767px) 186px, (max-width: 1023px) 206px, (min-width: 1280px) 318px, 246px"
-                   alt="Shop from your auto-generated list"
-                   loading="lazy" />
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="tiers">
+        <table>
+          <caption class="ff-sr">Free Chef compared with Pro Chef</caption>
+          <thead><tr><th scope="col"><span class="ff-sr">Feature</span></th><th scope="col">Free Chef</th><th scope="col" class="p">Pro Chef</th></tr></thead>
+          <tbody>
+            <tr><td>Foodie Assistant ideas<small>Free: 10 a week</small></td><td class="f">10 a week</td><td class="p">Unlimited</td></tr>
+            <tr><td>Moods and cravings<small>Free: Preview</small></td><td class="f">Preview</td><td class="p">Included</td></tr>
+            <tr><td>Video recipe imports<small>Free: 3 a week</small></td><td class="f">3 a week</td><td class="p">20 a week</td></tr>
+            <tr><td>Saved recipes<small>Free: Up to 28</small></td><td class="f">Up to 28</td><td class="p">Unlimited</td></tr>
+            <tr><td>Nutrition breakdown<small>Free: Locked</small></td><td class="f">Locked</td><td class="p">Full macros</td></tr>
+            <tr><td>Create a household<small>Free: Join only</small></td><td class="f">Join only</td><td class="p">Included</td></tr>
+            <tr><td>Reusable week templates<small>Free: Not included</small></td><td class="f">Not included</td><td class="p">Included</td></tr>
+            <tr><td>Smart list tidy-up<small>Free: Not included</small></td><td class="f">Not included</td><td class="p">Included</td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Wave into pro -->
-<div class="wave" aria-hidden="true" style="background:var(--bg)">
-  <svg viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-    <path d="M0,20 C480,60 960,0 1440,32 L1440,56 L0,56 Z" fill="var(--fore)"/>
-  </svg>
-</div>
-
-<!-- ── PRO SECTION ── -->
-<section class="pro-section" id="pro">
-  <div class="pro-inner">
-    <!-- Left: benefit callouts -->
+<!-- ── MAKER ── -->
+<section class="ff-wrap sec">
+  <div class="maker" data-reveal>
+    <img src="/favicon.png" alt="FoodieFlow logo" width="112" height="112" loading="lazy" />
     <div>
-      <div class="pro-header">
-        <p class="section-eyebrow">FoodieFlow Pro</p>
-        <h2 class="section-title">Eat better, waste less, stress never.</h2>
-        <p class="section-sub">Pro turns FoodieFlow into your personal sous chef — smarter suggestions, deeper nutrition, and a Foodie Assistant that truly knows your kitchen.</p>
-      </div>
-      <div class="pro-benefits">
-        <div class="pro-benefit">
-          <div class="pro-benefit-icon">
-            <svg viewBox="0 0 24 24"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg>
-          </div>
-          <div>
-            <h4>Unlimited Foodie Assistant suggestions</h4>
-            <p>Get a new personalised meal idea every morning, noon, or night — no caps, no waiting.</p>
-          </div>
-        </div>
-        <div class="pro-benefit">
-          <div class="pro-benefit-icon">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
-          </div>
-          <div>
-            <h4>Smarter recommendations</h4>
-            <p>FoodieFlow learns your pantry and preferences over time, improving every suggestion.</p>
-          </div>
-        </div>
-        <div class="pro-benefit">
-          <div class="pro-benefit-icon">
-            <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-          </div>
-          <div>
-            <h4>Full nutrition data</h4>
-            <p>Macros and calories for every meal, automatically. No manual logging required.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Right: Pro card -->
-    <div class="pro-card-col">
-      <div class="pro-card">
-        <div class="pro-badge">Most popular</div>
-        <div class="pro-price">
-          <div class="pro-price-lbl">FoodieFlow Pro</div>
-          <div class="pro-price-val" id="rc-price-container"><sup>£</sup>3.99<sub>/month</sub></div>
-          <div class="pro-price-note">Billed monthly. Cancel any time.</div>
-        </div>
-        <div class="pro-includes">
-          <div class="pro-include"><div class="pro-chk"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Unlimited Foodie Assistant suggestions</div>
-
-          <div class="pro-include"><div class="pro-chk"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Smarter, deeper preference matching</div>
-          <div class="pro-include"><div class="pro-chk"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Full macro &amp; calorie breakdowns</div>
-          <div class="pro-include"><div class="pro-chk"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Pantry-first meal recommendations</div>
-          <div class="pro-include"><div class="pro-chk"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Smart shopping list tidy-up</div>
-          <div class="pro-include"><div class="pro-chk"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Smart recipe tagging</div>
-          <div class="pro-include"><div class="pro-chk"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Priority support</div>
-          <div class="pro-include"><div class="pro-chk"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>All future Pro features</div>
-        </div>
-        <a href="/download/" class="btn-amber">Get Pro — Download the App</a>
-        <details class="pro-faq">
-          <summary>
-            What happens when I cancel?
-            <svg class="pro-faq-chevron" viewBox="0 0 24 24"><line x1="6" y1="9" x2="12" y2="15"/><line x1="12" y1="15" x2="18" y2="9"/></svg>
-          </summary>
-          <p class="pro-faq-answer">You keep full access until the end of your billing period. No charges after that, and you can resubscribe at any time.</p>
-        </details>
-      </div>
+      <p>Made in Aberdeen by a small, independent studio. Feedback in the app goes straight to the person who builds it.</p>
+      <span>Arthur, AWD Labs</span>
     </div>
   </div>
 </section>
 
 <!-- ── DOWNLOAD ── -->
-<section class="download-section" id="download">
-  <div class="dl-bg" aria-hidden="true">
-    <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1440&q=70" alt="" loading="lazy" />
-  </div>
-  <div class="dl-content">
-    <p class="section-eyebrow">Get started today</p>
-    <h2 class="section-title">Available on iOS &amp; Android.</h2>
-    <p class="section-sub">Download FoodieFlow and start planning your meals today. Free to download, no card required.</p>
-    <div class="dl-btns">
-      <a href="https://apps.apple.com/us/app/foodieflow-meal-planner/id6760259767" class="appstore-btn" target="_blank" rel="noopener noreferrer">
-        <svg width="22" height="27" viewBox="0 0 814 1000" fill="white" aria-hidden="true"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-57.8-155.5-127.4C46 790.7 0 663 0 541.8c0-207.5 135.4-317.3 269-317.3 70.1 0 128.4 46.4 172.5 46.4 42.8 0 109.6-49 192.5-49 30.9 0 113.8 2.6 168.9 98.3zm-234.8-181.4c31.3-36.9 53.7-88.1 53.7-139.3 0-7.1-.6-14.3-1.9-20.1-50.6 1.9-110.8 33.7-147.1 75.8-28.5 32.4-55.1 83.6-55.1 135.5 0 7.8 1.3 15.6 1.9 18.1 3.2.6 8.4 1.3 13.6 1.3 45.4 0 102.5-30.4 134.9-71.3z"/></svg>
-        <span class="appstore-btn-text">
-          <span class="appstore-btn-label">Download on the</span>
-          <span class="appstore-btn-name">App Store</span>
-        </span>
-      </a>
-      <a href="https://play.google.com/store/apps/details?id=com.foodieflow.app" class="playstore-btn" target="_blank" rel="noopener noreferrer">
-        <svg width="20" height="22" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M3.18 23.76a2 2 0 0 0 2.08-.21l11.39-6.58-3.22-3.22L3.18 23.76z" fill="white"/>
-          <path d="M21.28 10.4 17.64 8.3 14.1 11.86l3.54 3.54 3.64-2.1a2 2 0 0 0 0-3.46z" fill="white"/>
-          <path d="M3.18.24A2 2 0 0 0 2 2v20a2 2 0 0 0 1.18 1.76L13.38 12 3.18.24z" fill="white"/>
-          <path d="M5.26.45 16.65 7.03 13.38 10.3 3.18.24A2 2 0 0 1 5.26.45z" fill="white"/>
-        </svg>
-        <span class="playstore-btn-text">
-          <span class="playstore-btn-label">Get it on</span>
-          <span class="playstore-btn-name">Google Play</span>
-        </span>
-      </a>
+<section id="download" class="dl">
+  <div class="collage" aria-hidden="true">
+    <div class="row">
+      <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=480&q=70" alt="" loading="lazy" />
+      <img src="https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=480&q=70" alt="" loading="lazy" />
+      <img src="https://images.unsplash.com/photo-1512058564366-18510be2db19?w=480&q=70" alt="" loading="lazy" />
+      <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=480&q=70" alt="" loading="lazy" />
+      <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=480&q=70" alt="" loading="lazy" />
+      <img src="https://images.unsplash.com/photo-1543168256-418811576931?w=480&q=70" alt="" loading="lazy" />
     </div>
-    <div class="dl-trust">
-      <div class="dl-trust-item">
-        <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        Privacy first
-      </div>
-      <div class="dl-trust-item">
-        <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
-        iOS &amp; Android
-      </div>
-      <div class="dl-trust-item">
-        <svg viewBox="0 0 24 24"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
-        Free to download
-      </div>
+    <div class="fade"></div>
+  </div>
+  <div class="ff-wrap dl-copy">
+    <img src="/favicon.png" alt="" width="84" height="84" loading="lazy" />
+    <h2 class="ff-h2" data-reveal>Your week, sorted by Sunday.</h2>
+    <p data-reveal>Free on iPhone and Android. Set up in two minutes, then never stare into the fridge at 6pm again.</p>
+    <div class="ff-stores" data-reveal>
+      <a class="ff-store" href="https://apps.apple.com/us/app/foodieflow-meal-planner/id6760259767" target="_blank" rel="noopener noreferrer">
+        <svg width="20" height="24" viewBox="0 0 814 1000" fill="currentColor" aria-hidden="true"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-57.8-155.5-127.4C46 790.7 0 663 0 541.8c0-207.5 135.4-317.3 269-317.3 70.1 0 128.4 46.4 172.5 46.4 42.8 0 109.6-49 192.5-49 30.9 0 113.8 2.6 168.9 98.3zm-234.8-181.4c31.3-36.9 53.7-88.1 53.7-139.3 0-7.1-.6-14.3-1.9-20.1-50.6 1.9-110.8 33.7-147.1 75.8-28.5 32.4-55.1 83.6-55.1 135.5 0 7.8 1.3 15.6 1.9 18.1 3.2.6 8.4 1.3 13.6 1.3 45.4 0 102.5-30.4 134.9-71.3z"/></svg>
+        <span><small>Download on the</small><b>App Store</b></span></a>
+      <a class="ff-store ff-store--light" href="https://play.google.com/store/apps/details?id=com.foodieflow.app" target="_blank" rel="noopener noreferrer">
+        <svg width="20" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.18 23.76a2 2 0 0 0 2.08-.21l11.39-6.58-3.22-3.22L3.18 23.76z" fill="#1E6FE0"/><path d="M21.28 10.4 17.64 8.3 14.1 11.86l3.54 3.54 3.64-2.1a2 2 0 0 0 0-3.46z" fill="#F5B935"/><path d="M3.18.24A2 2 0 0 0 2 2v20a2 2 0 0 0 1.18 1.76L13.38 12 3.18.24z" fill="#22A35A"/><path d="M5.26.45 16.65 7.03 13.38 10.3 3.18.24A2 2 0 0 1 5.26.45z" fill="#E5484D"/></svg>
+        <span><small>Get it on</small><b>Google Play</b></span></a>
     </div>
   </div>
 </section>
 
+</main>
+
 <!-- ── FOOTER ── -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <img src="/logo.png" alt="FoodieFlow" />
-      <p class="footer-tagline">Meal planning made simple.</p>
-      <p>Organise your meals, discover new recipes, and shop smarter — all in one app.</p>
-      <div class="footer-social">
-        <a href="https://instagram.com/foodieflowapp" aria-label="FoodieFlow on Instagram" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-        </a>
-        <a href="https://twitter.com/foodieflowapp" aria-label="FoodieFlow on X (Twitter)" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24"><path d="M4 4l16 16M4 20L20 4" stroke-width="2"/></svg>
-        </a>
+<footer class="ff-footer">
+  <div class="ff-footer__main">
+    <div class="ff-footer__brand">
+      <a class="ff-brand" href="/"><img src="/favicon.png" alt="" width="36" height="36" loading="lazy" /><span>FoodieFlow</span></a>
+      <p>Smart meal planning for real kitchens.</p>
+      <div class="socials">
+        <a href="https://instagram.com/foodieflowapp" aria-label="FoodieFlow on Instagram" target="_blank" rel="noopener noreferrer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37zM17.5 6.5h.01"/></svg></a>
+        <a href="https://twitter.com/foodieflowapp" aria-label="FoodieFlow on X (Twitter)" target="_blank" rel="noopener noreferrer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 4l16 16M4 20L20 4"/></svg></a>
       </div>
     </div>
-    <div class="footer-col">
-      <h4>Product</h4>
-      <a href="#features">Features</a>
-      <a href="#how-it-works">How it works</a>
-      <a href="/compare/">Compare</a>
-      <a href="/blog/">Blog</a>
-      <a href="#pro">Pro</a>
-      <a href="#download">Download</a>
-    </div>
-    <div class="footer-col">
-      <h4>Company</h4>
-      <a href="/privacy/">Privacy Policy</a>
-      <a href="/terms/">Terms of Use</a>
-    </div>
-    <div class="footer-col">
-      <h4>Contact</h4>
-      <a href="/support/">Support</a>
+    <div class="ff-footer__cols">
+      <div class="ff-footer__col">
+        <b>Product</b>
+        <a href="#features">Features</a>
+        <a href="#pro">Pro Chef</a>
+        <a href="/compare/">Compare apps</a>
+        <a href="/food-waste-calculator/">Food waste calculator</a>
+      </div>
+      <div class="ff-footer__col">
+        <b>Read</b>
+        <a href="/blog/">Blog</a>
+        <a href="/blog/7-day-student-meal-plan/">Student meal plan</a>
+        <a href="/blog/save-tiktok-recipes/">Save video recipes</a>
+      </div>
+      <div class="ff-footer__col">
+        <b>Help</b>
+        <a href="/support/">Support</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/terms/">Terms</a>
+      </div>
     </div>
   </div>
-  <div class="footer-bottom">
-    <span>© <span id="copyright-year"></span> FoodieFlow. All rights reserved. FoodieFlow is an independent software product.</span>
+  <div class="ff-footer__base">
+    <span>© <span data-year>2026</span> AWD Labs. All rights reserved.</span>
+    <span>Made in Aberdeen, Scotland</span>
   </div>
 </footer>
 
+<div class="dock is-hidden" id="dock">
+  <span><img src="/favicon.png" alt="" width="40" height="40" /><span><b>FoodieFlow</b><small>Free on iOS and Android</small></span></span>
+  <a href="#download">Get</a>
+</div>
+
+<script src="/assets/ff26.js" defer></script>
 <script>
 (function () {
-  /* ── Nav scroll effect ── */
-  var nav = document.getElementById('main-nav');
-  function onScroll() {
-    nav.classList.toggle('scrolled', window.scrollY > 80);
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Import card: cycle through the kinds of link it takes and tick the steps. */
+  var importer = document.querySelector('[data-importer]');
+  if (importer && !reduce) {
+    var url = importer.querySelector('.url');
+    var steps = importer.querySelectorAll('.steps li');
+    var sources = ['tiktok.com/@yourfavouritecook/video', 'bbcgoodfood.com/recipes/…', 'youtube.com/watch?v=…', 'Photo of a cookbook page'];
+    var s = 0, phase = 0;
+    setInterval(function () {
+      phase = (phase + 1) % 5;
+      if (phase === 0) {
+        s = (s + 1) % sources.length;
+        url.style.opacity = 0;
+        setTimeout(function () { url.textContent = sources[s]; url.style.opacity = 1; }, 300);
+      }
+      steps.forEach(function (li, i) {
+        li.classList.toggle('done', i < phase - 1 || phase === 4);
+        li.classList.toggle('busy', i === phase - 1 && phase < 4);
+      });
+    }, 1100);
   }
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
 
-  /* ── Mobile menu ── */
-  var hamburger = document.getElementById('hamburger');
-  var mobileMenu = document.getElementById('mobile-menu');
-  hamburger.addEventListener('click', function () {
-    hamburger.classList.toggle('open');
-    mobileMenu.classList.toggle('open');
-    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
-  });
-  document.querySelectorAll('.mobile-nav-link').forEach(function (link) {
-    link.addEventListener('click', function () {
-      hamburger.classList.remove('open');
-      mobileMenu.classList.remove('open');
-      document.body.style.overflow = '';
-    });
-  });
+  /* Assistant card: move the highlighted mood along. */
+  var moods = document.querySelectorAll('[data-moods] span');
+  if (moods.length && !reduce) {
+    var m = 2;
+    setInterval(function () {
+      moods[m].classList.remove('on');
+      m = (m + 1) % moods.length;
+      moods[m].classList.add('on');
+    }, 2200);
+  }
 
-  /* ── Review carousel ──
-     The track scrolls and snaps on its own, so this only mirrors that scroll
-     position into the dots and arrows and drives it back when they are used.
-     Once the viewport is wide enough to show every review at once there is
-     nothing left to scroll, so the controls take themselves out. */
-  var track = document.getElementById('proof-track');
-  if (track) {
-    var carousel = track.closest('.proof-carousel');
-    var cards = track.querySelectorAll('.proof-quote');
-    var dotsWrap = document.getElementById('proof-dots');
-    var prevBtn = document.querySelector('.proof-prev');
-    var nextBtn = document.querySelector('.proof-next');
-    var dots = [];
-
-    cards.forEach(function (card, i) {
-      var dot = document.createElement('button');
-      dot.type = 'button';
-      dot.className = 'proof-dot';
-      dot.setAttribute('role', 'tab');
-      dot.setAttribute('aria-label', 'Review ' + (i + 1));
-      dot.addEventListener('click', function () { goTo(i); });
-      dotsWrap.appendChild(dot);
-      dots.push(dot);
-    });
-
-    function goTo(i) {
-      track.scrollTo({ left: cards[i].offsetLeft - cards[0].offsetLeft, behavior: 'smooth' });
+  /* Phone dock: out of the way once the download section is on screen. */
+  var dock = document.getElementById('dock');
+  var dl = document.getElementById('download');
+  if (dock && dl) {
+    var dlVisible = false;
+    var update = function () { dock.classList.toggle('is-hidden', dlVisible); };
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (e) { dlVisible = e[0].isIntersecting; update(); }).observe(dl);
     }
-
-    function refresh() {
-      var max = track.scrollWidth - track.clientWidth;
-      carousel.classList.toggle('is-static', max <= 4);
-
-      var nearest = 0;
-      var best = Infinity;
-      cards.forEach(function (card, i) {
-        var d = Math.abs(card.offsetLeft - cards[0].offsetLeft - track.scrollLeft);
-        if (d < best) { best = d; nearest = i; }
-      });
-      dots.forEach(function (dot, n) {
-        dot.classList.toggle('active', n === nearest);
-        dot.setAttribute('aria-selected', n === nearest ? 'true' : 'false');
-      });
-
-      prevBtn.disabled = track.scrollLeft <= 2;
-      nextBtn.disabled = track.scrollLeft >= max - 2;
-    }
-
-    prevBtn.addEventListener('click', function () {
-      goTo(Math.max(0, [].indexOf.call(dots, dotsWrap.querySelector('.active')) - 1));
-    });
-    nextBtn.addEventListener('click', function () {
-      goTo(Math.min(cards.length - 1, [].indexOf.call(dots, dotsWrap.querySelector('.active')) + 1));
-    });
-
-    track.addEventListener('keydown', function (e) {
-      var i = [].indexOf.call(dots, dotsWrap.querySelector('.active'));
-      if (e.key === 'ArrowRight') { e.preventDefault(); goTo(Math.min(cards.length - 1, i + 1)); }
-      if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(Math.max(0, i - 1)); }
-    });
-
-    var scrollTimer;
-    track.addEventListener('scroll', function () {
-      clearTimeout(scrollTimer);
-      scrollTimer = setTimeout(refresh, 90);
-    }, { passive: true });
-    window.addEventListener('resize', refresh);
-    refresh();
+    window.addEventListener('scroll', update, { passive: true });
+    update();
   }
-
-  /* ── How it works step-through ── */
-  var steps = document.querySelectorAll('.how-step');
-  var panes = document.querySelectorAll('.how-screen-pane');
-  steps.forEach(function (step) {
-    step.addEventListener('click', function () {
-      var idx = parseInt(step.getAttribute('data-step'), 10);
-      steps.forEach(function (s) { s.classList.remove('active'); });
-      step.classList.add('active');
-      panes.forEach(function (p) { p.classList.remove('active'); });
-      var target = document.querySelector('.how-screen-pane[data-pane="' + idx + '"]');
-      if (target) target.classList.add('active');
-    });
-  });
-
-  /* ── Scroll reveal via IntersectionObserver ── */
-  var reveals = document.querySelectorAll('.reveal');
-  if ('IntersectionObserver' in window) {
-    var ro = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          ro.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15 });
-    reveals.forEach(function (el) { ro.observe(el); });
-  } else {
-    reveals.forEach(function (el) { el.classList.add('visible'); });
-  }
-
-  /* ── Dynamic copyright year ── */
-  var yr = document.getElementById('copyright-year');
-  if (yr) yr.textContent = new Date().getFullYear();
 })();
 </script>
 <script src="/pricing.js"></script>

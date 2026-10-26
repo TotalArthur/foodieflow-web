@@ -21,475 +21,313 @@
   <link rel="apple-touch-icon" href="/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=PT+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/ff26.css" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --bg:        hsl(210, 28%, 95%);
-      --bg-warm:   hsl(210, 22%, 92%);
-      --card:      hsl(0, 0%, 100%);
-      --fore:      hsl(222, 47%, 13%);
-      --blue:      hsl(205, 68%, 50%);
-      --blue-mid:  hsl(205, 60%, 62%);
-      --blue-lt:   hsl(205, 55%, 90%);
-      --blue-pale: hsl(205, 45%, 96%);
-      --muted:     hsl(215, 16%, 50%);
-      --border:    hsl(210, 28%, 88%);
-      --gold:      hsl(42, 90%, 52%);
-      --radius:    1.3rem;
-      --primary-dark: hsl(205, 70%, 40%);
-      --secondary:    hsl(195, 60%, 94%);
+    .s-head { padding-top: 80px; padding-bottom: 56px; display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center; }
+    .s-head .ff-pill { align-self: center; }
+    .ff-dot { box-shadow: 0 0 0 0 rgba(34,163,90,.6); animation: pulse 2.4s infinite; }
+    @keyframes pulse { 70% { box-shadow: 0 0 0 7px rgba(34,163,90,0); } 100% { box-shadow: 0 0 0 0 rgba(34,163,90,0); } }
+    .search { width: 100%; max-width: 640px; height: 64px; border-radius: 32px; background: #fff; display: flex; align-items: center; gap: 12px; padding: 0 8px 0 24px; box-sizing: border-box; box-shadow: 0 24px 48px -28px rgba(14,17,22,.3); color: var(--muted); transition: box-shadow .3s; }
+    .search:focus-within { box-shadow: 0 0 0 3px var(--blue-lt), 0 24px 48px -28px rgba(14,17,22,.3); }
+    .search input { flex-grow: 1; min-width: 0; border: 0; outline: 0; background: transparent; font: 16px var(--sans); color: var(--ink); }
+    .search input::-webkit-search-cancel-button { display: none; }
+
+    .topics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; padding-bottom: 72px; }
+    .topic { border: 0; border-radius: 28px; background: #fff; padding: 24px; display: flex; align-items: center; gap: 16px; text-align: left; color: var(--ink); cursor: pointer; font: inherit; box-shadow: 0 0 0 0 transparent; }
+    .topic[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--ink); }
+    .topic .ff-tile { width: 52px; height: 52px; }
+    .topic b { display: block; font-family: var(--display); font-size: 20px; font-weight: 700; letter-spacing: -.3px; }
+    .topic small { font-size: 14px; color: var(--muted); }
+
+    .split { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 20px; align-items: start; padding-bottom: 96px; }
+    .faq-col { display: flex; flex-direction: column; gap: 20px; }
+    .faq-col h2 { margin: 0; font-family: var(--display); font-size: 44px; font-weight: 700; letter-spacing: -1.5px; }
+    .filter-note { display: none; align-items: center; gap: 10px; font-size: 14px; color: var(--ink-3); }
+    .filter-note.on { display: flex; }
+    .filter-note button { height: 32px; padding: 0 12px; border-radius: 16px; border: 0; background: var(--ink); color: #fff; font: 600 13px var(--sans); cursor: pointer; }
+    .faqs { border-radius: 32px; background: #fff; padding: 8px 28px; }
+    .faqs .ff-acc__item.is-last { border-bottom: 0; }
+    .faqs .empty { display: none; padding: 28px 0; font-size: 16px; color: var(--ink-3); }
+    .faqs .empty.on { display: block; }
+    .side { display: flex; flex-direction: column; gap: 16px; padding-top: 68px; position: sticky; top: 96px; }
+    .contact { position: relative; overflow: hidden; border-radius: 32px; background: var(--ink); color: #fff; padding: 32px; display: flex; flex-direction: column; gap: 16px; }
+    .contact > * { position: relative; }
+    .contact > .ff-blob { position: absolute; }
+    .contact h3 { margin: 0; font-family: var(--display); font-size: 30px; font-weight: 700; letter-spacing: -.8px; line-height: 1.05; }
+    .contact p { margin: 0; font-size: 15px; line-height: 1.55; color: rgba(255,255,255,.72); }
+    .contact .ff-btn { align-self: flex-start; height: 52px; }
+    .warn { border-radius: 28px; background: var(--amber-lt); padding: 22px 24px; display: flex; gap: 14px; font-size: 14px; line-height: 1.55; color: #4A3500; }
+    .subs { border-radius: 28px; background: #fff; padding: 22px 24px; display: flex; flex-direction: column; gap: 12px; }
+    .subs b { font-size: 14px; font-weight: 600; }
+    .subs p { margin: 0; font-size: 13px; line-height: 1.5; color: var(--muted); }
+    .subs div { display: flex; gap: 8px; flex-wrap: wrap; }
+    .subs a { height: 40px; padding: 0 14px; border-radius: 20px; background: var(--paper); color: var(--ink) !important; display: flex; align-items: center; font-size: 13px; font-weight: 600; text-decoration: none; transition: background-color .2s; }
+    .subs a:hover { background: var(--paper-2); }
+
+    .helpers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; padding-bottom: 96px; }
+    .helper { border-radius: 32px; background: #fff; padding: 32px; display: flex; flex-direction: column; gap: 14px; }
+    .helper h3 { margin: 0; font-family: var(--display); font-size: 24px; font-weight: 700; letter-spacing: -.5px; }
+    .helper p, .helper li { margin: 0; font-size: 15px; line-height: 1.6; color: var(--ink-3); }
+    .helper ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .helper li { display: flex; gap: 10px; }
+    .helper li::before { content: ""; width: 6px; height: 6px; border-radius: 3px; background: var(--blue); margin-top: 9px; flex-shrink: 0; }
+    .helper.green li::before { background: var(--green); }
+    .helper.dark { background: var(--ink); color: #fff; }
+    .helper.dark p { color: rgba(255,255,255,.72); }
+    .helper.dark a { color: #fff !important; }
+
+    .form-wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 20px; padding-bottom: 120px; }
+    .form-intro { display: flex; flex-direction: column; gap: 16px; padding: 24px 8px; }
+    .form-intro h2 { font-size: 52px; letter-spacing: -1.8px; }
+    .form-intro p { margin: 0; font-size: 17px; line-height: 1.55; color: var(--ink-3); }
+    .form-card { border-radius: 40px; background: #fff; padding: 44px; }
+    .form-card form { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .row { display: flex; flex-direction: column; gap: 8px; }
+    .row.full { grid-column: 1 / -1; }
+    .row label { font-size: 14px; font-weight: 600; }
+    .row label span { font-weight: 400; color: var(--muted); }
+    .row input, .row select, .row textarea { width: 100%; box-sizing: border-box; border: 1.5px solid transparent; border-radius: 18px; background: var(--paper); padding: 14px 16px; font: 16px var(--sans); color: var(--ink); transition: border-color .2s, background-color .2s; }
+    .row input:focus, .row select:focus, .row textarea:focus { outline: 0; border-color: var(--blue); background: #fff; }
+    .row textarea { min-height: 150px; resize: vertical; }
+    .row .err { display: none; font-size: 13px; color: #B42318; }
+    .row.has-error input, .row.has-error textarea { border-color: #B42318; background: #FFF6F5; }
+    .row.has-error .err { display: block; }
+    .form-card .ff-btn { justify-self: start; }
+    .form-card .ff-btn:disabled { opacity: .6; cursor: wait; }
+    .sent { display: none; align-items: center; gap: 14px; padding: 24px; border-radius: 24px; background: var(--green-lt); color: var(--green); font-size: 16px; font-weight: 600; line-height: 1.5; }
+    .sent.visible { display: flex; animation: ff-pop .6s var(--ease) both; }
+
+    @media (max-width: 1020px) {
+      .topics, .helpers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .split, .form-wrap { grid-template-columns: 1fr; }
+      .side { padding-top: 0; position: static; }
     }
-    html { scroll-behavior: smooth; }
-    body { font-family: "PT Sans", sans-serif; background: var(--bg); color: var(--fore); min-height: 100vh; overflow-x: hidden; }
-
-    /* ── NAV ── */
-    nav {
-      position: sticky; top: 0; z-index: 200;
-      background: rgba(235,240,246,0.96); backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-      padding: 0 2.5rem;
-      display: flex; align-items: center; justify-content: space-between; height: 66px;
+    @media (max-width: 640px) {
+      .s-head { padding-top: 48px; padding-bottom: 40px; }
+      .s-head h1 { font-size: 52px; letter-spacing: -2px; }
+      .search { height: 58px; padding-left: 18px; }
+      .search .ff-btn { display: none; }
+      .topics, .helpers { grid-template-columns: 1fr; padding-bottom: 56px; }
+      .topics { gap: 10px; }
+      .topic { padding: 16px 18px; border-radius: 24px; }
+      .faq-col h2, .form-intro h2 { font-size: 36px; letter-spacing: -1.2px; }
+      .faqs { padding: 4px 20px; border-radius: 28px; }
+      .form-card { padding: 24px; border-radius: 32px; }
+      .form-card form { grid-template-columns: 1fr; }
     }
-    .logo { display: flex; align-items: center; text-decoration: none; }
-    .logo img { height: 48px; width: auto; object-fit: contain; }
-    .nav-links { display: flex; align-items: center; gap: 2rem; }
-    .nav-links a { font-size: 0.84rem; color: var(--muted); text-decoration: none; font-weight: 700; transition: color 0.2s; }
-    .nav-links a:hover { color: var(--blue); }
-    .nav-cta {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--fore); color: white;
-      padding: 9px 20px; border-radius: 100px;
-      font-size: 0.82rem; font-weight: 700; text-decoration: none;
-      transition: background 0.2s;
-    }
-    .nav-cta:hover { background: var(--blue); color: white; }
-    .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 6px; }
-    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--fore); margin: 5px 0; border-radius: 2px; transition: 0.25s; }
-    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
-    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    .mobile-menu {
-      display: none; position: fixed; top: 66px; left: 0; right: 0; bottom: 0;
-      background: rgba(235,240,246,0.98); backdrop-filter: blur(16px);
-      z-index: 199; flex-direction: column; align-items: center; justify-content: center; gap: 2rem;
-    }
-    .mobile-menu.open { display: flex; }
-    .mobile-menu a { font-size: 1.4rem; font-weight: 700; color: var(--fore); text-decoration: none; transition: color 0.2s; }
-    .mobile-menu a:hover { color: var(--blue); }
-    .mobile-menu .mobile-cta { background: var(--fore); color: white; padding: 14px 36px; border-radius: 100px; font-size: 1rem; }
-    .mobile-menu .mobile-cta:hover { background: var(--blue); color: white; }
-
-    /* ── LAYOUT ── */
-    .section { max-width: 760px; margin: 0 auto; padding: 0 2rem; }
-    .section-gap { margin-bottom: 48px; }
-
-    .hero { padding: 64px 2rem 52px; text-align: center; max-width: 660px; margin: 0 auto; }
-    .hero-welcome { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue); margin-bottom: 14px; }
-    h1 {
-      font-family: "PT Sans", sans-serif;
-      font-size: clamp(1.9rem, 5vw, 2.9rem);
-      font-weight: 700; line-height: 1.1;
-      letter-spacing: -0.02em; margin-bottom: 20px;
-    }
-    h1 span { color: var(--primary-dark); }
-    .hero-sub { font-size: 1rem; color: var(--muted); line-height: 1.75; max-width: 400px; margin: 0 auto 0; }
-    .hero-sub a { color: var(--fore); font-weight: 700; text-decoration: none; border-bottom: 1.5px solid var(--blue); padding-bottom: 1px; transition: color 0.2s; }
-    .hero-sub a:hover { color: var(--blue); }
-    .hero-tagline { font-size: 0.83rem; color: hsl(215,16%,62%); margin-top: 14px; line-height: 1.6; max-width: 360px; margin-left: auto; margin-right: auto; }
-
-    /* ── STATUS BANNER ── */
-    .status-banner { background: var(--card); border: 1px solid var(--border); border-radius: calc(var(--radius) - 4px); padding: 12px 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
-    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; flex-shrink: 0; box-shadow: 0 0 0 3px rgba(74,222,128,0.2); }
-    .status-banner p { font-size: 0.85rem; color: var(--muted); }
-
-    /* ── CONTACT CTA CARD ── */
-    .contact-cta-card { background: var(--fore); border-radius: var(--radius); padding: 30px 34px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 14px; }
-    .contact-cta-card-text h2 { font-size: 1.25rem; font-weight: 700; color: white; margin-bottom: 6px; }
-    .contact-cta-card-text p { font-size: 0.86rem; color: rgba(255,255,255,0.5); line-height: 1.55; }
-    .contact-cta-btn { display: inline-flex; align-items: center; gap: 10px; background: var(--blue-lt); color: var(--primary-dark); text-decoration: none; padding: 13px 26px; border-radius: calc(var(--radius) - 8px); font-size: 1rem; font-weight: 700; white-space: nowrap; transition: background 0.2s, transform 0.15s; }
-    .contact-cta-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
-    .contact-cta-btn:hover { background: var(--blue-mid); color: white; transform: translateY(-1px); }
-
-    /* ── SECURITY NOTICE ── */
-    .security-notice { background: var(--card); border: 1px solid var(--border); border-radius: calc(var(--radius) - 6px); padding: 11px 18px; margin-bottom: 48px; display: flex; align-items: center; gap: 10px; }
-    .security-notice p { font-size: 0.82rem; color: var(--muted); }
-    .security-notice p strong { color: var(--fore); }
-
-    /* ── STORE CARD ── */
-    .store-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px 34px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 48px; }
-    .store-card-text h2 { font-size: 1rem; font-weight: 700; margin-bottom: 3px; }
-    .store-card-text p { font-size: 0.84rem; color: var(--muted); }
-    .store-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
-    .store-btn { display: inline-flex; align-items: center; gap: 12px; background: #000; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 10px; transition: opacity 0.2s, transform 0.15s; min-width: 160px; }
-    .store-btn:hover { opacity: 0.82; transform: translateY(-1px); }
-    .store-btn.soon { opacity: 0.45; cursor: default; }
-    .store-btn.soon:hover { transform: none; opacity: 0.45; }
-    .store-btn-text { display: flex; flex-direction: column; line-height: 1.2; }
-    .store-btn-label { font-size: 0.67rem; font-weight: 400; letter-spacing: 0.03em; opacity: 0.85; text-transform: uppercase; }
-    .store-btn-name { font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; }
-
-    /* ── CONTENT CARDS ── */
-    .content-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 30px 34px; margin-bottom: 12px; }
-    .content-card h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
-    .content-card h2 .icon { width: 30px; height: 30px; border-radius: 8px; background: var(--secondary); display: grid; place-items: center; font-size: 14px; flex-shrink: 0; }
-    .content-card p { font-size: 0.91rem; color: var(--muted); line-height: 1.7; margin-bottom: 10px; }
-    .content-card p:last-child { margin-bottom: 0; }
-    .content-card a { color: var(--fore); text-decoration: none; border-bottom: 1px solid var(--border); transition: border-color 0.2s, color 0.2s; }
-    .content-card a:hover { color: var(--blue); border-bottom-color: var(--blue); }
-    .feature-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 7px; margin-top: 4px; }
-    .feature-list li { font-size: 0.91rem; color: var(--muted); line-height: 1.6; padding-left: 16px; position: relative; }
-    .feature-list li::before { content: "•"; color: var(--primary-dark); position: absolute; left: 0; font-weight: 700; }
-
-    /* ── SECTION LABEL ── */
-    .section-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
-    .section-label::after { content: ""; flex: 1; height: 1px; background: var(--border); }
-
-    /* ── FAQ ── */
-    .faq-grid { display: flex; flex-direction: column; gap: 4px; }
-    details { background: var(--card); border: 1px solid var(--border); border-radius: calc(var(--radius) - 6px); overflow: hidden; transition: box-shadow 0.2s, border-color 0.2s; }
-    details[open] { box-shadow: 0 4px 20px rgba(100,170,220,0.12); border-color: var(--blue); }
-    summary { padding: 16px 20px; font-size: 0.93rem; font-weight: 700; color: var(--fore); cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; list-style: none; user-select: none; }
-    summary::-webkit-details-marker { display: none; }
-    .si { width: 25px; height: 25px; min-width: 25px; border-radius: 50%; background: var(--secondary); display: grid; place-items: center; font-size: 14px; color: var(--primary-dark); transition: background 0.2s, transform 0.25s; }
-    details[open] .si { background: var(--blue-lt); transform: rotate(45deg); }
-    .faq-answer { padding: 12px 20px 16px; font-size: 0.9rem; line-height: 1.7; color: var(--muted); border-top: 1px solid var(--border); }
-    .faq-answer a { color: var(--fore); text-decoration: none; border-bottom: 1px solid var(--border); transition: border-color 0.2s, color 0.2s; }
-    .faq-answer a:hover { color: var(--blue); border-bottom-color: var(--blue); }
-
-    /* ── PRIVACY STRIP ── */
-    .privacy-strip { background: var(--secondary); border-radius: var(--radius); padding: 20px 26px; margin-bottom: 48px; display: flex; align-items: flex-start; gap: 14px; }
-    .privacy-strip p { font-size: 0.88rem; color: var(--primary-dark); line-height: 1.65; }
-    .privacy-strip a { color: var(--primary-dark); text-decoration: underline; text-underline-offset: 3px; }
-
-    /* ── FEATURE REQUEST ── */
-    .feature-request { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 34px; margin-bottom: 48px; display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
-    .feature-request p { font-size: 0.9rem; color: var(--muted); line-height: 1.6; flex: 1; }
-    .feature-request p strong { color: var(--fore); }
-    .feature-request a { background: var(--secondary); color: var(--primary-dark); text-decoration: none; padding: 9px 18px; border-radius: 100px; font-size: 0.82rem; font-weight: 700; white-space: nowrap; transition: background 0.2s; }
-    .feature-request a:hover { background: var(--blue-lt); }
-
-    /* ── CONTACT FORM ── */
-    .form-section { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 36px 40px; margin-bottom: 12px; }
-    .form-section h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 6px; }
-    .form-section .form-intro { font-size: 0.91rem; color: var(--muted); line-height: 1.65; margin-bottom: 28px; }
-    .form-row { display: flex; flex-direction: column; gap: 6px; margin-bottom: 18px; }
-    .form-row label { font-size: 0.82rem; font-weight: 700; color: var(--fore); }
-    .form-row label span { color: var(--muted); font-weight: 400; margin-left: 4px; }
-    .form-row input,
-    .form-row select,
-    .form-row textarea {
-      width: 100%; font-family: "PT Sans", sans-serif; font-size: 0.91rem;
-      background: var(--bg); color: var(--fore);
-      border: 1px solid var(--border); border-radius: 0.75rem;
-      padding: 11px 14px; transition: border-color 0.2s, box-shadow 0.2s;
-      outline: none; appearance: none;
-    }
-    .form-row input:focus,
-    .form-row select:focus,
-    .form-row textarea:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(80,170,220,0.12); }
-    .form-row textarea { resize: vertical; min-height: 120px; line-height: 1.6; }
-    .form-row select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
-    .form-submit { display: inline-flex; align-items: center; justify-content: center; background: var(--fore); color: white; border: none; padding: 13px 32px; border-radius: 100px; font-family: "PT Sans", sans-serif; font-size: 0.92rem; font-weight: 700; cursor: pointer; transition: background 0.2s, transform 0.15s; width: 100%; margin-top: 4px; }
-    .form-submit:hover { background: var(--blue); transform: translateY(-1px); }
-    .form-submit:disabled { opacity: 0.6; cursor: default; transform: none; }
-    .form-success { display: none; background: hsl(145, 55%, 94%); border: 1px solid hsl(145, 45%, 80%); border-radius: 0.75rem; padding: 16px 20px; margin-top: 18px; font-size: 0.91rem; color: hsl(145, 50%, 28%); line-height: 1.6; }
-    .form-success.visible { display: block; }
-    .form-error-msg { display: none; font-size: 0.78rem; color: hsl(0, 65%, 50%); margin-top: 4px; }
-    .form-row.has-error input,
-    .form-row.has-error textarea { border-color: hsl(0, 65%, 60%); }
-    .form-row.has-error .form-error-msg { display: block; }
-
-    /* ── FOOTER ── */
-    footer { border-top: 1px solid var(--border); padding: 40px 2.5rem 28px; background: var(--card); }
-    .footer-inner { max-width: 1160px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 36px; }
-    .footer-brand img { height: 44px; margin-bottom: 12px; }
-    .footer-brand p { font-size: 0.84rem; color: var(--muted); line-height: 1.65; max-width: 240px; }
-    .footer-col h4 { font-size: 0.77rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--fore); margin-bottom: 14px; }
-    .footer-col a { display: block; font-size: 0.84rem; color: var(--muted); text-decoration: none; margin-bottom: 8px; transition: color 0.2s; }
-    .footer-col a:hover { color: var(--blue); }
-    .footer-bottom { max-width: 1160px; margin: 0 auto; padding-top: 22px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-    .footer-bottom span { font-size: 0.77rem; color: var(--muted); word-break: break-word; }
-
-    /* ── ANIMATIONS ── */
-    @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
-    h1       { animation: fadeUp 0.4s 0.06s ease both; }
-    .hero-sub { animation: fadeUp 0.4s 0.12s ease both; }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 900px) {
-      nav { padding: 0 1.5rem; }
-      .nav-links { display: none; }
-      .nav-hamburger { display: block; }
-      .footer-inner { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 600px) {
-      nav { padding: 0 1.25rem; }
-      .hero { padding: 48px 1.25rem 32px; }
-      .section { padding: 0 1.25rem; }
-      .contact-cta-card, .store-card, .content-card, .feature-request, .form-section { padding: 20px 16px; }
-      .footer-inner { grid-template-columns: 1fr; }
-      .footer-bottom { flex-direction: column; align-items: flex-start; }
-    }
+    @media (prefers-reduced-motion: reduce) { .ff-dot, .sent.visible { animation: none; } .search, .row input, .row textarea { transition: none; } }
   </style>
-  <link rel="stylesheet" href="/assets/site-glass.css" />
 </head>
-<body>
+<body class="ff-page">
 
-<!-- NAV -->
-<nav id="main-nav">
-  <a href="/" class="logo">
-    <img src="/logo.png" alt="FoodieFlow" />
-  </a>
-  <div class="nav-links">
-    <a href="/support/">Support</a>
-    <a href="/privacy/">Privacy</a>
-    <a href="/terms/">Terms of Use</a>
+<div class="ff-top">
+  <div class="ff-wrap">
+    <nav id="main-nav" class="ff-nav" aria-label="Main">
+      <a class="ff-brand" href="/" aria-label="FoodieFlow home"><img src="/favicon.png" alt="" width="40" height="40" /><span>FoodieFlow</span></a>
+      <div class="ff-navlinks">
+        <a href="/#features">Features</a>
+        <a href="/#pro">Pro</a>
+        <a href="/compare/">Compare</a>
+        <a href="/blog/">Blog</a>
+        <a href="/support/" aria-current="page">Support</a>
+      </div>
+      <div class="ff-navend">
+        <a class="ff-btn ff-btn--sm" href="/#download">Get the app <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <button class="ff-menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="ff-sheet"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg></button>
+      </div>
+    </nav>
   </div>
-  <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
-<div class="mobile-menu" id="mobile-menu">
-  <a href="/support/" class="mobile-nav-link">Support</a>
-  <a href="/privacy/" class="mobile-nav-link">Privacy</a>
-  <a href="/terms/" class="mobile-nav-link">Terms of Use</a>
 </div>
-<script>
-  var btn = document.getElementById('hamburger');
-  var menu = document.getElementById('mobile-menu');
-  btn.addEventListener('click', function() {
-    btn.classList.toggle('open');
-    menu.classList.toggle('open');
-    document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
-  });
-  document.querySelectorAll('.mobile-nav-link').forEach(function(link) {
-    link.addEventListener('click', function() {
-      btn.classList.remove('open');
-      menu.classList.remove('open');
-      document.body.style.overflow = '';
-    });
-  });
-</script>
 
-<!-- HERO -->
-<section class="hero">
-  <p class="hero-welcome">FoodieFlow Support</p>
-  <h1>How can we help <span>you?</span></h1>
-  <p class="hero-sub">Find answers to common questions below, or <a href="#contact-form">use the support form</a> and we'll get back to you as soon as possible.</p>
-  <p class="hero-tagline">We're always working to improve FoodieFlow — your feedback helps us make the app better.</p>
+<div class="ff-sheet" id="ff-sheet" hidden>
+  <div class="ff-sheet__scrim" data-close></div>
+  <section class="ff-sheet__panel" role="dialog" aria-modal="true" aria-label="Menu">
+    <span class="ff-sheet__grip" aria-hidden="true"></span>
+    <div class="ff-sheet__head">
+      <span class="ff-brand"><img src="/favicon.png" alt="" width="36" height="36" /><span>FoodieFlow</span></span>
+      <button class="ff-sheet__close" type="button" aria-label="Close menu" data-close><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="ff-sheet__links" role="navigation" aria-label="Menu links">
+      <a href="/#features">Features<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9AA0A8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+      <a href="/#how-it-works">How it works<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9AA0A8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+      <a href="/#pro">Pro Chef<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9AA0A8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+      <a href="/compare/">Compare apps<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9AA0A8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+      <a href="/blog/">Blog<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9AA0A8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+      <a href="/support/" aria-current="page">Support<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9AA0A8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+    </div>
+    <div class="ff-sheet__stores">
+      <a href="https://apps.apple.com/us/app/foodieflow-meal-planner/id6760259767" target="_blank" rel="noopener noreferrer">App Store</a>
+      <a href="https://play.google.com/store/apps/details?id=com.foodieflow.app" target="_blank" rel="noopener noreferrer">Google Play</a>
+    </div>
+    <p class="ff-sheet__note">Free to download. Pro Chef from <span class="rc-price-inline">£3.99</span> a month.</p>
+  </section>
+</div>
+
+<main>
+<header class="ff-wrap s-head">
+  <span class="ff-pill ff-rise"><span class="ff-dot" aria-hidden="true"></span>All systems running normally</span>
+  <h1 class="ff-h1 ff-rise-2">How can we help?</h1>
+  <form class="search ff-rise-3" role="search" onsubmit="return false">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+    <input id="q" type="search" placeholder="Search help, like “import a TikTok”" aria-label="Search help" autocomplete="off" />
+    <button class="ff-btn ff-btn--sm" type="submit">Search</button>
+  </form>
+</header>
+
+<section class="ff-wrap" aria-label="Help topics">
+  <div class="topics">
+    <button class="topic ff-lift" type="button" data-topic="assistant" aria-pressed="false" data-reveal>
+      <span class="ff-tile ff-tile--blue"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></svg></span>
+      <span><b>Foodie Assistant</b><small>Ideas, moods and cravings</small></span>
+    </button>
+    <button class="topic ff-lift" type="button" data-topic="import" aria-pressed="false" data-reveal>
+      <span class="ff-tile ff-tile--amber"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg></span>
+      <span><b>Importing recipes</b><small>Links, videos and photos</small></span>
+    </button>
+    <button class="topic ff-lift" type="button" data-topic="planner" aria-pressed="false" data-reveal>
+      <span class="ff-tile ff-tile--blue"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 5h10a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V8a3 3 0 0 1 3-3zM4 10h16M9 3v4M15 3v4"/></svg></span>
+      <span><b>Planner</b><small>Templates, repeats, Auto-fill</small></span>
+    </button>
+    <button class="topic ff-lift" type="button" data-topic="list" aria-pressed="false" data-reveal>
+      <span class="ff-tile ff-tile--green"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10h16l-1.6 9.2a2 2 0 0 1-2 1.8H7.6a2 2 0 0 1-2-1.8zM8.5 10L11 4M15.5 10L13 4"/></svg></span>
+      <span><b>Shopping list</b><small>Aisles, pantry, sharing</small></span>
+    </button>
+    <button class="topic ff-lift" type="button" data-topic="household" aria-pressed="false" data-reveal>
+      <span class="ff-tile ff-tile--purple"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5L12 4l8 6.5V20H4zM10 20v-5h4v5"/></svg></span>
+      <span><b>Household mode</b><small>Invites and shared plans</small></span>
+    </button>
+    <button class="topic ff-lift" type="button" data-topic="pro" aria-pressed="false" data-reveal>
+      <span class="ff-tile ff-tile--amber"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"/></svg></span>
+      <span><b>Pro and billing</b><small>Plans, upgrades, cancelling</small></span>
+    </button>
+  </div>
 </section>
 
-<!-- STATUS -->
-<div class="section" style="margin-bottom:16px;">
-  <div class="status-banner">
-    <span class="status-dot"></span>
-    <p><strong>System status: Operational.</strong> If FoodieFlow experiences temporary service issues, updates will appear here.</p>
-  </div>
-</div>
-
-<!-- CONTACT CTA CARD -->
-<div class="section" style="margin-bottom:14px;">
-  <div class="contact-cta-card">
-    <div class="contact-cta-card-text">
-      <h2>Need help?</h2>
-      <p>If you're experiencing issues or have questions about FoodieFlow, we're happy to help.<br>We aim to respond within 24–48 hours on business days.</p>
-    </div>
-    <a href="#contact-form" class="contact-cta-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg> Contact Support</a>
-  </div>
-</div>
-
-<!-- SECURITY NOTICE -->
-<div class="section" style="margin-bottom:48px;">
-  <div class="security-notice">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M12 2 3 6v6c0 5 4 9.5 9 11 5-1.5 9-6 9-11V6l-9-4z"/></svg>
-    <p><strong>Security notice:</strong> FoodieFlow support will never ask for your password or payment information.</p>
-  </div>
-</div>
-
-<!-- DOWNLOAD -->
-<div class="section" style="margin-bottom:48px;">
-  <div class="store-card">
-    <div class="store-card-text">
-      <h2>Download FoodieFlow</h2>
-      <p>Available on iOS &amp; Android.</p>
-    </div>
-    <div class="store-buttons">
-      <a href="https://apps.apple.com/us/app/foodieflow-meal-planner/id6760259767" class="store-btn">
-        <svg width="28" height="34" viewBox="0 0 814 1000" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-57.8-155.5-127.4C46 790.7 0 663 0 541.8c0-207.5 135.4-317.3 269-317.3 70.1 0 128.4 46.4 172.5 46.4 42.8 0 109.6-49 192.5-49 30.9 0 113.8 2.6 168.9 98.3zm-234.8-181.4c31.3-36.9 53.7-88.1 53.7-139.3 0-7.1-.6-14.3-1.9-20.1-50.6 1.9-110.8 33.7-147.1 75.8-28.5 32.4-55.1 83.6-55.1 135.5 0 7.8 1.3 15.6 1.9 18.1 3.2.6 8.4 1.3 13.6 1.3 45.4 0 102.5-30.4 134.9-71.3z"/></svg>
-        <span class="store-btn-text">
-          <span class="store-btn-label">Download on the</span>
-          <span class="store-btn-name">App Store</span>
-        </span>
-      </a>
-      <a href="https://play.google.com/store/apps/details?id=com.foodieflow.app" class="store-btn" target="_blank" rel="noopener">
-        <svg width="22" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M3.18 23.76a2 2 0 0 0 2.08-.21l11.39-6.58-3.22-3.22L3.18 23.76z" fill="white"/>
-          <path d="M21.28 10.4 17.64 8.3 14.1 11.86l3.54 3.54 3.64-2.1a2 2 0 0 0 0-3.46z" fill="white"/>
-          <path d="M3.18.24A2 2 0 0 0 2 2v20a2 2 0 0 0 1.18 1.76L13.38 12 3.18.24z" fill="white"/>
-          <path d="M5.26.45 16.65 7.03 13.38 10.3 3.18.24A2 2 0 0 1 5.26.45z" fill="white"/>
-        </svg>
-        <span class="store-btn-text">
-          <span class="store-btn-label">Get it on</span>
-          <span class="store-btn-name">Google Play</span>
-        </span>
-      </a>
-    </div>
-  </div>
-</div>
-
-<!-- HOW FOODIEFLOW HELPS -->
-<div class="section section-gap">
-  <div class="section-label">What FoodieFlow does</div>
-  <div class="content-card">
-    <h2><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span> How FoodieFlow helps you</h2>
-    <p>FoodieFlow helps simplify your weekly cooking and grocery planning. Here's what you can do with the app:</p>
-    <ul class="feature-list">
-      <li>Organise your personal meals in one place</li>
-      <li>Automatically generate weekly meal plans</li>
-      <li>Create shopping lists from your selected meals</li>
-      <li>Discover new meal ideas based on ingredients you already have at home</li>
-      <li>Save your dietary preferences, allergies, and ingredient restrictions</li>
-    </ul>
-  </div>
-</div>
-
-<!-- FAQ -->
-<div class="section section-gap">
-  <div class="section-label">Common questions</div>
-  <div class="faq-grid">
-
-    <details>
-      <summary>How do I generate meal ideas? <span class="si">+</span></summary>
-      <div class="faq-answer">Open the Meal Ideas section, enter ingredients you'd like to use, and FoodieFlow will suggest meal ideas based on what you have available.</div>
-    </details>
-
-    <details>
-      <summary>How do I edit my weekly meal plan? <span class="si">+</span></summary>
-      <div class="faq-answer">Tap any day in the weekly planner and choose a different meal from your saved meals. You can rearrange or remove meals at any time.</div>
-    </details>
-
-    <details>
-      <summary>How do shopping lists work? <span class="si">+</span></summary>
-      <div class="faq-answer">When meals are added to your weekly plan, FoodieFlow automatically combines all the ingredients into a single shopping list for you.</div>
-    </details>
-
-    <details>
-      <summary>The app is behaving strangely — what should I try? <span class="si">+</span></summary>
-      <div class="faq-answer">
-        Try these steps in order:
-        <ul class="feature-list" style="margin-top:10px;">
-          <li>Close and reopen the app</li>
-          <li>Ensure you are using the latest version from the App Store or Google Play</li>
-          <li>Check your internet connection</li>
-          <li>Sign out and back in from the Account tab</li>
-          <li>Restart your device</li>
-        </ul>
-        <p style="margin-top:10px;">If the problem continues, please <a href="#contact-form">contact us via the support form</a>.</p>
+<section id="faq" class="ff-wrap split">
+  <div class="faq-col">
+    <h2>Common questions</h2>
+    <p class="filter-note" id="filter-note" aria-live="polite"><span id="filter-text"></span><button type="button" id="clear">Show all</button></p>
+    <div class="faqs ff-acc" id="faqs">
+      <div class="ff-acc__item" data-topic="assistant">
+        <button class="ff-acc__q" type="button" aria-expanded="true">How do I get meal ideas?<span class="ff-acc__chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button>
+        <div class="ff-acc__a"><div><p>Tap Generate idea on Home or in the + menu to open Foodie Assistant. Pick a mood, describe a craving or hit Surprise me, and you get a full recipe back, built around your diet and what is already in your pantry.</p></div></div>
       </div>
-    </details>
-
-    <details>
-      <summary>What's the difference between Free and Pro? <span class="si">+</span></summary>
-      <div class="faq-answer">Free accounts include a limited number of meal suggestions and access to core planning features. Pro members (<span class="rc-price-inline">£3.99</span>/month) get unlimited AI meal suggestions, detailed nutrition information, and priority access to new features.</div>
-    </details>
-
-    <details>
-      <summary>How do I manage my subscription? <span class="si">+</span></summary>
-      <div class="faq-answer">Subscriptions can be managed through your App Store or Google Play account settings. From there you can upgrade, downgrade, or cancel at any time. Changes take effect at the end of your current billing period.</div>
-    </details>
-
-    <details>
-      <summary>Why can't I see Pro features after subscribing? <span class="si">+</span></summary>
-      <div class="faq-answer">If you recently subscribed, try refreshing the app or signing out and back in from the Account tab. If the issue continues, please <a href="#contact-form">contact us via the support form</a>.</div>
-    </details>
-
-    <details>
-      <summary>Can I change my dietary preferences and allergies? <span class="si">+</span></summary>
-      <div class="faq-answer">Yes, at any time. Go to the <strong>Account</strong> tab → <strong>Diet</strong> to update your dietary preferences, allergies, disliked ingredients, and measurement system. Changes apply immediately to new meal suggestions.</div>
-    </details>
-
-    <details>
-      <summary>How is my data used? <span class="si">+</span></summary>
-      <div class="faq-answer">FoodieFlow stores only the information needed to provide the service — such as your meals, preferences, and shopping lists. Your personal data is never sold or shared with third parties. You can request full account deletion at any time by <a href="#contact-form">contacting us via the support form</a>.</div>
-    </details>
-
-    <details>
-      <summary>Can I suggest a new feature? <span class="si">+</span></summary>
-      <div class="faq-answer">Yes — we love hearing ideas from users. Many features in FoodieFlow have come directly from user feedback. <a href="#contact-form">Send us your suggestion via the support form</a> and we'll consider it for future updates.</div>
-    </details>
-
-    <details>
-      <summary>Is FoodieFlow available on Android? <span class="si">+</span></summary>
-      <div class="faq-answer">Yes — FoodieFlow is available on both iOS and Android. Download it from the <a href="https://apps.apple.com/us/app/foodieflow-meal-planner/id6760259767" target="_blank" rel="noopener">App Store</a> or <a href="https://play.google.com/store/apps/details?id=com.foodieflow.app" target="_blank" rel="noopener">Google Play</a>.</div>
-    </details>
-
+      <div class="ff-acc__item" data-topic="import">
+        <button class="ff-acc__q" type="button" aria-expanded="false">How do I import a recipe?<span class="ff-acc__chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button>
+        <div class="ff-acc__a"><div><p>Tap + and choose Import. Paste a website, TikTok or YouTube link, or switch to Photo or file to snap a cookbook page or upload a PDF. A checklist shows progress, you can cancel at any time, and every import can be checked before it saves.</p></div></div>
+      </div>
+      <div class="ff-acc__item" data-topic="planner">
+        <button class="ff-acc__q" type="button" aria-expanded="false">How do I edit my weekly plan?<span class="ff-acc__chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button>
+        <div class="ff-acc__a"><div><p>Open Plan, tap a day and choose a meal from your library. Drag meals between days, repeat last week or use Auto-fill for the empty days. You can rearrange or remove meals at any time.</p></div></div>
+      </div>
+      <div class="ff-acc__item" data-topic="list">
+        <button class="ff-acc__q" type="button" aria-expanded="false">How does the shopping list work?<span class="ff-acc__chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button>
+        <div class="ff-acc__a"><div><p>Everything in your plan is combined into one list, sorted by aisle, with duplicate ingredients merged across the week. Items you have marked in your pantry are left off, and part-stocked ones are reduced. Change the plan and the list follows.</p></div></div>
+      </div>
+      <div class="ff-acc__item" data-topic="household">
+        <button class="ff-acc__q" type="button" aria-expanded="false">How does Household mode work?<span class="ff-acc__chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button>
+        <div class="ff-acc__a"><div><p>A household shares one meal plan, shopping list and cookbook in real time. Invite members by username so everyone keeps their own login. Creating a household needs Pro Chef, and anyone you invite joins for free. You can keep your pantry personal or share it with the household.</p></div></div>
+      </div>
+      <div class="ff-acc__item" data-topic="pro">
+        <button class="ff-acc__q" type="button" aria-expanded="false">What is the difference between Free and Pro?<span class="ff-acc__chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button>
+        <div class="ff-acc__a"><div><p>Free Chef covers planning, importing, full pantry tracking and the shopping list, with 10 meal ideas and 3 video imports a week and up to 28 saved recipes. Pro Chef, <span class="rc-price-inline">£3.99</span> a month, adds unlimited ideas with moods and cravings, full nutrition, up to 20 video imports a week, reusable week templates and household creation.</p></div></div>
+      </div>
+      <div class="ff-acc__item" data-topic="pro">
+        <button class="ff-acc__q" type="button" aria-expanded="false">How do I manage my subscription?<span class="ff-acc__chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button>
+        <div class="ff-acc__a"><div><p>Subscriptions are managed through your App Store or Google Play account settings. From there you can upgrade, downgrade or cancel at any time. Changes take effect at the end of your current billing period, and you keep Pro until then.</p></div></div>
+      </div>
+      <div class="ff-acc__item" data-topic="pro">
+        <button class="ff-acc__q" type="button" aria-expanded="false">Why can't I see Pro features after subscribing?<span class="ff-acc__chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button>
+        <div class="ff-acc__a"><div><p>If you subscribed recently, try refreshing the app or signing out and back in from Account. If it still does not show, <a href="#contact-form">send us a message</a>.</p></div></div>
+      </div>
+      <div class="ff-acc__item" data-topic="assistant">
+        <button class="ff-acc__q" type="button" aria-expanded="false">Can I change my dietary preferences and allergies?<span class="ff-acc__chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button>
+        <div class="ff-acc__a"><div><p>Yes, at any time. Open Account, then Diet, to update your dietary preferences, allergies, disliked ingredients and measurement system. Changes apply straight away to new meal suggestions.</p></div></div>
+      </div>
+      <div class="ff-acc__item" data-topic="general">
+        <button class="ff-acc__q" type="button" aria-expanded="false">The app is behaving strangely. What should I try?<span class="ff-acc__chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button>
+        <div class="ff-acc__a"><div><p>Try these in order:</p><ul><li>Close and reopen the app</li><li>Update to the latest version from the App Store or Google Play</li><li>Check your internet connection</li><li>Sign out and back in from Account</li><li>Restart your device</li></ul><p>If it keeps happening, <a href="#contact-form">contact us</a>.</p></div></div>
+      </div>
+      <div class="ff-acc__item" data-topic="general">
+        <button class="ff-acc__q" type="button" aria-expanded="false">How is my data used?<span class="ff-acc__chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button>
+        <div class="ff-acc__a"><div><p>FoodieFlow stores only what it needs to provide the service, such as your meals, preferences and shopping lists. Your personal data is never sold. You can ask for your account to be deleted at any time through <a href="#contact-form">the support form</a>. See the <a href="/privacy/">Privacy Policy</a> for full details.</p></div></div>
+      </div>
+      <div class="ff-acc__item" data-topic="general">
+        <button class="ff-acc__q" type="button" aria-expanded="false">Can I suggest a new feature?<span class="ff-acc__chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button>
+        <div class="ff-acc__a"><div><p>Yes, please do. Many features in FoodieFlow came straight from user feedback. <a href="#contact-form">Send us your idea</a>, or use Feedback from Account in the app.</p></div></div>
+      </div>
+      <div class="ff-acc__item" data-topic="general">
+        <button class="ff-acc__q" type="button" aria-expanded="false">Is FoodieFlow available on Android?<span class="ff-acc__chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button>
+        <div class="ff-acc__a"><div><p>Yes. FoodieFlow is on both iPhone and Android. Download it from the <a href="https://apps.apple.com/us/app/foodieflow-meal-planner/id6760259767" target="_blank" rel="noopener noreferrer">App Store</a> or <a href="https://play.google.com/store/apps/details?id=com.foodieflow.app" target="_blank" rel="noopener noreferrer">Google Play</a>.</p></div></div>
+      </div>
+      <p class="empty" id="empty">Nothing matches that yet. <a href="#contact-form">Send us a message</a> and we will help.</p>
+    </div>
   </div>
-</div>
 
-<!-- BEFORE CONTACTING -->
-<div class="section section-gap">
-  <div class="section-label">Before contacting support</div>
-  <div class="content-card">
-    <h2><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg></span> Help us help you faster</h2>
-    <p>When reaching out, including the following will help us resolve your issue much more quickly:</p>
-    <ul class="feature-list">
-      <li>A description of the issue and what you were doing when it happened</li>
-      <li>The device you are using (iPhone or Android)</li>
-      <li>The version of FoodieFlow installed (found in the Account tab)</li>
-      <li>Screenshots or a screen recording if possible</li>
+  <aside class="side">
+    <div class="contact" data-reveal>
+      <div class="ff-blob" aria-hidden="true" style="right:-70px;top:-90px;width:240px;height:240px;background:rgba(30,111,224,.35)"></div>
+      <h3>Still stuck? Message us.</h3>
+      <p>We aim to reply within 24 to 48 hours on business days. You can also send Feedback from Account in the app.</p>
+      <a class="ff-btn ff-btn--light" href="#contact-form">Contact support <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+    <div class="warn" data-reveal>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9A6B00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/></svg>
+      <span><b>We will never ask for your password</b> or payment details. If someone does, it is not us.</span>
+    </div>
+    <div class="subs" data-reveal>
+      <b>Manage your subscription</b>
+      <p>Pro Chef is billed by the store you subscribed through.</p>
+      <div>
+        <a href="https://apps.apple.com/account/subscriptions" target="_blank" rel="noopener noreferrer">App Store settings</a>
+        <a href="https://play.google.com/store/account/subscriptions" target="_blank" rel="noopener noreferrer">Google Play settings</a>
+      </div>
+    </div>
+  </aside>
+</section>
+
+<section class="ff-wrap helpers" aria-label="Before you get in touch">
+  <article class="helper" data-reveal>
+    <span class="ff-tile ff-tile--blue"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 3h6v4H9zM9 12h6M9 16h4"/></svg></span>
+    <h3>Help us help you faster</h3>
+    <ul>
+      <li>What happened, and what you were doing at the time</li>
+      <li>Your device, iPhone or Android</li>
+      <li>The FoodieFlow version, shown in Account</li>
+      <li>A screenshot or screen recording if you can</li>
     </ul>
-    <p style="margin-top:12px;">If something isn't working as expected, <a href="#contact-form">use the support form below</a> and we'll investigate.</p>
-  </div>
-</div>
+  </article>
+  <article class="helper green" data-reveal>
+    <span class="ff-tile ff-tile--green"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2l1.5 1.5M14.5 3.5L16 2M9 7.5a3 3 0 0 1 6 0M6.5 9.5A7 7 0 0 0 5 14a7 7 0 0 0 14 0 7 7 0 0 0-1.5-4.5M5 14H2M22 14h-3M12 21v-7M5 9L2 7M19 9l3-2"/></svg></span>
+    <h3>Found something broken?</h3>
+    <p>Bug reports genuinely help keep FoodieFlow running smoothly. Tell us which screen you were on and what you did just before it went wrong.</p>
+  </article>
+  <article class="helper dark" data-reveal>
+    <span class="ff-tile" style="background:rgba(255,255,255,.1);color:#fff"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+    <h3>Your data stays yours</h3>
+    <p>FoodieFlow only stores what it needs to run. Your dietary preferences and meal history are never sold. Read the <a href="/privacy/">Privacy Policy</a> for the details.</p>
+  </article>
+</section>
 
-<!-- REPORT A BUG -->
-<div class="section section-gap">
-  <div class="section-label">Report a bug</div>
-  <div class="content-card">
-    <h2><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2l1.5 1.5"/><path d="M14.5 3.5 16 2"/><path d="M9 7.5A3 3 0 0 1 15 7.5"/><path d="M6.5 9.5A7 7 0 0 0 5 14a7 7 0 0 0 14 0 7 7 0 0 0-1.5-4.5"/><path d="M5 14H2"/><path d="M22 14h-3"/><path d="M12 21v-7"/><path d="M5 9 2 7"/><path d="M19 9l3-2"/></svg></span> Found something broken?</h2>
-    <p>We really appreciate bug reports — they help us keep FoodieFlow running smoothly. <a href="#contact-form">Use the support form below</a> and include:</p>
-    <ul class="feature-list">
-      <li>A screenshot or screen recording of the issue</li>
-      <li>What you were doing just before the problem occurred</li>
-      <li>Which screen or section of the app you were on</li>
-    </ul>
+<section id="contact-form" class="ff-wrap form-wrap">
+  <div class="form-intro" data-reveal>
+    <span class="ff-eyebrow">Get in touch</span>
+    <h2 class="ff-h2">Contact support</h2>
+    <p>Can't find the answer you need? Fill in the form and we'll get back to you within 24 to 48 hours on business days.</p>
   </div>
-</div>
-
-<!-- FEATURE REQUESTS -->
-<div class="section section-gap">
-  <div class="feature-request">
-    <p><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:6px;flex-shrink:0;"><path d="M15 14c.2-1 .7-1.7 1.5-2.5C17.9 10.1 19 8.7 19 7a7 7 0 1 0-14 0c0 1.7 1.1 3.1 2.5 4.5.8.8 1.3 1.5 1.5 2.5"/><line x1="9" y1="18" x2="15" y2="18"/><line x1="10" y1="21" x2="14" y2="21"/></svg><strong>Have an idea for FoodieFlow?</strong> We'd love to hear it. Many features in the app come directly from user feedback.</p>
-    <a href="#contact-form">Share your idea</a>
-  </div>
-</div>
-
-<!-- PRIVACY STRIP -->
-<div class="section section-gap">
-  <div class="privacy-strip">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-    <p><strong>Your data stays yours.</strong> FoodieFlow only stores information required to provide the service. Your personal data, including dietary preferences and meal history, is never sold or shared with third parties. You can request account deletion at any time by <a href="#contact-form">contacting us via the support form</a>. See our <a href="/privacy/">Privacy Policy</a> for full details.</p>
-  </div>
-</div>
-
-<!-- CONTACT FORM -->
-<div class="section section-gap" id="contact-form">
-  <div class="section-label">Get in touch</div>
-  <div class="form-section">
-    <h2>Contact Support</h2>
-    <p class="form-intro">Can't find the answer you need? Fill in the form below and we'll get back to you within 24–48 hours on business days.</p>
+  <div class="form-card" data-reveal>
     <form id="support-form" action="https://formspree.io/f/mlgpndqn" method="POST" novalidate>
-      <div class="form-row" id="row-name">
+      <div class="row" id="row-name">
         <label for="name">Name <span>(optional)</span></label>
         <input type="text" id="name" name="name" placeholder="Your name" autocomplete="name" />
       </div>
-      <div class="form-row" id="row-email">
+      <div class="row" id="row-email">
         <label for="email">Email address <span>(required)</span></label>
-        <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required />
-        <span class="form-error-msg">Please enter a valid email address.</span>
+        <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required aria-describedby="email-err" />
+        <span class="err" id="email-err">Please enter a valid email address.</span>
       </div>
-      <div class="form-row" id="row-subject">
+      <div class="row full" id="row-subject">
         <label for="subject">Subject <span>(optional)</span></label>
         <select id="subject" name="subject">
           <option value="">Select a topic…</option>
@@ -500,108 +338,123 @@
           <option value="Privacy / Data Request">Privacy / Data Request</option>
         </select>
       </div>
-      <div class="form-row" id="row-message">
+      <div class="row full" id="row-message">
         <label for="message">Message <span>(required)</span></label>
-        <textarea id="message" name="message" placeholder="Describe your issue or question…" required></textarea>
-        <span class="form-error-msg">Please enter a message.</span>
+        <textarea id="message" name="message" placeholder="Describe your issue or question…" required aria-describedby="message-err"></textarea>
+        <span class="err" id="message-err">Please enter a message.</span>
       </div>
       <!-- Honeypot spam field -->
       <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
-      <button type="submit" class="form-submit" id="submit-btn">Send Message</button>
+      <button type="submit" class="ff-btn" id="submit-btn">Send message <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
     </form>
-    <div class="form-success" id="form-success">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:8px;"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>Thanks, your message has been sent. We aim to reply within 24 to 48 business hours.
+    <div class="sent" id="form-success" role="status">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+      Thanks, your message has been sent. We aim to reply within 24 to 48 business hours.
     </div>
   </div>
-</div>
+</section>
+</main>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <img src="/logo.png" alt="FoodieFlow" />
-      <p>Meal planning made simple. Organise your meals, discover new recipes, and shop smarter — all in one app.</p>
-    </div>
-    <div class="footer-col">
-      <h4>Product</h4>
-      <a href="/#features">Features</a>
-      <a href="/#how-it-works">How it works</a>
-      <a href="/#pro">Pro</a>
-      <a href="/#download">Download</a>
-    </div>
-    <div class="footer-col">
-      <h4>Company</h4>
-      <a href="/privacy/">Privacy Policy</a>
-      <a href="/terms/">Terms of Use</a>
-    </div>
-    <div class="footer-col">
-      <h4>Contact</h4>
+<footer class="ff-footer">
+  <div class="ff-footer__compact">
+    <span><img src="/favicon.png" alt="" width="28" height="28" loading="lazy" /><span>© <span data-year>2026</span> AWD Labs</span></span>
+    <div class="ff-footer__links" role="navigation" aria-label="Footer">
+      <a href="/compare/">Compare</a>
+      <a href="/food-waste-calculator/">Food waste calculator</a>
       <a href="/support/">Support</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/terms/">Terms</a>
     </div>
-  </div>
-  <div class="footer-bottom">
-    <span>© 2026 FoodieFlow. All rights reserved. FoodieFlow is an independent software product.</span>
   </div>
 </footer>
 
+<script src="/assets/ff26.js" defer></script>
+<script src="/pricing.js"></script>
 <script>
-  // Form validation and submission
+(function () {
+  /* FAQ filter: the search box and the topic tiles both narrow the list. */
+  var items = [].slice.call(document.querySelectorAll('#faqs .ff-acc__item'));
+  var q = document.getElementById('q');
+  var topics = document.querySelectorAll('.topic');
+  var note = document.getElementById('filter-note');
+  var noteText = document.getElementById('filter-text');
+  var empty = document.getElementById('empty');
+  var topic = '';
+
+  function apply() {
+    var term = q.value.trim().toLowerCase();
+    var words = term.split(/\s+/).filter(Boolean);
+    var shown = [];
+    items.forEach(function (it) {
+      var text = it.textContent.toLowerCase();
+      var on = (!topic || it.dataset.topic === topic) && words.every(function (w) { return text.indexOf(w) !== -1; });
+      it.hidden = !on;
+      it.classList.remove('is-last');
+      if (on) shown.push(it);
+    });
+    if (shown.length) shown[shown.length - 1].classList.add('is-last');
+    empty.classList.toggle('on', !shown.length);
+    var label = topic ? document.querySelector('.topic[data-topic="' + topic + '"] b').textContent : '';
+    var parts = [];
+    if (label) parts.push(label);
+    if (term) parts.push('“' + q.value.trim() + '”');
+    note.classList.toggle('on', parts.length > 0);
+    noteText.textContent = parts.length ? 'Showing ' + shown.length + ' for ' + parts.join(' and ') : '';
+    if (shown.length && (term || topic)) {
+      items.forEach(function (it) { it.querySelector('.ff-acc__q').setAttribute('aria-expanded', 'false'); });
+      shown[0].querySelector('.ff-acc__q').setAttribute('aria-expanded', 'true');
+    }
+  }
+  q.addEventListener('input', apply);
+  q.form.addEventListener('submit', function () { apply(); document.getElementById('faq').scrollIntoView({ behavior: 'smooth' }); });
+  topics.forEach(function (t) {
+    t.addEventListener('click', function () {
+      topic = topic === t.dataset.topic ? '' : t.dataset.topic;
+      topics.forEach(function (o) { o.setAttribute('aria-pressed', o.dataset.topic === topic ? 'true' : 'false'); });
+      apply();
+      if (topic) document.getElementById('faq').scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+  document.getElementById('clear').addEventListener('click', function () {
+    topic = ''; q.value = '';
+    topics.forEach(function (o) { o.setAttribute('aria-pressed', 'false'); });
+    apply();
+  });
+  apply();
+
+  /* Contact form: validate, then submit to Formspree in place. */
   var form = document.getElementById('support-form');
   var successMsg = document.getElementById('form-success');
   var submitBtn = document.getElementById('submit-btn');
-
-  form.addEventListener('submit', function(e) {
+  var btnHtml = submitBtn.innerHTML;
+  form.addEventListener('submit', function (e) {
     e.preventDefault();
-    var valid = true;
+    var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('email').value.trim());
+    var msgOk = !!document.getElementById('message').value.trim();
+    document.getElementById('row-email').classList.toggle('has-error', !emailOk);
+    document.getElementById('row-message').classList.toggle('has-error', !msgOk);
+    if (!emailOk || !msgOk) return;
 
-    // Validate email
-    var emailRow = document.getElementById('row-email');
-    var emailVal = document.getElementById('email').value.trim();
-    var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal);
-    emailRow.classList.toggle('has-error', !emailOk);
-    if (!emailOk) valid = false;
-
-    // Validate message
-    var msgRow = document.getElementById('row-message');
-    var msgVal = document.getElementById('message').value.trim();
-    msgRow.classList.toggle('has-error', !msgVal);
-    if (!msgVal) valid = false;
-
-    if (!valid) return;
-
-    // Submit via fetch for SPA-style success message
     submitBtn.disabled = true;
     submitBtn.textContent = 'Sending…';
-
-    var data = new FormData(form);
-    fetch(form.action, {
-      method: 'POST',
-      body: data,
-      headers: { 'Accept': 'application/json' }
-    }).then(function(res) {
-      if (res.ok) {
-        form.style.display = 'none';
-        successMsg.classList.add('visible');
-      } else {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Send Message';
-        alert('Something went wrong. Please try again.');
-      }
-    }).catch(function() {
+    var fail = function (msg) {
       submitBtn.disabled = false;
-      submitBtn.textContent = 'Send Message';
-      alert('Something went wrong. Please check your connection and try again.');
-    });
+      submitBtn.innerHTML = btnHtml;
+      alert(msg);
+    };
+    fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } })
+      .then(function (res) {
+        if (res.ok) { form.style.display = 'none'; successMsg.classList.add('visible'); }
+        else fail('Something went wrong. Please try again.');
+      })
+      .catch(function () { fail('Something went wrong. Please check your connection and try again.'); });
   });
-
-  // Clear error state on input
-  ['email','message'].forEach(function(id) {
-    document.getElementById(id).addEventListener('input', function() {
+  ['email', 'message'].forEach(function (id) {
+    document.getElementById(id).addEventListener('input', function () {
       document.getElementById('row-' + id).classList.remove('has-error');
     });
   });
+})();
 </script>
-<script src="/pricing.js"></script>
-
 </body>
 </html>
