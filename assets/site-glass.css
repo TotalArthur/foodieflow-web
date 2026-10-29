@@ -1,6 +1,10 @@
 /* ──────────────────────────────────────────────────────────────
    Shared frosted navigation bar.
 
+   Since the 2026 redesign this only styles the app-flow pages (/r/, /verify/,
+   /reset-password/, /recover-email/). Every other page uses the nav in
+   /assets/ff26.css.
+
    Every page carries its own inline <style> with its own `nav {}` rule, so
    this file is linked *after* that block in each <head>. At equal specificity
    the later rule wins, which lets one file restyle the bar site-wide without

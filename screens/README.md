@@ -85,3 +85,17 @@ rung exists for blog figures drawing at 420 on a 2x display.
 `LeftoversRecipeBox.jpg` and `LeftoversMealPlan.jpg` are blog-only and remain
 600px pre-refresh captures — there is no 1320px source for them. They predate the
 app's visual refresh, so the blog post they illustrate shows the older UI.
+
+## The October 2026 UI (`app-*`)
+
+The 2026 site redesign shows the app's October 2026 interface, which the phone
+exports above predate. `app-home`, `app-plan`, `app-list` and `app-assistant` come
+from `raw/AppHome.png`, `raw/AppPlan.png`, `raw/AppList.png` and
+`raw/AppAssistant.png`: the app screens drawn in the redesign's design canvas,
+rendered at 390x844 and 3x (1170x2532). The frames on the homepage use the same
+390:844 aspect, so these need no crop.
+
+Since the redesign, `home`, `weekly-planner`, `dietary-preferences`,
+`import-recipe` and `household-mode` are no longer referenced by any page. They
+are kept in the tool so they can come back without a re-export; drop their entries
+from `SCREENS` to have the next run prune them.

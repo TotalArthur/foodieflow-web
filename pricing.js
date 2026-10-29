@@ -1,5 +1,6 @@
 /* Static RevenueCat pricing — exact App Store prices keyed by ISO 3166-1 alpha-2
-   country code. Falls back to US price if geolocation is unavailable. */
+   country code. Countries missing from the table get the US price; if the
+   lookup itself fails, the price written in the page is left as it is. */
 (async function initPricing() {
   const priceBox  = document.getElementById('rc-price-container');
   const inlineEls = document.querySelectorAll('.rc-price-inline');
@@ -71,13 +72,21 @@
     const geoRes = await fetch('https://ipapi.co/json/');
     const geo    = geoRes.ok ? await geoRes.json() : null;
     const code   = geo?.country_code || '';
+    // No country back (lookup blocked or rate-limited): keep the price already
+    // in the page rather than swapping a UK visitor's £3.99 for the US $3.99.
+    if (!code) return;
     const price  = PRICES[code] || PRICES['US'];
     const { symbol, number } = parsePriceStr(price);
 
     if (priceBox) {
       priceBox.innerHTML = `<sup>${symbol}</sup>${number}<sub>/month</sub>`;
     }
-    inlineEls.forEach(el => { el.textContent = price; });
+    inlineEls.forEach(el => {
+      if (el.textContent === price) return;
+      el.textContent = price;
+      // ff26.css fades the new figure in, so the swap from the default reads as an update.
+      el.classList.add('rc-live');
+    });
 
   } catch (e) {
     console.warn('[FoodieFlow] Pricing lookup unavailable:', e.message);
