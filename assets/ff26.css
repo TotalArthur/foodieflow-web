@@ -322,6 +322,8 @@ html.ff-js [data-reveal].is-in { opacity: 1; translate: 0 0; }
   .ff-nav .ff-btn--sm { height: 44px; padding: 0 16px; }
   .ff-nav .ff-btn--sm svg { display: none; }
   .ff-band { padding: 32px 24px; border-radius: 32px; }
+  .ff-footer__compact { flex-direction: column; align-items: flex-start; gap: 20px; }
+  .ff-footer__links { display: grid; grid-template-columns: repeat(3, max-content); gap: 12px 24px; }
   .ff-band h2 { font-size: 34px; }
   .ff-acc__a p, .ff-acc__a ul { padding-right: 0; }
   .ff-acc__q { font-size: 18px; }

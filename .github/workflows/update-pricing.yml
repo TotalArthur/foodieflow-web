@@ -22,6 +22,11 @@ jobs:
         run: python3 .github/fetch-pricing.py
         continue-on-error: true
 
+      # ── Fetch the live App Store rating into the homepage hero ──────────────
+      - name: Fetch App Store rating
+        run: python3 .github/fetch-app-rating.py
+        continue-on-error: true
+
       # ── Regenerate favicon.ico from favicon.png ─────────────────────────────
       - name: Generate favicon.ico from favicon.png
         run: |
@@ -33,11 +38,11 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add pricing.json favicon.ico
+          git add pricing.json favicon.ico index.html
           if git diff --staged --quiet; then
-            echo "Nothing to commit — pricing and assets are already up to date."
+            echo "Nothing to commit, pricing, rating and assets are already up to date."
           else
             PRICE=$(python3 -c "import json; d = json.load(open('pricing.json')); print(f\"{d['base_currency']} {d['base_amount']}\")")
-            git commit -m "chore: sync pricing (${PRICE}) and regenerate favicon"
+            git commit -m "chore: sync pricing (${PRICE}), App Store rating and favicon"
             git push origin HEAD:main
           fi
