@@ -293,6 +293,9 @@
       .feat-copy { padding: 28px; max-width: none !important; }
       .feat h3 { font-size: 32px; letter-spacing: -1px; }
       .feat .phone-slot { position: relative; inset: auto; margin: 4px auto 0; height: 360px; overflow: hidden; display: flex; justify-content: center; }
+      /* Keep the frame at its full height so the card crops it flat, rather than
+         the flex row squashing it to 360px with rounded corners mid-screen. */
+      .feat .phone-slot .ff-phone { align-self: flex-start; flex-shrink: 0; }
       .feat .phone-slot .ff-phone__screen { width: 232px; }
       .feat-import .feat-copy { height: auto !important; }
       .importer { margin-top: 8px; }
