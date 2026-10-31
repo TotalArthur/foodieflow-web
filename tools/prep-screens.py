@@ -139,22 +139,27 @@ SCREENS = {
     # The frame aspect matches the source exactly, so none of these need a crop.
     "app-home": Screen(
         source="raw/AppHome.png",
-        slots=["hero centre phone 312 (234 <=640px)"],
+        slots=["hero phone 312 (242 <=640px)"],
+        max_rung=620,
+    ),
+    "app-recipes": Screen(
+        source="raw/AppRecipes.png",
+        slots=["story phone 273 (240 <=640px)"],
         max_rung=620,
     ),
     "app-plan": Screen(
         source="raw/AppPlan.png",
-        slots=["hero side phone 254", "bento phone 273 (232 <=640px)"],
+        slots=["story phone 273 (240 <=640px)"],
         max_rung=620,
     ),
     "app-list": Screen(
         source="raw/AppList.png",
-        slots=["hero side phone 254", "bento phone 273 (232 <=640px)"],
+        slots=["story phone 273 (240 <=640px)"],
         max_rung=620,
     ),
     "app-assistant": Screen(
         source="raw/AppAssistant.png",
-        slots=["bento phone 273 (232 <=640px)"],
+        slots=["assistant card phone 273, hidden <=640px"],
         max_rung=620,
     ),
     # Blog-only, and still the pre-refresh exports -- there is no 1320px source
