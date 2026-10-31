@@ -4,9 +4,8 @@ Fetches FoodieFlow's live App Store rating from Apple's public lookup API
 and writes it into the homepage, between the app-rating markers.
 Called by .github/workflows/update-pricing.yml. No API key needed.
 
-The homepage shows the rating in two places, each between its own markers:
-  app-rating          the hero's check row ("5.0 from 3 App Store ratings")
-  app-rating-summary  the score card beside the reviews
+The homepage shows the rating once, in the hero's check row between the
+app-rating markers: stars for the average, then "on the App Store".
 
 Uses only the Python standard library, so no pip install is needed.
 """
@@ -52,22 +51,14 @@ count   = int(results[0].get("userRatingCount") or 0)
 print(f"App Store ({COUNTRY.upper()}): {average:.2f} from {count} ratings")
 
 # ── 2. Build the blocks ──────────────────────────────────────────────────────
-# With no ratings yet both blocks are left empty, rather than showing an empty
-# or made-up score.
-noun = "rating" if count == 1 else "ratings"
-blocks = {"app-rating": "", "app-rating-summary": ""}
+# With no ratings yet the block is left empty, rather than showing an empty or
+# made-up score.
+blocks = {"app-rating": ""}
 if count:
     blocks["app-rating"] = (
         f'      <li><span class="stars" role="img" aria-label="Rated {average:.1f} out of 5 on the App Store">'
-        f"{stars(average, 13)}</span>"
-        f'<a href="{APP_URL}" target="_blank" rel="noopener noreferrer">{average:.1f} from {count} App Store {noun}</a></li>'
-    )
-    blocks["app-rating-summary"] = (
-        f'    <a class="rating-sum" href="{APP_URL}" target="_blank" rel="noopener noreferrer" data-reveal>\n'
-        f"      <b>{average:.1f}</b>\n"
-        f'      <span><span class="stars" role="img" aria-label="Rated {average:.1f} out of 5">{stars(average, 14)}</span>'
-        f"From {count} App Store {noun}</span>\n"
-        f"    </a>"
+        f"{stars(average, 14)}</span>"
+        f'<a href="{APP_URL}" target="_blank" rel="noopener noreferrer">on the App Store</a></li>'
     )
 
 # ── 3. Write them into the page ──────────────────────────────────────────────
