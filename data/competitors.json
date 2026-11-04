@@ -26,6 +26,7 @@
     "platforms": "Platforms"
   },
   "comparison_matrix": {
+    "last_verified": "July 2026",
     "columns": [
       "mealime",
       "paprika",
@@ -34,6 +35,7 @@
     "rows": [
       {
         "label": "Smart Meal Assistant",
+        "group": "Planning",
         "foodieflow": true,
         "mealime": false,
         "paprika": false,
@@ -41,6 +43,7 @@
       },
       {
         "label": "One-tap smart weekly meal plan",
+        "group": "Planning",
         "foodieflow": true,
         "mealime": false,
         "paprika": false,
@@ -48,6 +51,7 @@
       },
       {
         "label": "Drag-and-drop weekly planner",
+        "group": "Planning",
         "foodieflow": true,
         "mealime": false,
         "paprika": true,
@@ -55,6 +59,7 @@
       },
       {
         "label": "Basic vs. From Scratch ingredient mode",
+        "group": "Planning",
         "foodieflow": true,
         "mealime": false,
         "paprika": false,
@@ -62,6 +67,7 @@
       },
       {
         "label": "Automatic metric/imperial conversion",
+        "group": "Planning",
         "foodieflow": true,
         "mealime": false,
         "paprika": false,
@@ -69,6 +75,7 @@
       },
       {
         "label": "Per-day servings override",
+        "group": "Planning",
         "foodieflow": true,
         "mealime": false,
         "paprika": false,
@@ -76,6 +83,7 @@
       },
       {
         "label": "Pantry-aware suggestions",
+        "group": "Kitchen and shopping",
         "foodieflow": true,
         "mealime": false,
         "paprika": false,
@@ -83,6 +91,7 @@
       },
       {
         "label": "Pantry auto-exclusion in shopping list",
+        "group": "Kitchen and shopping",
         "foodieflow": true,
         "mealime": false,
         "paprika": false,
@@ -90,6 +99,7 @@
       },
       {
         "label": "Dedicated Pantry tab",
+        "group": "Kitchen and shopping",
         "foodieflow": true,
         "mealime": false,
         "paprika": true,
@@ -97,6 +107,7 @@
       },
       {
         "label": "Auto aisle-sorted shopping list",
+        "group": "Kitchen and shopping",
         "foodieflow": true,
         "mealime": true,
         "paprika": true,
@@ -104,6 +115,7 @@
       },
       {
         "label": "By-recipe shopping list view",
+        "group": "Kitchen and shopping",
         "foodieflow": true,
         "mealime": false,
         "paprika": false,
@@ -111,6 +123,7 @@
       },
       {
         "label": "Import recipes from a web link",
+        "group": "Recipes and nutrition",
         "foodieflow": true,
         "mealime": false,
         "paprika": true,
@@ -118,6 +131,7 @@
       },
       {
         "label": "Import recipes from video (YouTube/TikTok)",
+        "group": "Recipes and nutrition",
         "foodieflow": true,
         "mealime": false,
         "paprika": false,
@@ -125,6 +139,7 @@
       },
       {
         "label": "Dietary & allergy profiles",
+        "group": "Recipes and nutrition",
         "foodieflow": true,
         "mealime": true,
         "paprika": false,
@@ -132,6 +147,7 @@
       },
       {
         "label": "Disliked-ingredient exclusion",
+        "group": "Recipes and nutrition",
         "foodieflow": true,
         "mealime": false,
         "paprika": false,
@@ -139,6 +155,7 @@
       },
       {
         "label": "Nutrition (macros & calories)",
+        "group": "Recipes and nutrition",
         "foodieflow": true,
         "mealime": true,
         "paprika": false,
@@ -146,6 +163,7 @@
       },
       {
         "label": "Auto-estimated nutrition, even on imports",
+        "group": "Recipes and nutrition",
         "foodieflow": true,
         "mealime": false,
         "paprika": false,
@@ -153,6 +171,7 @@
       },
       {
         "label": "Cook Again history",
+        "group": "Recipes and nutrition",
         "foodieflow": true,
         "mealime": false,
         "paprika": false,
@@ -160,6 +179,7 @@
       },
       {
         "label": "Meal History log",
+        "group": "Recipes and nutrition",
         "foodieflow": true,
         "mealime": false,
         "paprika": false,
@@ -167,6 +187,7 @@
       },
       {
         "label": "Household mode (multiple individual users)",
+        "group": "Household and access",
         "foodieflow": true,
         "mealime": false,
         "paprika": false,
@@ -174,6 +195,7 @@
       },
       {
         "label": "Real-time sync between household members",
+        "group": "Household and access",
         "foodieflow": true,
         "mealime": false,
         "paprika": false,
@@ -181,6 +203,7 @@
       },
       {
         "label": "Guest mode (no signup)",
+        "group": "Household and access",
         "foodieflow": true,
         "mealime": false,
         "paprika": false,
@@ -188,6 +211,7 @@
       },
       {
         "label": "Free to start",
+        "group": "Household and access",
         "foodieflow": true,
         "mealime": true,
         "paprika": false,

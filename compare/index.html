@@ -6,7 +6,7 @@
   <title>FoodieFlow vs Mealime, Paprika &amp; Plan to Eat (2026)</title>
   <meta name="description" content="Which meal planning app is best? FoodieFlow, Mealime, Paprika and Plan to Eat compared side by side on meal ideas, weekly plans, shopping lists and recipe import." />
   <link rel="canonical" href="https://foodieflow.app/compare/" />
-  <meta name="theme-color" content="#2a7c8a" />
+  <meta name="theme-color" content="#F3F3F0" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://foodieflow.app/compare/" />
   <meta property="og:site_name" content="FoodieFlow" />
@@ -14,384 +14,268 @@
   <meta property="og:description" content="Which meal planning app is best? FoodieFlow, Mealime, Paprika and Plan to Eat compared side by side on meal ideas, weekly plans, shopping lists and recipe import." />
   <meta property="og:image" content="https://foodieflow.app/logo.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="FoodieFlow vs Mealime, Paprika &amp; Plan to Eat (2026)" />
-  <meta name="twitter:description" content="Which meal planning app is best? FoodieFlow, Mealime, Paprika and Plan to Eat compared side by side on meal ideas, weekly plans, shopping lists and recipe import." />
   <meta name="twitter:image" content="https://foodieflow.app/logo.png" />
   <link rel="icon" href="/favicon.png" type="image/png" />
   <link rel="apple-touch-icon" href="/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=PT+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/ff26.css" />
   <script type="application/ld+json">[{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://foodieflow.app/"}, {"@type": "ListItem", "position": 2, "name": "Compare", "item": "https://foodieflow.app/compare/"}]}, {"@context": "https://schema.org", "@type": "ItemList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "FoodieFlow vs Mealime", "url": "https://foodieflow.app/compare/foodieflow-vs-mealime/"}, {"@type": "ListItem", "position": 2, "name": "FoodieFlow vs Paprika", "url": "https://foodieflow.app/compare/foodieflow-vs-paprika/"}, {"@type": "ListItem", "position": 3, "name": "FoodieFlow vs Plan to Eat", "url": "https://foodieflow.app/compare/foodieflow-vs-plan-to-eat/"}]}]</script>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --bg:        hsl(210, 28%, 95%);
-      --bg-warm:   hsl(210, 22%, 92%);
-      --card:      hsl(0, 0%, 100%);
-      --fore:      hsl(222, 47%, 13%);
-      --muted:     hsl(215, 16%, 50%);
-      --blue:      hsl(205, 68%, 50%);
-      --blue-lt:   hsl(205, 55%, 90%);
-      --amber:     hsl(205, 68%, 50%);
-      --amber-dark:hsl(205, 75%, 40%);
-      --gold:      hsl(42, 90%, 52%);
-      --border:    hsl(210, 28%, 88%);
-      --primary-dark: hsl(205, 70%, 40%);
-      --secondary:    hsl(195, 60%, 94%);
-      --good:      hsl(150, 55%, 42%);
-      --bad:       hsl(0, 0%, 72%);
-      --radius:    1.3rem;
-      --nav-h:     64px;
+    .crumbs { padding-top: 28px; font-size: 13px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px; }
+    .crumbs a { color: var(--muted) !important; text-decoration: none; }
+    .crumbs a:hover { color: var(--ink) !important; }
+    .c-head { padding-top: 56px; padding-bottom: 72px; display: flex; flex-direction: column; align-items: center; gap: 26px; text-align: center; }
+    .c-head h1 { max-width: 900px; }
+    .c-head .ff-lede { max-width: 640px; }
+    .marks { display: flex; align-items: center; gap: 18px; }
+    .marks img, .marks .mono { width: 88px; height: 88px; border-radius: 26px; box-shadow: 0 20px 40px -20px rgba(14,17,22,.4); }
+    .marks img { background: #fff; }
+    .marks .mono { background: var(--paper-2); color: var(--ink-3); display: flex; align-items: center; justify-content: center; font-family: var(--display); font-size: 34px; font-weight: 700; }
+    .marks .mono.sm { width: 64px; height: 64px; border-radius: 20px; font-size: 24px; }
+    .marks i { font-style: normal; font-family: var(--display); font-size: 22px; font-weight: 700; color: var(--muted); }
+    .ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+
+    .sec { padding-bottom: 96px; }
+    .table-card { border-radius: 40px; background: #fff; padding: 12px 12px 20px; box-shadow: 0 1px 2px rgba(14,17,22,.04); }
+    .scroll { overflow-x: auto; }
+    table.matrix { width: 100%; border-collapse: separate; border-spacing: 0; }
+    table.matrix caption { text-align: left; padding: 20px 24px 8px; font-family: var(--display); font-size: 26px; font-weight: 700; letter-spacing: -.6px; }
+    table.matrix thead th { padding: 12px 8px 16px; font-size: 14px; font-weight: 600; color: var(--muted); text-align: center; white-space: nowrap; }
+    table.matrix thead th:first-child { text-align: left; padding-left: 24px; }
+    table.matrix thead th.us span { height: 40px; padding: 0 16px; border-radius: 20px; background: var(--ink); color: #fff; display: inline-flex; align-items: center; gap: 8px; }
+    table.matrix thead th.us img { width: 22px; height: 22px; border-radius: 7px; background: #fff; }
+    table.matrix tbody th[scope="colgroup"] { padding: 22px 24px 8px; text-align: left; font-size: 13px; font-weight: 600; color: var(--muted); }
+    table.matrix td { height: 60px; padding: 0 8px; text-align: center; }
+    table.matrix td.label { text-align: left; padding: 14px 24px; font-size: 16px; font-weight: 500; border-radius: 18px 0 0 18px; }
+    table.matrix td:last-child { border-radius: 0 18px 18px 0; }
+    table.matrix tr.alt td { background: #FAFAF8; }
+    table.matrix tbody tr:not(.grp) { transition: background-color .25s; }
+    table.matrix tbody tr:not(.grp):hover td { background: var(--blue-lt); }
+    table.matrix col.c { width: 180px; }
+    .yes, .yes-us, .no { width: 32px; height: 32px; border-radius: 16px; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; }
+    .yes-us { background: var(--blue); color: #fff; }
+    .yes { background: var(--line); color: var(--ink); }
+    .no { color: var(--faint); }
+    .yes svg, .yes-us svg, .no svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    html.ff-js .table-card.is-in .yes-us { animation: tick .5s var(--ease) both; animation-delay: var(--t, 0s); }
+    @keyframes tick { from { transform: scale(.4); opacity: 0; } to { transform: none; opacity: 1; } }
+    .updated { margin: 18px 8px 0; font-size: 13px; color: var(--muted); }
+
+    .grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+    .why { border-radius: 32px; background: #fff; padding: 32px; display: flex; flex-direction: column; gap: 14px; }
+    .why.dark { background: var(--ink); color: #fff; }
+    .why h3 { margin: 0; font-family: var(--display); font-size: 26px; font-weight: 700; letter-spacing: -.6px; line-height: 1.1; }
+    .why p { margin: 0; font-size: 15px; line-height: 1.6; color: var(--ink-3); }
+    .why.dark p { color: rgba(255,255,255,.72); }
+    .why.dark .ff-tile { background: rgba(245,185,53,.16); color: var(--amber); }
+    .sec h2.big { margin: 0 0 32px; font-family: var(--display); font-size: 52px; font-weight: 700; letter-spacing: -1.8px; line-height: 1; }
+
+    .split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+    .fair { border-radius: 36px; background: var(--paper-2); padding: 44px; display: flex; flex-direction: column; gap: 16px; }
+    .fair small { font-size: 13px; font-weight: 600; color: var(--ink-3); }
+    .fair h3 { margin: 0; font-family: var(--display); font-size: 34px; font-weight: 700; letter-spacing: -1px; line-height: 1.05; }
+    .fair ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; font-size: 16px; line-height: 1.5; color: var(--ink-2); }
+    .fair li { display: flex; gap: 10px; }
+    .fair li::before { content: ""; width: 6px; height: 6px; border-radius: 3px; background: var(--ink); margin-top: 9px; flex-shrink: 0; }
+    .faq { border-radius: 36px; background: #fff; padding: 12px 28px; }
+
+    .more-card { border-radius: 28px; background: #fff; padding: 24px 24px 24px 28px; display: flex; align-items: center; justify-content: space-between; gap: 16px; text-decoration: none; color: var(--ink) !important; }
+    .more-card span.t { display: flex; flex-direction: column; gap: 2px; }
+    .more-card small { font-size: 13px; color: var(--muted); }
+    .more-card b { font-family: var(--display); font-size: 24px; font-weight: 700; letter-spacing: -.5px; }
+    .more-card p { margin: 6px 0 0; font-size: 14px; line-height: 1.5; color: var(--muted); }
+    .more-card .go { width: 44px; height: 44px; border-radius: 22px; background: var(--paper); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform .3s var(--ease); }
+    .more-card:hover .go { transform: translateX(4px); }
+    .more-card.dark { background: var(--ink); color: #fff !important; }
+    .more-card.dark small, .more-card.dark p { color: rgba(255,255,255,.65); }
+    .more-card.dark .go { background: rgba(255,255,255,.12); }
+    .more h2 { margin: 0 0 24px; font-family: var(--display); font-size: 32px; font-weight: 700; letter-spacing: -1px; }
+
+    @media (max-width: 1020px) {
+      .grid3, .split { grid-template-columns: 1fr; }
+      table.matrix col.c { width: 110px; }
     }
-    html { scroll-behavior: smooth; }
-    body { font-family: "PT Sans", sans-serif; background: var(--bg); color: var(--fore); min-height: 100vh; overflow-x: hidden; line-height: 1.5; }
-    :focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; border-radius: 4px; }
-    a { color: inherit; }
-
-    /* NAV — identical to the homepage header */
-    nav {
-      position: sticky; top: 0; z-index: 200;
-      height: var(--nav-h);
-      padding: 0 clamp(16px, 5vw, 80px);
-      display: flex; align-items: center; justify-content: space-between;
-      background: transparent;
-      border-bottom: 1px solid transparent;
-      transition: background 0.3s, border-color 0.3s, backdrop-filter 0.3s;
+    @media (max-width: 640px) {
+      .c-head { padding-top: 32px; padding-bottom: 48px; }
+      .marks img, .marks .mono { width: 64px; height: 64px; border-radius: 20px; font-size: 26px; }
+      .marks .mono.sm { width: 52px; height: 52px; font-size: 20px; }
+      .marks { gap: 12px; }
+      .table-card { border-radius: 28px; padding: 6px 4px 12px; }
+      table.matrix caption { padding: 16px 14px 6px; font-size: 22px; }
+      table.matrix thead th:first-child, table.matrix tbody th[scope="colgroup"] { padding-left: 14px; }
+      table.matrix td.label { padding: 12px 8px 12px 14px; font-size: 14px; }
+      table.matrix col.c { width: 72px; }
+      table.matrix thead th { font-size: 12px; white-space: normal; }
+      table.matrix thead th.us span { height: 32px; padding: 0 10px; font-size: 12px; }
+      table.matrix thead th.us img { display: none; }
+      table.matrix.wide { min-width: 520px; }
+      .sec { padding-bottom: 64px; }
+      .sec h2.big { font-size: 36px; letter-spacing: -1.2px; }
+      .fair, .why { padding: 28px; border-radius: 28px; }
+      .faq { padding: 4px 20px; border-radius: 28px; }
     }
-    nav.scrolled {
-      background: rgba(255,255,255,0.75);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom-color: rgba(0,0,0,0.08);
-    }
-    .logo { display: flex; align-items: center; text-decoration: none; }
-    .logo img { height: 44px; width: auto; object-fit: contain; }
-    .nav-links { display: flex; align-items: center; gap: 1.8rem; }
-    .nav-links a { font-size: 0.88rem; color: var(--fore); text-decoration: none; font-weight: 700; opacity: 0.65; transition: color 0.2s, opacity 0.2s; }
-    .nav-links a:hover { color: var(--blue); opacity: 1; }
-    .nav-cta {
-      display: inline-flex; align-items: center; min-height: 44px;
-      background: var(--amber); color: #fff;
-      padding: 10px 22px; border-radius: 8px;
-      font-size: 0.88rem; font-weight: 700; text-decoration: none;
-      transition: background 0.2s, transform 0.15s;
-    }
-    /* Beat `.nav-links a` specificity so the CTA text stays white, not grey. */
-    .nav-links a.nav-cta { color: #fff; opacity: 1; }
-    .nav-cta:hover { background: var(--amber-dark); transform: translateY(-1px); }
-    .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 6px; min-height: 44px; min-width: 44px; align-items: center; justify-content: center; flex-direction: column; gap: 5px; }
-    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--fore); border-radius: 2px; transition: 0.25s; }
-    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
-    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    .mobile-menu { display: none; position: fixed; top: var(--nav-h); left: 0; right: 0; bottom: 0; background: rgba(249,248,245,0.97); backdrop-filter: blur(16px); z-index: 199; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
-    .mobile-menu.open { display: flex; }
-    .mobile-menu a { font-size: 1.4rem; font-weight: 700; color: var(--fore); text-decoration: none; min-height: 44px; display: flex; align-items: center; transition: color 0.2s; }
-    .mobile-menu a:hover { color: var(--amber); }
-    .mobile-menu .mobile-cta { background: var(--amber); color: #fff; padding: 14px 36px; border-radius: 8px; font-size: 1rem; }
-    .mobile-menu .mobile-cta:hover { background: var(--amber-dark); color: #fff; }
-
-    /* LAYOUT */
-    .wrap { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
-    .eyebrow { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue); margin-bottom: 12px; }
-
-    /* HERO */
-    .hero { text-align: center; padding: 40px 2rem 8px; max-width: 780px; margin: 0 auto; }
-    h1 { font-size: clamp(2rem, 5.5vw, 3.2rem); font-weight: 900; line-height: 1.08; letter-spacing: -0.02em; margin-bottom: 18px; }
-    h1 .vs { color: var(--muted); font-weight: 700; }
-    h1 .brand { color: var(--primary-dark); }
-    .hero-sub { font-size: 1.05rem; color: var(--muted); line-height: 1.7; max-width: 560px; margin: 0 auto 26px; }
-    .hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-    .btn-primary { display: inline-flex; align-items: center; min-height: 48px; background: var(--amber); color: #fff; padding: 13px 28px; border-radius: 10px; font-weight: 700; text-decoration: none; transition: background 0.2s, transform 0.15s; }
-    .btn-primary:hover { background: var(--amber-dark); transform: translateY(-1px); }
-    .btn-ghost { display: inline-flex; align-items: center; min-height: 48px; background: var(--card); color: var(--fore); padding: 13px 24px; border-radius: 10px; font-weight: 700; text-decoration: none; border: 1px solid var(--border); transition: border-color 0.2s; }
-    .btn-ghost:hover { border-color: var(--blue); }
-
-    /* SECTIONS */
-    section.block { padding: 44px 0; }
-    .section-title { font-size: clamp(1.4rem, 3.5vw, 2rem); font-weight: 900; letter-spacing: -0.01em; margin-bottom: 10px; text-align: center; }
-    .section-sub { text-align: center; color: var(--muted); max-width: 560px; margin: 0 auto 30px; }
-    .matrix-intro, .matrix-note { max-width: 720px; margin: 0 auto 30px; color: var(--fore); font-size: 0.95rem; line-height: 1.7; }
-    .matrix-note { margin: 26px auto 0; color: var(--muted); font-size: 0.92rem; }
-
-    /* COMPARISON TABLE */
-    /* Card backdrop matches the highlighted column so the rounded blue border
-       has no white slivers at its corners; individual cells set their own bg. */
-    .table-card { background: hsl(205, 55%, 97%); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
-    table.compare { width: 100%; border-collapse: collapse; }
-    table.compare th, table.compare td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--border); font-size: 0.92rem; }
-    table.compare thead th { background: var(--secondary); font-weight: 700; font-size: 0.82rem; }
-    table.compare thead th.col-us { color: var(--primary-dark); }
-    table.compare tbody tr:last-child td { border-bottom: none; }
-    table.compare td.feat { font-weight: 700; }
-    table.compare td.val { color: var(--muted); }
-    table.compare td.col-us { background: hsl(205,55%,97%); font-weight: 700; color: var(--fore); }
-    .v-yes { color: var(--good); font-weight: 700; }
-    .v-no { color: var(--bad); font-weight: 700; }
-    .v-part { color: var(--gold); font-weight: 700; }
-
-    /* MATRIX (hub) — Lucide tick / grey X */
-    .matrix-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-    table.matrix { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 560px; }
-    table.matrix th, table.matrix td { padding: 13px 12px; border-bottom: 1px solid var(--border); text-align: center; }
-    table.matrix tbody td { background: var(--card); }
-    table.matrix thead th { background: var(--secondary); font-size: 0.82rem; font-weight: 700; }
-    table.matrix thead th.col-us, table.matrix td.col-us { background: hsl(205,55%,97%); }
-    table.matrix thead th.col-us { color: var(--primary-dark); }
-    table.matrix th.rowlabel, table.matrix td.rowlabel { text-align: left; font-weight: 700; font-size: 0.9rem; }
-    table.matrix tbody tr:last-child td { border-bottom: none; }
-    /* Highlight the FoodieFlow column with a smooth, rounded blue border. */
-    table.matrix .col-us { border-left: 2px solid var(--blue); border-right: 2px solid var(--blue); }
-    table.matrix thead th.col-us { border-top: 2px solid var(--blue); border-top-left-radius: 12px; border-top-right-radius: 12px; }
-    table.matrix tbody tr:last-child td.col-us { border-bottom: 2px solid var(--blue); border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; }
-    .lucide { width: 22px; height: 22px; fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; vertical-align: middle; }
-    .lucide.tick { stroke: var(--good); }
-    .lucide.cross { stroke: var(--bad); }
-
-    /* The tick/cross icons carry no text of their own, so each table cell also
-       gets a visually-hidden word. That keeps the Yes/No values in the DOM as
-       real text for text-only crawlers and extraction, instead of relying on
-       aria-label alone, which never appears in the page's text content. */
-    .vh {
-      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
-      overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
-    }
-    .matrix-legend { display: flex; gap: 22px; justify-content: center; flex-wrap: wrap; margin-top: 18px; font-size: 0.84rem; color: var(--muted); }
-    .matrix-legend span { display: inline-flex; align-items: center; gap: 7px; }
-    .matrix-legend .lucide { width: 17px; height: 17px; }
-
-    /* SWITCH REASONS */
-    .reason-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .reason-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 24px; }
-    .reason-card .r-icon { width: 34px; height: 34px; border-radius: 9px; background: var(--secondary); display: grid; place-items: center; margin-bottom: 12px; }
-    .reason-card .r-icon svg { width: 17px; height: 17px; stroke: var(--primary-dark); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-    .reason-card h3 { font-size: 1.02rem; font-weight: 700; margin-bottom: 6px; }
-    .reason-card p { color: var(--muted); font-size: 0.92rem; line-height: 1.65; }
-
-    /* FAIR / STRENGTHS */
-    .fair-card { background: var(--secondary); border-radius: var(--radius); padding: 26px 30px; max-width: 720px; margin: 0 auto; }
-    .fair-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 14px; }
-    .fair-card ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-    .fair-card li { padding-left: 26px; position: relative; color: var(--primary-dark); font-size: 0.95rem; line-height: 1.6; }
-    .fair-card li::before { content: "✓"; position: absolute; left: 0; font-weight: 700; color: var(--good); }
-
-    /* FAQ */
-    .faq-list { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
-    .faq-item { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 0 22px; }
-    .faq-item summary { cursor: pointer; list-style: none; padding: 18px 0; font-weight: 700; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-    .faq-item summary::-webkit-details-marker { display: none; }
-    .faq-item summary .chev { width: 18px; height: 18px; stroke: var(--muted); fill: none; stroke-width: 2; flex-shrink: 0; transition: transform 0.2s; }
-    .faq-item[open] summary .chev { transform: rotate(180deg); }
-    .faq-item p { color: var(--muted); line-height: 1.7; padding: 0 0 18px; font-size: 0.94rem; }
-
-    /* CTA */
-    .cta-section { background: hsl(222,47%,10%); border-radius: var(--radius); padding: 48px 32px; text-align: center; max-width: 820px; margin: 0 auto; }
-    .cta-section h2 { color: #fff; font-size: clamp(1.5rem, 4vw, 2.1rem); font-weight: 900; margin-bottom: 12px; }
-    .cta-section p { color: rgba(255,255,255,0.65); max-width: 460px; margin: 0 auto 26px; }
-    .store-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-    .store-btn { display: inline-flex; align-items: center; gap: 10px; background: #fff; color: var(--fore); padding: 12px 22px; border-radius: 10px; font-weight: 700; text-decoration: none; transition: transform 0.15s; }
-    .store-btn:hover { transform: translateY(-2px); }
-    .cta-note { color: rgba(255,255,255,0.5); font-size: 0.82rem; margin-top: 18px; }
-
-    /* OTHER COMPARISONS — flex so 2 or 3 cards stay centred */
-    .other-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
-    .other-card { flex: 1 1 240px; max-width: 320px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; text-decoration: none; color: var(--fore); transition: border-color 0.2s, transform 0.15s; }
-    .other-card:hover { border-color: var(--blue); transform: translateY(-2px); }
-    .other-card .oc-vs { font-size: 0.76rem; color: var(--muted); font-weight: 700; }
-    .other-card .oc-name { font-size: 1rem; font-weight: 700; margin-top: 2px; }
-    .other-card .oc-arrow { color: var(--blue); font-weight: 700; font-size: 0.84rem; margin-top: 8px; display: inline-block; }
-
-    .updated { text-align: center; font-size: 0.78rem; color: var(--muted); margin-top: 34px; }
-
-    /* FOOTER */
-    footer { border-top: 1px solid var(--border); padding: 40px 2.5rem 28px; background: var(--card); margin-top: 20px; }
-    .footer-inner { max-width: 1160px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 36px; }
-    .footer-brand img { height: 44px; margin-bottom: 12px; }
-    .footer-brand p { font-size: 0.84rem; color: var(--muted); line-height: 1.65; max-width: 240px; }
-    .footer-col h4 { font-size: 0.77rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--fore); margin-bottom: 14px; }
-    .footer-col a { display: block; font-size: 0.84rem; color: var(--muted); text-decoration: none; margin-bottom: 8px; transition: color 0.2s; }
-    .footer-col a:hover { color: var(--blue); }
-    .footer-bottom { max-width: 1160px; margin: 0 auto; padding-top: 22px; border-top: 1px solid var(--border); text-align: center; }
-    .footer-bottom span { font-size: 0.77rem; color: var(--muted); }
-
-    @media (max-width: 900px) {
-      nav { padding: 0 1.5rem; }
-      .nav-links { display: none; }
-      .nav-hamburger { display: flex; }
-      .reason-grid { grid-template-columns: 1fr; }
-      .footer-inner { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 600px) {
-      .wrap { padding: 0 1.25rem; }
-      table.compare th, table.compare td { padding: 11px 12px; font-size: 0.84rem; }
-      .footer-inner { grid-template-columns: 1fr; }
+    @media (prefers-reduced-motion: reduce) {
+      html.ff-js .table-card.is-in .yes-us { animation: none; }
+      .more-card .go { transition: none; }
     }
 </style>
-  <link rel="stylesheet" href="/assets/site-glass.css" />
 </head>
-<body>
-<!-- NAV -->
-<nav id="main-nav">
-  <a href="/" class="logo"><img src="/logo.png" alt="FoodieFlow" /></a>
-  <div class="nav-links">
-    <a href="/#features">Features</a>
-    <a href="/#how-it-works">How it works</a>
-    <a href="/#pro">Pricing</a>
-    <a href="/compare/">Compare</a>
-    <a href="/blog/">Blog</a>
-    <a href="/download/" class="nav-cta">Download the App</a>
+<body class="ff-page">
+
+<div class="ff-top">
+  <div class="ff-wrap">
+    <nav id="main-nav" class="ff-nav" aria-label="Main">
+      <a class="ff-brand" href="/" aria-label="FoodieFlow home"><img src="/favicon.png" alt="" width="40" height="40" /><span>FoodieFlow</span></a>
+      <div class="ff-navlinks">
+        <a href="/#features">Features</a>
+        <a href="/#pro">Pro</a>
+        <a href="/compare/" aria-current="page">Compare</a>
+        <a href="/blog/">Blog</a>
+        <a href="/support/">Support</a>
+      </div>
+      <div class="ff-navend">
+        <a class="ff-btn ff-btn--sm" href="/#download">Get the app <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <button class="ff-menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="ff-sheet"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg></button>
+      </div>
+    </nav>
   </div>
-  <button class="nav-hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
-</nav>
-<div class="mobile-menu" id="mobile-menu">
-  <a href="/#features" class="mobile-nav-link">Features</a>
-  <a href="/#how-it-works" class="mobile-nav-link">How it works</a>
-  <a href="/#pro" class="mobile-nav-link">Pricing</a>
-  <a href="/compare/" class="mobile-nav-link">Compare</a>
-  <a href="/blog/" class="mobile-nav-link">Blog</a>
-  <a href="/download/" class="mobile-cta mobile-nav-link">Download the App</a>
 </div>
 
+<div class="ff-sheet" id="ff-sheet" hidden>
+  <div class="ff-sheet__scrim" data-close></div>
+  <section class="ff-sheet__panel" role="dialog" aria-modal="true" aria-label="Menu">
+    <span class="ff-sheet__grip" aria-hidden="true"></span>
+    <div class="ff-sheet__head">
+      <span class="ff-brand"><img src="/favicon.png" alt="" width="36" height="36" /><span>FoodieFlow</span></span>
+      <button class="ff-sheet__close" type="button" aria-label="Close menu" data-close><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="ff-sheet__links" role="navigation" aria-label="Menu links">
+      <a href="/#features">Features<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9AA0A8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+      <a href="/#how-it-works">How it works<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9AA0A8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+      <a href="/#pro">Pro Chef<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9AA0A8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+      <a href="/compare/" aria-current="page">Compare apps<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9AA0A8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+      <a href="/blog/">Blog<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9AA0A8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+      <a href="/support/">Support<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9AA0A8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+    </div>
+    <div class="ff-sheet__stores">
+      <a href="https://apps.apple.com/us/app/foodieflow-meal-planner/id6760259767" target="_blank" rel="noopener noreferrer">App Store</a>
+      <a href="https://play.google.com/store/apps/details?id=com.foodieflow.app" target="_blank" rel="noopener noreferrer">Google Play</a>
+    </div>
+    <p class="ff-sheet__note">Free to download. Pro Chef from <span class="rc-price-inline">£3.99</span> a month.</p>
+  </section>
+</div>
 
-<header class="hero">
-  <p class="eyebrow">Comparisons</p>
-  <h1>FoodieFlow vs <span class="brand">the alternatives</span></h1>
-  <p class="hero-sub">Thinking of switching meal planning apps? Here's FoodieFlow next to Mealime, Paprika and Plan to Eat — including the smart-planning and recipe-import features you won't find elsewhere.</p>
-  <div class="hero-ctas">
-    <a href="/download/" class="btn-primary">Try FoodieFlow free</a>
+<main>
+<nav class="ff-wrap crumbs" aria-label="Breadcrumb">
+  <a href="/">Home</a><span aria-hidden="true">›</span><span>Compare</span>
+</nav>
+
+<header class="ff-wrap c-head">
+  <div class="marks ff-pop">
+    <img src="/favicon.png" alt="FoodieFlow" width="88" height="88" />
+    <i>vs</i>
+    <span class="mono sm" role="img" aria-label="Mealime">M</span>
+    <span class="mono sm" role="img" aria-label="Paprika">P</span>
+    <span class="mono sm" role="img" aria-label="Plan to Eat">P</span>
+  </div>
+  <span class="ff-eyebrow ff-rise">Comparisons</span>
+  <h1 class="ff-h1 ff-rise">FoodieFlow vs the alternatives.</h1>
+  <p class="ff-lede ff-rise-2">Thinking of switching meal planning apps? Here is FoodieFlow next to Mealime, Paprika and Plan to Eat, including the smart planning and recipe import features you won't find elsewhere.</p>
+  <div class="ctas ff-rise-3">
+    <a class="ff-btn" href="/#download">Try FoodieFlow free</a>
+    <a class="ff-btn ff-btn--light" href="#compare">See the comparison</a>
   </div>
 </header>
 
-<section class="block">
-  <div class="wrap">
-    <h2 class="section-title">How FoodieFlow compares</h2>
-    <p class="section-sub">An honest, head-to-head look at the features that matter most.</p>
-    <p class="matrix-intro">Most meal planning apps are strong in one place and thin everywhere else. Mealime is built around its own recipe catalogue, Paprika is a recipe manager first and a planner second, and Plan to Eat is designed for people who already know what they want to cook. FoodieFlow is the one that starts from what's already in your kitchen: pantry-aware suggestions, a shopping list that removes what you've already got, and recipe import from a web link or a video rather than retyping it by hand.</p>
-    <div class="table-card">
-      <div class="matrix-scroll">
-        <table class="matrix">
-          <thead>
-            <tr><th class="rowlabel">Feature</th><th class="col-us">FoodieFlow</th><th>Mealime</th><th>Paprika</th><th>Plan to Eat</th></tr>
-          </thead>
+<section id="compare" class="ff-wrap sec">
+  <div class="table-card" data-reveal>
+    <div class="scroll">
+      <table class="matrix wide">
+        <caption>How FoodieFlow compares</caption>
+        <colgroup><col /><col class="c" /><col class="c" /><col class="c" /><col class="c" /></colgroup>
+        <thead><tr><th scope="col"><span class="ff-sr">Feature</span></th><th scope="col" class="us"><span><img src="/favicon.png" alt="" width="22" height="22" />FoodieFlow</span></th><th scope="col">Mealime</th><th scope="col">Paprika</th><th scope="col">Plan to Eat</th></tr></thead>
           <tbody>
-          <tr><td class="rowlabel">Smart Meal Assistant</td><td class="col-us"><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="vh">Yes</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td></tr>
-          <tr><td class="rowlabel">One-tap smart weekly meal plan</td><td class="col-us"><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="vh">Yes</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td></tr>
-          <tr><td class="rowlabel">Drag-and-drop weekly planner</td><td class="col-us"><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="vh">Yes</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="vh">Yes</span></td><td><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="vh">Yes</span></td></tr>
-          <tr><td class="rowlabel">Basic vs. From Scratch ingredient mode</td><td class="col-us"><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="vh">Yes</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td></tr>
-          <tr><td class="rowlabel">Automatic metric/imperial conversion</td><td class="col-us"><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="vh">Yes</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td></tr>
-          <tr><td class="rowlabel">Per-day servings override</td><td class="col-us"><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="vh">Yes</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td></tr>
-          <tr><td class="rowlabel">Pantry-aware suggestions</td><td class="col-us"><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="vh">Yes</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td></tr>
-          <tr><td class="rowlabel">Pantry auto-exclusion in shopping list</td><td class="col-us"><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="vh">Yes</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td></tr>
-          <tr><td class="rowlabel">Dedicated Pantry tab</td><td class="col-us"><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="vh">Yes</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="vh">Yes</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td></tr>
-          <tr><td class="rowlabel">Auto aisle-sorted shopping list</td><td class="col-us"><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="vh">Yes</span></td><td><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="vh">Yes</span></td><td><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="vh">Yes</span></td><td><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="vh">Yes</span></td></tr>
-          <tr><td class="rowlabel">By-recipe shopping list view</td><td class="col-us"><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="vh">Yes</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td></tr>
-          <tr><td class="rowlabel">Import recipes from a web link</td><td class="col-us"><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="vh">Yes</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="vh">Yes</span></td><td><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="vh">Yes</span></td></tr>
-          <tr><td class="rowlabel">Import recipes from video (YouTube/TikTok)</td><td class="col-us"><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="vh">Yes</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td></tr>
-          <tr><td class="rowlabel">Dietary &amp; allergy profiles</td><td class="col-us"><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="vh">Yes</span></td><td><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="vh">Yes</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td></tr>
-          <tr><td class="rowlabel">Disliked-ingredient exclusion</td><td class="col-us"><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="vh">Yes</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td></tr>
-          <tr><td class="rowlabel">Nutrition (macros &amp; calories)</td><td class="col-us"><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="vh">Yes</span></td><td><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="vh">Yes</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td></tr>
-          <tr><td class="rowlabel">Auto-estimated nutrition, even on imports</td><td class="col-us"><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="vh">Yes</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td></tr>
-          <tr><td class="rowlabel">Cook Again history</td><td class="col-us"><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="vh">Yes</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td></tr>
-          <tr><td class="rowlabel">Meal History log</td><td class="col-us"><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="vh">Yes</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td></tr>
-          <tr><td class="rowlabel">Household mode (multiple individual users)</td><td class="col-us"><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="vh">Yes</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="vh">Yes</span></td></tr>
-          <tr><td class="rowlabel">Real-time sync between household members</td><td class="col-us"><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="vh">Yes</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="vh">Yes</span></td></tr>
-          <tr><td class="rowlabel">Guest mode (no signup)</td><td class="col-us"><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="vh">Yes</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td></tr>
-          <tr><td class="rowlabel">Free to start</td><td class="col-us"><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="vh">Yes</span></td><td><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span class="vh">Yes</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td><td><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg><span class="vh">No</span></td></tr>
+            <tr class="grp"><th scope="colgroup" colspan="5">Planning</th></tr>
+            <tr class="alt"><td class="label">Smart Meal Assistant</td><td><span class="yes-us" role="img" aria-label="Yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td></tr>
+            <tr><td class="label">One-tap smart weekly meal plan</td><td><span class="yes-us" role="img" aria-label="Yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td></tr>
+            <tr class="alt"><td class="label">Drag-and-drop weekly planner</td><td><span class="yes-us" role="img" aria-label="Yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="yes" role="img" aria-label="Yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></td><td><span class="yes" role="img" aria-label="Yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></td></tr>
+            <tr><td class="label">Basic vs. From Scratch ingredient mode</td><td><span class="yes-us" role="img" aria-label="Yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td></tr>
+            <tr class="alt"><td class="label">Automatic metric/imperial conversion</td><td><span class="yes-us" role="img" aria-label="Yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td></tr>
+            <tr><td class="label">Per-day servings override</td><td><span class="yes-us" role="img" aria-label="Yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td></tr>
           </tbody>
-        </table>
-      </div>
+          <tbody>
+            <tr class="grp"><th scope="colgroup" colspan="5">Kitchen and shopping</th></tr>
+            <tr class="alt"><td class="label">Pantry-aware suggestions</td><td><span class="yes-us" role="img" aria-label="Yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td></tr>
+            <tr><td class="label">Pantry auto-exclusion in shopping list</td><td><span class="yes-us" role="img" aria-label="Yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td></tr>
+            <tr class="alt"><td class="label">Dedicated Pantry tab</td><td><span class="yes-us" role="img" aria-label="Yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="yes" role="img" aria-label="Yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td></tr>
+            <tr><td class="label">Auto aisle-sorted shopping list</td><td><span class="yes-us" role="img" aria-label="Yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></td><td><span class="yes" role="img" aria-label="Yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></td><td><span class="yes" role="img" aria-label="Yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></td><td><span class="yes" role="img" aria-label="Yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></td></tr>
+            <tr class="alt"><td class="label">By-recipe shopping list view</td><td><span class="yes-us" role="img" aria-label="Yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td></tr>
+          </tbody>
+          <tbody>
+            <tr class="grp"><th scope="colgroup" colspan="5">Recipes and nutrition</th></tr>
+            <tr class="alt"><td class="label">Import recipes from a web link</td><td><span class="yes-us" role="img" aria-label="Yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="yes" role="img" aria-label="Yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></td><td><span class="yes" role="img" aria-label="Yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></td></tr>
+            <tr><td class="label">Import recipes from video (YouTube/TikTok)</td><td><span class="yes-us" role="img" aria-label="Yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td></tr>
+            <tr class="alt"><td class="label">Dietary &amp; allergy profiles</td><td><span class="yes-us" role="img" aria-label="Yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></td><td><span class="yes" role="img" aria-label="Yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td></tr>
+            <tr><td class="label">Disliked-ingredient exclusion</td><td><span class="yes-us" role="img" aria-label="Yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td></tr>
+            <tr class="alt"><td class="label">Nutrition (macros &amp; calories)</td><td><span class="yes-us" role="img" aria-label="Yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></td><td><span class="yes" role="img" aria-label="Yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td></tr>
+            <tr><td class="label">Auto-estimated nutrition, even on imports</td><td><span class="yes-us" role="img" aria-label="Yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td></tr>
+            <tr class="alt"><td class="label">Cook Again history</td><td><span class="yes-us" role="img" aria-label="Yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td></tr>
+            <tr><td class="label">Meal History log</td><td><span class="yes-us" role="img" aria-label="Yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td></tr>
+          </tbody>
+          <tbody>
+            <tr class="grp"><th scope="colgroup" colspan="5">Household and access</th></tr>
+            <tr class="alt"><td class="label">Household mode (multiple individual users)</td><td><span class="yes-us" role="img" aria-label="Yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="yes" role="img" aria-label="Yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></td></tr>
+            <tr><td class="label">Real-time sync between household members</td><td><span class="yes-us" role="img" aria-label="Yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="yes" role="img" aria-label="Yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></td></tr>
+            <tr class="alt"><td class="label">Guest mode (no signup)</td><td><span class="yes-us" role="img" aria-label="Yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td></tr>
+            <tr><td class="label">Free to start</td><td><span class="yes-us" role="img" aria-label="Yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></td><td><span class="yes" role="img" aria-label="Yes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td><td><span class="no" role="img" aria-label="No"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></span></td></tr>
+          </tbody>
+      </table>
     </div>
-    <div class="matrix-legend">
-      <span><svg class="lucide tick" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Included</span>
-      <span><svg class="lucide cross" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg> Not available</span>
-    </div>
-    <p class="matrix-note">Where the table gets interesting is the bottom half. Household mode and real-time sync between household members are the rows that matter if you're planning meals with a partner or family rather than on your own — Plan to Eat handles that, Mealime and Paprika don't. Nutrition works the other way round: Mealime tracks macros and calories, but only FoodieFlow estimates them automatically on recipes you've imported yourself. If you want the detail behind any single column, the full write-ups are below.</p>
   </div>
+  <p class="updated">Comparisons last updated July 2026. Competitor features and pricing change over time, so please check current details on each provider's site.</p>
 </section>
 
-<section class="block" style="background:var(--bg-warm)">
-  <div class="wrap">
-    <h2 class="section-title">Read the full comparisons</h2>
-    <p class="section-sub">Full feature tables and FAQs for each meal planning app.</p>
-    <div class="other-grid">
-      <a class="other-card" href="/compare/foodieflow-vs-mealime/">
-        <span class="oc-vs">FoodieFlow vs</span>
-        <div class="oc-name">Mealime</div>
-        <p style="color:var(--muted);font-size:0.86rem;margin-top:8px;line-height:1.55">Recipe-first meal planner</p>
-        <span class="oc-arrow">Read comparison &rarr;</span>
+<section class="ff-wrap sec more">
+  <h2>Read the full comparisons</h2>
+  <div class="grid3">
+      <a class="more-card ff-lift" href="/compare/foodieflow-vs-mealime/" data-reveal>
+        <span class="t"><small>FoodieFlow vs</small><b>Mealime</b><p>Recipe-first meal planner</p></span>
+        <span class="go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
-      <a class="other-card" href="/compare/foodieflow-vs-paprika/">
-        <span class="oc-vs">FoodieFlow vs</span>
-        <div class="oc-name">Paprika</div>
-        <p style="color:var(--muted);font-size:0.86rem;margin-top:8px;line-height:1.55">Recipe manager</p>
-        <span class="oc-arrow">Read comparison &rarr;</span>
+      <a class="more-card ff-lift" href="/compare/foodieflow-vs-paprika/" data-reveal>
+        <span class="t"><small>FoodieFlow vs</small><b>Paprika</b><p>Recipe manager</p></span>
+        <span class="go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
-      <a class="other-card" href="/compare/foodieflow-vs-plan-to-eat/">
-        <span class="oc-vs">FoodieFlow vs</span>
-        <div class="oc-name">Plan to Eat</div>
-        <p style="color:var(--muted);font-size:0.86rem;margin-top:8px;line-height:1.55">Recipe organiser &amp; planner</p>
-        <span class="oc-arrow">Read comparison &rarr;</span>
+      <a class="more-card ff-lift" href="/compare/foodieflow-vs-plan-to-eat/" data-reveal>
+        <span class="t"><small>FoodieFlow vs</small><b>Plan to Eat</b><p>Recipe organiser &amp; planner</p></span>
+        <span class="go"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
-    </div>
-    <p class="updated">Comparisons last updated July 2026. Competitor features and pricing change over time — please verify current details on each provider's site.</p>
   </div>
 </section>
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <img src="/logo.png" alt="FoodieFlow" />
-      <p>Meal planning made simple. Organise your meals, discover new recipes, and shop smarter — all in one app.</p>
-    </div>
-    <div class="footer-col">
-      <h4>Product</h4>
-      <a href="/#features">Features</a>
-      <a href="/#how-it-works">How it works</a>
+</main>
+
+<footer class="ff-footer">
+  <div class="ff-footer__compact">
+    <span><img src="/favicon.png" alt="" width="28" height="28" loading="lazy" /><span>© <span data-year>2026</span> AWD Labs</span></span>
+    <div class="ff-footer__links" role="navigation" aria-label="Footer">
       <a href="/compare/">Compare</a>
-      <a href="/blog/">Blog</a>
-      <a href="/#download">Download</a>
-    </div>
-    <div class="footer-col">
-      <h4>Company</h4>
-      <a href="/privacy/">Privacy Policy</a>
-      <a href="/terms/">Terms of Use</a>
-    </div>
-    <div class="footer-col">
-      <h4>Contact</h4>
+      <a href="/food-waste-calculator/">Food waste calculator</a>
       <a href="/support/">Support</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/terms/">Terms</a>
     </div>
-  </div>
-  <div class="footer-bottom">
-    <span>&copy; 2026 FoodieFlow. All rights reserved. FoodieFlow is an independent software product.</span>
   </div>
 </footer>
 
-<script>
-  /* Nav scroll effect — identical to the homepage. */
-  var mainNav = document.getElementById('main-nav');
-  if (mainNav) {
-    var onScroll = function () { mainNav.classList.toggle('scrolled', window.scrollY > 80); };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-  }
-  var btn = document.getElementById('hamburger');
-  var menu = document.getElementById('mobile-menu');
-  if (btn) {
-    btn.addEventListener('click', function () {
-      btn.classList.toggle('open');
-      menu.classList.toggle('open');
-      document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
-    });
-    document.querySelectorAll('.mobile-nav-link').forEach(function (link) {
-      link.addEventListener('click', function () {
-        btn.classList.remove('open');
-        menu.classList.remove('open');
-        document.body.style.overflow = '';
-      });
-    });
-  }
-</script>
+<script src="/assets/ff26.js" defer></script>
 <script src="/pricing.js"></script>
+<script>
+  /* Stagger the FoodieFlow ticks down the table as it scrolls in. */
+  document.querySelectorAll('.table-card .yes-us').forEach(function (el, i) {
+    el.style.setProperty('--t', Math.min(i, 30) * 0.03 + 's');
+  });
+</script>
 </body>
 </html>

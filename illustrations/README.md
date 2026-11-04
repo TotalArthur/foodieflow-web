@@ -1,5 +1,8 @@
 # Homepage illustrations
 
+The 2026 redesign of the homepage no longer uses these files. The notes below
+describe how the previous homepage used them, kept for if they come back.
+
 The homepage references these four files. They are loaded as CSS `background-image`,
 so a missing file collapses to empty space rather than a broken-image icon — the
 page stays intact, it just loses the artwork.
